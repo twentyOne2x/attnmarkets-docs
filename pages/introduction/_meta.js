@@ -1,7 +1,4 @@
 const sidebar = {
-  README: {
-    title: 'Overview'
-  },
   'onchain-revenues-are-homeless': {
     title: 'Onchain revenues are homeless'
   },

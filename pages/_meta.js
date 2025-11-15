@@ -5,9 +5,6 @@ const sidebar = {
   SUMMARY: {
     title: 'Summary'
   },
-  'for-builders-and-users': {
-    title: 'For builders & users'
-  },
   introduction: {
     title: 'Introduction'
   },
