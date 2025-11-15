@@ -3,7 +3,7 @@
 attn turns onchain **revenues** into something familiar:
 
 - revenue-backed **cash advances**,
-- **credit lines** that repay from your fees,
+- **credit lines** that repay from your earnings,
 - and a **USD yield token** backed by those revenues.
 
 You can think of attn as:
@@ -12,7 +12,7 @@ You can think of attn as:
 
 Instead of only selling tokens or doing custom OTC deals, attn lets you:
 
-- route your **fee stream** into a dedicated revenue account,
+- route your **revenue stream** into a dedicated revenue account,
 - unlock **upfront cash** or a **revolving credit line**,
 - and let outside capital earn yield from your success.
 

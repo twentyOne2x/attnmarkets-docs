@@ -36,7 +36,7 @@ Their primary customer is:
   - DAOs,
   - DePIN networks,
 - and asks:
-  - “where do your fees go?”
+  - “where do your revenues go?”
   - “how do you fund yourself from them?”
   - “how can outside capital own a slice of that income?”
 

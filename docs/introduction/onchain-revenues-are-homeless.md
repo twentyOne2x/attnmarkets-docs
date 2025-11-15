@@ -6,7 +6,7 @@ Onchain, we’ve nailed a few things:
 - routing trades through DEXs,
 - spinning up fee switches and revenue PDAs.
 
-What we haven’t nailed is what happens **after** the fees arrive.
+What we haven’t nailed is what happens **after** the revenues arrive.
 
 Most onchain revenues today:
 

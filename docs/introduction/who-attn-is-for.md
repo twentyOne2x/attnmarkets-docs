@@ -7,19 +7,19 @@ The docs are structured around four main groups.
 
 ## 1. Apps, DAOs & builders
 
-“I run something with real users and fees.”
+“I run something with real users and revenues.”
 
 Examples:
 
 - DEXs, lending markets, infra protocols,
 - DAOs owning treasuries and products,
-- SaaS-like crypto apps charging usage fees.
+- SaaS-like crypto apps charging usage revenues.
 
 What you want:
 
 - non-dilutive funding,
 - better use of protocol income,
-- credible ways to show your fee stream is under control.
+- credible ways to show your revenue stream is under control.
 
 Your section:  
 [For Apps, DAOs & Builders](../users/for-apps-daos-and-builders.md)
@@ -28,13 +28,13 @@ Your section:
 
 ## 2. Creators, devs & memecoin CTOs
 
-“I launched a token or fee stream around a community, and I want to build something real on top.”
+“I launched a token or revenue stream around a community, and I want to build something real on top.”
 
 Examples:
 
 - Pump.fun or similar creators,
 - small teams with a meme that stuck,
-- creator-token projects with recurring fees.
+- creator-token projects with recurring revenues.
 
 What you want:
 

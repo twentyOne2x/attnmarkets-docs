@@ -38,7 +38,7 @@ It is **not** a pure “1:1 stablecoin”:
 
 Yield comes from:
 
-- interest and fees on revenue advances,
+- interest and revenues on revenue advances,
 - spreads on revenue-backed credit lines,
 - any economics shared from more complex deals (like hybrid vesting+revenue structures).
 
@@ -79,7 +79,7 @@ This is different from assuming you always get 1:1 back in any circumstance.
 - Vault TVL: $40M in stables and revenue loans.  
 - Over a year:
   - revenue deals make ~8% net yield after losses,
-  - fees and costs absorb 2%.
+  - revenues and costs absorb 2%.
 
 Result:
 

@@ -37,7 +37,7 @@ At launch, you can:
 
 From day one, this makes the project:
 
-- “credit-ready” as soon as it has fees,
+- “credit-ready” as soon as it has revenues,
 - with no painful migration later.
 
 ---
@@ -47,7 +47,7 @@ From day one, this makes the project:
 As projects gain traction, you can route them into standard deals:
 
 - **short-term advances**:
-  - trade 20–40% of the next 3–12 months of fees,
+  - trade 20–40% of the next 3–12 months of revenues,
   - for marketing, product, or expansion budget.
 - **longer revenue-sharing deals**:
   - where a slice of revenues supports multi-year credit.
@@ -55,7 +55,7 @@ As projects gain traction, you can route them into standard deals:
 Your benefits:
 
 - better outcomes for the strongest teams,
-- a share of the interest and fees,
+- a share of the interest and revenues,
 - a tangible differentiator vs other launchpads.
 
 <details>
@@ -68,12 +68,12 @@ Project “ALPHA”:
 
 You design a “Launchpad Advance” template:
 
-- up to 40% of 1-year future fees can be sold,
+- up to 40% of 1-year future revenues can be sold,
 - attn provides pricing and risk limits.
 
 ALPHA opts to:
 
-- sell 30% of 1-year projected fees.
+- sell 30% of 1-year projected revenues.
 
 attn’s capital provides the cash,  
 you share in the economics,  
@@ -89,7 +89,7 @@ Some projects will want larger tickets **before** their revenues are mature. For
 
 - hybrid deals where:
   - an agreed portion of **vesting tokens** is escrowed,
-  - plus a commitment to route future fees into their revenue account once live.
+  - plus a commitment to route future revenues into their revenue account once live.
 
 This allows:
 
@@ -130,7 +130,7 @@ To use attn smoothly, you will want:
 
 - a **“Connect to attn”** step in your launch workflows,
 - standard docs explaining:
-  - what share of fees may be pledged,
+  - what share of revenues may be pledged,
   - what happens in defaults or underperformance,
 - lightweight review with attn on:
   - which projects qualify,

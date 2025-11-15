@@ -14,7 +14,7 @@ This page is for:
 You have:
 
 - a token with real volume and a community,
-- creator or protocol fees coming in,
+- creator or protocol earnings coming in,
 - and a list of things you wish you could fund:
   - content,
   - features,
@@ -28,7 +28,7 @@ But:
 
 attn gives you a way to:
 
-- **turn your fees into a funding tool**, without dumping.
+- **turn your earnings into a funding tool**, without dumping.
 
 ---
 
@@ -36,7 +36,7 @@ attn gives you a way to:
 
 ### 1. A “real” revenue account for your token
 
-After you use a CTO or similar process (Pump.fun etc.), fees are routed to a joint account:
+After you use a CTO or similar process (Pump.fun etc.), earnings are routed to a joint account:
 
 - controlled by:
   - you / your DAO,
@@ -44,8 +44,8 @@ After you use a CTO or similar process (Pump.fun etc.), fees are routed to a joi
 
 with rules such as:
 
-- if **no advance or loan is open**, you can withdraw fees freely,
-- if **an advance or loan is open**, a set share of fees repays it first.
+- if **no advance or loan is open**, you can withdraw earnings freely,
+- if **an advance or loan is open**, a set share of earnings repays it first.
 
 This sets you up to be taken seriously by:
 
@@ -55,15 +55,15 @@ This sets you up to be taken seriously by:
 
 ---
 
-### 2. One-off advances (“sell a slice of your fees”)
+### 2. One-off advances (“sell a slice of your earnings”)
 
 You can:
 
-- sell a portion of your expected fees over a chosen period for cash now.
+- sell a portion of your expected earnings over a chosen period for cash now.
 
 You choose:
 
-- how much of your future fees to sell (e.g. 25–35%),
+- how much of your future earnings to sell (e.g. 25–35%),
 - for how long (e.g. 3–9 months),
 
 and attn quotes how much you can get today.
@@ -79,7 +79,7 @@ and attn quotes how much you can get today.
 
 You opt to sell:
 
-- **30%** of your next **120 days** of fees.
+- **30%** of your next **120 days** of earnings.
 
 Estimates:
 
@@ -89,9 +89,9 @@ Estimates:
 attn or a fund offers:
 
 - 600 SOL upfront,
-- in exchange for receiving 30% of your creator fees until 1,800 SOL has been routed to them.
+- in exchange for receiving 30% of your creator earnings until 1,800 SOL has been routed to them.
 
-You trade 30% of 4 months of future fees for 600 SOL today,  
+You trade 30% of 4 months of future earnings for 600 SOL today,  
 without selling your own token.
 
 </details>
@@ -100,7 +100,7 @@ without selling your own token.
 
 ### 3. Credit lines as your project matures
 
-Once you have stable fees:
+Once you have stable earnings:
 
 - you can apply for a **credit line** instead of only one-off deals.
 
@@ -115,7 +115,7 @@ This is most relevant when:
 The line:
 
 - grows with your revenue track record,
-- repays automatically from your fees,
+- repays automatically from your earnings,
 - can be combined with vesting token collateral for larger tickets.
 
 ---
@@ -135,7 +135,7 @@ This is usually done in partnership with:
 The goal is:
 
 - let you access more capital earlier,
-- while still anchoring repayment in future fees once they exist.
+- while still anchoring repayment in future earnings once they exist.
 
 Details live in:
 
@@ -147,7 +147,7 @@ Details live in:
 
 You should make it explicit to your community:
 
-- what share of future fees you are selling or using to repay a loan,
+- what share of future earnings you are selling or using to repay a loan,
 - what you are using the cash for,
 - and how this helps the project grow.
 
@@ -156,6 +156,6 @@ From their perspective, if done well:
 - tokens represent a project with:
   - real revenue,
   - a clear funding plan,
-  - and transparent commitments around fees.
+  - and transparent commitments around earnings.
 
 attn is the infrastructure that makes those commitments enforceable onchain.

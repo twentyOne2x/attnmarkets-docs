@@ -24,14 +24,14 @@ The machinery underneath stays in the background unless you want to see it.
 
 ## 1. A real revenue account for onchain businesses
 
-You connect your fee stream (e.g. Pump.fun creator rewards, protocol fee switch, DePIN income) to an **attn revenue account**.
+You connect your revenue stream (e.g. Pump.fun creator rewards, protocol fee switch, DePIN income) to an **attn revenue account**.
 
 That account is:
 
 - jointly governed (creator / DAO + attn),
 - wired so that:
   - when **no financing is active**, you withdraw like usual,
-  - when **a deal is active**, agreed rules decide how much of incoming fees goes first to repayment.
+  - when **a deal is active**, agreed rules decide how much of incoming revenues goes first to repayment.
 
 It is the onchain analogue of a **business operating account with covenants**:
 
@@ -43,7 +43,7 @@ It is the onchain analogue of a **business operating account with covenants**:
 
 ## 2. Revenue-based funding instead of only token sales
 
-Once fees flow through that account, you can choose between:
+Once revenues flow through that account, you can choose between:
 
 ### a) One-off revenue advances
 
@@ -51,31 +51,31 @@ You sell a slice of upcoming revenue for cash now.
 
 You configure:
 
-- share of future fees (e.g. 20–40%),
+- share of future revenues (e.g. 20–40%),
 - horizon (e.g. 3, 6, 12 months).
 
-Capital on the other side pays you up front and, in return, gets that share of fees until the agreed amount is repaid.
+Capital on the other side pays you up front and, in return, gets that share of revenues until the agreed amount is repaid.
 
 From your UI, it’s phrased in business language:
 
-- “Sell 30% of the next 6 months of fees for X today.”
+- “Sell 30% of the next 6 months of revenues for X today.”
 
 <details>
 <summary>Example – “Bridge the next release without selling tokens”</summary>
 
-- Your protocol earns around $20,000/month in net fees.
+- Your protocol earns around $20,000/month in net revenues.
 - You’d like $30,000 to ship a new product and list on a major venue.
-- You decide to sell **40%** of the next **4 months** of fees.
+- You decide to sell **40%** of the next **4 months** of revenues.
 
 Estimated path:
 
-- 4 × $20,000 = $80,000 of fees.
+- 4 × $20,000 = $80,000 of revenues.
 - 40% of that = $32,000.
 
 attn (or an LP) offers:
 
 - $30,000 up front,
-- in exchange for routing 40% of those fees until $32,000 has been collected.
+- in exchange for routing 40% of those revenues until $32,000 has been collected.
 
 You trade 40% of 4 months of income for $30k now,  
 without touching your governance token.
@@ -96,7 +96,7 @@ You get:
 
 - a limit,
 - a drawdown balance,
-- a rule like “up to X% of new fees goes to repayment when the line is used.”
+- a rule like “up to X% of new revenues goes to repayment when the line is used.”
 
 It behaves like a **corporate revolver**, except:
 
@@ -107,7 +107,7 @@ For larger or earlier projects, this line can also be backed by:
 
 - vesting token collateral,
 - launchpad reputation,
-- and explicit commitments to route future fees once live.
+- and explicit commitments to route future revenues once live.
 
 ---
 

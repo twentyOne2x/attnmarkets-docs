@@ -4,7 +4,7 @@ This page is for people who run:
 
 - a protocol or dApp,
 - a DAO with real revenues,
-- or any onchain business that collects fees.
+- or any onchain business that collects revenues.
 
 ---
 
@@ -14,7 +14,7 @@ For you, attn is mainly three things:
 
 1. A **revenue account** for your app or DAO.  
 2. **Revenue advances** – trade a slice of future income for cash now.  
-3. **Revenue-backed credit lines** – ongoing borrowing capacity that repays from fees.
+3. **Revenue-backed credit lines** – ongoing borrowing capacity that repays from revenues.
 
 You can use these to fund:
 
@@ -28,7 +28,7 @@ You can use these to fund:
 
 ## 1. Revenue account
 
-You point your protocol fees to a **revenue account** controlled by:
+You point your protocol revenues to a **revenue account** controlled by:
 
 - your DAO or multisig,
 - and attn (dual control on configuration),
@@ -38,17 +38,17 @@ with clear rules:
 - When **no loan is open**:
   - you can move funds freely.
 - When **a loan is open**:
-  - a fixed share of incoming fees goes first to repayment.
+  - a fixed share of incoming revenues goes first to repayment.
 
-This turns your fee stream into a clean, predictable asset that credit can be built on.
+This turns your revenue stream into a clean, predictable asset that credit can be built on.
 
 ---
 
 ## 2. Revenue advances
 
-When you know your app is producing steady fees but you do not want to do a token sale, you can request:
+When you know your app is producing steady revenues but you do not want to do a token sale, you can request:
 
-- a **one-off advance** against a defined slice of future fees.
+- a **one-off advance** against a defined slice of future revenues.
 
 You choose:
 
@@ -60,12 +60,12 @@ attn or outside capital pays you upfront and collects that slice of income until
 <details>
 <summary>Example – DAO funds a new product line</summary>
 
-- Your DEX earns roughly $80k/month in net fees.  
+- Your DEX earns roughly $80k/month in net revenues.  
 - The DAO wants $200k to fund a new product and listings.
 
 You propose:
 
-- selling **30%** of the next **9 months** of net fees.
+- selling **30%** of the next **9 months** of net revenues.
 
 Rough expectation:
 
@@ -75,7 +75,7 @@ Rough expectation:
 attn offers:
 
 - $200k upfront in exchange for that slice,  
-- and collects 30% of net fees until $216k has been routed to repayment.
+- and collects 30% of net revenues until $216k has been routed to repayment.
 
 DAO decision:
 
@@ -98,12 +98,12 @@ For ongoing needs, you can apply for a **credit line**:
 You get:
 
 - a maximum limit in USD terms,
-- an agreed repayment share of fees,
+- an agreed repayment share of revenues,
 - the ability to draw and repay flexibly within those parameters.
 
 It behaves like a revolving facility in corporate banking, except:
 
-- your “covenants” are enforced by how fees are routed through your revenue account.
+- your “covenants” are enforced by how revenues are routed through your revenue account.
 
 For larger tickets or earlier-stage projects, this line can combine:
 
@@ -122,7 +122,7 @@ From your users’ perspective:
 You should communicate to your community:
 
 - that you are:
-  - treating fees as a formal financial asset,
+  - treating revenues as a formal financial asset,
   - avoiding unnecessary token sales,
   - funding growth with income first.
 
