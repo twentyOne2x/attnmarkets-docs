@@ -1,2 +1,0 @@
-# For builders and users
-
