@@ -39,7 +39,7 @@ const config = {
 
   // Sidebar & TOC behavior
   sidebar: {
-    defaultMenuCollapseLevel: 1
+    defaultMenuCollapseLevel: 3 // keep all nested sections expanded
   },
 
   toc: {
