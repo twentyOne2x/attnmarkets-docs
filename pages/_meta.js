@@ -13,8 +13,7 @@ const sidebar = {
   },
   users: {
     title: 'Users'
-  },
-  README: false
+  }
 }
 
 export default sidebar

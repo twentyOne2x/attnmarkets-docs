@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Welcome](README.md)
+* [Welcome](index.md)
 * [Introduction](introduction/README.md)
   * [Onchain revenues are homeless](introduction/onchain-revenues-are-homeless.md)
   * [Banking the internet of revenue](introduction/banking-the-internet-of-revenue.md)
