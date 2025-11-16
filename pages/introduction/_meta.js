@@ -1,7 +1,4 @@
 const sidebar = {
-  'onchain-revenues-are-homeless': {
-    title: 'Onchain revenues are homeless'
-  },
   'banking-the-internet-of-revenue': {
     title: 'Banking the internet of revenue'
   },
@@ -10,6 +7,9 @@ const sidebar = {
   },
   'who-attn-is-for': {
     title: 'Who attn is for'
+  },
+  'the-missing-layer-for-onchain-revenues': {
+    title: 'The missing layer for onchain revenues'
   }
 }
 
