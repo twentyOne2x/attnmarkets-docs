@@ -2,9 +2,9 @@
 
 This page is for teams that run:
 
-- a protocol or dApp,  
-- a DAO with real revenues,  
-- or any onchain business that collects recurring income.
+- a protocol or dApp  
+- a DAO with real revenues  
+- or any onchain business that collects recurring income
 
 ---
 
@@ -12,17 +12,17 @@ This page is for teams that run:
 
 For apps and DAOs, attn provides three core pieces:
 
-1. A **revenue account** for your app or DAO.  
+1. A **revenue account** for your app or DAO (with optional yield on idle balances).  
 2. **Revenue advances** – trade a slice of future income for cash now.  
 3. **Revenue-backed credit lines** – ongoing borrowing capacity that repays from revenues.
 
 You can use these to fund:
 
-- liquidity,  
-- development,  
-- marketing and growth,  
-- acquisitions,  
-- or anything else your DAO votes for.
+- liquidity  
+- development  
+- marketing and growth  
+- acquisitions  
+- or anything else your DAO votes for
 
 ---
 
@@ -30,7 +30,7 @@ You can use these to fund:
 
 You point protocol revenues to a **revenue account** controlled by:
 
-- your DAO or multisig,  
+- your DAO or multisig  
 - and attn (dual control on configuration),
 
 with clear rules:
@@ -40,7 +40,12 @@ with clear rules:
 - When **a loan is open**:
   - a fixed share of incoming revenues goes first to repayment.
 
-This turns your revenue stream into a clean, predictable asset that credit can be built on.
+On top of that, the account can:
+
+- allocate unencumbered balances into simple onchain yield sources (e.g. staked SOL or yield-bearing stablecoins),  
+- keep cash available for operations and for use as collateral, while avoiding idle capital.
+
+This turns your revenue stream into a clean, predictable asset that credit can be built on, and reduces the cost of letting balances sit in the account.
 
 ---
 
@@ -82,6 +87,8 @@ DAO decision:
 - trade 30% of 9 months of revenue for $200k now,  
 - without issuing additional governance tokens.
 
+Meanwhile, any net revenues beyond the pledged slice can continue to earn base yield in the revenue account.
+
 </details>
 
 ---
@@ -91,15 +98,15 @@ DAO decision:
 For ongoing needs, you can apply for a **credit line**:
 
 - sized according to:
-  - your revenue track record,  
-  - volatility,  
+  - your revenue track record  
+  - volatility  
   - diversification.
 
 You receive:
 
-- a maximum limit in USD terms,  
-- an agreed repayment share of revenues,  
-- the ability to draw and repay flexibly within those parameters.
+- a maximum limit in USD terms  
+- an agreed repayment share of revenues  
+- the ability to draw and repay flexibly within those parameters
 
 It behaves like a revolving facility in corporate banking, except that:
 
@@ -109,6 +116,8 @@ For larger tickets or earlier-stage projects, this line can combine:
 
 - revenue commitments once live,  
 - plus vesting token collateral.
+
+When the line is unused and revenues are not pledged, they can still be deployed into simple onchain yield strategies via the revenue account.
 
 ---
 
@@ -123,7 +132,8 @@ You should communicate to your community that you are:
 
 - treating revenues as a formal financial asset,  
 - avoiding unnecessary token sales,  
-- funding growth with income first.
+- funding growth with income first,  
+- and, where appropriate, earning base yield on idle revenues instead of leaving them unproductive.
 
 If you want to expose the more technical side, you can link them to:
 

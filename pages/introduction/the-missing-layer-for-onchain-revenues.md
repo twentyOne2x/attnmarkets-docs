@@ -7,7 +7,7 @@ Onchain infrastructure makes it easy to:
 - turn on fee switches and revenue PDAs,  
 - and track protocol and app revenues via dashboards and indexers.
 
-What is still missing is a **product layer on top of those revenues**: a way for recurring onchain income to behave like an asset that can support advances, credit lines, and pooled yield in a predictable way.
+What is still missing is a **product layer on top of those revenues**: a way for recurring onchain income to behave like an asset that can support advances, credit lines, pooled yield, and basic “cash management” (earning something on idle balances) in a predictable way.
 
 ---
 
@@ -25,13 +25,15 @@ Even if an analytics dashboard can say “this app generated $X in the last 30 d
 - designated **revenue account** with simple, enforceable rules,  
 - standard way to **pledge those revenues** as collateral,  
 - shared template for **repayment waterfalls** or priorities,  
-- clean instrument that gives outside capital a **defined claim on that income** instead of on the token.
+- clean instrument that gives outside capital a **defined claim on that income** instead of on the token,  
+- default way for those balances to earn yield without breaking accounting or risk assumptions.
 
 As a result, teams with real income still tend to rely on:
 
 - repeated token sales or emissions,  
 - ad-hoc OTC arrangements,  
-- or under-investing relative to what their revenues could support.
+- or under-investing relative to what their revenues could support,  
+- while a large portion of revenues sits idle in non-yielding wallets.
 
 ---
 
@@ -64,7 +66,7 @@ attn is built around this specific missing layer.
 
 The protocol aims to turn onchain revenues into **bankable collateral**, by adding:
 
-- a dedicated **revenue account** with clear governance and rules,  
+- a dedicated **revenue account** with clear governance and rules, including options for low-friction yield on idle balances,  
 - standard **revenue-based funding products** (advances and credit lines),  
 - and a **USD yield token** backed by a portfolio of those positions.
 
@@ -72,6 +74,7 @@ Once revenues live in that structure, they can support:
 
 - non-dilutive funding for apps, DAOs, and creators,  
 - repeatable credit templates for launchpads and incubators,  
-- and pooled revenue-backed yield for LPs,
+- pooled revenue-backed yield for LPs,  
+- and simple “park and earn” behaviour for idle income,
 
 instead of remaining only a number on a dashboard or idle balances in miscellaneous wallets.

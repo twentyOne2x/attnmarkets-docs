@@ -38,10 +38,16 @@ This account is:
   - when **no financing is active**, you can withdraw as usual,  
   - when **a deal is active**, an agreed share of incoming revenues goes first to repayment.
 
-Functionally, it is the onchain analogue of a **business operating account with covenants**:
+On top of this, the revenue account can:
+
+- allocate **unencumbered balances** into simple onchain yield sources (e.g. staked SOL or yield-bearing stablecoins),  
+- keep funds available for operations and for use as collateral, while avoiding idle balances.
+
+Functionally, it is the onchain analogue of a **business operating account with covenants and base yield**:
 
 - one place where revenue lands,  
 - predictable rules on who gets paid when,  
+- and default yield on idle balances,  
 - enough structure for credit to be underwritten seriously.
 
 ---
@@ -87,6 +93,8 @@ without issuing or dumping governance tokens.
 
 </details>
 
+Throughout, any unpledged revenues sitting in the account can continue to earn base yield.
+
 ---
 
 ### b) Revenue-backed credit lines
@@ -114,6 +122,8 @@ For larger or earlier-stage projects, the line can also be backed by:
 - launchpad reputation,  
 - and explicit commitments to route future revenues once live.
 
+While the line is unused, unencumbered balances in the revenue account can continue to earn simple onchain yield.
+
 ---
 
 ## 3. A USD yield token backed by revenue deals
@@ -124,6 +134,11 @@ They deposit stablecoins (USDC, USDT, USDe, USDC+) and receive **attnUSD, a USD-
 
 - the underlying stablecoin basket,  
 - plus the portfolio of revenue advances and credit lines.
+
+Depending on deal structure, economics can include:
+
+- interest and fees on advances and credit lines,  
+- where applicable, the underlying yield on pledged assets (e.g. if pledged revenues sit in staked or yield-bearing form).
 
 Over time, as deals:
 
@@ -148,6 +163,6 @@ Details on the structure live in:
 
 In short, “banking the internet of revenue” means:
 
-- giving onchain businesses a proper revenue account,  
+- giving onchain businesses a proper revenue account that can also earn on idle balances,  
 - letting them fund themselves from income instead of only tokens,  
 - and giving LPs a clear, pooled way to own that revenue risk.

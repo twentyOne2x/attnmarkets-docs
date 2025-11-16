@@ -2,12 +2,12 @@
 
 This page is for:
 
-- launchpads and incubators,  
-- project studios,  
+- launchpads and incubators  
+- project studios  
 - anyone who helps teams:
-  - launch tokens,  
-  - raise capital,  
-  - structure vesting and fee switches.
+  - launch tokens  
+  - raise capital  
+  - structure vesting and fee switches
 
 ---
 
@@ -18,9 +18,10 @@ attn gives you a way to:
 1. Offer **revenue-backed financing** as a native part of your launchpad.  
 2. Combine **vesting tokens** and **future fee commitments** into structured deals.  
 3. Share in the economics of:
-   - advances,  
-   - credit lines,  
-   - and yield products built on top of your best projects.
+   - advances  
+   - credit lines  
+   - and yield products built on top of your best projects.  
+4. Provide projects with a standard **revenue account** that can also earn on idle balances.
 
 ---
 
@@ -31,14 +32,19 @@ At launch, you can:
 - create a standard template where:
   - a project’s **fee switch** points into an **attn revenue account**,  
   - controlled by:
-    - the project team / DAO,  
-    - you (if you are part of governance),  
+    - the project team / DAO  
+    - you (if you are part of governance)  
     - and attn (for financing configuration).
 
 From day one, this makes the project:
 
 - “credit-ready” as soon as it has revenues,  
 - without a painful migration later.
+
+By default, that account can also:
+
+- place unencumbered revenues into simple onchain yield sources,  
+- so projects benefit from base yield even before they start using credit products.
 
 ---
 
@@ -54,9 +60,9 @@ As projects gain traction, you can route them into standard deals:
 
 Your benefits:
 
-- better outcomes for strong teams,  
-- a share of interest and revenues,  
-- a tangible differentiator versus other launchpads.
+- better outcomes for strong teams  
+- a share of interest and revenues  
+- a tangible differentiator versus other launchpads
 
 <details>
 <summary>Example – Launchpad-led revenue advance</summary>

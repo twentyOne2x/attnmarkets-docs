@@ -13,7 +13,7 @@ attn focuses on a different object:
 
 > the revenues of apps, creators, DAOs, and networks.
 
-Instead of banking deposits, stake, or pure reputation, attn banks the **revenue stream itself** and turns it into collateral.
+Instead of banking deposits, stake, or pure reputation, attn banks the **revenue stream itself** and turns it into collateral, while also providing ways for those revenues to earn yield when idle.
 
 ---
 
@@ -50,6 +50,11 @@ and asks:
 If Avici is about banking individuals and their income,  
 attn is about banking the revenue streams of onchain businesses.
 
+In practice, they can be complementary:
+
+- an individual might receive income via Avici-style tools,  
+- while the underlying app or token routes its revenues into an attn revenue account for credit and yield.
+
 ---
 
 ## Pye: staking yield vs protocol and creator revenue
@@ -76,7 +81,8 @@ attn enables deals around future protocol and creator income:
 
 - revenue advances  
 - revenue-backed credit lines  
-- pooled revenue yield via a USD share token
+- pooled revenue yield via a USD share token  
+- plus base-layer yield on idle balances in revenue accounts, where appropriate
 
 In short:
 
@@ -134,15 +140,15 @@ It is positioned as:
 attn sits alongside this, rather than inside the same problem:
 
 - Altitude focuses on **where your stablecoin cash lives, how it earns low-risk yield, and how you pay people**  
-- attn focuses on **how your onchain revenues are pledged and financed**
+- attn focuses on **how your onchain revenues are routed, pledged, financed, and optionally put to work while idle**
 
 A single protocol or DAO could reasonably:
 
 - hold operating cash, payroll, and vendors in an Altitude-style account  
-- route protocol / creator revenues into an attn revenue account for financing  
+- route protocol / creator revenues into an attn revenue account for financing and base yield  
 - treat attnUSD as a separate credit-yield sleeve on top of its core treasury
 
-Altitude is treasury and payments; attn is revenue-backed structuring and credit.
+Altitude is treasury and payments; attn is revenue-backed structuring, credit, and revenue-native yield.
 
 ---
 
@@ -169,7 +175,7 @@ They operate at different layers:
   stablecoin business accounts, yield on balances, and fiat/stablecoin rails  
 
 - **attn** – revenue layer:  
-  advances, credit lines, and pooled yield on app and creator income, with revenues themselves wired as collateral
+  revenue accounts, base yield on idle revenues, advances, credit lines, and pooled yield on app and creator income, with revenues themselves wired as collateral
 
 A mature project can realistically touch several of these at once:
 

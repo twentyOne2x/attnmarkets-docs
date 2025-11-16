@@ -2,9 +2,9 @@
 
 This page is for:
 
-- funds,  
-- DAOs,  
-- yield farmers,
+- funds  
+- DAOs  
+- yield-focused individuals,
 
 who want to deploy capital into **revenue-backed yield** rather than only trading tokens.
 
@@ -16,10 +16,10 @@ attnUSD is a **USD-denominated share** backed by:
 
 - a basket of stablecoins (USDC, USDT, USDe, USDC+),  
 - revenue-backed advances and loans to:
-  - apps,  
-  - creators,  
-  - DAOs,  
-  - DePIN projects.
+  - apps  
+  - creators  
+  - DAOs  
+  - x402 AIs and DePIN projects.
 
 You deposit stables and receive attnUSD. Over time:
 
@@ -40,6 +40,7 @@ Yield comes from:
 
 - interest and revenues on revenue advances,  
 - spreads on revenue-backed credit lines,  
+- where applicable, underlying base yield on pledged assets (e.g. if pledged revenues are held in staked SOL or yield-bearing stablecoins),  
 - economics shared from more complex deals (e.g. hybrid vesting + revenue structures).
 
 It does **not** come from:
@@ -65,7 +66,7 @@ More detail is in:
 
 The key point:
 
-> You are explicitly buying revenue-backed credit risk in exchange for yield.
+> You are explicitly buying revenue-backed credit risk (plus, in some cases, underlying base yield) in exchange for returns.
 
 This is different from assuming you always get 1:1 back in any circumstance.
 

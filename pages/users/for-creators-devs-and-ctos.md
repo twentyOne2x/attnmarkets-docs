@@ -2,10 +2,10 @@
 
 This page is for:
 
-* Pump.fun creators
-* devs whose meme refused to die
-* creator-token founders
-* small teams building around a community token
+- Pump.fun creators  
+- devs whose meme refused to die  
+- creator-token founders  
+- small teams building around a community token
 
 ---
 
@@ -13,23 +13,20 @@ This page is for:
 
 You have:
 
-* a token with real volume and a community
-* creator or protocol earnings coming in
-* a list of things you want to fund:
-
-  * content
-  * features
-  * marketing
-  * events, tools, infra
+- a token with real volume and a community  
+- creator or protocol earnings coming in  
+- a list of things you want to fund:
+  - content  
+  - features  
+  - marketing  
+  - events, tools, infra
 
 But:
 
-* selling large chunks of your token feels wrong
-* banks do not care about your meme or your address history
+- selling large chunks of your token feels wrong  
+- banks do not care about your meme or your address history  
 
-attn gives you a way to:
-
-* **turn your earnings into a funding tool**, instead of selling your own supply.
+attn gives you a way to **turn your earnings into a funding tool** instead of selling your own supply.
 
 ---
 
@@ -39,21 +36,25 @@ attn gives you a way to:
 
 After you use a CTO or similar process (Pump.fun etc.), earnings are routed to a joint account:
 
-* controlled by:
-
-  * you / your DAO
-  * and attn (for configuration)
+- controlled by:
+  - you / your DAO  
+  - and attn (for configuration),
 
 with rules such as:
 
-* if **no advance or loan is open**, you can withdraw earnings freely
-* if **an advance or loan is open**, a set share of earnings repays it first
+- if **no advance or loan is open**, you can withdraw earnings freely  
+- if **an advance or loan is open**, a set share of earnings repays it first
+
+On top of that, the account can:
+
+- place unencumbered earnings into simple onchain yield sources (e.g. staked SOL or yield-bearing stablecoins),  
+- so that your rewards earn something by default while still being available for spending or as collateral.
 
 This makes your earnings:
 
-* legible to partners and LPs
-* easier to use as collateral
-* easier to explain to your community
+- legible to partners and LPs  
+- easier to use as collateral  
+- easier to explain to your community
 
 ---
 
@@ -61,64 +62,68 @@ This makes your earnings:
 
 You can:
 
-* sell a portion of your expected earnings over a chosen period for cash now.
+- sell a portion of your expected earnings over a chosen period for cash now.
 
 You choose:
 
-* how much of your future earnings to sell (e.g. 20–35%)
-* for how long (typically up to a few weeks, sometimes a month)
+- how much of your future earnings to sell (e.g. 20–35%),  
+- for how long (typically up to a few weeks, sometimes a month),
 
 and attn quotes how much you can get today.
 
 <details>
 <summary>Example – Fund a small build with 30 days of earnings</summary>
 
-* Your token’s creator rewards average ~5 SOL/day.
-* You want ~70 SOL to pay a dev and run a small campaign.
+- Your token’s creator rewards average ~5 SOL/day.  
+- You want ~40–70 SOL to pay a dev and run a small campaign.
 
 You opt to sell:
 
-* **30%** of your next **30 days** of earnings.
+- **30%** of your next **30 days** of earnings.
 
 Estimates:
 
-* 30 × 5 SOL = 150 SOL total expected.
-* 30% slice ≈ 45 SOL.
+- 30 × 5 SOL = 150 SOL total expected.  
+- 30% slice ≈ 45 SOL.
 
 attn or a fund might offer:
 
-* ~40 SOL upfront,
-* in exchange for receiving 30% of your creator earnings until 45 SOL has been routed to them.
+- ~40 SOL upfront,  
+- in exchange for receiving 30% of your creator earnings until 45 SOL has been routed to them.
 
-You trade a slice of ~1 month of earnings for ~40 SOL today,
+You trade a slice of ~1 month of earnings for ~40 SOL today,  
 without selling your own token.
 
 </details>
 
-These are short-dated, **“bridge this month”** style deals, not multi-year financing.
+These are short-dated, “bridge this month” style deals with fast payback from ongoing volume.
 
 ---
 
-### 3. Credit lines as your project matures
+### 3. Credit lines as your project scales
 
-Once you have more stable earnings:
-
-* you can apply for a **credit line** instead of only one-off deals.
+Once your earnings are more predictable in size and frequency, you can apply for a **credit line** instead of only one-off deals.
 
 This is most relevant when:
 
-* you have moved beyond pure meme
-* you have:
-
-  * products
-  * recurring revenue
-  * real expenses and contributors
+- your meme or project has settled into a steady baseline of volume  
+- you are running:
+  - recurring content or product work  
+  - ongoing contributors and operations  
+  - a budget you want to reuse month over month  
 
 The line:
 
-* grows with your revenue track record
-* repays automatically from your earnings
-* can be combined with vesting token collateral for larger tickets
+- grows with your revenue track record and size  
+- repays automatically from your earnings  
+- can be combined with vesting token collateral for larger tickets
+
+It does not require “stopping being a meme”. It simply assumes:
+
+- your earnings are stable enough  
+- and your funding needs are ongoing enough  
+
+that a revolving limit makes more sense than repeatedly selling new slices.
 
 ---
 
@@ -126,22 +131,22 @@ The line:
 
 For bigger tickets, especially via a launchpad, you might:
 
-* offer a portion of your **vesting tokens** as extra collateral.
+- offer a portion of your **vesting tokens** as extra collateral.
 
 This is usually done in partnership with:
 
-* a launchpad
-* your DAO (if applicable)
-* and attn
+- a launchpad  
+- your DAO (if applicable)  
+- and attn  
 
 The goal is:
 
-* to let you access more capital earlier
-* while still anchoring repayment in future earnings once they exist
+- to let you access more capital earlier,  
+- while still anchoring repayment in future earnings once they exist.
 
 Details live in:
 
-* [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
+- [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
 ---
 
@@ -149,14 +154,14 @@ Details live in:
 
 You should make it explicit to your community:
 
-* what share of future earnings you are selling or using to repay a loan
-* what you are using the cash for
-* how this helps the project grow
+- what share of future earnings you are selling or using to repay a loan  
+- what you are using the cash for  
+- how this helps the project grow
 
 From their perspective, if done well, tokens represent a project with:
 
-* real revenue
-* a clear funding plan
-* transparent commitments around earnings
+- real revenue  
+- a clear funding plan  
+- transparent commitments around earnings  
 
-attn provides the infrastructure that makes those commitments enforceable onchain.
+attn provides the infrastructure that makes those commitments enforceable onchain, and gives you a default place to park and grow earnings between decisions.

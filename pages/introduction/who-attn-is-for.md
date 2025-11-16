@@ -11,15 +11,15 @@ The docs are organised around four main groups.
 
 Examples:
 
-- DEXs, lending markets, infra protocols,  
-- DAOs owning treasuries and products,  
-- SaaS-like crypto apps charging usage-based revenues.
+- DEXs, lending markets, infra protocols  
+- DAOs owning treasuries and products  
+- SaaS-like crypto apps charging usage-based revenues
 
 Typical goals:
 
-- non-dilutive funding,  
-- better use of protocol income,  
-- credible ways to show that the revenue stream is under control.
+- non-dilutive funding  
+- better use of protocol income (including earning on idle balances)  
+- credible ways to show that the revenue stream is under control
 
 Your section:  
 [For Apps, DAOs & Builders](../users/for-apps-daos-and-builders.md)
@@ -32,16 +32,17 @@ Your section:
 
 Examples:
 
-- Pump.fun devs or similar creators,  
-- small teams with a meme that stuck,  
-- creator-token projects with recurring revenues.
+- Pump.fun devs or similar creators  
+- small teams with a meme that stuck  
+- creator-token projects with recurring revenues
 
 Typical goals:
 
-- finance your lifestyle from a rolling credit line backed by your earnings,
-- fund work without dumping,  
-- turn creator rewards into a working budget,  
-- show the community how earnings are used.
+- finance your lifestyle from a rolling credit line backed by your earnings  
+- fund work without dumping  
+- turn creator rewards into a working budget  
+- let earnings parked in a revenue account earn simple yield when idle  
+- show the community how earnings are used
 
 Your section:  
 [For Creators, Devs & Memecoin CTOs](../users/for-creators-devs-and-ctos.md)
@@ -54,15 +55,16 @@ Your section:
 
 Examples:
 
-- launchpads and incubators,  
-- project studios,  
-- vertical networks that spin up multiple products.
+- launchpads and incubators  
+- project studios  
+- vertical networks that spin up multiple products
 
 Typical goals:
 
-- plug **revenue-backed credit** into your launch template,  
-- use vesting + future revenue to support larger tickets for your best teams,  
-- earn a share of the financing stack.
+- plug **revenue-backed credit** into your launch template  
+- use vesting + future revenue to support larger tickets for your best teams  
+- earn a share of the financing stack  
+- offer projects a standard way to route revenues, earn on idle balances, and access credit
 
 Your section:  
 [For Launchpads & Incubators](../users/for-launchpads-and-incubators.md)
@@ -75,16 +77,17 @@ Your section:
 
 Examples:
 
-- funds and DAOs,  
-- sophisticated individuals,  
-- treasuries that want exposure to credit, not just token price.
+- funds and DAOs  
+- sophisticated individuals  
+- treasuries that want exposure to credit, not just token price
 
 Typical goals:
 
 - a clear picture of:
-  - what backs the attnUSD yield token,  
-  - how defaults and recoveries work,  
-  - how diversified the book is.
+  - what backs the attnUSD yield token  
+  - how defaults and recoveries work  
+  - how diversified the book is  
+- a way to own a diversified slice of revenue-backed credit (and, in some deals, the underlying base yield on pledged assets)
 
 Your section:  
 [For Liquidity Providers](../users/for-liquidity-providers.md)
