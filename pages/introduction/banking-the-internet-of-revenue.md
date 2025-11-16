@@ -4,7 +4,7 @@ attn is a protocol for **revenue-backed finance**:
 
 1. A governed **revenue account** for your app, DAO, or token.  
 2. **Revenue-based funding products** (advances and credit lines).  
-3. A **USD yield token** backed by a portfolio of those deals.
+3. A **USD yield token** backed by a portfolio of those products.
 
 It starts from a simple question:
 
@@ -126,7 +126,7 @@ While the line is unused, unencumbered balances in the revenue account can conti
 
 ---
 
-## 3. A USD yield token backed by revenue deals
+## 3. A USD yield token backed by revenue products
 
 On the other side of the table sit LPs.
 
@@ -140,7 +140,7 @@ Depending on deal structure, economics can include:
 - interest and fees on advances and credit lines,  
 - where applicable, the underlying yield on pledged assets (e.g. if pledged revenues sit in staked or yield-bearing form).
 
-Over time, as deals:
+Over time, as attn positions:
 
 - amortise,  
 - default and recover,  

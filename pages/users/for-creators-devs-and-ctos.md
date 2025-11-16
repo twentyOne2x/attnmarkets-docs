@@ -96,13 +96,13 @@ without selling your own token.
 
 </details>
 
-These are short-dated, “bridge this month” style deals with fast payback from ongoing volume.
+These are short-dated, “bridge this month” style positions with fast payback from ongoing volume.
 
 ---
 
 ### 3. Credit lines as your project scales
 
-Once your earnings are more predictable in size and frequency, you can apply for a **credit line** instead of only one-off deals.
+Once your earnings are more predictable in size and frequency, you can apply for a **credit line** instead of only one-off positions.
 
 This is most relevant when:
 

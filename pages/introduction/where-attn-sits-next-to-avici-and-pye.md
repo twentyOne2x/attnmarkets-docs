@@ -76,8 +76,8 @@ attn uses a similar “principal / yield” mental model but with a different un
 
 - protocol and creator revenues, not validator rewards
 
-Where Pye enables deals around future staking income,  
-attn enables deals around future protocol and creator income:
+Where Pye enables positions around future staking income,  
+attn enables positions around future protocol and creator income:
 
 - revenue advances  
 - revenue-backed credit lines  
@@ -166,7 +166,7 @@ They operate at different layers:
   income, spending, cards, accounts, and retail credit  
 
 - **Pye** – stake layer:  
-  validator yield and structured deals on staked assets  
+  validator yield and structured products on staked assets  
 
 - **Wildcat** – market / reputation layer:  
   bespoke loan markets, reserves, and agreements  

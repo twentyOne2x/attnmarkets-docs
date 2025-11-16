@@ -23,7 +23,7 @@ attnUSD is a **USD-denominated share** backed by:
 
 You deposit stables and receive attnUSD. Over time:
 
-- as loans amortise and revenue deals pay in (or default),  
+- as loans amortise and revenue products pay in (or default),  
 - the vault’s value moves,  
 - and attnUSD tracks that value.
 
@@ -41,7 +41,7 @@ Yield comes from:
 - interest and revenues on revenue advances,  
 - spreads on revenue-backed credit lines,  
 - where applicable, underlying base yield on pledged assets (e.g. if pledged revenues are held in staked SOL or yield-bearing stablecoins),  
-- economics shared from more complex deals (e.g. hybrid vesting + revenue structures).
+- economics shared from more complex products (e.g. hybrid vesting + revenue structures).
 
 It does **not** come from:
 
@@ -79,7 +79,7 @@ This is different from assuming you always get 1:1 back in any circumstance.
 
 - Vault TVL: $40M in stables and revenue loans.  
 - Over a year:
-  - revenue deals make ~8% net yield after losses,  
+  - revenue products make ~8% net yield after losses,  
   - operations and costs absorb 2%.
 
 Result:
@@ -99,7 +99,7 @@ Result:
 Effect:
 
 - ~8% hit to the vault NAV from that deal,  
-- partially offset if other deals perform well,  
+- partially offset if other positions perform well,  
 - NAV per share could dip from 1.06 to ~0.99, for example.
 
 The exact numbers depend on diversification, reserves, and how the rest of the book performs.

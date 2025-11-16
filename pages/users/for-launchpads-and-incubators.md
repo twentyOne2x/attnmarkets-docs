@@ -16,7 +16,7 @@ This page is for:
 attn gives you a way to:
 
 1. Offer **revenue-backed financing** as a native part of your launchpad.  
-2. Combine **vesting tokens** and **future fee commitments** into structured deals.  
+2. Combine **vesting tokens** and **future fee commitments** into structured products.  
 3. Share in the economics of:
    - advances  
    - credit lines  
@@ -50,12 +50,12 @@ By default, that account can also:
 
 ## 2. Offer revenue advances to your top projects
 
-As projects gain traction, you can route them into standard deals:
+As projects gain traction, you can route them into standard products:
 
 - **short-term advances**:
   - trade 20–40% of the next 3–12 months of revenues,  
   - for marketing, product, or expansion budget.  
-- **longer revenue-sharing deals**:
+- **longer revenue-sharing products**:
   - where a slice of revenues supports multi-year credit.
 
 Your benefits:
@@ -93,7 +93,7 @@ and ALPHA gets non-dilutive funding sourced from its own revenue.
 
 Some projects will want larger tickets **before** their revenues are mature. For them, you can help structure:
 
-- hybrid deals where:
+- hybrid products where:
   - an agreed portion of **vesting tokens** is escrowed,  
   - plus a commitment to route future revenues into their revenue account once live.
 

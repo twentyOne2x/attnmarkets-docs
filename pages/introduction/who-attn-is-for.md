@@ -87,7 +87,7 @@ Typical goals:
   - what backs the attnUSD yield token  
   - how defaults and recoveries work  
   - how diversified the book is  
-- a way to own a diversified slice of revenue-backed credit (and, in some deals, the underlying base yield on pledged assets)
+- a way to own a diversified slice of revenue-backed credit (and, in some products, the underlying base yield on pledged assets)
 
 Your section:  
 [For Liquidity Providers](../users/for-liquidity-providers.md)
