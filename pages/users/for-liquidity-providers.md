@@ -2,9 +2,9 @@
 
 This page is for:
 
-- funds,
-- DAOs,
-- high-conviction individuals,
+- funds,  
+- DAOs,  
+- yield farmers,
 
 who want to deploy capital into **revenue-backed yield** rather than only trading tokens.
 
@@ -14,22 +14,22 @@ who want to deploy capital into **revenue-backed yield** rather than only tradin
 
 attnUSD is a **USD-denominated share** backed by:
 
-- a basket of stablecoins (USDC, USDT, USDe, USDC+),
+- a basket of stablecoins (USDC, USDT, USDe, USDC+),  
 - revenue-backed advances and loans to:
-  - apps,
-  - creators,
-  - DAOs,
+  - apps,  
+  - creators,  
+  - DAOs,  
   - DePIN projects.
 
-You deposit stables, you receive attnUSD. Over time:
+You deposit stables and receive attnUSD. Over time:
 
-- as loans amortize and revenue deals pay in (or default),
-- the vault’s value moves,
+- as loans amortise and revenue deals pay in (or default),  
+- the vault’s value moves,  
 - and attnUSD tracks that value.
 
-It is **not** a pure “1:1 stablecoin”:
+It is **not** a pure 1:1 stablecoin:
 
-- it can trade above or below 1,
+- it can trade above or below 1,  
 - depending on performance and losses.
 
 ---
@@ -38,24 +38,24 @@ It is **not** a pure “1:1 stablecoin”:
 
 Yield comes from:
 
-- interest and revenues on revenue advances,
-- spreads on revenue-backed credit lines,
-- any economics shared from more complex deals (like hybrid vesting+revenue structures).
+- interest and revenues on revenue advances,  
+- spreads on revenue-backed credit lines,  
+- economics shared from more complex deals (e.g. hybrid vesting + revenue structures).
 
 It does **not** come from:
 
-- pure token emissions without underlying business,
+- pure token emissions without underlying business,  
 - hidden leverage on unrelated risky assets (unless explicitly disclosed).
 
 ---
 
 ## What risks you take
 
-High-level:
+High-level risks include:
 
 - **Credit risk** – some projects will underperform or default.  
 - **Stablecoin risk** – any basket asset can be impaired.  
-- **Concentration risk** – poor diversification can make one failure hurt more.  
+- **Concentration risk** – poor diversification can make one failure more painful.  
 - **Operational and smart-contract risk** – Solana, programs, keepers, or routes can fail.
 
 More detail is in:
@@ -78,8 +78,8 @@ This is different from assuming you always get 1:1 back in any circumstance.
 
 - Vault TVL: $40M in stables and revenue loans.  
 - Over a year:
-  - revenue deals make ~8% net yield after losses,
-  - revenues and costs absorb 2%.
+  - revenue deals make ~8% net yield after losses,  
+  - operations and costs absorb 2%.
 
 Result:
 
@@ -101,7 +101,7 @@ Effect:
 - partially offset if other deals perform well,  
 - NAV per share could dip from 1.06 to ~0.99, for example.
 
-The exact numbers depend on diversification, reserves, and how many other deals are performing.
+The exact numbers depend on diversification, reserves, and how the rest of the book performs.
 
 </details>
 
@@ -115,17 +115,17 @@ You can choose how far you go down the stack:
    - treat it as a diversified revenue-backed yield position.
 
 2. **PT/YT and structured products (later phases)**  
-   - buy specific revenue bonds,
-   - buy or sell specific revenue slices,
+   - buy specific revenue bonds,  
+   - buy or sell specific revenue slices,  
    - provide liquidity in PT/USDC pools, etc.
 
-The first phase of the protocol is designed so you only need to understand:
+The first phase of the protocol is designed so you mainly need to understand:
 
-- what backs attnUSD,
-- what the yield is,
+- what backs attnUSD,  
+- what the yield is,  
 - how defaults and losses are handled.
 
-The detailed math and mechanics live in:
+The detailed mechanics live in:
 
 - [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md)  
 - [LP Guide](../mechanics/lp-guide.md)

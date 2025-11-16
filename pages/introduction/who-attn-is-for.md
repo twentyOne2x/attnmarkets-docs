@@ -1,7 +1,7 @@
 # Who attn Is For
 
-attn is opinionated about who it serves.  
-The docs are structured around four main groups.
+attn is designed for a specific set of users.  
+The docs are organised around four main groups.
 
 ---
 
@@ -11,15 +11,15 @@ The docs are structured around four main groups.
 
 Examples:
 
-- DEXs, lending markets, infra protocols,
-- DAOs owning treasuries and products,
-- SaaS-like crypto apps charging usage revenues.
+- DEXs, lending markets, infra protocols,  
+- DAOs owning treasuries and products,  
+- SaaS-like crypto apps charging usage-based revenues.
 
-What you want:
+Typical goals:
 
-- non-dilutive funding,
-- better use of protocol income,
-- credible ways to show your revenue stream is under control.
+- non-dilutive funding,  
+- better use of protocol income,  
+- credible ways to show that the revenue stream is under control.
 
 Your section:  
 [For Apps, DAOs & Builders](../users/for-apps-daos-and-builders.md)
@@ -32,15 +32,16 @@ Your section:
 
 Examples:
 
-- Pump.fun or similar creators,
-- small teams with a meme that stuck,
+- Pump.fun devs or similar creators,  
+- small teams with a meme that stuck,  
 - creator-token projects with recurring revenues.
 
-What you want:
+Typical goals:
 
-- to fund work without dumping,
-- to turn creator rewards into budget,
-- to show your community how money will be used.
+- finance your lifestyle from a rolling credit line backed by your earnings,
+- fund work without dumping,  
+- turn creator rewards into a working budget,  
+- show the community how earnings are used.
 
 Your section:  
 [For Creators, Devs & Memecoin CTOs](../users/for-creators-devs-and-ctos.md)
@@ -53,15 +54,15 @@ Your section:
 
 Examples:
 
-- launchpads and incubators,
-- project studios,
+- launchpads and incubators,  
+- project studios,  
 - vertical networks that spin up multiple products.
 
-What you want:
+Typical goals:
 
-- to plug “revenue-backed credit” into your launch template,
-- to use vesting + future revenue to support bigger tickets for your best teams,
-- to earn a share of the financing stack.
+- plug **revenue-backed credit** into your launch template,  
+- use vesting + future revenue to support larger tickets for your best teams,  
+- earn a share of the financing stack.
 
 Your section:  
 [For Launchpads & Incubators](../users/for-launchpads-and-incubators.md)
@@ -74,15 +75,15 @@ Your section:
 
 Examples:
 
-- funds and DAOs,
-- sophisticated individuals,
-- treasuries that want exposure to credit, not just price action.
+- funds and DAOs,  
+- sophisticated individuals,  
+- treasuries that want exposure to credit, not just token price.
 
-What you want:
+Typical goals:
 
 - a clear picture of:
-  - what backs the USD yield token,
-  - how defaults and recoveries work,
+  - what backs the attnUSD yield token,  
+  - how defaults and recoveries work,  
   - how diversified the book is.
 
 Your section:  
@@ -90,7 +91,7 @@ Your section:
 
 ---
 
-You can stay entirely in your persona lane and never touch the mechanics,  
+You can stay in your persona lane and never touch the mechanics,  
 or you can go deeper when you are ready:
 
 - [How attn works (non-technical)](../mechanics/how-it-works-nontechnical.md)  

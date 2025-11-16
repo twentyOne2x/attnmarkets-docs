@@ -1,16 +1,16 @@
 # For Apps, DAOs & Builders
 
-This page is for people who run:
+This page is for teams that run:
 
-- a protocol or dApp,
-- a DAO with real revenues,
-- or any onchain business that collects revenues.
+- a protocol or dApp,  
+- a DAO with real revenues,  
+- or any onchain business that collects recurring income.
 
 ---
 
 ## What you get from attn
 
-For you, attn is mainly three things:
+For apps and DAOs, attn provides three core pieces:
 
 1. A **revenue account** for your app or DAO.  
 2. **Revenue advances** – trade a slice of future income for cash now.  
@@ -18,25 +18,25 @@ For you, attn is mainly three things:
 
 You can use these to fund:
 
-- liquidity,
-- development,
-- marketing,
-- acquisitions,
+- liquidity,  
+- development,  
+- marketing and growth,  
+- acquisitions,  
 - or anything else your DAO votes for.
 
 ---
 
 ## 1. Revenue account
 
-You point your protocol revenues to a **revenue account** controlled by:
+You point protocol revenues to a **revenue account** controlled by:
 
-- your DAO or multisig,
+- your DAO or multisig,  
 - and attn (dual control on configuration),
 
 with clear rules:
 
 - When **no loan is open**:
-  - you can move funds freely.
+  - you can move funds freely.  
 - When **a loan is open**:
   - a fixed share of incoming revenues goes first to repayment.
 
@@ -46,13 +46,13 @@ This turns your revenue stream into a clean, predictable asset that credit can b
 
 ## 2. Revenue advances
 
-When you know your app is producing steady revenues but you do not want to do a token sale, you can request:
+If your app produces steady revenues but you do not want to do a token sale, you can request:
 
 - a **one-off advance** against a defined slice of future revenues.
 
 You choose:
 
-- how big a slice (e.g. 20–40%),
+- how large a slice (e.g. 20–40%),  
 - how long (e.g. 3, 6, 12 months).
 
 attn or outside capital pays you upfront and collects that slice of income until the deal is settled.
@@ -80,7 +80,7 @@ attn offers:
 DAO decision:
 
 - trade 30% of 9 months of revenue for $200k now,  
-- without issuing new governance tokens.
+- without issuing additional governance tokens.
 
 </details>
 
@@ -91,24 +91,24 @@ DAO decision:
 For ongoing needs, you can apply for a **credit line**:
 
 - sized according to:
-  - your revenue track record,
-  - volatility,
+  - your revenue track record,  
+  - volatility,  
   - diversification.
 
-You get:
+You receive:
 
-- a maximum limit in USD terms,
-- an agreed repayment share of revenues,
+- a maximum limit in USD terms,  
+- an agreed repayment share of revenues,  
 - the ability to draw and repay flexibly within those parameters.
 
-It behaves like a revolving facility in corporate banking, except:
+It behaves like a revolving facility in corporate banking, except that:
 
-- your “covenants” are enforced by how revenues are routed through your revenue account.
+- covenants are enforced by how revenues are routed through your revenue account.
 
 For larger tickets or earlier-stage projects, this line can combine:
 
-- revenue commitments once live,
-- plus vesting token collateral if you and a launchpad agree.
+- revenue commitments once live,  
+- plus vesting token collateral.
 
 ---
 
@@ -116,15 +116,14 @@ For larger tickets or earlier-stage projects, this line can combine:
 
 From your users’ perspective:
 
-- Nothing about trading or interacting with your protocol must change.  
-- The main change is where your **fee revenue** lands and how it is managed.
+- Nothing about trading or interacting with your protocol has to change.  
+- The main change is where **fee revenue** lands and how it is managed.
 
-You should communicate to your community:
+You should communicate to your community that you are:
 
-- that you are:
-  - treating revenues as a formal financial asset,
-  - avoiding unnecessary token sales,
-  - funding growth with income first.
+- treating revenues as a formal financial asset,  
+- avoiding unnecessary token sales,  
+- funding growth with income first.
 
 If you want to expose the more technical side, you can link them to:
 
