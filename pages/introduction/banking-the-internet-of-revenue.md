@@ -36,7 +36,7 @@ This account is:
 - jointly governed (creator / DAO + attn),  
 - configured so that:
   - when **no financing is active**, you can withdraw as usual,  
-  - when **a deal is active**, an agreed share of incoming revenues goes first to repayment.
+  - when **a position is active**, an agreed share of incoming revenues goes first to repayment.
 
 On top of this, the revenue account can:
 
@@ -135,7 +135,7 @@ They deposit stablecoins (USDC, USDT, USDe, USDC+) and receive **attnUSD, a USD-
 - the underlying stablecoin basket,  
 - plus the portfolio of revenue advances and credit lines.
 
-Depending on deal structure, economics can include:
+Depending on position structure, economics can include:
 
 - interest and fees on advances and credit lines,  
 - where applicable, the underlying yield on pledged assets (e.g. if pledged revenues sit in staked or yield-bearing form).

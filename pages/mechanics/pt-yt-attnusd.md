@@ -55,7 +55,7 @@ Each RBP is tagged by:
 A **Principal Token (PT)** is an SPL token that represents the “principal leg” of an RBP:
 
 - 1 PT is designed to redeem for a fixed **principal amount** of the underlying at maturity `T`,  
-- PTs are **non-yield-bearing**: they do not accrue revenue between `t0` (deal open) and `T`,  
+- PTs are **non-yield-bearing**: they do not accrue revenue between `t0` (position open) and `T`,  
 - their market value before maturity reflects:
   - time to maturity,  
   - discount rates,  
@@ -107,11 +107,11 @@ Yield for LPs is encoded in how `P(t)` changes over time.
 
 ## 2. Yield-stripped representation of revenue positions
 
-### 2.1 Mapping a deal into PT/YT
+### 2.1 Mapping a position into PT/YT
 
-When a revenue-backed deal is opened, we conceptually:
+When a revenue-backed position is opened, we conceptually:
 
-1. Define the **deal term**:
+1. Define the **position term**:
    - a maturity `T`,  
    - a target repayment amount `R_target` (principal + fees),  
    - a revenue share schedule (e.g. `α`% of relevant revenues between `t0` and `T`),  
@@ -123,8 +123,8 @@ When a revenue-backed deal is opened, we conceptually:
    - up to the cap `R_target` (where applicable).
 
 3. Perform a **yield strip**:
-   - mint `PT_deal` representing “principal” at `T`,  
-   - mint `YT_deal` representing the project’s obligations on revenue flows over `[t0, T]`.
+   - mint `PT_position` representing “principal” at `T`,  
+   - mint `YT_position` representing the project’s obligations on revenue flows over `[t0, T]`.
 
 For many attn positions:
 
@@ -135,8 +135,8 @@ For many attn positions:
 
 YT behaviour over time:
 
-- At `t0` (deal open), YT has full exposure to future revenue in the deal window.  
-- As revenues arrive and are routed to the deal:
+- At `t0` (position open), YT has full exposure to future revenue in the position window.  
+- As revenues arrive and are routed to the position:
   - some portion of the economic value “realises”,  
   - the outstanding risk on the YT’s remaining flows decreases.  
 - At or after `T`:
@@ -150,7 +150,7 @@ In many designs:
 
 ### 2.3 Lifecycle of PT
 
-PT behaviour over time depends on how much of the underlying is tied to the deal:
+PT behaviour over time depends on how much of the underlying is tied to the position:
 
 - It can be configured to:
   - represent residual claims to revenue beyond `T`,  
@@ -176,21 +176,21 @@ Consider a one-off advance:
 
 Onchain:
 
-1. A **deal record** is created referencing:
+1. A **position record** is created referencing:
    - the project’s revenue account,  
    - `(α, T, R_target)`,  
    - priority in the repayment waterfall.
 
-2. A corresponding **RBP_deal** is defined and yield-stripped into `(PT_deal, YT_deal)`.
+2. A corresponding **RBP_position** is defined and yield-stripped into `(PT_position, YT_position)`.
 
 3. **Capital match**:
-   - attnUSD vault (or another LP source) buys `YT_deal` from the deal at a price close to `A`,  
+   - attnUSD vault (or another LP source) buys `YT_position` from the position at a price close to `A`,  
    - `A` USDC (minus any origination costs) is sent to the project,  
-   - `YT_deal` is held by the vault as an asset.
+   - `YT_position` is held by the vault as an asset.
 
 4. As revenues hit the revenue account:
-   - the routing logic applies `α`% of relevant flows to `R_deal`,  
-   - once `R_deal >= R_target`, the deal is closed and `YT_deal` is considered fully paid.
+   - the routing logic applies `α`% of relevant flows to `R_position`,  
+   - once `R_position >= R_target`, the position is closed and `YT_position` is considered fully paid.
 
 The vault’s return on this position is:
 

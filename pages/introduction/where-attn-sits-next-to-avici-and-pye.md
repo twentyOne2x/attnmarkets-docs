@@ -1,6 +1,6 @@
 # Where attn Sits Next to Avici, Pye, Wildcat, and Altitude
 
-attn is easier to understand when seen next to other projects that deal with credit, yield, and onchain underwriting.
+attn is easier to understand when seen next to other projects that position with credit, yield, and onchain underwriting.
 
 Four especially relevant points of comparison:
 

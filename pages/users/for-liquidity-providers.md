@@ -98,7 +98,7 @@ Result:
 
 Effect:
 
-- ~8% hit to the vault NAV from that deal,  
+- ~8% hit to the vault NAV from that position,  
 - partially offset if other positions perform well,  
 - NAV per share could dip from 1.06 to ~0.99, for example.
 

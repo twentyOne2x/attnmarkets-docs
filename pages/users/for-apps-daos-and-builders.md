@@ -60,7 +60,7 @@ You choose:
 - how large a slice (e.g. 20–40%),  
 - how long (e.g. 3, 6, 12 months).
 
-attn or outside capital pays you upfront and collects that slice of income until the deal is settled.
+attn or outside capital pays you upfront and collects that slice of income until the position is settled.
 
 <details>
 <summary>Example – DAO funds a new product line</summary>

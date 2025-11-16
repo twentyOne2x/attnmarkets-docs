@@ -43,8 +43,8 @@ The revenue account is:
 - a **jointly governed vault**:
   - signers: the project (multisig/DAO) + attn,  
 - configured with simple rules:
-  - if **no deal is open**, the project can withdraw freely,  
-  - if **a deal is open**, an agreed share of new revenues goes first to repayment.
+  - if **no position is open**, the project can withdraw freely,  
+  - if **a position is open**, an agreed share of new revenues goes first to repayment.
 
 On top of that, the account can:
 
@@ -114,9 +114,9 @@ The UI stays in business language:
 
 ---
 
-## 5. Step four: what happens onchain when you open a deal
+## 5. Step four: what happens onchain when you open a position
 
-Under the hood, attn does three things when a deal is opened:
+Under the hood, attn does three things when a position is opened:
 
 1. **Locks in a share of your future revenues** for a fixed period and/or until a target amount is repaid.  
 2. **Mints claim tokens** (PT and YT) that represent:
@@ -146,7 +146,7 @@ The PT/YT layer exists so that products of different shapes can be standardised 
 
 ## 6. Step five: how repayment works
 
-Every time new revenue hits the revenue account while a deal is open:
+Every time new revenue hits the revenue account while a position is open:
 
 1. The attn logic checks:
    - which product positions are active,  
@@ -156,16 +156,16 @@ Every time new revenue hits the revenue account while a deal is open:
    - first into **repayment buckets** for open product positions,  
    - then any leftover stays in the project’s free balance (which can earn base yield).
 3. It updates onchain state:
-   - outstanding principal per deal,  
+   - outstanding principal per position,  
    - how much revenue has been collected,  
-   - whether a deal is fully repaid, in good standing, or in default.
+   - whether a position is fully repaid, in good standing, or in default.
 
 For a one-off advance:
 
 - once the **target repayment amount** has been collected,  
-- that deal is automatically marked as complete,  
+- that position is automatically marked as complete,  
 - the revenue share drops back to 0%,  
-- and all future revenues go back to the project (unless another deal is active).
+- and all future revenues go back to the project (unless another position is active).
 
 For a credit line:
 
@@ -196,7 +196,7 @@ Yield comes from:
 - sometimes the underlying base yield on pledged assets,  
 - minus losses, operating costs, and reserves.
 
-LPs do not have to understand each individual deal. They mainly care about:
+LPs do not have to understand each individual position. They mainly care about:
 
 - what backs attnUSD,  
 - performance and risk metrics,  
@@ -248,4 +248,4 @@ From an LP’s perspective, it reduces to:
 - “attnUSD gives me diversified exposure to **revenue-backed products** instead of just token price.”  
 - “My return is the vault’s performance, marked transparently on-chain.”
 
-From attn’s perspective, PT/YT and vault mechanics are the glue that makes these experiences consistent and auditable across many different revenue sources and deal shapes.
+From attn’s perspective, PT/YT and vault mechanics are the glue that makes these experiences consistent and auditable across many different revenue sources and position shapes.
