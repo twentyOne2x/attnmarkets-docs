@@ -35,7 +35,7 @@ Examples of revenue sources:
 
 - Pump.fun creator rewards,  
 - protocol fee switches (DEX, lending, perp, infra fees),  
-- DePIN income routed onchain,  
+- x402 AI or DePIN income routed onchain,  
 - other programmatic revenue streams.
 
 The revenue account is:
@@ -66,7 +66,7 @@ Before you can borrow, attn:
 - reads your **historical revenue data** (onchain traces, indexers, dashboards),  
 - looks at:
   - level and stability of income,  
-  - concentration (is it all from one product or many?),  
+  - concentration (is it all from one position or many?),  
   - volatility and drawdowns,  
 - and derives **risk limits** for that revenue account.
 

@@ -57,7 +57,7 @@ High-level risks include:
 - **Credit risk** – some projects will underperform or default.  
 - **Stablecoin risk** – any basket asset can be impaired.  
 - **Concentration risk** – poor diversification can make one failure more painful.  
-- **Operational and smart-contract risk** – Solana, programs, keepers, or routes can fail.
+- **Operational and program risk** – Solana, programs, keepers, or routes can fail.
 
 More detail is in:
 

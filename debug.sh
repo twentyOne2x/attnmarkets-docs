@@ -12,7 +12,8 @@ FILES=(
 'pages/users/for-creators-devs-and-ctos.md'
 'pages/users/for-launchpads-and-incubators.md'
 'pages/users/for-liquidity-providers.md'
-
+'pages/mechanics/how-it-works-nontechnical.md'
+'pages/mechanics/pt-yt-attnusd.md'
 
 )
 

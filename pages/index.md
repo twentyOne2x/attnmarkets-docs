@@ -35,3 +35,17 @@ If you already know what you are, jump straight to your section:
 - [For Creators, Devs & Memecoin CTOs](./users/for-creators-devs-and-ctos.md)  
 - [For Launchpads & Incubators](./users/for-launchpads-and-incubators.md)  
 - [For Liquidity Providers](./users/for-liquidity-providers.md)
+
+If you want the mechanics and under-the-hood design:
+
+- [How attn works (non-technical)](./mechanics/how-it-works-nontechnical.md)  
+- [Architecture overview](./mechanics/architecture-overview.md)  
+- [Revenue accounts and signing model](./mechanics/revenue-accounts-and-signing-model.md)  
+- [PT, YT, and attnUSD – Technical design](./mechanics/pt-yt-attnusd.md)  
+- [Risk, limits, and concentration](./mechanics/risk-and-limits.md)  
+- [Pricing, spreads, and parameters](./mechanics/pricing-and-parameters.md)
+
+If you care about the token and future direction:
+
+- [Tokenomics overview](./tokenomics/tokenomics-overview.md)  
+- [Roadmap](./roadmap.md)

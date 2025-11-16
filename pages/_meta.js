@@ -1,12 +1,21 @@
 const sidebar = {
   index: {
-    title: 'Index'
+    title: 'Overview'
   },
   introduction: {
     title: 'Introduction'
   },
   users: {
     title: 'Users'
+  },
+  mechanics: {
+    title: 'Mechanics'
+  },
+  tokenomics: {
+    title: 'Tokenomics'
+  },
+  roadmap: {
+    title: 'Roadmap'
   }
 }
 

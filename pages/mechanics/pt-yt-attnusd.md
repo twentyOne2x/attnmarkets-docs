@@ -7,10 +7,10 @@ This page describes the lower-level objects that sit under attn’s user-facing 
 - **Yield Token (YT)** → the “cashflow leg” between now and a defined maturity.  
 - **attnUSD** → a vault share token that holds a portfolio of PT/YT positions and stablecoins.
 
-The goal is to:
+The goals are to:
 
 - standardise how revenue-backed positions are represented on-chain,  
-- make them composable with other fixed-income infrastructure (e.g. Exponent),  
+- make them composable with fixed-income infrastructure on Solana (e.g. Exponent’s “Standardised Yield” framework),  
 - and give LPs and integrators a clear picture of what backs attnUSD.
 
 This is a conceptual specification rather than a formal program spec.
@@ -21,10 +21,10 @@ This is a conceptual specification rather than a formal program spec.
 
 ### 1.1 Revenue Account
 
-A **Revenue Account** is a jointly controlled onchain vault (e.g. Squads Safe) that:
+A **Revenue Account** is a jointly controlled onchain vault (typically a Squads Safe) that:
 
 - receives protocol / creator / network revenues,  
-- enforces **routing rules** when one or more positions are active,  
+- enforces **routing rules** when one or more financing positions are active,  
 - can deploy **unencumbered balances** into safe yield sources.
 
 From the PT/YT system’s perspective, a revenue account is:
@@ -42,7 +42,7 @@ To interface with yield-stripping infra, we define a logical **Revenue-Bearing P
 In practice:
 
 - the RBP is an internal abstraction (not necessarily a freely transferable token),  
-- attn can wrap it as a standardised “yield-bearing token” type if the infra provider expects that (e.g. a SY-like token).
+- attn can wrap it as a standardised “yield-bearing token” type if the infra provider expects that (e.g. an SY-like token in Exponent’s model).
 
 Each RBP is tagged by:
 
@@ -126,6 +126,12 @@ When a revenue-backed position is opened, we conceptually:
    - mint `PT_position` representing “principal” at `T`,  
    - mint `YT_position` representing the project’s obligations on revenue flows over `[t0, T]`.
 
+In an Exponent-style implementation:
+
+- the RBP can be represented as an SY token (standardised yield-bearing token),  
+- PT and YT are then derived from that SY position via the infra’s stripping logic,  
+- attn treats those PT/YT tokens as the canonical representation of the position on-chain.
+
 For many attn positions:
 
 - the **economic exposure** is heavily concentrated in the YT leg,  
@@ -184,7 +190,7 @@ Onchain:
 2. A corresponding **RBP_position** is defined and yield-stripped into `(PT_position, YT_position)`.
 
 3. **Capital match**:
-   - attnUSD vault (or another LP source) buys `YT_position` from the position at a price close to `A`,  
+   - the attnUSD vault (or another LP source) buys `YT_position` from the position at a price close to `A`,  
    - `A` USDC (minus any origination costs) is sent to the project,  
    - `YT_position` is held by the vault as an asset.
 
@@ -294,7 +300,7 @@ Recoveries (e.g. renegotiations, late revenue, collateral unwinds) can:
 - partially restore YT or PT value,  
 - be reflected in higher `NAV(t)` and `P(t)` later.
 
-At no point is attnUSD intended to behave like a guaranteed 1:1 stable.
+attnUSD is not intended to behave like a guaranteed 1:1 stable.
 
 ---
 
@@ -326,10 +332,10 @@ This separation allows:
 
 ## 7. Implementation and infra notes
 
-- The yield-stripping mechanism (PT/YT minting and redemption) is designed to be implemented using **specialised fixed-income infra** on Solana.  
+- The yield-stripping mechanism (PT/YT minting and redemption) is intended to be implemented using **specialised fixed-income infra** on Solana, such as Exponent’s Standardised Yield (SY) framework.  
 - attn treats that infra as:
   - a canonical way to turn a yield-bearing position (here, revenue) into PT/YT,  
-  - a shared standard other protocols can integrate with,  
+  - a shared standard that other protocols can integrate with,  
   - an auditable onchain representation of credit exposures.
 
 In early versions, some of these details may be simplified or kept internal:
@@ -342,7 +348,7 @@ As the system matures, PT/YT and attnUSD can form the basis for:
 
 - secondary markets for specific revenue bonds,  
 - structured products (e.g. PT-only pools for lower-risk LPs),  
-- integrations with other protocols that understand standardised fixed-income tokens.
+- integrations with other protocols that understand standardised yield tokens.
 
 The invariant across versions is:
 
