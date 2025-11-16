@@ -15,7 +15,7 @@ Milestones:
 - CreatorVault / revenue account live on devnet.  
 - Integration with Squads for 2-of-2 or similar governance.  
 - Exponent-style PT/YT infrastructure wired to represent revenue positions.  
-- AttnUSD vault skeleton with manual risk controls.
+- attnUSD vault skeleton with manual risk controls.
 
 ---
 
@@ -81,7 +81,7 @@ Milestones:
 - Wider set of use cases:
   - DePIN and machine revenue,  
   - offchain businesses bridging revenues onchain.  
-- Progressive governance rollout for $ATTN holders or designated councils.  
+- Progressive governance rollout for $attn holders or designated councils.  
 - Clear, ongoing reporting on:
   - portfolio performance,  
   - losses and recoveries,  
