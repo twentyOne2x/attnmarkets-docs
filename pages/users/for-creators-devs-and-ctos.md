@@ -2,9 +2,9 @@
 
 This page is for:
 
-- Pump.fun creators  
-- devs whose meme refused to die  
-- creator-token founders  
+- Pump.fun creators
+- devs whose meme refused to die
+- creator-token founders
 - small teams building around a community token
 
 ---
@@ -13,18 +13,19 @@ This page is for:
 
 You have:
 
-- a token with real volume and a community  
-- creator or protocol earnings coming in  
+- a token with real volume and a community
+- creator or protocol earnings coming in
 - a list of things you want to fund:
-  - content  
-  - features  
-  - marketing  
+
+  - content
+  - features
+  - marketing
   - events, tools, infra
 
 But:
 
-- selling large chunks of your token feels wrong  
-- banks do not care about your meme or your address history  
+- selling large chunks of your token feels wrong
+- banks do not care about your meme or your address history
 
 attn gives you a way to **turn your earnings into a funding tool** instead of selling your own supply.
 
@@ -37,23 +38,24 @@ attn gives you a way to **turn your earnings into a funding tool** instead of se
 After you use a CTO or similar process (Pump.fun etc.), earnings are routed to a joint account:
 
 - controlled by:
-  - you / your DAO  
+
+  - you / your DAO
   - and attn (for configuration),
 
 with rules such as:
 
-- if **no advance or loan is open**, you can withdraw earnings freely  
+- if **no advance or loan is open**, you can withdraw earnings freely
 - if **an advance or loan is open**, a set share of earnings repays it first
 
 On top of that, the account can:
 
-- place unencumbered earnings into simple onchain yield sources (e.g. staked SOL or yield-bearing stablecoins),  
+- place unencumbered earnings into simple onchain yield sources (e.g. staked SOL or yield-bearing stablecoins),
 - so that your rewards earn something by default while still being available for spending or as collateral.
 
 This makes your earnings:
 
-- legible to partners and LPs  
-- easier to use as collateral  
+- legible to partners and LPs
+- easier to use as collateral
 - easier to explain to your community
 
 ---
@@ -66,7 +68,7 @@ You can:
 
 You choose:
 
-- how much of your future earnings to sell (e.g. 20–35%),  
+- how much of your future earnings to sell (e.g. 20–35%),
 - for how long (typically up to a few weeks, sometimes a month),
 
 and attn quotes how much you can get today.
@@ -74,7 +76,7 @@ and attn quotes how much you can get today.
 <details>
 <summary>Example – Fund a small build with 30 days of earnings</summary>
 
-- Your token’s creator rewards average ~5 SOL/day.  
+- Your token’s creator rewards average ~5 SOL/day.
 - You want ~40–70 SOL to pay a dev and run a small campaign.
 
 You opt to sell:
@@ -83,15 +85,15 @@ You opt to sell:
 
 Estimates:
 
-- 30 × 5 SOL = 150 SOL total expected.  
+- 30 × 5 SOL = 150 SOL total expected.
 - 30% slice ≈ 45 SOL.
 
 attn or a fund might offer:
 
-- ~40 SOL upfront,  
+- ~40 SOL upfront,
 - in exchange for receiving 30% of your creator earnings until 45 SOL has been routed to them.
 
-You trade a slice of ~1 month of earnings for ~40 SOL today,  
+You trade a slice of ~1 month of earnings for ~40 SOL today,
 without selling your own token.
 
 </details>
@@ -106,24 +108,20 @@ Once your earnings are more predictable in size and frequency, you can apply for
 
 This is most relevant when:
 
-- your meme or project has settled into a steady baseline of volume  
+- your token (meme, utility, whatever you ship) has a steady baseline of volume and rewards
 - you are running:
-  - recurring content or product work  
-  - ongoing contributors and operations  
-  - a budget you want to reuse month over month  
+
+  - recurring content or product work
+  - ongoing contributors and operations
+  - a budget you want to reuse month over month
 
 The line:
 
-- grows with your revenue track record and size  
-- repays automatically from your earnings  
+- grows with your revenue track record and size
+- repays automatically from your earnings
 - can be combined with vesting token collateral for larger tickets
 
-It does not require “stopping being a meme”. It simply assumes:
-
-- your earnings are stable enough  
-- and your funding needs are ongoing enough  
-
-that a revolving limit makes more sense than repeatedly selling new slices.
+At that point, a revolving limit is usually more convenient than repeatedly opening new short advances.
 
 ---
 
@@ -135,13 +133,13 @@ For bigger tickets, especially via a launchpad, you might:
 
 This is usually done in partnership with:
 
-- a launchpad  
-- your DAO (if applicable)  
-- and attn  
+- a launchpad
+- your DAO (if applicable)
+- and attn
 
 The goal is:
 
-- to let you access more capital earlier,  
+- to let you access more capital earlier,
 - while still anchoring repayment in future earnings once they exist.
 
 Details live in:
@@ -154,14 +152,14 @@ Details live in:
 
 You should make it explicit to your community:
 
-- what share of future earnings you are selling or using to repay a loan  
-- what you are using the cash for  
+- what share of future earnings you are selling or using to repay a loan
+- what you are using the cash for
 - how this helps the project grow
 
 From their perspective, if done well, tokens represent a project with:
 
-- real revenue  
-- a clear funding plan  
-- transparent commitments around earnings  
+- real revenue
+- a clear funding plan
+- transparent commitments around earnings
 
 attn provides the infrastructure that makes those commitments enforceable onchain, and gives you a default place to park and grow earnings between decisions.
