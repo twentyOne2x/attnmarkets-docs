@@ -1,21 +1,29 @@
+const sectionTitle = (label) => (
+  <span className="sidebar-label sidebar-label--section">{label}</span>
+)
+
+const overviewTitle = (label) => (
+  <span className="sidebar-label sidebar-label--overview">{label}</span>
+)
+
 const sidebar = {
   index: {
-    title: 'Overview'
+    title: overviewTitle('Overview')
   },
   introduction: {
-    title: 'Introduction'
+    title: sectionTitle('Introduction')
   },
   users: {
-    title: 'Users'
+    title: sectionTitle('Users')
   },
   mechanics: {
-    title: 'Mechanics'
+    title: sectionTitle('Mechanics')
   },
   tokenomics: {
-    title: 'Tokenomics'
+    title: sectionTitle('Tokenomics')
   },
   roadmap: {
-    title: 'Roadmap'
+    title: sectionTitle('Roadmap')
   }
 }
 

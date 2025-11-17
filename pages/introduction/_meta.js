@@ -1,15 +1,19 @@
+const itemTitle = (label) => (
+  <span className="sidebar-label sidebar-label--item">{label}</span>
+)
+
 const sidebar = {
+  'the-missing-layer-for-onchain-revenues': {
+    title: itemTitle('Missing layer')
+  },
   'banking-the-internet-of-revenue': {
-    title: 'Banking the internet of revenue'
+    title: itemTitle('Banking revenue')
   },
   'where-attn-sits-next-to-avici-and-pye': {
-    title: 'Where attn sits next to Avici and Pye'
+    title: itemTitle('attn in context')
   },
   'who-attn-is-for': {
-    title: 'Who attn is for'
-  },
-  'the-missing-layer-for-onchain-revenues': {
-    title: 'The missing layer for onchain revenues'
+    title: itemTitle("Who it's for")
   }
 }
 

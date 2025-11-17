@@ -1,15 +1,19 @@
+const itemTitle = (label) => (
+  <span className="sidebar-label sidebar-label--item">{label}</span>
+)
+
 const sidebar = {
   'for-apps-daos-and-builders': {
-    title: 'For apps, DAOs & builders'
+    title: itemTitle('Apps & DAOs')
   },
   'for-creators-devs-and-ctos': {
-    title: 'For creators, devs & CTOs'
+    title: itemTitle('Creators & CTOs')
   },
   'for-launchpads-and-incubators': {
-    title: 'For launchpads & incubators'
+    title: itemTitle('Launchpads')
   },
   'for-liquidity-providers': {
-    title: 'For liquidity providers'
+    title: itemTitle('Liquidity providers')
   }
 }
 

@@ -1,0 +1,49 @@
+:root {
+  --attn-sidebar-width: 16.5rem;
+}
+
+.nextra-sidebar-container {
+  width: var(--attn-sidebar-width);
+  min-width: var(--attn-sidebar-width);
+}
+
+@media (max-width: 768px) {
+  .nextra-sidebar-container {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.nextra-sidebar-container .nextra-menu-desktop > li > a,
+.nextra-sidebar-container .nextra-menu-desktop > li > button {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.nextra-sidebar-container .nextra-menu-desktop li li > a,
+.nextra-sidebar-container .nextra-menu-desktop li li > button {
+  font-weight: 400;
+}
+
+.nextra-sidebar-container .nextra-menu-desktop a,
+.nextra-sidebar-container .nextra-menu-desktop button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-label {
+  display: inline-flex;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-label--section {
+  text-transform: none;
+}
+
+.sidebar-label--item {
+  font-weight: 400;
+}

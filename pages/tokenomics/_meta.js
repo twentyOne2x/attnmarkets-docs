@@ -1,6 +1,10 @@
+const itemTitle = (label) => (
+  <span className="sidebar-label sidebar-label--item">{label}</span>
+)
+
 const sidebar = {
   'tokenomics-overview': {
-    title: 'Tokenomics overview'
+    title: itemTitle('Tokenomics')
   }
 }
 

@@ -1,21 +1,25 @@
+const itemTitle = (label) => (
+  <span className="sidebar-label sidebar-label--item">{label}</span>
+)
+
 const sidebar = {
   'how-it-works-nontechnical': {
-    title: 'How attn works (non-technical)'
+    title: itemTitle('How it works')
   },
   'architecture-overview': {
-    title: 'Architecture overview'
+    title: itemTitle('Architecture')
   },
   'revenue-accounts-and-signing-model': {
-    title: 'Revenue accounts & signing model'
+    title: itemTitle('Revenue accounts')
   },
   'pt-yt-attnusd': {
-    title: 'PT, YT, and attnUSD – Technical design'
+    title: itemTitle('PT / YT / attnUSD')
   },
   'risk-and-limits': {
-    title: 'Risk, limits, and concentration'
+    title: itemTitle('Risk & limits')
   },
   'pricing-and-parameters': {
-    title: 'Pricing, spreads, and parameters'
+    title: itemTitle('Pricing & params')
   }
 }
 
