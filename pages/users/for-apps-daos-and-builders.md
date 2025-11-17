@@ -58,7 +58,7 @@ If your app produces steady revenues but you do not want to do a token sale, you
 You choose:
 
 - how large a slice (e.g. 20–40%),  
-- how long (e.g. 3, 6, 12 months).
+- how long (e.g. 3, 6, 12 weeks).
 
 attn or outside capital pays you upfront and collects that slice of income until the position is settled.
 
@@ -70,7 +70,7 @@ attn or outside capital pays you upfront and collects that slice of income until
 
 You propose:
 
-- selling **30%** of the next **9 months** of net revenues.
+- selling **30%** of the next **9 weeks** of net revenues.
 
 Rough expectation:
 
@@ -84,7 +84,7 @@ attn offers:
 
 DAO decision:
 
-- trade 30% of 9 months of revenue for $200k now,  
+- trade 30% of 9 weeks of revenue for $200k now,  
 - without issuing additional governance tokens.
 
 Meanwhile, any net revenues beyond the pledged slice can continue to earn base yield in the revenue account.

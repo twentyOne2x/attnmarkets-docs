@@ -89,13 +89,13 @@ Once the revenue account exists and limits are set, a project can choose:
 
 ### A) One-off revenue advance
 
-- “Sell X% of the next N days / months of revenues for cash now.”
+- “Sell X% of the next N days / weeks of revenues for cash now.”
 
 This is good for:
 
 - shipping a release,  
 - listings, campaigns, short bursts of hiring,  
-- “bridge the next few months” type use-cases.
+- “bridge the next few weeks” type use-cases.
 
 ### B) Revenue-backed credit line
 
@@ -109,7 +109,7 @@ This is good for:
 
 The UI stays in business language:
 
-- “Advance: 30% of the next 6 months for $X today.”  
+- “Advance: 30% of the next 6 weeks for $X today.”  
 - “Credit line: up to $Y, repaid from Z% of monthly revenues.”
 
 ---

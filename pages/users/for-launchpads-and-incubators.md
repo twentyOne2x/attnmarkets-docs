@@ -53,7 +53,7 @@ By default, that account can also:
 As projects gain traction, you can route them into standard products:
 
 - **short-term advances**:
-  - trade 20–40% of the next 3–12 months of revenues,  
+  - trade 20–40% of the next 3–12 weeks of revenues,  
   - for marketing, product, or expansion budget.  
 - **longer revenue-sharing products**:
   - where a slice of revenues supports multi-year credit.

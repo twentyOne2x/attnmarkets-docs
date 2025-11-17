@@ -63,20 +63,20 @@ You sell a defined slice of upcoming revenue for cash now.
 You specify:
 
 - the share of future revenues (e.g. 20–40%),  
-- the horizon (e.g. 3, 6, 12 months).
+- the horizon (e.g. 3, 6, 12 weeks).
 
 Capital on the other side pays you upfront and, in return, receives that share of revenues until the agreed amount has been repaid.
 
 In the UI this is presented in straightforward terms such as:
 
-> “Sell 30% of the next 6 months of revenues for X today.”
+> “Sell 30% of the next 6 weeks of revenues for X today.”
 
 <details>
 <summary>Example – Fund a release without selling tokens</summary>
 
 - Your protocol earns around $20,000/month in net revenues.  
 - You want $30,000 to ship a new product and list on a major venue.  
-- You choose to sell **40%** of the next **4 months** of revenues.
+- You choose to sell **40%** of the next **4 weeks** of revenues.
 
 Estimates:
 
@@ -88,7 +88,7 @@ attn (or an LP) offers:
 - $30,000 upfront,  
 - in exchange for 40% of those revenues until $32,000 has been collected.
 
-You trade 40% of 4 months of income for $30k now,  
+You trade 40% of 4 weeks of income for $30k now,  
 without issuing or dumping governance tokens.
 
 </details>

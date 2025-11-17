@@ -177,7 +177,7 @@ Consider a one-off advance:
 - Project wants upfront `A` USDC.  
 - attn sets:
   - revenue share `α` (e.g. 30%),  
-  - term `[t0, T]` (e.g. 6 months),  
+  - term `[t0, T]` (e.g. 6 weeks),  
   - target repayment `R_target = A + fees`.
 
 Onchain:
