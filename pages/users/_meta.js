@@ -7,7 +7,7 @@ const sidebar = {
     title: itemTitle('Apps & DAOs')
   },
   'for-creators-devs-and-ctos': {
-    title: itemTitle('Creators & CTOs')
+    title: itemTitle('Devs, Creators & CTOs')
   },
   'for-launchpads-and-incubators': {
     title: itemTitle('Launchpads')
