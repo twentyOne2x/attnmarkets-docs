@@ -5,7 +5,7 @@ attn turns onchain **revenues** into something familiar:
 - revenue-backed **cash advances**,  
 - **credit lines** that repay from your earnings,  
 - a **revenue account** that can also earn on idle balances,  
-- and a **USD yield token** backed by those revenues.
+- and attnUSD, a **USD yield token** backed by those revenues.
 
 You can think of attn as:
 
@@ -26,7 +26,7 @@ If you want the story first:
 
 - [The missing layer for onchain revenues](./introduction/the-missing-layer-for-onchain-revenues.md)  
 - [Banking the internet of revenue](./introduction/banking-the-internet-of-revenue.md)  
-- [Where attn sits next to Avici, Pye, Wildcat, and Altitude](./introduction/where-attn-sits-next-to-avici-and-pye.md)  
+- [Where attn sits next to Avici, Pye, Wildcat, Altitude, and 3Jane](./introduction/where-attn-sits-next-to-avici-and-pye.md)  
 - [Who attn is for](./introduction/who-attn-is-for.md)
 
 If you already know what you are, jump straight to your section:
