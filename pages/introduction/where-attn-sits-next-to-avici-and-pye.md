@@ -18,6 +18,20 @@ Instead of banking deposits, stake, or pure reputation, attn banks the **revenue
 
 ---
 
+## At a glance
+| Project   | Layer / object                                | What it focuses on                                                         | Primary users                                      | How it intersects with attn                                                                      |
+|----------|-----------------------------------------------|----------------------------------------------------------------------------|----------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| **Avici**   | Individual banking + personal trust layer      | Accounts, cards, and spending limits based on an individual Trust Score   | Individuals, freelancers, small businesses         | Avici handles **personal** cashflow and card credit; attn handles **app / creator onchain revenue** and credit at the project layer |
+| **Pye**     | Stake / validator-yield layer                 | Splitting staked SOL into principal and yield, structuring yield          | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn’s protocol / creator revenues       |
+| **Wildcat** | Market / reputation credit layer              | Under-collateralised loan “markets” based on borrower reputation & terms  | Whitelisted borrowers, stablecoin lenders          | attn uses wired revenues as collateral; Wildcat relies more on market design and borrower reputation |
+| **Altitude**| Treasury and payments layer                   | Stablecoin business accounts, fiat/stable rails, treasury tooling         | DAOs, protocols, companies running ops/treasury    | Altitude holds operating cash; attn structures credit and yield on revenue flows                 |
+| **3Jane**   | Credit-account / future-yield layer           | Unsecured USDC credit lines and USD3 yield-bearing stablecoin             | Asset-rich users with verifiable credit footprint  | 3Jane sizes lines via multi-source credit; attn sizes lines on live revenue routed onchain       |
+| **attn**    | Revenue layer                                 | Revenue accounts, revenue-backed credit, pooled revenue yield             | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into             |
+
+The rest of this page goes into more detail for each.
+
+---
+
 ## Avici: internet banking for individuals
 
 **Avici** is building an internet-native neobank:
