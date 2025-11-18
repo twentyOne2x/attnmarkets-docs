@@ -1,159 +1,222 @@
 # Banking the Internet of Revenue
 
-attn is a protocol for **revenue-backed finance**:
+attn is a **revenue bank** for onchain businesses.
+
+Concretely, it gives you three things:
 
 1. A governed **revenue account** for your app, DAO, or token.  
-2. **Revenue-based funding products** (advances and credit lines).  
-3. A **USD yield token** backed by a portfolio of those products.
+2. **Revenue-backed funding rails** (one-off advances and revolving credit lines).  
+3. **attnUSD**, a USD share token backed by a portfolio of those positions and stablecoins.
 
-It starts from a simple question:
-
-> If onchain apps and creators already have revenues,  
-> why isn’t there a standard way to bank them?
-
-Instead of one-off OTC arrangements and bespoke side deals, attn provides a repeatable structure so that:
-
-- projects have a clear place where revenues land and rules on how they are used,  
-- capital can underwrite and price revenue-backed positions in a consistent way,  
-- LPs can hold a diversified USD share of many such positions.
-
-From a user perspective, this boils down to three primitives:
-
-- “this is my revenue account”  
-- “this is my advance / credit line”  
-- “this is the USD token LPs hold on the other side”
-
-The PT / YT mechanics sit under the hood and only matter if you want to go deeper.
+This page is the product view: what lives where, how money moves, and what each side sees.
 
 ---
 
-## 1. Revenue account for onchain businesses
+## 1. Revenue account: where revenues land and how they are routed
 
-You connect your revenue stream (for example, Pump.fun creator rewards, protocol fee switches, or DePIN income) to an **attn revenue account**.
+You connect your revenue stream (Pump.fun creator rewards, protocol fee switches, DePIN income, etc.) to an **attn revenue account**.
 
-This account is:
+At a high level, this account is:
 
-- jointly governed (creator / DAO + attn),  
-- configured so that:
-  - when **no financing is active**, you can withdraw as usual,  
-  - when **a position is active**, an agreed share of incoming revenues goes first to repayment.
+- a jointly governed vault (e.g. creator / DAO + attn for configuration),  
+- the canonical destination for protocol / creator revenues,  
+- the place where repayment logic is enforced.
 
-On top of this, the revenue account can:
+### 1.1 Behaviour with and without financing
 
-- allocate **unencumbered balances** into simple onchain yield sources (e.g. staked SOL or yield-bearing stablecoins),  
-- keep funds available for operations and for use as collateral, while avoiding idle balances.
+Two states matter:
 
-Functionally, it is the onchain analogue of a **business operating account with covenants and base yield**:
+- **No position open**  
+  - incoming revenues accrue in the account,  
+  - you can withdraw or redeploy them as usual.
 
-- one place where revenue lands,  
+- **Position open (advance or credit line)**  
+  - an agreed share of incoming revenues is automatically routed to repayment first,  
+  - the remainder behaves like normal working capital.
+
+This makes the revenue account the onchain analogue of a **business operating account with covenants**:
+
+- a single place where revenue lands,  
 - predictable rules on who gets paid when,  
-- and default yield on idle balances,  
 - enough structure for credit to be underwritten seriously.
 
+### 1.2 Idle balances and base yield
+
+When revenues are not pledged to a position, the account can:
+
+- allocate **unencumbered balances** into simple, transparent onchain yield sources  
+  (e.g. staked SOL or yield-bearing stablecoins),  
+- keep funds available for operations and as collateral,  
+- avoid large idle balances sitting in non-yielding wallets.
+
+The goal is to provide:
+
+- a default, low-friction way for revenues to earn something,  
+- without breaking accounting or risk assumptions.
+
 ---
 
-## 2. Revenue-based funding instead of only token sales
+## 2. Revenue-backed funding rails
 
-Once revenues flow through that account, you can choose between two main product types.
+Once revenues flow through the account, you can use them to fund work instead of only selling tokens.
 
-### a) One-off revenue advances
+attn exposes two main product types:
 
-You sell a defined slice of upcoming revenue for cash now.
+- **One-off revenue advances**: short, finite positions against a defined slice of upcoming revenues.  
+- **Revenue-backed credit lines**: ongoing borrowing capacity that adjusts with your revenues.
 
-You specify:
+### 2.1 One-off revenue advances
 
-- the share of future revenues (e.g. 20–40%),  
-- the horizon (e.g. 3, 6, 12 weeks).
+A revenue advance is:
 
-Capital on the other side pays you upfront and, in return, receives that share of revenues until the agreed amount has been repaid.
+- “get a defined amount of cash today, repaid from a slice of upcoming revenues.”
 
-In the UI this is presented in straightforward terms such as:
+In the UI you mostly choose:
 
-> “Sell 30% of the next 6 weeks of revenues for X today.”
+- the **upfront amount** you want (e.g. $30,000),  
+- optionally a **max payback window** (e.g. “up to 6 weeks”) or a **max revenue share** you are comfortable with.
+
+Given your revenue history, attn proposes a position:
+
+- a revenue share (e.g. 20–40%),  
+- an effective horizon (e.g. 3–6 weeks),  
+- a target repayment amount (principal + fees),  
+- plus any internal limits (caps, concentration, etc.).
+
+You see this as a single line such as:
+
+> “Get $30,000 now, repay from up to 35% of revenues over the next 6 weeks (capped at $32,000 total).”
+
+Under the hood (see [PT/YT docs](../mechanics/pt-yt-attnusd.md)), the position is represented as a yield token (YT) backed by a share of your future cashflows into the revenue account until maturity or the cap is reached.
 
 <details>
 <summary>Example – Fund a release without selling tokens</summary>
 
 - Your protocol earns around $20,000/month in net revenues.  
-- You want $30,000 to ship a new product and list on a major venue.  
-- You choose to sell **40%** of the next **4 weeks** of revenues.
+- You request **$30,000** to ship a new product and list on a major venue.  
+- You are comfortable using up to **40%** of revenues for **around 4 weeks** to repay.
+
+attn simulates against your history and proposes:
+
+- route **40%** of the next **4 weeks** of revenues to repayment,  
+- with a **repayment cap** of $32,000 (principal + fees).
 
 Estimates:
 
 - 4 × $20,000 = $80,000 of revenues.  
 - 40% slice = $32,000.
 
-attn (or an LP) offers:
+attn (or an LP via attnUSD) funds the position:
 
-- $30,000 upfront,  
-- in exchange for 40% of those revenues until $32,000 has been collected.
+- you receive $30,000 upfront,  
+- 40% of those revenues are routed to repayment until $32,000 has been collected.
 
-You trade 40% of 4 weeks of income for $30k now,  
+You trade a bounded slice of ~4 weeks of income for $30k now,  
 without issuing or dumping governance tokens.
+
+Unpledged revenues in the account can continue to earn base yield throughout.
 
 </details>
 
-Throughout, any unpledged revenues sitting in the account can continue to earn base yield.
+These are useful for:
+
+- specific launches, campaigns, listings, or one-off spend,  
+- creators who want a defined budget against near-term volume.
 
 ---
 
-### b) Revenue-backed credit lines
+### 2.2 Revenue-backed credit lines
 
-For ongoing needs, you can open a **revolving credit line** sized by:
+For ongoing needs, you can open a **revolving credit line** backed by your revenues.
 
-- your revenue history,  
-- volatility,  
-- diversification.
+Internal sizing takes into account:
+
+- your revenue history and volatility,  
+- diversification of sources (e.g. multiple products / markets),  
+- any additional collateral (vesting tokens, launchpad backing, etc.).
 
 You receive:
 
 - a limit in USD terms,  
-- a current drawdown balance,  
-- a rule such as “up to X% of new revenues goes to repayment when the line is used”.
+- a current drawn balance,  
+- a rule such as “up to X% of new revenues goes to repayment when utilisation > 0”.
 
-It behaves like a **corporate revolver**, except that:
+It behaves like a **corporate revolver**:
 
-- covenants are enforced by how the revenue account routes funds,  
-- adjustments can be made based on live revenue performance and risk limits.
+- you draw when you need cash,  
+- repayments happen automatically as revenues hit the account,  
+- as the line amortises and performance improves, limits can be revisited.
 
-For larger or earlier-stage projects, the line can also be backed by:
+For larger or earlier-stage projects, the line can also be secured by:
 
-- vesting token collateral,  
-- launchpad reputation,  
-- and explicit commitments to route future revenues once live.
+- vesting token collateral held in escrow,  
+- explicit commitments to point future fee switches and creator rewards into the revenue account once they exist,  
+- launchpad or incubator guarantees.
 
-While the line is unused, unencumbered balances in the revenue account can continue to earn simple onchain yield.
+While the line is unused, unencumbered balances in the revenue account continue to earn simple onchain yield.
 
 ---
 
-## 3. A USD yield token backed by revenue products
+## 3. attnUSD: pooled exposure to revenue-backed positions
 
 On the other side of the table sit LPs.
 
-They deposit stablecoins (USDC, USDT, USDe, USDC+) and receive **attnUSD, a USD-denominated share token** whose value is backed by:
+They deposit stablecoins (USDC, USDT, USDe, USDC+) and receive **attnUSD**, a USD-denominated share token whose value is backed by:
 
 - the underlying stablecoin basket,  
-- plus the portfolio of revenue advances and credit lines.
+- plus a portfolio of revenue advances and credit lines represented as PT/YT positions.
 
-Depending on position structure, economics can include:
+### 3.1 What attnUSD represents
 
-- interest and fees on advances and credit lines,  
-- where applicable, the underlying yield on pledged assets (e.g. if pledged revenues sit in staked or yield-bearing form).
+Let:
 
-Over time, as attn positions:
+- `NAV(t)` = total marked value of the vault’s assets minus liabilities at time `t`,  
+- `S(t)` = total supply of attnUSD at time `t`.
 
-- amortise,  
-- default and recover,  
-- are refinanced or rolled,
+Then:
 
-the vault’s net asset value moves and the USD token tracks that.
+- **attnUSD share price** `P(t) = NAV(t) / S(t)`.
 
-attnUSD is **not** a promise of a fixed rate or a risk-free 1:1 stable:
+LPs:
+
+- deposit stables and mint attnUSD at or near `P(t)`,  
+- burn attnUSD to withdraw a pro-rata share of the underlying.
+
+Yield comes from:
+
+- interest and fees on revenue advances and credit lines,  
+- where applicable, base yield on pledged assets (e.g. if pledged revenues sit in staked or yield-bearing form),  
+- minus losses from underperforming or defaulted positions and operating costs.
+
+attnUSD is **not** a fixed-rate instrument or a promise of a 1:1 stable:
 
 - it can drift around 1 depending on portfolio performance and losses,  
 - it is explicitly a way to hold **revenue-backed credit risk** in exchange for yield.
 
-Details on the structure live in:
+---
+
+## 4. How this shows up in the UI
+
+From a user’s perspective, the mechanics above reduce to a few simple objects:
+
+- “**This is my revenue account**”  
+  - where my protocol / creator / network revenues land,  
+  - with clear rules when funding is active vs inactive.
+
+- “**This is my advance / credit line**”  
+  - one-off or revolving,  
+  - defined by a revenue share, horizon, and size.
+
+- “**This is the USD token LPs hold on the other side**”  
+  - attnUSD,  
+  - whose yield comes from a diversified book of these revenue-backed positions.
+
+The PT / YT details sit under the hood and only matter if you want to go deeper into:
+
+- how individual positions are priced and risk-managed,  
+- how attnUSD is constructed and marked.
+
+For that, see:
 
 - [How attn works (non-technical)](../mechanics/how-it-works-nontechnical.md)  
 - [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md)  
@@ -164,5 +227,5 @@ Details on the structure live in:
 In short, “banking the internet of revenue” means:
 
 - giving onchain businesses a proper revenue account that can also earn on idle balances,  
-- letting them fund themselves from income instead of only tokens,  
-- and giving LPs a clear, pooled way to own that revenue risk.
+- letting them fund themselves directly from income instead of only tokens,  
+- and giving LPs a clear, pooled way to own that revenue risk via attnUSD.

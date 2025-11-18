@@ -64,17 +64,15 @@ rather than being anchored in contractual revenue flows.
 
 attn is built around this specific missing layer.
 
-The protocol aims to turn onchain revenues into **bankable collateral**, by adding:
+The protocol’s job is to turn onchain revenues into **bankable collateral** by:
 
-- a dedicated **revenue account** with clear governance and rules, including options for low-friction yield on idle balances,  
-- standard **revenue-based funding products** (advances and credit lines),  
-- and a **USD yield token** backed by a portfolio of those positions.
+- giving them a governed place to land (a revenue account),  
+- wiring predictable rules for how they can be pledged and repaid,  
+- and aggregating those positions into a pooled USD share token for LPs.
 
-Once revenues live in that structure, they can support:
+This page is about the *why*.  
+The next ones cover the *how*:
 
-- non-dilutive funding for apps, DAOs, and creators,  
-- repeatable credit templates for launchpads and incubators,  
-- pooled revenue-backed yield for LPs,  
-- and simple “park and earn” behaviour for idle income,
-
-instead of remaining only a number on a dashboard or idle balances in miscellaneous wallets.
+- [Banking the internet of revenue](./banking-the-internet-of-revenue.md) – product view  
+- [How attn works (non-technical)](../mechanics/how-it-works-nontechnical.md) – step-by-step flows  
+- [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md) – under-the-hood model
