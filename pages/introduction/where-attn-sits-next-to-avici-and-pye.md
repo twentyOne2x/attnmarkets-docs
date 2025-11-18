@@ -1,13 +1,14 @@
-# Where attn Sits Next to Avici, Pye, Wildcat, and Altitude
+# Where attn Sits Next to Avici, Pye, Wildcat, Altitude, and 3Jane
 
-attn is easier to understand when seen next to other projects that position with credit, yield, and onchain underwriting.
+attn is easier to understand when seen next to other projects that work on credit, yield, and onchain underwriting.
 
-Four especially relevant points of comparison:
+Especially relevant points of comparison:
 
 - **Avici** – internet banking for people  
 - **Pye** – structured markets for staking yield  
 - **Wildcat** – undercollateralised credit markets for vetted borrowers  
-- **Altitude (Squads)** – stablecoin business accounts and treasury
+- **Altitude (Squads)** – stablecoin business accounts and treasury  
+- **3Jane** – unsecured credit lines and a yield-bearing stablecoin backed by future cashflows
 
 attn focuses on a different object:
 
@@ -152,6 +153,62 @@ Altitude is treasury and payments; attn is revenue-backed structuring, credit, a
 
 ---
 
+## 3Jane: unsecured, credit-scored lines vs revenue-account collateral
+
+**3Jane** is a credit-based money market on Ethereum:
+
+- borrowers receive **unsecured USDC credit lines** with no onchain collateral posted,  
+- underwriting uses a **multi-source credit engine**:
+  - onchain DeFi / CEX / RWA positions across many protocols and asset types,  
+  - offchain credit data (e.g. U.S. credit scores, income, bank balances) verified via zkTLS and partners like Cred Protocol,  
+  - combined into a proprietary score and limits model.   
+- capital suppliers deposit USDC to mint **USD3**, a yield-bearing stablecoin that represents a share of the credit pool,  
+- USD3 can be staked into **sUSD3** for levered exposure to the same credit book.   
+
+The core mechanics:
+
+- **Borrower side**  
+  - target segment today is high-balance users (e.g. U.S. residents with substantial verified assets and strong scores),  
+  - credit lines are sized by aggregate verified assets and credit quality,  
+  - minimum monthly payments and utilisation rules are enforced offchain via legal agreements and, if needed, collections.   
+
+- **LP side**  
+  - suppliers face a diversified pool of unsecured lines,  
+  - yield is driven by interest and fees on those lines,  
+  - loss protection uses an insurance / first-loss structure plus diversification and conservative caps on pool utilisation.   
+
+How this differs from attn:
+
+- **Collateral type**  
+  - 3Jane: lines are economically unsecured at the onchain level; protection relies on verified asset snapshots, credit scores, and enforceable legal recourse.  
+  - attn: positions are explicitly secured by **live revenue routing** into governed revenue accounts (e.g. fee PDAs, creator rewards, machine income), with programmable waterfalls on those flows.
+
+- **Who it primarily serves**  
+  - 3Jane: credit accounts for individuals and entities with substantial, verifiable asset footprints and credit histories; borrowing against future yield and portfolios, mostly in a U.S.-centric regulatory frame.   
+  - attn: revenue infrastructure for apps, DAOs, creators, and networks that want to fund work directly out of protocol or creator income, often natively pseudonymous and global.
+
+- **What the yield token represents**  
+  - 3Jane’s **USD3**: a yield-bearing USDC-like asset whose backing is a pool of unsecured credit lines, delta-hedged and managed via integrations such as Aave and other yield sources.   
+  - **attnUSD**: a USD share in a portfolio of **revenue-backed PT/YT positions and stablecoins**, where each position is tied to a specified revenue account and routing schedule.
+
+You can think of it this way:
+
+- 3Jane is building a **future-yield credit account** for asset-rich users, with unsecured lines mapped to a yield-bearing stablecoin.  
+- attn is building **revenue-native banking rails** for apps and creators, where specific fee and reward streams sit in revenue accounts, support advances and credit lines, and roll up into a pooled revenue-backed USD token.
+
+They share:
+
+- the belief that **future cashflows** (not just static collateral) can back credit,  
+- the use of a **yield-bearing USD token** as an access point for LP capital.
+
+They differ in:
+
+- what they treat as primary collateral (multi-source balance sheets vs wired revenues),  
+- which users they optimise for,  
+- and how much they lean on offchain credit and legal enforcement versus onchain revenue routing.
+
+---
+
 ## How the layers line up
 
 All of these projects care about:
@@ -174,6 +231,9 @@ They operate at different layers:
 - **Altitude** – treasury and payments layer:  
   stablecoin business accounts, yield on balances, and fiat/stablecoin rails  
 
+- **3Jane** – credit account / future-yield layer:  
+  unsecured USDC credit lines sized by verified assets and credit scores, plus a yield-bearing USD3/sUSD3 stack  
+
 - **attn** – revenue layer:  
   revenue accounts, base yield on idle revenues, advances, credit lines, and pooled yield on app and creator income, with revenues themselves wired as collateral
 
@@ -182,7 +242,7 @@ A mature project can realistically touch several of these at once:
 - team members using Avici-style tools for personal banking  
 - the organisation running its treasury and payments on something like Altitude  
 - staking positions structured via Pye  
-- occasional reputation-based credit via Wildcat  
+- occasional reputation-based or multi-factor credit via Wildcat or 3Jane  
 - and revenue-backed financing and yield via attn
 
 attn’s role in that stack is focused and narrow:  
