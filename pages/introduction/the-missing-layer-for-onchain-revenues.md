@@ -48,7 +48,7 @@ Capital providers can now see:
 What they still cannot buy easily is **a standardised, enforceable slice of those revenues**:
 
 - there is no canonical “revenue account + rules” they can underwrite,  
-- no widely used primitive for “X% of revenues for Y weeks with these covenants”,  
+- no widely used primitive for “X% of revenues for Y weeks with these enforceable terms,  
 - no USD numeraire built explicitly on a diversified book of such positions.
 
 Most credit risk therefore remains either:

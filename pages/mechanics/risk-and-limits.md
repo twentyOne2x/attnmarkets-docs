@@ -14,7 +14,7 @@ It covers:
 attn focuses on a small set of core risks:
 
 - **Revenue risk** – volatility or decline of the underlying revenues.
-- **Counterparty / execution risk** – teams disappearing, misusing funds, or breaching covenants.
+- **Counterparty / execution risk** – teams disappearing, misusing funds, or breaching terms.
 - **Concentration risk** – too much exposure to one project, sector, or launchpad.
 - **Tenor / liquidity risk** – advances or lines that are too long relative to how quickly losses can be realised.
 - **Stablecoin / infra risk** – issues with the stablecoins or infra used by the vault.

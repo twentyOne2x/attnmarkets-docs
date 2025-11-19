@@ -110,7 +110,7 @@ You receive:
 
 It behaves like a revolving facility in corporate banking, except that:
 
-- covenants are enforced by how revenues are routed through your revenue account.
+- Terms are enforced by how revenues are routed through your revenue account.
 
 For larger tickets or earlier-stage projects, this line can combine:
 

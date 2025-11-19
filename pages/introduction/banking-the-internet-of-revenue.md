@@ -34,7 +34,7 @@ Two states matter:
   - an agreed share of incoming revenues is automatically routed to repayment first,  
   - the remainder behaves like normal working capital.
 
-This makes the revenue account the onchain analogue of a **business operating account with covenants**:
+This makes the revenue account the onchain analogue of a **business operating account with enforceable terms**:
 
 - a single place where revenue lands,  
 - predictable rules on who gets paid when,  
