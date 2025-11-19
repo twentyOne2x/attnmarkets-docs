@@ -44,13 +44,18 @@ const XIcon = (
 );
 
 const TelegramIcon = (
-  <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+  <svg viewBox="0 0 32 32" width="16" height="16" aria-hidden="true">
+    <defs>
+      <linearGradient id="tgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#37a3ff" />
+        <stop offset="100%" stopColor="#007ad9" />
+      </linearGradient>
+    </defs>
+    <circle cx="16" cy="16" r="15" fill="url(#tgGradient)" />
     <path
-      d="M21.5 3.5 2.5 10.2c-.7.25-.66 1.26.06 1.44l4.83 1.22a1 1 0 0 0 .96-.26L13 8l-3.37 4.3a.75.75 0 0 0 .2 1.1l6.2 3.6c.6.35 1.36-.02 1.49-.7l2.13-11.58c.16-.86-.64-1.56-1.35-1.22Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M23.2 10.2 8.4 15.1c-.63.22-.6 1.1.04 1.26l4.01 1.02a.7.7 0 0 0 .66-.18L17 13l-2.72 3.47a.6.6 0 0 0 .12.86l4.93 3.02c.5.31 1.13-.02 1.25-.6l1.78-8.99c.13-.67-.53-1.21-1.16-1.04Z"
+      fill="#fff"
+      opacity="0.95"
     />
   </svg>
 );
