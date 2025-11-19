@@ -3,6 +3,8 @@
  * See: https://nextra.site/docs/docs-theme/theme-configuration
  */
 
+import { useRouter } from 'next/router'
+import { useConfig } from 'nextra-theme-docs'
 import CopyPageButton from './components/CopyPageButton.jsx'
 
 const config = {
@@ -14,14 +16,32 @@ const config = {
 
   // Used for "Edit this page" / "Feedback" links in the UI
   // Point it at the root of your docs pages in the repo.
-  docsRepositoryBase: 'https://github.com/twentyOne2x/attnmarkets-docs/tree/main/pages',
+  docsRepositoryBase:
+    'https://github.com/twentyOne2x/attnmarkets-docs/tree/main/pages',
 
-  // Default SEO title formatting
-  useNextSeoProps() {
-    return {
-      titleTemplate: '%s',
-      defaultTitle: 'attn.markets docs'
-    }
+  // Custom <head> – this fully controls <title>, so we drop the " - Nextra" suffix
+  head() {
+    const { asPath } = useRouter()
+    const { frontMatter, title: pageTitle } = useConfig()
+
+    // Page title: front matter > computed page title > fallback
+    const title =
+      frontMatter?.title || pageTitle || 'attn.markets docs'
+
+    const url = 'https://docs.attn.markets' + asPath
+    const description =
+      frontMatter?.description ||
+      'attn turns onchain revenues into cash advances, credit lines, and attnUSD. attn.markets documentation.'
+
+    return (
+      <>
+        <title>{title}</title>
+        <meta property="og:title" content={title} />
+        <meta property="og:url" content={url} />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
+      </>
+    )
   },
 
   // Dark mode + theme behavior
@@ -33,7 +53,6 @@ const config = {
   },
 
   primaryHue: 210, // blue-ish accent, tweak later if you like
-
 
   // Sidebar & TOC behavior
   sidebar: {
