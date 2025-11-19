@@ -20,7 +20,7 @@ For most projects, revenues:
 - are mixed with other funds (treasury, speculation, runway),  
 - are not bound by clear rules on who gets paid when.
 
-Even if an analytics dashboard can say “this app generated $X in the last 30 days”, there is usually no:
+That usually means there is **no**:
 
 - designated **revenue account** with simple, enforceable rules,  
 - standard way to **pledge those revenues** as collateral,  
