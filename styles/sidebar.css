@@ -78,24 +78,33 @@
 
 .attn-page-shell {
   position: relative;
+  padding-top: 2.5rem;
 }
 
 .attn-copy-row {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 1rem;
+  width: 100%;
+  pointer-events: none;
 }
 
 .attn-copy-row button {
   white-space: nowrap;
+  pointer-events: auto;
 }
 
 @media (max-width: 768px) {
+  .attn-page-shell {
+    padding-top: 0;
+  }
+
   .attn-copy-row {
-    position: sticky;
-    top: calc(var(--nextra-navbar-height, 4rem) + 0.5rem);
-    z-index: 5;
-    padding-top: 0.5rem;
-    margin-bottom: 1.5rem;
+    position: static;
+    width: auto;
+    pointer-events: auto;
+    margin-bottom: 0.75rem;
   }
 }
