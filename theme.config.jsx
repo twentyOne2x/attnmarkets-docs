@@ -19,7 +19,8 @@ const config = {
   // Default SEO title formatting
   useNextSeoProps() {
     return {
-      titleTemplate: '%s – attn.markets docs'
+      titleTemplate: '%s – attn.markets docs',
+      defaultTitle: 'attn.markets docs'
     }
   },
 
