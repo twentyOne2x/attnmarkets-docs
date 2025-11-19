@@ -3,6 +3,8 @@
  * See: https://nextra.site/docs/docs-theme/theme-configuration
  */
 
+import CopyPageButton from './components/CopyPageButton.jsx'
+
 const config = {
   logo: <span>attn.markets docs</span>,
 
@@ -31,15 +33,21 @@ const config = {
 
   primaryHue: 210, // blue-ish accent, tweak later if you like
 
-  // Basic nav items (you can customize later)
-  // These map to top navbar links.
-  nav: {
-    title: 'attn.markets docs'
-  },
 
   // Sidebar & TOC behavior
   sidebar: {
     defaultMenuCollapseLevel: 3 // keep all nested sections expanded
+  },
+
+  main({ children }) {
+    return (
+      <div className="attn-page-shell">
+        <div className="attn-copy-row">
+          <CopyPageButton />
+        </div>
+        {children}
+      </div>
+    )
   },
 
   toc: {

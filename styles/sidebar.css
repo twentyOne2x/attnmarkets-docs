@@ -75,3 +75,27 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.attn-page-shell {
+  position: relative;
+}
+
+.attn-copy-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.attn-copy-row button {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .attn-copy-row {
+    position: sticky;
+    top: calc(var(--nextra-navbar-height, 4rem) + 0.5rem);
+    z-index: 5;
+    padding-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
