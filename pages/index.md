@@ -26,7 +26,7 @@ If you want the story first:
 
 - [The missing layer for onchain revenues](./introduction/the-missing-layer-for-onchain-revenues.md)  
 - [Banking the internet of revenue](./introduction/banking-the-internet-of-revenue.md)  
-- [Where attn sits next to Avici, Pye, Wildcat, Altitude, and 3Jane](./introduction/where-attn-sits-next-to-avici-and-pye.md)  
+- [Where attn sits next to Avici, Pye, Wildcat, Altitude, 3Jane, and Xitadel](./introduction/where-attn-sits-next-to-avici-and-pye.md)  
 - [Who attn is for](./introduction/who-attn-is-for.md)
 
 If you already know what you are, jump straight to your section:

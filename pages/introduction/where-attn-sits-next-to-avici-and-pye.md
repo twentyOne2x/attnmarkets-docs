@@ -1,4 +1,4 @@
-# Where attn Sits Next to Avici, Pye, Wildcat, Altitude, and 3Jane
+# Where attn Sits Next to Avici, Pye, Wildcat, Altitude, 3Jane, and Xitadel
 
 attn is easier to understand when seen next to other projects that work on credit, yield, and onchain underwriting.
 
@@ -8,7 +8,8 @@ Especially relevant points of comparison:
 - **Pye** – structured markets for staking yield  
 - **Wildcat** – undercollateralised credit markets for vetted borrowers  
 - **Altitude (Squads)** – stablecoin business accounts and treasury  
-- **3Jane** – unsecured credit lines and a yield-bearing stablecoin backed by future cashflows
+- **3Jane** – unsecured credit lines and a yield-bearing stablecoin backed by future cashflows  
+- **Xitadel** – Liquid Treasury Tokens (LTTs) backed by project treasuries  
 
 attn focuses on a different object:
 
@@ -19,14 +20,16 @@ Instead of banking deposits, stake, or pure reputation, attn banks the **revenue
 ---
 
 ## At a glance
-| Project   | Layer / object                                | What it focuses on                                                         | Primary users                                      | How it intersects with attn                                                                      |
-|----------|-----------------------------------------------|----------------------------------------------------------------------------|----------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| **Avici**   | Individual banking + personal trust layer      | Accounts, cards, and spending limits based on an individual Trust Score   | Individuals, freelancers, small businesses         | Avici handles **personal** cashflow and card credit; attn handles **app / creator onchain revenue** and credit at the project layer |
-| **Pye**     | Stake / validator-yield layer                 | Splitting staked SOL into principal and yield, structuring yield          | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn’s protocol / creator revenues       |
-| **Wildcat** | Market / reputation credit layer              | Under-collateralised loan “markets” based on borrower reputation & terms  | Whitelisted borrowers, stablecoin lenders          | attn uses wired revenues as collateral; Wildcat relies more on market design and borrower reputation |
-| **Altitude**| Treasury and payments layer                   | Stablecoin business accounts, fiat/stable rails, treasury tooling         | DAOs, protocols, companies running ops/treasury    | Altitude holds operating cash; attn structures credit and yield on revenue flows                 |
-| **3Jane**   | Credit-account / future-yield layer           | Unsecured USDC credit lines and USD3 yield-bearing stablecoin             | Asset-rich users with verifiable credit footprint  | 3Jane sizes lines via multi-source credit; attn sizes lines on live revenue routed onchain       |
-| **attn**    | Revenue layer                                 | Revenue accounts, revenue-backed credit, pooled revenue yield             | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into             |
+
+| Project     | Layer / object                                   | What it focuses on                                                                     | Primary users                                      | How it intersects with attn                                                                                  |
+|------------|---------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| **Avici**   | Individual banking + personal trust layer        | Accounts, cards, and spending limits based on an individual Trust Score               | Individuals, freelancers, small businesses         | Avici handles **personal** cashflow and card credit; attn handles **app / creator onchain revenue** and credit at the project layer |
+| **Pye**     | Stake / validator-yield layer                    | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn’s protocol / creator revenues                   |
+| **Wildcat** | Market / reputation credit layer                 | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn uses wired revenues as collateral; Wildcat relies more on market design and borrower reputation         |
+| **Altitude**| Treasury and payments layer                      | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude holds operating cash; attn structures credit and yield on revenue flows                             |
+| **3Jane**   | Credit-account / future-yield layer              | Unsecured USDC credit lines and USD3 yield-bearing stablecoin                         | Asset-rich users with verifiable credit footprint  | 3Jane sizes lines via multi-source credit; attn sizes lines on live revenue routed onchain                   |
+| **Xitadel** | Treasury / native-token collateral layer         | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel finances against **treasury tokens**; attn finances against **revenues**. A project can use both at once. |
+| **attn**    | Revenue layer                                    | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
 
 The rest of this page goes into more detail for each.
 
@@ -223,6 +226,43 @@ They differ in:
 
 ---
 
+## Xitadel: Liquid Treasury Tokens vs revenue-account collateral
+
+**Xitadel** focuses on project treasuries and native tokens:
+
+- projects lock a portion of their treasury (typically native tokens) into a collateral vault,  
+- against that collateral they mint **Liquid Treasury Tokens (LTTs)**, which are:
+  - overcollateralised,  
+  - fixed-term,  
+  - designed to behave like onchain bond instruments for the project,  
+- investors buy LTTs with stablecoins and receive a defined return profile over the term.
+
+The underlying object is:
+
+- the **token treasury** and its market value,  
+- not the live revenue stream of the protocol or creator.
+
+The protection stack includes:
+
+- collateral ratios and coverage thresholds,  
+- automated monitoring and liquidation rules over the treasury backing,  
+- standardised issuance and reporting, so investors know what is backing each LTT.
+
+attn looks at a different part of the same balance sheet:
+
+- Xitadel: “How much capital can you raise against the **tokens** you already hold in your treasury?”  
+- attn: “How much capital can you raise against the **revenues** your system produces over time?”
+
+In practice, a project could:
+
+- use Xitadel to unlock a slice of its native-token treasury via LTTs,  
+- route protocol or app revenues into an attn revenue account to back advances and credit lines,  
+- and let attnUSD or other credit LPs selectively hold LTTs as part of a broader revenue and credit book.
+
+Xitadel is a **treasury-debt** layer; attn is a **revenue-debt and revenue-yield** layer.
+
+---
+
 ## How the layers line up
 
 All of these projects care about:
@@ -248,6 +288,9 @@ They operate at different layers:
 - **3Jane** – credit account / future-yield layer:  
   unsecured USDC credit lines sized by verified assets and credit scores, plus a yield-bearing USD3/sUSD3 stack  
 
+- **Xitadel** – treasury / fixed-income layer:  
+  Liquid Treasury Tokens backed by project treasuries, giving investors fixed-income-style exposure to token treasuries  
+
 - **attn** – revenue layer:  
   revenue accounts, base yield on idle revenues, advances, credit lines, and pooled yield on app and creator income, with revenues themselves wired as collateral
 
@@ -257,6 +300,7 @@ A mature project can realistically touch several of these at once:
 - the organisation running its treasury and payments on something like Altitude  
 - staking positions structured via Pye  
 - occasional reputation-based or multi-factor credit via Wildcat or 3Jane  
+- treasury-backed bond-style financing via Xitadel  
 - and revenue-backed financing and yield via attn
 
 attn’s role in that stack is focused and narrow:  
