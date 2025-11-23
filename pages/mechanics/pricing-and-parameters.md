@@ -8,7 +8,7 @@ It is descriptive of the intended framework and may change as more data and feed
 
 Pricing aims to:
 
-- offer projects **useful, non-punitive funding**,
+- offer projects **useful, non-punitive financing**,
 - offer LPs **risk-appropriate yield**,
 - keep the book **short-dated and granular** enough to react to new information.
 

@@ -1,6 +1,13 @@
 # Who attn Is For
 
 attn is designed for a specific set of users.  
+
+It is **Solana-native and onchain-only**:
+- no bank accounts
+- no credit scores
+- no real-world asset verification
+- no KYC
+
 The docs are organised around four main groups.
 
 ---
@@ -17,7 +24,7 @@ Examples:
 
 Typical goals:
 
-- non-dilutive funding  
+- non-dilutive financing  
 - better use of protocol income (including earning on idle balances)  
 - credible ways to show that the revenue stream is under control
 

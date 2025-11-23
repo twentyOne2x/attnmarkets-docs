@@ -64,6 +64,11 @@ rather than being anchored in contractual revenue flows.
 
 attn is built around this specific missing layer.
 
+It is **Solana-native** and relies only on **onchain revenue routing**:
+- no identity binding
+- no banking rails
+- no credit-bureau inputs
+
 The protocol’s job is to turn onchain revenues into **bankable collateral** by:
 
 - giving them a governed place to land (a revenue account),  

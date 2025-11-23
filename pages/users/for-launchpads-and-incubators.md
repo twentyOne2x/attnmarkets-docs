@@ -83,7 +83,7 @@ ALPHA opts to:
 
 attn’s capital provides the cash,  
 you share in the economics,  
-and ALPHA gets non-dilutive funding sourced from its own revenue.
+and ALPHA gets non-dilutive financing sourced from its own revenue.
 
 </details>
 

@@ -27,7 +27,7 @@ But:
 - selling large chunks of your token feels wrong
 - banks do not care about your meme or your address history
 
-attn gives you a way to **turn your earnings into a funding tool** instead of selling your own supply.
+attn gives you a way to **turn your earnings into a financing tool** instead of selling your own supply.
 
 ---
 
@@ -159,7 +159,7 @@ You should make it explicit to your community:
 From their perspective, if done well, tokens represent a project with:
 
 - real revenue
-- a clear funding plan
+- a clear financing plan
 - transparent commitments around earnings
 
 attn provides the infrastructure that makes those commitments enforceable onchain, and gives you a default place to park and grow earnings between decisions.

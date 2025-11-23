@@ -116,9 +116,4 @@ if [ "$error_section_included" = true ]; then
 fi
 
 echo "\`\`\`"  # End triple backticks
-if [ "$error_section_included" = true ]; then
-    echo "Please fix"
-else
-    echo "Given the above:"
-fi
 } | copy_to_clipboard

@@ -16,6 +16,13 @@ For apps and DAOs, attn provides three core pieces:
 2. **Revenue advances** – trade a slice of future income for cash now.  
 3. **Revenue-backed credit lines** – ongoing borrowing capacity that repays from revenues.
 
+No offchain underwriting is required:
+- no bank linking
+- no credit scores
+- no real-world asset proofs
+
+Everything is based on onchain revenue performance and rules enforced on Solana.
+
 You can use these to fund:
 
 - liquidity  
@@ -132,7 +139,7 @@ You should communicate to your community that you are:
 
 - treating revenues as a formal financial asset,  
 - avoiding unnecessary token sales,  
-- funding growth with income first,  
+- financing growth with income first,  
 - and, where appropriate, earning base yield on idle revenues instead of leaving them unproductive.
 
 If you want to expose the more technical side, you can link them to:

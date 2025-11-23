@@ -2,10 +2,18 @@
 
 attn is a **revenue bank** for onchain businesses.
 
+It is **Solana-native and fully onchain**:
+- no KYC
+- no bank-account linking
+- no credit-score or offchain asset proofs
+- no offchain data wrangling
+
+You only connect **onchain revenue routes**. Credit and yield are written strictly against those routed revenues, with transparent onchain rules.
+
 Concretely, it gives you three things:
 
 1. A governed **revenue account** for your app, DAO, or token.  
-2. **Revenue-backed funding rails** (one-off advances and revolving credit lines).  
+2. **Revenue-backed financing rails** (one-off advances and revolving credit lines).  
 3. **attnUSD**, a USD share token backed by a portfolio of those positions and stablecoins.
 
 This page is the product view: what lives where, how money moves, and what each side sees.
@@ -14,7 +22,7 @@ This page is the product view: what lives where, how money moves, and what each 
 
 ## 1. Revenue account: where revenues land and how they are routed
 
-You connect your revenue stream (Pump.fun creator rewards, protocol fee switches, DePIN income, etc.) to an **attn revenue account**.
+You connect your revenue stream (Pump.fun creator rewards, protocol fee switches, DePIN income, etc.) to an **attn revenue account**. 
 
 At a high level, this account is:
 
@@ -56,7 +64,7 @@ The goal is to provide:
 
 ---
 
-## 2. Revenue-backed funding rails
+## 2. Revenue-backed financing rails
 
 Once revenues flow through the account, you can use them to fund work instead of only selling tokens.
 
@@ -133,7 +141,14 @@ Internal sizing takes into account:
 
 - your revenue history and volatility,  
 - diversification of sources (e.g. multiple products / markets),  
-- any additional collateral (vesting tokens, launchpad backing, etc.).
+- any additional **onchain** collateral (vesting tokens, launchpad backing, etc.).
+
+It does **not** take into account:
+- bank balances
+- credit scores
+- real-world asset statements
+
+Everything is derived from onchain revenue performance and optional onchain escrow. 
 
 You receive:
 
@@ -201,7 +216,7 @@ From a user’s perspective, the mechanics above reduce to a few simple objects:
 
 - “**This is my revenue account**”  
   - where my protocol / creator / network revenues land,  
-  - with clear rules when funding is active vs inactive.
+  - with clear rules when financing is active vs inactive.
 
 - “**This is my advance / credit line**”  
   - one-off or revolving,  

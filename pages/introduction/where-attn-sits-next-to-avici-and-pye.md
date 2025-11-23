@@ -8,7 +8,7 @@ Especially relevant points of comparison:
 - **Pye** – structured markets for staking yield  
 - **Wildcat** – undercollateralised credit markets for vetted borrowers  
 - **Altitude (Squads)** – stablecoin business accounts and treasury  
-- **3Jane** – unsecured credit lines and a yield-bearing stablecoin backed by future cashflows  
+- **3Jane** – unsecured credit lines underwritten on verified assets + offchain credit data (EVM-first)  
 - **Xitadel** – Liquid Treasury Tokens (LTTs) backed by project treasuries  
 
 attn focuses on a different object:
@@ -27,7 +27,7 @@ Instead of banking deposits, stake, or pure reputation, attn banks the **revenue
 | **Pye**     | Stake / validator-yield layer                    | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn’s protocol / creator revenues                   |
 | **Wildcat** | Market / reputation credit layer                 | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn uses wired revenues as collateral; Wildcat relies more on market design and borrower reputation         |
 | **Altitude**| Treasury and payments layer                      | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude holds operating cash; attn structures credit and yield on revenue flows                             |
-| **3Jane**   | Credit-account / future-yield layer              | Unsecured USDC credit lines and USD3 yield-bearing stablecoin                         | Asset-rich users with verifiable credit footprint  | 3Jane sizes lines via multi-source credit; attn sizes lines on live revenue routed onchain                   |
+| **3Jane**   | Credit-account / future-yield layer              | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane requires linking real-world accounts/credit data; attn sizes lines only on live onchain revenues |
 | **Xitadel** | Treasury / native-token collateral layer         | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel finances against **treasury tokens**; attn finances against **revenues**. A project can use both at once. |
 | **attn**    | Revenue layer                                    | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
 
@@ -181,6 +181,11 @@ Altitude is treasury and payments; attn is revenue-backed structuring, credit, a
   - combined into a proprietary score and limits model.   
 - capital suppliers deposit USDC to mint **USD3**, a yield-bearing stablecoin that represents a share of the credit pool,  
 - USD3 can be staked into **sUSD3** for levered exposure to the same credit book.   
+
+This implies a different trust and privacy model:
+
+- 3Jane’s lines depend on linking wallets to real-world financial accounts and credit data.
+- attn does **not** require any of that. attn underwrites strictly from **onchain revenue routing** into governed revenue accounts.
 
 The core mechanics:
 
