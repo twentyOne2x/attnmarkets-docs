@@ -18,6 +18,8 @@ attn focuses on a different object:
 
 Instead of banking deposits, stake, or pure reputation, attn banks the **revenue stream itself** and turns it into collateral, while also providing ways for those revenues to earn yield when idle.
 
+Skim the table and exec summaries first. Expand a project if you want detail.
+
 ---
 
 ## At a glance
@@ -33,11 +35,18 @@ Instead of banking deposits, stake, or pure reputation, attn banks the **revenue
 | **Colossus** | Payments / card-network layer (EVM)            | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus targets consumer/merchant payments; attn targets revenue-collateralised credit for onchain businesses |
 | **attn**    | Revenue layer                                    | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
 
-The rest of this page goes into more detail for each.
-
 ---
 
-## Avici: internet banking for individuals
+## Avici (exec summary)
+
+- Layer: individual banking + personal trust.  
+- Focus: accounts, cards, and retail credit tied to a Trust Score.  
+- Primary users: individuals, freelancers, small businesses.  
+- Difference vs attn: Avici underwrites **people and personal cashflow**; attn underwrites **projects and onchain revenue streams**.  
+- Relationship: complementary (personal banking for teams; revenue banking for the project).
+
+<details>
+<summary>Deep dive</summary>
 
 **Avici** is building an internet-native neobank:
 
@@ -75,9 +84,20 @@ In practice, they can be complementary:
 - an individual might receive income via Avici-style tools,  
 - while the underlying app or token routes its revenues into an attn revenue account for credit and yield.
 
+</details>
+
 ---
 
-## Pye: staking yield vs protocol and creator revenue
+## Pye (exec summary)
+
+- Layer: stake / validator-yield structuring on Solana.  
+- Focus: splitting staked SOL into principal and yield legs.  
+- Primary users: stakers, infra protocols, yield traders.  
+- Difference vs attn: Pye slices **validator rewards**; attn slices **protocol/creator revenues**.  
+- Relationship: shared PT/YT mental model, different collateral base.
+
+<details>
+<summary>Deep dive</summary>
 
 **Pye** focuses on Solana staking yield:
 
@@ -109,9 +129,20 @@ In short:
 - Pye = slicing up stake yield  
 - attn = slicing up business revenue
 
+</details>
+
 ---
 
-## Wildcat: reputation and terms vs revenue-locked collateral
+## Wildcat (exec summary)
+
+- Layer: undercollateralised credit markets on reputation + terms.  
+- Focus: borrower-defined markets with reserves, lockups, and whitelisting.  
+- Primary users: vetted borrowers and stablecoin lenders.  
+- Difference vs attn: Wildcat relies on **market parameters + reputation**; attn relies on **wired revenue collateral + routing rules**.  
+- Relationship: alternative approach to onchain unsecured credit.
+
+<details>
+<summary>Deep dive</summary>
 
 **Wildcat** builds undercollateralised credit markets:
 
@@ -140,9 +171,20 @@ At a high level:
 - Wildcat = structured undercollateralised credit where “collateral” is mostly reputation + market parameters  
 - attn = undercollateralised credit anchored in concrete, wired revenue flows and their PT/YT tokens
 
+</details>
+
 ---
 
-## Altitude: stablecoin business accounts vs revenue-backed credit
+## Altitude (exec summary)
+
+- Layer: treasury, stablecoin accounts, and payments for organisations.  
+- Focus: business accounts, fiat/stable rails, and low-risk yield on balances.  
+- Primary users: DAOs, protocols, companies with ops/treasury needs.  
+- Difference vs attn: Altitude manages **operating cash and payments**; attn manages **revenue routing, financing, and revenue-native yield**.  
+- Relationship: complementary treasury + revenue stack.
+
+<details>
+<summary>Deep dive</summary>
 
 **Altitude** (by Squads) is a stablecoin-powered financial product for businesses:
 
@@ -170,9 +212,20 @@ A single protocol or DAO could reasonably:
 
 Altitude is treasury and payments; attn is revenue-backed structuring, credit, and revenue-native yield.
 
+</details>
+
 ---
 
-## 3Jane: unsecured, credit-scored lines vs revenue-account collateral
+## 3Jane (exec summary)
+
+- Layer: credit-account / future-yield underwriting on Ethereum.  
+- Focus: unsecured credit lines sized by verified onchain + offchain assets and credit data.  
+- Primary users: asset-rich borrowers with verifiable credit footprint; LPs via USD3.  
+- Difference vs attn: 3Jane needs **identity/asset verification + offchain enforcement**; attn needs **onchain revenue routing only**.  
+- Relationship: both underwrite future cashflows, different trust models and target users.
+
+<details>
+<summary>Deep dive</summary>
 
 **3Jane** is a credit-based money market on Ethereum:
 
@@ -231,9 +284,20 @@ They differ in:
 - which users they optimise for,  
 - and how much they lean on offchain credit and legal enforcement versus onchain revenue routing.
 
+</details>
+
 ---
 
-## Xitadel: Liquid Treasury Tokens vs revenue-account collateral
+## Xitadel (exec summary)
+
+- Layer: treasury-backed fixed-income via LTTs.  
+- Focus: overcollateralised, fixed-term debt against native-token treasuries.  
+- Primary users: token-rich projects/DAOs and credit LPs.  
+- Difference vs attn: Xitadel finances **token treasuries**; attn finances **live revenues**.  
+- Relationship: can be used together on the same balance sheet.
+
+<details>
+<summary>Deep dive</summary>
 
 **Xitadel** focuses on project treasuries and native tokens:
 
@@ -268,9 +332,20 @@ In practice, a project could:
 
 Xitadel is a **treasury-debt** layer; attn is a **revenue-debt and revenue-yield** layer.
 
+</details>
+
 ---
 
-## Colossus: stablecoin cards and payment-network rails (early)
+## Colossus (exec summary)
+
+- Layer: payments / stablecoin card-network rails on Ethereum L2.  
+- Focus: EMV-compatible stablecoin cards using account abstraction.  
+- Primary users: merchants, issuers, acquirers, consumer card users.  
+- Difference vs attn: Colossus targets **consumer/merchant payments**; attn targets **revenue-collateralised credit and yield for onchain businesses**.  
+- Status: early, sparse public detail.
+
+<details>
+<summary>Deep dive</summary>
 
 **Colossus** positions itself as a stablecoin credit-card and payments network built as an Ethereum L2. Public materials emphasize:
 
@@ -282,6 +357,8 @@ Xitadel is a **treasury-debt** layer; attn is a **revenue-debt and revenue-yield
 There is limited detail available so far beyond the landing-page narrative. No full technical specification, developer documentation set, or public codebase is clearly exposed yet. The project appears early in its process, with many implementation and go-to-market specifics still undisclosed.
 
 Colossus is adjacent to attn only at the highest level (both are financial infrastructure). It targets consumer/merchant payment rails; attn targets revenue-collateralised credit and yield for onchain businesses.
+
+</details>
 
 ---
 
@@ -336,4 +413,3 @@ For deeper mechanics, see:
 
 - _How attn works (non-technical)_ – overview of the flows  
 - _PT, YT, and attnUSD – Technical Design_ – the detailed model
-```
