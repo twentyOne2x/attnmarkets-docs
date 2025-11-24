@@ -9,6 +9,9 @@ const sidebar = {
   'banking-the-internet-of-revenue': {
     title: itemTitle('Banking revenue')
   },
+  'vision-attn': {
+    title: itemTitle('Vision')
+  },
   'where-attn-sits-next-to-avici-and-pye': {
     title: itemTitle('attn in context')
   },
