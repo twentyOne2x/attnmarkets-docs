@@ -37,7 +37,7 @@ Skim the table and exec summaries first. Expand a project if you want detail.
 
 ---
 
-## Avici.money (exec summary)
+## Avici.money
 
 - Layer: individual banking + personal trust.  
 - Focus: accounts, cards, and retail credit tied to a Trust Score.  
@@ -88,7 +88,7 @@ In practice, they can be complementary:
 
 ---
 
-## Pye.fi (exec summary)
+## Pye.fi
 
 - Layer: stake / validator-yield structuring on Solana.  
 - Focus: splitting staked SOL into principal and yield legs.  
@@ -133,7 +133,7 @@ In short:
 
 ---
 
-## Wildcat.finance (exec summary)
+## Wildcat.finance
 
 - Layer: undercollateralised credit markets on reputation + terms.  
 - Focus: borrower-defined markets with reserves, lockups, and whitelisting.  
@@ -175,7 +175,7 @@ At a high level:
 
 ---
 
-## Altitude (Squads.xyz) (exec summary)
+## Altitude (Squads.xyz)
 
 - Layer: treasury, stablecoin accounts, and payments for organisations.  
 - Focus: business accounts, fiat/stable rails, and low-risk yield on balances.  
@@ -216,7 +216,7 @@ Altitude (Squads.xyz) is treasury and payments; attn.markets is revenue-backed s
 
 ---
 
-## 3Jane.xyz (exec summary)
+## 3Jane.xyz
 
 - Layer: credit-account / future-yield underwriting on Ethereum.  
 - Focus: unsecured credit lines sized by verified onchain + offchain assets and credit data.  
@@ -288,7 +288,7 @@ They differ in:
 
 ---
 
-## Xitadel.fi (exec summary)
+## Xitadel.fi
 
 - Layer: treasury-backed fixed-income via LTTs.  
 - Focus: overcollateralised, fixed-term debt against native-token treasuries.  
@@ -336,7 +336,7 @@ Xitadel.fi is a **treasury-debt** layer; attn.markets is a **revenue-debt and re
 
 ---
 
-## Colossus.credit (exec summary)
+## Colossus.credit
 
 - Layer: payments / stablecoin card-network rails on Ethereum L2.  
 - Focus: EMV-compatible stablecoin cards using account abstraction.  
