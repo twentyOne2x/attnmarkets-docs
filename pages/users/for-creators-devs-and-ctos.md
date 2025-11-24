@@ -1,4 +1,4 @@
-# For Creators, Devs & Memecoin CTOs
+# For Pump.fun Creators, Devs & Memecoin CTOs
 
 This page is for:
 

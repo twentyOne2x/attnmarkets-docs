@@ -34,7 +34,8 @@ If you already know what you are, jump straight to your section:
 - [For Apps, DAOs & Builders](./users/for-apps-daos-and-builders.md)  
 - [For Creators, Devs & Memecoin CTOs](./users/for-creators-devs-and-ctos.md)  
 - [For Launchpads & Incubators](./users/for-launchpads-and-incubators.md)  
-- [For Liquidity Providers](./users/for-liquidity-providers.md)
+- [For Liquidity Providers](./users/for-liquidity-providers.md)  
+- [For Cards, Commerce & BNPL Partners](./users/for-cards-and-commerce-partners.md)
 
 If you want the mechanics and under-the-hood design:
 

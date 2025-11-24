@@ -14,6 +14,9 @@ const sidebar = {
   },
   'for-liquidity-providers': {
     title: itemTitle('Liquidity providers')
+  },
+  'for-cards-and-commerce-partners': {
+    title: itemTitle('Cards & Commerce')
   }
 }
 

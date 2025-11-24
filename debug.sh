@@ -9,6 +9,7 @@ FILES=(
 'pages/introduction/where-attn-sits-next-to-avici-and-pye.md'
 'pages/introduction/who-attn-is-for.md'
 'pages/users/for-apps-daos-and-builders.md'
+'pages/users/for-cards-and-commerce-partners.md'
 'pages/users/for-creators-devs-and-ctos.md'
 'pages/users/for-launchpads-and-incubators.md'
 'pages/users/for-liquidity-providers.md'
