@@ -65,6 +65,32 @@ const buildAllPageFiles = () => {
 
 const ALL_PAGE_FILES = buildAllPageFiles()
 
+// Format the combined clipboard text with a tree + per-file delimiters + ``` blocks
+const formatAllPagesClipboard = (fileEntries) => {
+  const treeSectionLines = [
+    'DOC TREE',
+    '========',
+    ...fileEntries.map(({ filePath }) => filePath),
+    '========',
+    '',
+  ]
+
+  const fileSections = fileEntries.map(({ filePath, text }) => {
+    return [
+      `----- FILE START: ${filePath} -----`,
+      '',
+      '```markdown',
+      text.trim(),
+      '```',
+      '',
+      `----- FILE END: ${filePath} -----`,
+      '',
+    ].join('\n')
+  })
+
+  return [...treeSectionLines, ...fileSections].join('\n')
+}
+
 const normalizePath = (path) => {
   if (!path || path === '/') {
     return '/index'
@@ -127,18 +153,19 @@ export default function CopyPageButton() {
         setBusy(true)
         setLabel('Copying all…')
 
-        const texts = await Promise.all(
+        const fileEntries = await Promise.all(
           ALL_PAGE_FILES.map(async (filePath) => {
             const rawUrl = `${RAW_BASE}${filePath}`
             const res = await fetch(rawUrl)
             if (!res.ok) {
               throw new Error(`Failed to fetch ${rawUrl}`)
             }
-            return res.text()
+            const text = await res.text()
+            return { filePath, text }
           })
         )
 
-        const combined = texts.join('\n\n---\n\n')
+        const combined = formatAllPagesClipboard(fileEntries)
 
         if (!navigator?.clipboard) {
           throw new Error('Clipboard API unavailable')
@@ -187,7 +214,7 @@ export default function CopyPageButton() {
           {label}
         </span>
 
-        {/* Arrow pill: slightly smaller outline, big arrow */}
+        {/* Arrow pill: circle + arrow glyph, arrow nudged up slightly */}
         <span
           role="button"
           aria-label="Copy options"
@@ -198,14 +225,13 @@ export default function CopyPageButton() {
         >
           <span className="_inline-flex _items-center _justify-center _h-7 _px-3 _rounded-full _border _border-white/20 _bg-white/0 _text-2xl _font-semibold _text-white/90 hover:_bg-white/10">
             <span
-              style={{ position: 'relative', top: '-1px' }} // adjust -1px to taste
+              style={{ position: 'relative', top: '-1px' }}
               className="leading-none"
             >
               {menuOpen ? '▾' : '▸'}
             </span>
           </span>
         </span>
-
       </button>
 
       {/* Dropdown: wider + more padded items */}
