@@ -202,9 +202,9 @@ export default function CopyPageButton() {
           aria-haspopup="menu"
           aria-expanded={menuOpen}
           onClick={handleArrowClick}
-          className="_inline-flex _items-center _justify-center _px-1.5 _py-0.5 _text-xs _text-white/70 hover:_bg-white/10 _rounded-sm"
+          className="_inline-flex _items-center _justify-center _px-7 _py-3 _text-2xl _font-semibold _text-white/80 hover:_bg-white/10 _rounded-md"
         >
-          ▾
+          {menuOpen ? '▾' : '▸'}
         </span>
       </button>
 
