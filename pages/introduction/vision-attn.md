@@ -1,16 +1,20 @@
-# Vision: Streams, Payroll Rails, and Revenue-Native Credit
+# Vision: Payrolls & Streams, Cards & Commerce, and Revenue-Native Credit
 
 This page is a forward-looking sketch of where attn could be in a later phase (“v3”).
 It builds on the current design (Solana-native revenue accounts and credit) and extends it across:
 
-* onchain streaming infra (Sablier and similar), and
-* offchain payroll rails (Deel, cards) as spend endpoints,
+* onchain streaming infra (Sablier and similar),
+* card and commerce rails (Kast, Avici, merchant and BNPL partners) as spend endpoints, and
+* offchain payroll platforms (Deel and similar) as optional spend endpoints,
 
 while keeping the core invariant:
 
-> attn underwrites and banks **revenue**, not banks, payroll providers, or personal credit scores.
+> attn underwrites and banks **revenue streams** of creators, apps, DAOs, and companies.  
+> Risk is taken on those cashflows and entities, not on banks, card programs, payroll providers, or individual credit scores.
 
-It is deliberately aspirational and makes no assumption that large incumbents (like Deel) will partner early, if at all.
+attn facilities are always extended to entities (projects, DAOs, companies, platforms), never directly to individual employees or shoppers.
+
+This page is deliberately aspirational and makes no assumption that large incumbents (like Deel) will partner early, if at all.
 
 ---
 
@@ -23,6 +27,7 @@ Today’s design (v0–v1 in this language):
   * Pump.fun creator rewards
   * protocol fee switches
   * DePIN / machine income
+
 * **Core primitives**
 
   * attn revenue accounts (jointly governed vaults)
@@ -37,8 +42,9 @@ The next steps (v2) generalise this to **streams**:
 The “v3” vision extends one step further:
 
 * attn remains a **revenue bank** onchain,
-* but the *spend side* of its credit (payroll, cards, payouts) can connect into large payroll rails and card programs,
-* without making those rails core dependencies or collateral sources.
+* but the *spend side* of its credit (cards, commerce, BNPL, payroll, payouts) can connect into card programs, merchant rails, and payroll providers,
+* while collateral and risk remain on the underlying onchain revenues and streams, not on those rails themselves,
+* and without making any of those rails core dependencies or collateral sources.
 
 ---
 
@@ -63,8 +69,9 @@ On top of that account you get:
 * the option to:
 
   * withdraw directly in stables,
-  * plug a card into the facility (Kast, Avici, etc.),
-  * route a portion of credit into payroll rails (onchain streams, or offchain providers).
+  * plug a card into the facility (Kast, Avici, etc.) and pay for travel, SaaS, events, and day-to-day spend,
+  * route a portion of credit into payroll rails (onchain streams, or offchain providers),
+  * fund small BNPL-style instalments or staged payments that you offer to your own users or partners via existing checkout stacks, where you remain the BNPL provider of record and attn just funds your facility.
 
 From your perspective, the line is “just there”:
 
@@ -86,13 +93,15 @@ You use attn as:
 
   * a governed vault where fees route,
   * credit lines and advances backed by those fees + streamed income,
+  * card and wallet limits that grow with revenues via funding addresses,
+  * BNPL and net-terms capacity for your own customers, funded from the same facility,
   * automatic repayment from future inflows.
 
 You do not need to move your operations treasury or payroll stack on-chain.
 You only need to:
 
 * route the relevant revenue flows onchain into attn, and
-* optionally expose how attn-funded credit is used (payroll, cards, growth).
+* optionally expose how attn-funded credit is used (payroll, cards, commerce, growth).
 
 ### Individual contributors (end-state)
 
@@ -121,9 +130,9 @@ LPs hold attnUSD (and, later, more granular PT/YT exposure) backed by:
 
   * development, growth, liquidity,
   * payroll (onchain and offchain),
-  * card spend and operations.
+  * card spend, commerce, and operations.
 
-The LP side does not care which specific payroll or card rail was used.
+The LP side does not care which specific payroll, card, or merchant rail was used.
 LPs are exposed only to:
 
 * revenue-backed PT/YT positions,
@@ -176,31 +185,35 @@ Streams become another **standardised revenue input**, alongside Squads-based re
 
 ---
 
-## 4. Payroll rails and card programs as spend endpoints
+## 4. Card, commerce, and payroll rails as spend endpoints
 
-v3 assumes a clear separation:
+v3 assumes a clear separation between where risk is taken and where credit is spent:
 
 * **Collateral side** – onchain revenues and streams (fees, creator rewards, Sablier, etc.)
-* **Spend side** – where credit-funded cash goes (payroll, cards, vendors).
+* **Spend side** – where credit-funded cash goes (cards, commerce, BNPL, payroll, vendors).
 
 On the spend side:
 
 * card programs (Kast, Avici, others) expose **funding addresses** on Solana or stablecoin accounts;
+* commerce and BNPL stacks expose merchant or settlement wallets, or internal ledgers;
 * payroll providers (including Deel and newer, crypto-native stacks) accept **USDC or fiat** to run their flows.
 
 attn’s job remains:
 
 * sizing, underwriting, and managing the **credit facility**,
-* automating **draws** to these endpoints (auto top-ups of card funding addresses, prepaid payroll wallets, etc.),
+* automating **draws** to these endpoints (auto top-ups of card funding addresses, prepaid payroll wallets, merchant or platform wallets, etc.),
 * enforcing **repayment** via revenue routing and PT/YT accounting.
 
 The protocol does not:
 
 * handle card KYC,
-* become a payroll provider,
-* or attempt to reimplement HR / compliance.
+* operate as a consumer-facing payroll or BNPL brand (it lends to entities, not to employees or shoppers),
+* originate or hold direct consumer receivables,
+* or attempt to reimplement HR, consumer lending, or commerce stack logic.
 
 It funds those systems.
+
+For detailed integration patterns with card, commerce, and BNPL partners, see the separate page **“For Cards, Commerce & BNPL Partners.”**
 
 ---
 
@@ -263,12 +276,12 @@ The v3 vision implies a simple but strict ordering:
    * Extend credit to DAOs and entities whose income is streamed.
    * Carefully explore stream-backed credit to individuals when the stream is enforceable.
 
-4. **v3 – Broad payroll / spend integration**
+4. **v3 – Broad payroll / commerce / spend integration**
 
    * Fully general “revenue → credit → spend” loop, where:
 
      * revenue sources can be PDAs, streams, and other onchain routes,
-     * spend endpoints can be cards, payroll providers, and vendor rails.
+     * spend endpoints can be cards, payroll providers, merchant and BNPL rails, and vendor wallets.
 
    * Integration with large incumbents (like Deel) is strictly additive:
 
@@ -289,14 +302,14 @@ Even in this expanded vision, a few principles remain constant:
 * **Clear separation of concerns**
 
   * attn provides revenue accounts, credit facilities, and PT/YT representation.
-  * Card programs, payroll providers, and HR stacks remain separate, opinionated products.
+  * Card, commerce, BNPL, and payroll stacks remain separate, opinionated products.
 
 * **Transparent risk to LPs**
 
   * attnUSD and other LP exposures are always backed by tokenised revenue positions and stablecoins.
-  * No hidden leverage via third-party payroll or card providers.
+  * No hidden leverage via third-party payroll, card, or BNPL providers.
 
-The v3 direction is not “attn becomes a payroll or card company”.
-It is “attn becomes the default **revenue-native credit engine** underneath whatever payroll and spend stack a project already uses.”
+The v3 direction is not “attn becomes a payroll, card, or BNPL company”.
+It is “attn becomes the **revenue-native credit engine** underneath whatever card, commerce, payroll, and spend stack a project already uses.”
 
 This page exists to keep that direction clear, while acknowledging that some parts of it (especially tight integrations with large incumbents) are unlikely to be available early and must not be assumed for the core protocol to make sense.
