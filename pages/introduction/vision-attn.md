@@ -10,10 +10,11 @@ It builds on the current design (Solana-native revenue accounts and credit) and 
 
 while keeping the core invariant:
 
-> attn underwrites and banks **revenue streams** of creators, apps, DAOs, and companies.  
-> Risk is taken on those cashflows and entities, not on banks, card programs, payroll providers, or individual credit scores.
+> attn underwrites and banks **onchain revenue streams** of the entities that borrow from it.  
+> Risk is taken on those cashflows and those borrowers. Payment, card, and payroll providers are just where funds are spent; they are not guarantors, and attn does not take consumer risk on employees or shoppers.
 
-Facilities always go to **entities** (projects, DAOs, companies, platforms), never directly to individual employees or shoppers.
+
+Facilities always go to **revenue-generating entities** (projects, DAOs, companies, platforms), never directly to individual employees or shoppers. Card, commerce, BNPL, and payroll providers may bear consumer risk in their own stack; attn does not.
 
 This page is aspirational and assumes no privileged access to large incumbents (like Deel).
 
