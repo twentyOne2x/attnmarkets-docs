@@ -18,19 +18,15 @@ const DEFAULT_LABEL = 'Copy page'
 const buildAllPageFiles = () => {
   const files = []
 
-  // Root meta defines section order:
-  // website, twitter, telegram, github, index, introduction, users, mechanics, tokenomics, roadmap
   const rootOrder = Object.keys(rootMeta)
 
   rootOrder.forEach((key) => {
     if (key === 'index') {
-      // Top-level overview page
       files.push('/index.md')
       return
     }
 
     if (key === 'introduction') {
-      // Pages under /introduction in introduction/_meta.js order
       Object.keys(introductionMeta).forEach((slug) => {
         files.push(`/introduction/${slug}.md`)
       })
@@ -38,7 +34,6 @@ const buildAllPageFiles = () => {
     }
 
     if (key === 'users') {
-      // Pages under /users in users/_meta.js order
       Object.keys(usersMeta).forEach((slug) => {
         files.push(`/users/${slug}.md`)
       })
@@ -46,7 +41,6 @@ const buildAllPageFiles = () => {
     }
 
     if (key === 'mechanics') {
-      // Pages under /mechanics in mechanics/_meta.js order
       Object.keys(mechanicsMeta).forEach((slug) => {
         files.push(`/mechanics/${slug}.md`)
       })
@@ -54,7 +48,6 @@ const buildAllPageFiles = () => {
     }
 
     if (key === 'tokenomics') {
-      // Pages under /tokenomics in tokenomics/_meta.js order
       Object.keys(tokenomicsMeta).forEach((slug) => {
         files.push(`/tokenomics/${slug}.md`)
       })
@@ -62,12 +55,9 @@ const buildAllPageFiles = () => {
     }
 
     if (key === 'roadmap') {
-      // Single top-level roadmap page, appears last as in rootMeta
       files.push('/roadmap.md')
       return
     }
-
-    // Everything else (website, twitter, telegram, github, etc.) is ignored
   })
 
   return files
@@ -185,36 +175,47 @@ export default function CopyPageButton() {
 
   return (
     <div className="_relative _inline-block">
-      {/* Single button: main action + inline caret */}
+      {/* Main pill button (slightly smaller) */}
       <button
         type="button"
         onClick={handleCopyPageClick}
         disabled={busy}
         title="Copy this page's markdown"
-        className="_inline-flex _items-center _gap-2 _rounded-md _border _border-white/10 _bg-black/40 _px-3 _py-1.5 _text-sm _font-medium _text-white/90 hover:_bg-white/10 focus:_outline-none focus:_ring-2 focus:_ring-white/50 disabled:_opacity-60"
+        className="_inline-flex _items-center _gap-2 _rounded-full _border _border-white/10 _bg-black/40 _px-3 _py-1 _text-xs _font-medium _text-white/90 hover:_bg-white/10 focus:_outline-none focus:_ring-2 focus:_ring-white/50 disabled:_opacity-60"
       >
         <span aria-live="polite" className="_mr-1">
           {label}
         </span>
+
+        {/* Arrow pill: slightly smaller outline, big arrow */}
         <span
           role="button"
           aria-label="Copy options"
           aria-haspopup="menu"
           aria-expanded={menuOpen}
           onClick={handleArrowClick}
-          className="_inline-flex _items-center _justify-center _px-7 _py-3 _text-2xl _font-semibold _text-white/80 hover:_bg-white/10 _rounded-md"
+          className="_inline-flex _items-center _justify-center _ml-1"
         >
-          {menuOpen ? '▾' : '▸'}
+          <span className="_inline-flex _items-center _justify-center _h-7 _px-3 _rounded-full _border _border-white/20 _bg-white/0 _text-2xl _font-semibold _text-white/90 hover:_bg-white/10">
+            <span
+              style={{ position: 'relative', top: '-1px' }} // adjust -1px to taste
+              className="leading-none"
+            >
+              {menuOpen ? '▾' : '▸'}
+            </span>
+          </span>
         </span>
+
       </button>
 
+      {/* Dropdown: wider + more padded items */}
       {menuOpen && (
-        <div className="_absolute _right-0 _z-20 _mt-1 _w-44 _overflow-hidden _rounded-md _border _border-white/10 _bg-black/90 _shadow-lg">
+        <div className="_absolute _right-0 _z-20 _mt-1 _w-56 _overflow-hidden _rounded-lg _border _border-white/10 _bg-black/95 _shadow-xl">
           <button
             type="button"
             onClick={handleCopyPageClick}
             disabled={busy}
-            className="_block _w-full _px-3 _py-2 _text-left _text-sm _text-white/90 hover:_bg-white/10 disabled:_opacity-60"
+            className="_block _w-full _px-5 _py-3.5 _text-left _text-base _text-white/90 hover:_bg-white/10 disabled:_opacity-60"
           >
             Copy this page
           </button>
@@ -222,7 +223,7 @@ export default function CopyPageButton() {
             type="button"
             onClick={handleCopyAllClick}
             disabled={busy}
-            className="_block _w-full _px-3 _py-2 _text-left _text-sm _text-white/90 hover:_bg-white/10 disabled:_opacity-60"
+            className="_block _w-full _px-5 _py-3.5 _text-left _text-base _text-white/90 hover:_bg-white/10 disabled:_opacity-60"
           >
             Copy all pages
           </button>

@@ -93,10 +93,10 @@ const sidebar = {
   },
   github: {
     title: socialLinkTitle(GitHubIcon, 'GitHub'),
-    href: 'https://github.com/twentyOne2x/attnmarket',
+    href: 'https://github.com/twentyOne2x/attnmarkets',
     newWindow: true,
     type: 'page'
-  },
+  },    
   index: {
     title: overviewTitle('Overview')
   },
