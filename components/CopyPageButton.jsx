@@ -3,40 +3,77 @@
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 
+// Import meta files to derive ordering
+import rootMeta from '../pages/_meta'
+import introductionMeta from '../pages/introduction/_meta'
+import mechanicsMeta from '../pages/mechanics/_meta'
+import tokenomicsMeta from '../pages/tokenomics/_meta'
+import usersMeta from '../pages/users/_meta'
+
 const RAW_BASE =
   'https://raw.githubusercontent.com/twentyOne2x/attnmarkets-docs/main/pages'
 const DEFAULT_LABEL = 'Copy page'
 
-// Explicit list of all markdown files under /pages
-const ALL_PAGE_FILES = [
-  '/index.md',
-  '/roadmap.md',
+// Build the list of all .md files in the order defined by _meta.js
+const buildAllPageFiles = () => {
+  const files = []
 
-  // introduction
-  '/introduction/banking-the-internet-of-revenue.md',
-  '/introduction/the-missing-layer-for-onchain-revenues.md',
-  '/introduction/vision-attn.md',
-  '/introduction/where-attn-sits-next-to-avici-and-pye.md',
-  '/introduction/who-attn-is-for.md',
+  // Root meta defines section order:
+  // website, twitter, telegram, github, index, introduction, users, mechanics, tokenomics, roadmap
+  const rootOrder = Object.keys(rootMeta)
 
-  // mechanics
-  '/mechanics/architecture-overview.md',
-  '/mechanics/how-it-works-nontechnical.md',
-  '/mechanics/pricing-and-parameters.md',
-  '/mechanics/pt-yt-attnusd.md',
-  '/mechanics/revenue-accounts-and-signing-model.md',
-  '/mechanics/risk-and-limits.md',
+  rootOrder.forEach((key) => {
+    if (key === 'index') {
+      // Top-level overview page
+      files.push('/index.md')
+      return
+    }
 
-  // tokenomics
-  '/tokenomics/tokenomics-overview.md',
+    if (key === 'introduction') {
+      // Pages under /introduction in introduction/_meta.js order
+      Object.keys(introductionMeta).forEach((slug) => {
+        files.push(`/introduction/${slug}.md`)
+      })
+      return
+    }
 
-  // users
-  '/users/for-apps-daos-and-builders.md',
-  '/users/for-cards-and-commerce-partners.md',
-  '/users/for-creators-devs-and-ctos.md',
-  '/users/for-launchpads-and-incubators.md',
-  '/users/for-liquidity-providers.md'
-]
+    if (key === 'users') {
+      // Pages under /users in users/_meta.js order
+      Object.keys(usersMeta).forEach((slug) => {
+        files.push(`/users/${slug}.md`)
+      })
+      return
+    }
+
+    if (key === 'mechanics') {
+      // Pages under /mechanics in mechanics/_meta.js order
+      Object.keys(mechanicsMeta).forEach((slug) => {
+        files.push(`/mechanics/${slug}.md`)
+      })
+      return
+    }
+
+    if (key === 'tokenomics') {
+      // Pages under /tokenomics in tokenomics/_meta.js order
+      Object.keys(tokenomicsMeta).forEach((slug) => {
+        files.push(`/tokenomics/${slug}.md`)
+      })
+      return
+    }
+
+    if (key === 'roadmap') {
+      // Single top-level roadmap page, appears last as in rootMeta
+      files.push('/roadmap.md')
+      return
+    }
+
+    // Everything else (website, twitter, telegram, github, etc.) is ignored
+  })
+
+  return files
+}
+
+const ALL_PAGE_FILES = buildAllPageFiles()
 
 const normalizePath = (path) => {
   if (!path || path === '/') {
@@ -148,7 +185,7 @@ export default function CopyPageButton() {
 
   return (
     <div className="_relative _inline-block">
-      {/* Single button: whole surface is one button, arrow is a sub-area */}
+      {/* Single button: main action + inline caret */}
       <button
         type="button"
         onClick={handleCopyPageClick}
