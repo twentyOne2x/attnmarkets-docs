@@ -1,4 +1,4 @@
-# Where attn Sits Next to Avici, Pye, Wildcat, Altitude, 3Jane, Xitadel, and Colossus
+# Where attn Sits Next to Avici, Pye, Wildcat, Altitude, 3Jane, Xitadel, Colossus, and Klarna + Tempo
 
 attn is easier to understand when seen next to other projects that work on credit, yield, and onchain underwriting.
 
@@ -11,6 +11,7 @@ Especially relevant points of comparison:
 - **3Jane.xyz** – unsecured credit lines underwritten on verified assets + offchain credit data (EVM-first)  
 - **Xitadel.fi** – Liquid Treasury Tokens (LTTs) backed by project treasuries  
 - **Colossus.credit** – stablecoin card and payment-network stack built as an Ethereum L2 (very early / sparse public detail)  
+- **Klarna + Tempo** – consumer BNPL network and USD stablecoin on a payments-focused L1  
 
 attn.markets focuses on a different object:
 
@@ -24,16 +25,17 @@ Skim the table and exec summaries first. Expand a project if you want detail.
 
 ## At a glance
 
-| Project     | Layer / object                                   | What it focuses on                                                                     | Primary users                                      | How it intersects with attn                                                                                  |
-|------------|---------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| **Avici.money**   | Individual banking + personal trust layer        | Accounts, cards, and spending limits based on an individual Trust Score               | Individuals, freelancers, small businesses         | Avici.money handles **personal** cashflow and card credit; attn.markets handles **app / creator onchain revenue** and credit at the project layer |
-| **Pye.fi**     | Stake / validator-yield layer                    | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues                   |
-| **Wildcat.finance** | Market / reputation credit layer                 | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation         |
-| **Altitude (Squads.xyz)**| Treasury and payments layer                      | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude (Squads.xyz) holds operating cash; attn.markets structures credit and yield on revenue flows                             |
-| **3Jane.xyz**   | Credit-account / future-yield layer              | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane.xyz requires linking real-world accounts/credit data; attn.markets sizes lines only on live onchain revenues |
-| **Xitadel.fi** | Treasury / native-token collateral layer         | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel.fi finances against **treasury tokens**; attn.markets finances against **revenues**. A project can use both at once. |
-| **Colossus.credit** | Payments / card-network layer (EVM)            | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus.credit targets consumer/merchant payments; attn.markets targets revenue-collateralised credit for onchain businesses |
-| **attn.markets**    | Revenue layer                                    | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
+| Project           | Layer / object                                   | What it focuses on                                                                     | Primary users                                      | How it intersects with attn                                                                                  |
+|------------------|---------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| **Avici.money**  | Individual banking + personal trust layer         | Accounts, cards, and spending limits based on an individual Trust Score               | Individuals, freelancers, small businesses         | Avici.money handles **personal** cashflow and card credit; attn.markets handles **app / creator onchain revenue** and credit at the project layer |
+| **Pye.fi**       | Stake / validator-yield layer                     | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues                   |
+| **Wildcat.finance** | Market / reputation credit layer               | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation         |
+| **Altitude (Squads.xyz)** | Treasury and payments layer              | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude (Squads.xyz) holds operating cash; attn.markets structures credit and yield on revenue flows                             |
+| **3Jane.xyz**    | Credit-account / future-yield layer               | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane.xyz requires linking real-world accounts/credit data; attn.markets sizes lines only on live onchain revenues |
+| **Xitadel.fi**   | Treasury / native-token collateral layer          | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel.fi finances against **treasury tokens**; attn.markets finances against **revenues**. A project can use both at once. |
+| **Colossus.credit** | Payments / card-network layer (EVM)           | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus.credit targets consumer/merchant payments; attn.markets targets revenue-collateralised credit for onchain businesses |
+| **Klarna + Tempo** | Consumer BNPL + payments L1 layer              | BNPL lending, merchant checkout, and a USD stablecoin issued on a payments-optimised L1 for cheaper global payments | Consumers, merchants, BNPL investors; payment and platform partners | Klarna + Tempo target **consumer BNPL and payments**; attn.markets targets **revenue-backed credit to entities**. In principle, Klarna-style BNPL providers or merchants on Tempo could tap attn.markets for entity-level financing against their revenues, while consumer risk stays on their own balance sheet. |
+| **attn.markets** | Revenue layer                                     | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
 
 ---
 
@@ -362,6 +364,55 @@ Colossus.credit is adjacent to attn.markets only at the highest level (both are 
 
 ---
 
+## Klarna + Tempo
+
+- Layer: consumer BNPL network + payments-focused L1.  
+- Focus: BNPL lending and a USD-pegged stablecoin used for cheaper, high-volume global payments on a dedicated payments chain.  
+- Primary users: consumers and merchants using Klarna at checkout; payment and platform partners integrating Tempo.  
+- Difference vs attn.markets: Klarna takes **consumer credit risk** and runs BNPL and checkout; Tempo provides **payments infrastructure** optimised for stablecoin transactions. attn.markets takes risk on **business revenues** and lends only to entities, not to individual shoppers.  
+- Relationship: Klarna-style BNPL providers or merchants on Tempo could, in principle, use attn.markets as a **wholesale, revenue-backed credit line**. Consumer receivables and UX remain with Klarna/Tempo; attn.markets would only finance the BNPL or merchant entity against its revenue flows.
+
+<details>
+<summary>Deep dive</summary>
+
+**Klarna** is a large BNPL and checkout network that finances consumer purchases and collects instalments from shoppers on behalf of merchants. Its core risk book is consumer receivables and merchant performance, not protocol-level credit to other apps.
+
+Recently, Klarna announced a **USD-pegged stablecoin** to reduce costs for international payments and FX, and to route more of its settlement flow over crypto rails. That stablecoin is planned to launch on **Tempo**, a dedicated payments Layer 1. Tempo is an **EVM-compatible L1** incubated by Stripe and Paradigm, designed for high-volume, real-world payments with a strong focus on stablecoin transactions and low fees.
+
+In that stack:
+
+- Klarna handles:
+  - consumer BNPL underwriting,  
+  - merchant integration and checkout UX,  
+  - collections on consumer instalments.  
+
+- Tempo provides:
+  - payments-focused blockspace,  
+  - stablecoin settlement for Klarna and other partners,  
+  - an environment optimised for high-throughput, low-cost transactions.
+
+Where attn.markets differs and could intersect:
+
+- attn.markets does **not** take consumer risk or originate BNPL receivables.  
+- It could, however, lend to:
+  - Klarna-style BNPL platforms as **entities**, against their net fee and interest revenue streams, or  
+  - merchants and platforms operating on Tempo that have predictable, onchain revenues.
+
+In that setup:
+
+- consumer instalments and credit risk stay on Klarna’s balance sheet (or similar BNPL providers),  
+- Tempo remains the payments and settlement L1,  
+- attn.markets is a separate revenue-backed credit engine that can fund BNPL providers or merchants at the entity level, without touching individual shoppers.
+
+This keeps the boundary clear:
+
+- Klarna/Tempo = consumer BNPL and payments rails,  
+- attn.markets = revenue-backed financing for businesses that happen to run over those rails.
+
+</details>
+
+---
+
 ## How the layers line up
 
 All of these projects care about:
@@ -393,6 +444,9 @@ They operate at different layers:
 - **Colossus.credit** – payments / card-network layer:  
   stablecoin-native card authorization and settlement rails mapped to onchain transactions  
 
+- **Klarna + Tempo** – consumer BNPL + payments L1 layer:  
+  BNPL receivables, merchant checkout, and a USD stablecoin on a payments-centric L1 for global payments  
+
 - **attn.markets** – revenue layer:  
   revenue accounts, base yield on idle revenues, advances, credit lines, and pooled yield on app and creator income, with revenues themselves wired as collateral
 
@@ -403,7 +457,8 @@ A mature project can realistically touch several of these at once:
 - staking positions structured via Pye.fi  
 - occasional reputation-based or multi-factor credit via Wildcat.finance or 3Jane.xyz  
 - treasury-backed bond-style financing via Xitadel.fi  
-- payments or cards via Colossus.credit-style rails  
+- consumer payments or cards via Colossus.credit-style rails  
+- BNPL and checkout via Klarna-like platforms on Tempo or similar L1s  
 - and revenue-backed financing and yield via attn.markets
 
 attn.markets’s role in that stack is focused and narrow:  
