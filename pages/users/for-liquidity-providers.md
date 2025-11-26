@@ -19,7 +19,7 @@ attnUSD is a **USD-denominated share** backed by:
   - apps  
   - creators  
   - DAOs  
-  - x402 AIs and DePIN projects.
+  - other revenue-generating onchain businesses.
 
 You deposit stables and receive attnUSD. Over time:
 
@@ -59,10 +59,10 @@ High-level risks include:
 - **Concentration risk** – poor diversification can make one failure more painful.  
 - **Operational and program risk** – Solana, programs, keepers, or routes can fail.
 
-More detail is in:
+The detailed mechanics live in:
 
-- [LP Guide](../mechanics/lp-guide.md)  
-- [Risks](../governance-and-risks/risks.md)
+- [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md)  
+- [LP Guide](../mechanics/lp-guide.md)
 
 The key point:
 

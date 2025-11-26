@@ -235,7 +235,7 @@ For that, see:
 
 - [How attn works (non-technical)](../mechanics/how-it-works-nontechnical.md)  
 - [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md)  
-- [LP Guide](../mechanics/lp-guide.md)
+- [For Liquidity Providers](../users/for-liquidity-providers.md)
 
 ---
 

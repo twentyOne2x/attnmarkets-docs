@@ -2,7 +2,7 @@
 
 This page is for:
 
-- card programs (Emerald-style USDC/sUSD cards, Kast, Avici, etc.),
+- card programs and wallets (cards funded in SOL or stablecoins, Kast, Avici, Solayer's Emerald, etc.),
 - travel and rewards platforms,
 - merchant networks and marketplaces,
 - B2B SaaS and infra providers,
@@ -29,7 +29,7 @@ End users see normal cards, checkouts, and instalments; attn only ever lends to 
 
 2. **Automatic card and wallet top-ups**
 
-   - Card programs or wallets expose a **funding address** in USDC (or similar) per card/wallet.
+   - Card programs or wallets expose a **funding address** in SOL or stablecoins (USDC or similar) per card/wallet.
    - attn watches those addresses and the entity’s facility.
    - When balances fall below thresholds and there is headroom, attn:
      - draws from the facility,
@@ -43,7 +43,7 @@ End users see normal cards, checkouts, and instalments; attn only ever lends to 
 
 3. **Merchant, B2B and vertical BNPL financed from revenues**
 
-   - For shops, platforms, and B2B vendors, attn facilities can fund:
+   - For shops, platforms, and B2B vendors (including B2B SaaS and infra providers), attn facilities can fund:
      - instalment offers (“3 × monthly payments”),
      - pre-packaged travel or commerce bundles,
      - B2B payment terms on large API / infra invoices (30–90 day net terms),
@@ -67,10 +67,10 @@ End users see normal cards, checkouts, and instalments; attn only ever lends to 
 
 ### 1.1 Card programs
 
-For card programs similar to Solayer’s Emerald Card:
+For card programs that issue cards funded in SOL or stablecoins:
 
 - Visa/Mastercard rails,
-- USDC (and optionally a yield-bearing stablecoin like sUSD) as funding currency,
+- SOL or stablecoins (USDC, USDT, or other supported assets) as funding currency,
 - integrated perks such as travel discounts, points, and partner offers,
 
 attn enables:
@@ -116,7 +116,7 @@ Objects:
   - repaid automatically from a slice of future revenues.
 
 - **Card funding address**  
-  - a USDC (or stablecoin) address per card, provided by the card program,
+  - a SOL or stablecoin funding address per card, provided by the card program,
   - KYC, card issuance, Visa/Mastercard, Apple/Google Pay are handled by the program.
 
 Flow:
@@ -133,7 +133,7 @@ Flow:
    - checks headroom on the entity facility and per-card caps,
    - when `balance < min_card_balance` and there is headroom:
      - draws `topup_chunk` from the facility,
-     - sends USDC to the funding address,
+     - sends funds to the funding address,
      - records a tagged credit position.
 
 Card programs retain:
@@ -183,7 +183,7 @@ Who owes whom:
 
 Example:
 
-- An infra or API provider issues a 50k USDC monthly invoice to a customer on 60-day terms.
+- An infra or API provider issues a 50k equivalent monthly invoice to a customer on 60-day terms.
 - The provider holds an attn facility sized off recurring protocol / network revenues (including similar invoices).
 
 Flow:

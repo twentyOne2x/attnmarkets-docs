@@ -8,7 +8,7 @@ It is **Solana-native and onchain-only**:
 - no real-world asset verification
 - no KYC
 
-The docs are organised around four main groups.
+The docs are organised around five main groups.
 
 ---
 
@@ -101,9 +101,33 @@ Your section:
 
 ---
 
+## 5. Cards, commerce & BNPL partners
+
+“I run cards, checkouts, or B2B billing and want credit that is funded by onchain revenues, not unsecured consumer loans.”
+
+Examples:
+
+- card programs and wallets (USDC cards, Kast, Avici, etc.)  
+- travel and rewards platforms  
+- merchant networks and marketplaces  
+- B2B SaaS and infra providers offering usage-based billing and net terms  
+- BNPL / checkout providers who want their limits to grow with merchant or platform revenues
+
+Typical goals:
+
+- offer cards and wallets whose limits grow with project revenues  
+- fund instalments, net terms, and invoice BNPL from **entity-level revenue-backed facilities**  
+- keep all consumer KYC, UX, and receivables on the partner’s stack  
+- share in the economics of revenue-backed credit
+
+Your section:  
+[For Cards, Commerce & BNPL Partners](../users/for-cards-and-commerce-partners.md)
+
+---
+
 You can stay in your persona lane and never touch the mechanics,  
 or you can go deeper when you are ready:
 
 - [How attn works (non-technical)](../mechanics/how-it-works-nontechnical.md)  
 - [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md)  
-- [LP Guide](../mechanics/lp-guide.md)
+- [For Liquidity Providers](../users/for-liquidity-providers.md)

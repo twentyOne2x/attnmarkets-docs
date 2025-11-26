@@ -110,26 +110,7 @@ attn will:
 
 ---
 
-## 4. DePIN and machine revenue (later-stage patterns)
-
-In later integrations (see `use-cases/icm-launchpads-and-depin.md`), attn can also be applied to:
-
-- machine revenue from DePIN networks,  
-- where devices and protocols generate onchain income.
-
-For you as a launchpad, this can support:
-
-- token launches,  
-- plus financing of real-world machine fleets via revenue bonds.
-
-The core docs here focus on:
-
-- how to plug your launchpad into attn,  
-- how to offer revenue-based credit within existing flows.
-
----
-
-## 5. Operational integration
+## 4. Operational integration
 
 To use attn smoothly, you will want:
 
