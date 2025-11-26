@@ -1,4 +1,4 @@
-# Where attn Sits Next to Avici, Slash, Pye, Wildcat, Altitude, 3Jane, Xitadel, Colossus, and Klarna + Tempo
+# Where attn Sits Next to Avici, Slash, Krak, Pye, Wildcat, Altitude, 3Jane, Xitadel, Colossus, and Klarna + Tempo
 
 attn is easier to understand when seen next to other projects that work on credit, yield, and onchain underwriting.
 
@@ -6,6 +6,7 @@ Especially relevant points of comparison:
 
 - **Avici.money** – internet banking for people  
 - **Slash** – business banking, corporate cards, and Global USD accounts for entities  
+- **Krak (Kraken KRAK app + card)** – consumer global money app and multi-asset debit card  
 - **Pye.fi** – structured markets for staking yield  
 - **Wildcat.finance** – undercollateralised credit markets for vetted borrowers  
 - **Altitude (Squads.xyz)** – stablecoin business accounts and treasury  
@@ -26,18 +27,19 @@ Skim the table and exec summaries first. Expand a project if you want detail.
 
 ## At a glance
 
-| Project           | Layer / object                                   | What it focuses on                                                                     | Primary users                                      | How it intersects with attn                                                                                  |
-|------------------|---------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| **Avici.money**  | Individual banking + personal trust layer         | Accounts, cards, and spending limits based on an individual Trust Score               | Individuals, freelancers, small businesses         | Avici.money handles **personal** cashflow and card credit; attn.markets handles **app / creator onchain revenue** and credit at the project layer |
-| **Slash**        | Business banking, cards, and Global USD layer     | Business checking, corporate cards, stablecoin payments, Global USD (USDSL), working capital | SMEs, internet entrepreneurs, Web3 teams, ecommerce, agencies | Slash handles **entity banking, cards, and stablecoin rails**; attn.markets provides **revenue-backed credit and yield**, especially for onchain/Web3 clients who then spend via Slash |
-| **Pye.fi**       | Stake / validator-yield layer                     | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues                   |
-| **Wildcat.finance** | Market / reputation credit layer               | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation         |
-| **Altitude (Squads.xyz)** | Treasury and payments layer              | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude (Squads.xyz) holds operating cash; attn.markets structures credit and yield on revenue flows                             |
-| **3Jane.xyz**    | Credit-account / future-yield layer               | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane.xyz requires linking real-world accounts/credit data; attn.markets sizes lines only on live onchain revenues |
-| **Xitadel.fi**   | Treasury / native-token collateral layer          | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel.fi finances against **treasury tokens**; attn.markets finances against **revenues**. A project can use both at once. |
-| **Colossus.credit** | Payments / card-network layer (EVM)           | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus.credit targets consumer/merchant payments; attn.markets targets revenue-collateralised credit for onchain businesses |
-| **Klarna + Tempo** | Consumer BNPL + payments L1 layer              | BNPL lending, merchant checkout, and a USD stablecoin issued on a payments-optimised L1 for cheaper global payments | Consumers, merchants, BNPL investors; payment and platform partners | Klarna + Tempo target **consumer BNPL and payments**; attn.markets targets **revenue-backed credit to entities**. In principle, Klarna-style BNPL providers or merchants on Tempo could tap attn.markets for entity-level financing against their revenues, while consumer risk stays on their own balance sheet. |
-| **attn.markets** | Revenue layer                                     | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
+| Project                         | Layer / object                                   | What it focuses on                                                                     | Primary users                                      | How it intersects with attn                                                                                  |
+|---------------------------------|---------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| **Avici.money**                | Individual banking + personal trust layer         | Accounts, cards, and spending limits based on an individual Trust Score               | Individuals, freelancers, small businesses         | Avici.money handles **personal** cashflow and card credit; attn.markets handles **app / creator onchain revenue** and credit at the project layer |
+| **Slash**                      | Business banking, cards, and Global USD layer     | Business checking, corporate cards, stablecoin payments, Global USD (USDSL), working capital | SMEs, internet entrepreneurs, Web3 teams, ecommerce, agencies | Slash handles **entity banking, cards, and stablecoin rails**; attn.markets provides **revenue-backed credit and yield**, especially for onchain/Web3 clients who then spend via Slash |
+| **Krak (KRAK app + card)**    | Individual + global money-app layer               | Personal account, P2P transfers, yields, and a multi-asset Mastercard debit card that spends 400+ fiat and crypto assets | Individuals, freelancers, crypto users, remitters  | Krak covers **personal accounts, card, and yield**; attn.markets covers **revenue-backed credit for apps/creators/DAOs** that may ultimately pay users into apps like Krak |
+| **Pye.fi**                     | Stake / validator-yield layer                     | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues                   |
+| **Wildcat.finance**           | Market / reputation credit layer                  | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation         |
+| **Altitude (Squads.xyz)**     | Treasury and payments layer                       | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude (Squads.xyz) holds operating cash; attn.markets structures credit and yield on revenue flows                             |
+| **3Jane.xyz**                 | Credit-account / future-yield layer               | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane.xyz requires linking real-world accounts/credit data; attn.markets sizes lines only on live onchain revenues |
+| **Xitadel.fi**                | Treasury / native-token collateral layer          | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel.fi finances against **treasury tokens**; attn.markets finances against **revenues**. A project can use both at once. |
+| **Colossus.credit**           | Payments / card-network layer (EVM)               | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus.credit targets consumer/merchant payments; attn.markets targets revenue-collateralised credit for onchain businesses |
+| **Klarna + Tempo**            | Consumer BNPL + payments L1 layer                 | BNPL lending, merchant checkout, and a USD stablecoin issued on a payments-optimised L1 for cheaper global payments | Consumers, merchants, BNPL investors; payment and platform partners | Klarna + Tempo target **consumer BNPL and payments**; attn.markets targets **revenue-backed credit to entities**. In principle, Klarna-style BNPL providers or merchants on Tempo could tap attn.markets for entity-level financing against their revenues, while consumer risk stays on their own balance sheet. |
+| **attn.markets**              | Revenue layer                                     | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
 
 ---
 
@@ -105,10 +107,10 @@ In practice, they can be complementary:
 
 **Slash** is a business banking and expense-management platform:
 
-- FDIC-insured business checking via partner banks (e.g. Column and Piermont).  
+- FDIC-insured business checking via partner banks.  
 - Unlimited virtual and physical corporate cards with cashback and fine-grained controls (card groups, merchant limits, country restrictions, etc.).  
 - Stablecoin payments and on/off-ramps for major stablecoins.  
-- A **Global USD Account** where balances are represented by **USDSL**, Slash’s own USD-pegged stablecoin backed by short-term U.S. Treasuries and USDC, issued on a modern L2 via a stablecoin infrastructure partner.
+- A **Global USD Account** where balances are represented by **USDSL**, Slash’s own USD-pegged stablecoin backed by high-quality liquid assets and issued on a modern L2 via a stablecoin infrastructure partner.
 
 The card stack has two main components:
 
@@ -130,7 +132,7 @@ For **longer-tenor credit**, Slash offers **Working Capital**:
 Global USD + USDSL add a cross-border and onchain dimension:
 
 - Non-U.S. entities can access a USD account without needing a U.S. LLC, hold a USDSL-denominated balance, and send/receive stablecoins and fiat rails (wires, ACH, local transfers) from one place.  
-- USDSL is effectively a closed-loop stablecoin that underpins those balances; rewards on Global USD are structured as promotional rebates funded by Slash, not as on-chain interest paid by the issuer.
+- USDSL is effectively a closed-loop stablecoin that underpins those balances; rewards on Global USD are structured as promotional rebates funded by Slash, not as onchain interest paid by the issuer.
 
 Relative to attn.markets:
 
@@ -152,6 +154,56 @@ A Web3 protocol or creator can reasonably:
 - and use Slash cards and payments to cover fiat suppliers, ad spend, and operations.
 
 In that stack, Slash is the **regulated business-banking and card front end**, while attn.markets is a **revenue-backed credit engine** for onchain-native clients.
+
+</details>
+
+---
+
+## Krak (Kraken KRAK app + card)
+
+- Layer: individual + global money-app layer.  
+- Focus: a personal “everything account” with a multi-asset Mastercard debit card (Krak Card), global P2P and remittances, and yield on balances and vaults.  
+- Primary users: individuals and freelancers who want a consumer bank replacement that speaks both fiat and crypto.  
+- Difference vs attn.markets: Krak is **consumer-facing** (personal account + debit card + yields); attn.markets is **entity-facing** (apps, creators, DAOs) and treats their revenues as collateral.  
+- Relationship: complementary (Krak = where people get paid, hold, and spend; attn.markets = where the projects behind those payments raise revenue-backed credit and structure yield).
+
+<details>
+<summary>Deep dive</summary>
+
+**Krak** is a global money app from Kraken:
+
+- A personal **Everyday account** that can hold and move 400+ fiat and crypto assets.  
+- Global, low-friction transfers to 160+ countries, often framed as “send like a message” using handles (Kraktags) instead of IBANs.  
+- Auto-earn on eligible balances (e.g. a base APY on holdings) plus **vaults** for higher, DeFi-like yields on selected assets.  
+- A cashback/refunds and rewards layer tied to usage and balances.
+
+The centrepiece for everyday spending is **Krak Card**:
+
+- A **Mastercard debit card** (virtual + physical) linked to the Krak Everyday account.  
+- Lets you spend from your balance of 400+ assets (fiat and crypto) at any Mastercard merchant worldwide, plus ATM withdrawals.  
+- Multi-asset spend: you set a **spend order** in-app; Krak converts assets in that order into your primary currency (GBP for UK, EUR for EEA) at the time of authorization, combining multiple assets if needed.  
+- **No FX / foreign transaction fees** on card spend, and no annual/monthly fee; a spread on conversion may apply but is built into the quoted rate.  
+- **Cashback**:
+  - Up to around **1% base cashback** on everyday spend, paid in either local fiat or Bitcoin.  
+  - Boosted cashback (e.g. higher rewards on travel booked via Krak’s concierge/partners).  
+  - Reward rate tiers that depend on the average assets you hold across Krak/Kraken/Kraken Pro.
+
+Krak is explicitly positioned as a **bank alternative**:
+
+- Salary deposits / direct deposit into the Krak Everyday account.  
+- Global transfers and P2P, including to non-crypto-native users, with a UX similar to neobanks.  
+- “Spend, send, grow” framing: card, transfers, and yields in a single consumer app.
+
+Relative to attn.markets:
+
+- Krak is where **people** hold and spend their money (fiat + crypto) and earn yield.  
+- attn.markets is where **apps, creators, DAOs, and networks** centralise and collateralise their revenue streams.
+
+You can imagine a full loop:
+
+- A creator or protocol routes its fees into an attn.markets revenue account, borrows against them, and/or issues PT/YT and attnUSD.  
+- That income pays out contributors or users who custody and spend via Krak.  
+- Krak is the personal front-end; attn.markets is the project-level revenue and credit engine behind some of the flows that land in it.
 
 </details>
 
@@ -301,7 +353,7 @@ Altitude (Squads.xyz) is treasury and payments; attn.markets is revenue-backed s
 - borrowers receive **unsecured USDC credit lines** with no onchain collateral posted,  
 - underwriting uses a **multi-source credit engine**:
   - onchain DeFi / CEX / RWA positions across many protocols and asset types,  
-  - offchain credit data (e.g. U.S. credit scores, income, bank balances) verified via zkTLS and similar tools,  
+  - offchain credit data (e.g. credit scores, income, bank balances) verified via secure attestations,  
   - combined into a proprietary score and limits model.  
 - capital suppliers deposit USDC to mint **USD3**, a yield-bearing stablecoin that represents a share of the credit pool,  
 - USD3 can be staked into **sUSD3** for levered exposure to the same credit book.  
@@ -330,11 +382,11 @@ How this differs from attn.markets:
   - attn.markets: positions are explicitly secured by **live revenue routing** into governed revenue accounts (e.g. fee PDAs, creator rewards, machine income), with programmable waterfalls on those flows.
 
 - **Who it primarily serves**  
-  - 3Jane.xyz: credit accounts for individuals and entities with substantial, verifiable asset footprints and credit histories; borrowing against future yield and portfolios, mostly in a U.S.-centric regulatory frame.   
+  - 3Jane.xyz: credit accounts for individuals and entities with substantial, verifiable asset footprints and credit histories.  
   - attn.markets: revenue infrastructure for apps, DAOs, creators, and networks that want to fund work directly out of protocol or creator income, often natively pseudonymous and global.
 
 - **What the yield token represents**  
-  - 3Jane.xyz’s **USD3**: a yield-bearing USDC-like asset whose backing is a pool of unsecured credit lines, delta-hedged and managed via integrations such as Aave and other yield sources.   
+  - 3Jane.xyz’s **USD3**: a yield-bearing USDC-like asset whose backing is a pool of unsecured credit lines.  
   - **attnUSD**: a USD share in a portfolio of **revenue-backed PT/YT positions and stablecoins**, where each position is tied to a specified revenue account and routing schedule.
 
 You can think of it this way:
@@ -493,6 +545,9 @@ They operate at different layers:
 - **Avici.money** – individual layer:  
   income, spending, cards, accounts, and retail credit  
 
+- **Krak (KRAK app + card)** – individual + global money-app layer:  
+  personal account, multi-asset debit card, P2P and remittances, and yields across fiat and crypto  
+
 - **Slash** – business banking + cards + Global USD layer:  
   business checking, corporate cards, stablecoin on/off-ramps, Global USD accounts backed by USDSL, and embedded working capital  
 
@@ -522,7 +577,7 @@ They operate at different layers:
 
 A mature project can realistically touch several of these at once:
 
-- team members using Avici.money-style tools for personal banking  
+- team members using Avici.money- or Krak-style tools for personal banking and spending  
 - the organisation running its treasury and payments on something like Altitude (Squads.xyz) or Slash  
 - staking positions structured via Pye.fi  
 - occasional reputation-based or multi-factor credit via Wildcat.finance or 3Jane.xyz  
