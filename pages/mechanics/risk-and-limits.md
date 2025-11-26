@@ -17,7 +17,7 @@ attn focuses on a small set of core risks:
 - **Counterparty / execution risk** – teams disappearing, misusing funds, or breaching terms.
 - **Concentration risk** – too much exposure to one project, sector, or launchpad.
 - **Tenor / liquidity risk** – advances or lines that are too long relative to how quickly losses can be realised.
-- **Stablecoin / infra risk** – issues with the stablecoins or infra used by the vault.
+- **Stablecoin / infra risk** – issues with the stablecoins or infra used by the vault (including Exponent Finance’s SY contracts for PT/YT and Squads Safe for revenue account custody).
 
 Other risks (program, chain-level, legal) are acknowledged but treated separately.
 

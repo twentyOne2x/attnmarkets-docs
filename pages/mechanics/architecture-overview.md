@@ -8,7 +8,7 @@ Details may evolve; this is a working map for developers and integrators.
 ## 1. Core components
 
 - **Revenue Accounts**
-  - Squads / multisig vaults that receive protocol and creator revenues.  
+  - Squads Safe / multisig vaults on Solana that receive protocol and creator revenues.  
   - Host routing logic for repayment, base yield, and withdrawals.
 
 - **Position Engine**
@@ -18,7 +18,7 @@ Details may evolve; this is a working map for developers and integrators.
     - interfacing with yield-stripping infra (PT/YT).
 
 - **PT/YT Layer**
-  - Implemented via a fixed-income infra (e.g. Exponent’s Standardised Yield):  
+  - Implemented on Exponent Finance’s Standardised Yield (SY) fixed-income infra:  
     - represent revenue-bearing positions as SY-like tokens,  
     - strip into PT and YT,  
     - expose them for vault accounting and potential secondary markets.

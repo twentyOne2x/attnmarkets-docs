@@ -10,7 +10,7 @@ This page describes the lower-level objects that sit under attn’s user-facing 
 The goals are to:
 
 - standardise how revenue-backed positions are represented on-chain,  
-- make them composable with fixed-income infrastructure on Solana (e.g. Exponent’s “Standardised Yield” framework),  
+- make them composable with fixed-income infrastructure on Solana, using Exponent Finance’s “Standardised Yield” (SY) framework for PT/YT representation,
 - and give LPs and integrators a clear picture of what backs attnUSD.
 
 This is a conceptual specification rather than a formal program spec.
@@ -332,9 +332,9 @@ This separation allows:
 
 ## 7. Implementation and infra notes
 
-- The yield-stripping mechanism (PT/YT minting and redemption) is intended to be implemented using **specialised fixed-income infra** on Solana, such as Exponent’s Standardised Yield (SY) framework.  
-- attn treats that infra as:
-  - a canonical way to turn a yield-bearing position (here, revenue) into PT/YT,  
+- The yield-stripping mechanism (PT/YT minting and redemption) is implemented using **Exponent Finance’s Standardised Yield (SY) infra** on Solana.  
+- attn treats this infra as:
+  - the canonical way to turn a yield-bearing position (here, revenue) into PT/YT,  
   - a shared standard that other protocols can integrate with,  
   - an auditable onchain representation of credit exposures.
 

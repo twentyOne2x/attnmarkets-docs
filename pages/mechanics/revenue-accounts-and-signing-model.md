@@ -8,7 +8,7 @@ This page describes the assumptions around custody, signatures, and vault design
 
 Revenue accounts are intended to be:
 
-- **programmable vaults** (e.g. Squads Safe) living on Solana,  
+- **programmable vaults** living on Solana, implemented as Squads Safe multisig vaults,  
 - jointly controlled by:
   - the project (team / DAO multisig),  
   - and attn (or another designated risk agent in later versions).

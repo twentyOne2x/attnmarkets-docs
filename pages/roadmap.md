@@ -20,7 +20,7 @@ Milestones:
 
 - CreatorVault / revenue account implementation on devnet.  
 - Integration with Squads (2-of-2 or similar) for governed revenue accounts.  
-- Exponent-style Standardised Yield (PT/YT) representation for revenue positions.  
+- Exponent Finance Standardised Yield (PT/YT) representation for revenue positions.  
 - attnUSD vault skeleton with manual risk controls and no public access.  
 - First internal pilots with tightly controlled limits.
 

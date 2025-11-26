@@ -234,7 +234,21 @@ attnUSD is explicitly **not** a guarantee of 1:1 return of principal; it is a to
 
 ---
 
-## 9. Mapping back to the user-facing story
+## 9. Implementation notes
+
+Two concrete implementation choices matter under the hood:
+
+- **Revenue account infra**  
+  - Revenue accounts are implemented as Squads Safe multisig vaults on Solana.  
+  - This gives jointly governed custody and routing for protocol and creator revenues without taking over a project’s entire treasury.
+
+- **PT/YT and yield infra**  
+  - PT/YT positions are represented via Exponent Finance’s Standardised Yield (SY) contracts on Solana.  
+  - SY is used to represent revenue-bearing positions and strip them into PT and YT in a standard way that other protocols can integrate with.
+
+
+---
+## 10. Mapping back to the user-facing story
 
 From a project’s perspective, everything above reduces to:
 
