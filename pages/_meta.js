@@ -72,34 +72,41 @@ const GitHubIcon = (
   </svg>
 );
 
-const sidebar = {
+const meta = {
+  // Header nav items (shown in the top navbar, not in the sidebar)
   website: {
     title: socialLinkTitle(GlobeIcon, 'Website'),
     href: 'https://attn.markets',
-    newWindow: true,
     type: 'page'
   },
   twitter: {
     title: socialLinkTitle(XIcon, 'X (Twitter)'),
     href: 'https://x.com/attndotmarkets',
-    newWindow: true,
     type: 'page'
   },
   telegram: {
     title: socialLinkTitle(TelegramIcon, 'Telegram'),
     href: 'https://t.me/twentyOne2x',
-    newWindow: true,
     type: 'page'
   },
   github: {
     title: socialLinkTitle(GitHubIcon, 'GitHub'),
     href: 'https://github.com/twentyOne2x/attnmarkets',
-    newWindow: true,
     type: 'page'
-  },    
+  },
+
+  // LEFT SIDEBAR ORDER (top → bottom)
+  // 1) attn 1-pager (points at pages/attn-1-pager.md)
+  'attn-1-pager': {
+    title: sectionTitle('attn 1-pager')
+  },
+
+  // 2) Overview (index.md) – still the default landing page at `/`
   index: {
     title: overviewTitle('Overview')
   },
+
+  // 3) Rest of the sections
   introduction: {
     title: sectionTitle('Introduction')
   },
@@ -117,4 +124,4 @@ const sidebar = {
   }
 };
 
-export default sidebar;
+export default meta;

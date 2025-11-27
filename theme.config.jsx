@@ -14,17 +14,13 @@ const config = {
     link: 'https://github.com/twentyOne2x/attnmarkets-docs'
   },
 
-  // Used for "Edit this page" / "Feedback" links in the UI
-  // Point it at the root of your docs pages in the repo.
   docsRepositoryBase:
     'https://github.com/twentyOne2x/attnmarkets-docs/tree/main/pages',
 
-  // Custom <head> – this fully controls <title>, so we drop the " - Nextra" suffix
   head() {
     const { asPath } = useRouter()
     const { frontMatter, title: pageTitle } = useConfig()
 
-    // Page title: front matter > computed page title > fallback
     const title =
       frontMatter?.title || pageTitle || 'attn.markets docs'
 
@@ -44,19 +40,21 @@ const config = {
     )
   },
 
-  // Dark mode + theme behavior
   darkMode: true,
   nextThemes: {
-    defaultTheme: 'dark',        // dark by default
+    defaultTheme: 'dark',
     storageKey: 'attn-docs-theme'
-    // enableSystem: false      // uncomment to ignore OS theme
   },
 
-  primaryHue: 210, // blue-ish accent, tweak later if you like
+  primaryHue: 210,
 
   // Sidebar & TOC behavior
   sidebar: {
-    defaultMenuCollapseLevel: 3 // keep all nested sections expanded
+    defaultMenuCollapseLevel: 3,
+    // Disable any CSS "capitalize" applied by the theme
+    titleComponent({ title }) {
+      return <span style={{ textTransform: 'none' }}>{title}</span>
+    }
   },
 
   main({ children }) {
@@ -78,7 +76,6 @@ const config = {
     text: 'attn.markets – revenues, tokenised.'
   },
 
-  // Search placeholder text
   search: {
     placeholder: 'Search attn docs…'
   }
