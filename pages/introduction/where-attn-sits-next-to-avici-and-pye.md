@@ -4,7 +4,7 @@ attn is easier to understand when seen next to other projects that work on credi
 
 Especially relevant points of comparison:
 
-- **Avici.money** – internet banking for people  
+- **Avici.money** – internet neobank with payroll accounts, Visa spend cards, and a trust-score-driven unsecured credit / mortgage roadmap for people  
 - **Slash** – business banking, corporate cards, and Global USD accounts for entities  
 - **Krak (Kraken KRAK app + card)** – consumer global money app and multi-asset debit card  
 - **Pye.fi** – structured markets for staking yield  
@@ -29,7 +29,7 @@ Skim the table and exec summaries first. Expand a project if you want detail.
 
 | Project                         | Layer / object                                   | What it focuses on                                                                     | Primary users                                      | How it intersects with attn                                                                                  |
 |---------------------------------|---------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| **Avici.money**                | Individual banking + personal trust layer         | Accounts, cards, and spending limits based on an individual Trust Score               | Individuals, freelancers, small businesses         | Avici.money handles **personal** cashflow and card credit; attn.markets handles **app / creator onchain revenue** and credit at the project layer |
+| **Avici.money**                | Individual banking + payroll + personal trust/credit layer | Self-custodial accounts and Visa cards, payroll/salary accounts, and a Trust Score that unlocks unsecured loans and (later) mortgages and major credit lines | Individuals, employees, freelancers; eventually small businesses for payroll | Avici.money handles **personal income, payroll, and retail credit** via a Trust Score; attn.markets handles **app / creator / DAO onchain revenue** and entity-level, revenue-backed credit |
 | **Slash**                      | Business banking, cards, and Global USD layer     | Business checking, corporate cards, stablecoin payments, Global USD (USDSL), working capital | SMEs, internet entrepreneurs, Web3 teams, ecommerce, agencies | Slash handles **entity banking, cards, and stablecoin rails**; attn.markets provides **revenue-backed credit and yield**, especially for onchain/Web3 clients who then spend via Slash |
 | **Krak (KRAK app + card)**    | Individual + global money-app layer               | Personal account, P2P transfers, yields, and a multi-asset Mastercard debit card that spends 400+ fiat and crypto assets | Individuals, freelancers, crypto users, remitters  | Krak covers **personal accounts, card, and yield**; attn.markets covers **revenue-backed credit for apps/creators/DAOs** that may ultimately pay users into apps like Krak |
 | **Pye.fi**                     | Stake / validator-yield layer                     | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues                   |
@@ -45,50 +45,61 @@ Skim the table and exec summaries first. Expand a project if you want detail.
 
 ## Avici.money
 
-- Layer: individual banking + personal trust.  
-- Focus: accounts, cards, and retail credit tied to a Trust Score.  
-- Primary users: individuals, freelancers, small businesses.  
-- Difference vs attn.markets: Avici.money underwrites **people and personal cashflow**; attn.markets underwrites **projects and onchain revenue streams**.  
-- Relationship: complementary (personal banking for teams; revenue banking for the project).
+- Layer: individual banking + payroll + personal trust/credit.  
+- Focus: self-custodial Visa spend cards, global payroll/salary accounts, and an “internet native” Trust Score that unlocks unsecured personal and business loans, larger credit lines, and eventually home mortgages.  
+- Primary users: individuals, employees, freelancers, and, over time, startups and DAOs using Avici as a primary payroll and spend rail.  
+- Difference vs attn.markets: Avici.money underwrites **people and their cashflow** via a Trust Score and aims at mortgages and unsecured loans; attn.markets underwrites **projects and onchain revenue streams** at the entity level.  
+- Relationship: complementary (Avici as people + payroll neobank; attn as revenue bank for the underlying apps and DAOs).
 
 <details>
 <summary>Deep dive</summary>
 
-**Avici.money** is building an internet-native neobank:
+**Avici.money** is building a Solana-native, internet neobank aimed at replacing the traditional retail bank account:
 
-- accounts and cards  
-- on-/off-ramps  
-- an onchain “Trust Score” to unlock credit  
-- income and spending tools anchored in self-custody
+- self-custodial **Visa spend cards** connected to stablecoin balances, usable at 150M+ merchants  
+- **USD/EUR accounts** via regulated partners for salary deposit and on-/off-ramp  
+- an “internet native” **Trust Score** designed as a credit primitive for unsecured lending  
+- a roadmap that explicitly includes **unsecured loans, personal and business credit lines, and home mortgages** funded from onchain investor pools  
 
-The primary customer is:
+Their go-to-market emphasises a set of tightly coupled “network effect nodes”:
 
-- a person or small business that wants:
-  - to get paid  
-  - to spend globally  
-  - to access familiar banking primitives without a legacy retail bank
+- **Trust Score** – a programmable, onchain credit identity and scoring primitive  
+- **Payroll accounts (smart wallets)** – where users receive paychecks in USD, EUR, or stablecoins  
+- **Employers ⇆ employees** – payroll networks where employers pay through Avici rails  
+- **Visa spend card** – the front-end to everyday spend and interchange  
+- **Credit layer** – unsecured loans, major credit lines, and eventually mortgages for users with strong Trust Scores  
 
-attn.markets looks one layer up:
+The intended loop is:
 
-- the projects and businesses themselves:
-  - apps and protocols  
-  - creator economies  
-  - DAOs  
-  - DePIN networks
+- users and employers adopt Avici for **payroll and everyday spend**,  
+- data from those flows and other signals feeds the **Trust Score**,  
+- the Trust Score unlocks **unsecured loans and mortgages** financed by onchain credit pools,  
+- those loans, in turn, further embed Avici as a primary financial home.
 
-and asks:
+Governance and capital formation are designed to be DAO-driven:
 
-- Where do your revenues go?  
-- How do you fund yourself from them?  
-- How can outside capital own a slice of that income onchain?
+- the ICO is structured with no team allocation and a **monthly allowance** from the treasury, gated by futarchy-style **decision markets** rather than a trusted multisig,  
+- the long-term goal is a **distributed internet banking infrastructure** that reduces dependence on central banks and fiat interest-rate policy.  
 
-If Avici.money is about banking individuals and their income,  
-attn.markets is about banking the revenue streams of onchain businesses.
+Relative to attn.markets:
 
-In practice, they can be complementary:
+- Avici is where **people** bank:
+  - receive salaries and income,  
+  - hold balances in stablecoins and fiat,  
+  - spend via Visa,  
+  - and, over time, access unsecured loans and mortgages using a Trust Score.
 
-- an individual might receive income via Avici.money-style tools,  
-- while the underlying app or token routes its revenues into an attn.markets revenue account for credit and yield.
+- attn.markets is where **apps, DAOs, creators, and networks** bank their **revenue streams**:
+  - route protocol/creator fees into governed revenue accounts,  
+  - borrow against those revenues,  
+  - and pool revenue-backed PT/YT positions into attnUSD.
+
+In a realistic stack:
+
+- an employer or DAO might pay contributors into **Avici** accounts and cards,  
+- while the protocol or app’s own revenue PDAs are wired into **attn.markets** for advances and revolving credit.
+
+Avici is an **internet neobank and trust-score credit layer for people and payroll**; attn.markets is a **revenue-native credit engine** for the entities and apps generating the income that flows into those personal rails.
 
 </details>
 
@@ -543,7 +554,7 @@ All of these projects care about:
 They operate at different layers:
 
 - **Avici.money** – individual layer:  
-  income, spending, cards, accounts, and retail credit  
+  income, payroll, spend cards, accounts, and unsecured credit built on a Trust Score and onchain investor pools  
 
 - **Krak (KRAK app + card)** – individual + global money-app layer:  
   personal account, multi-asset debit card, P2P and remittances, and yields across fiat and crypto  
@@ -577,7 +588,7 @@ They operate at different layers:
 
 A mature project can realistically touch several of these at once:
 
-- team members using Avici.money- or Krak-style tools for personal banking and spending  
+- team members using Avici.money- or Krak-style tools for personal banking, payroll, and spending  
 - the organisation running its treasury and payments on something like Altitude (Squads.xyz) or Slash  
 - staking positions structured via Pye.fi  
 - occasional reputation-based or multi-factor credit via Wildcat.finance or 3Jane.xyz  

@@ -2,7 +2,7 @@
 
 **Solana-native “revenue bank” that turns onchain income into bankable collateral via governed revenue accounts, revenue-backed financing, and a pooled USD share token (attnUSD).**
 
-Positioning: compared to Avici.money (personal banking) and Pye.fi (staking-yield PT/YT), attn banks apps / creators / DAOs by slicing protocol & creator revenues into PT/YT-backed credit.
+Positioning: compared to Avici.money (internet neobank with payroll accounts, spend cards, and a Trust Score for unsecured credit and future mortgages) and Pye.fi (staking-yield PT/YT), attn banks apps / creators / DAOs by slicing protocol & creator revenues into PT/YT-backed credit.
 
 ## Product
 
