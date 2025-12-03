@@ -1,4 +1,4 @@
-# Where attn Sits Next to Avici, Slash, Krak, Pye, Wildcat, Altitude, 3Jane, Xitadel, Colossus, and Klarna + Tempo
+# Where attn Sits Next to Avici, Slash, Krak, Pye, Wildcat, Altitude, 3Jane, Xitadel, Colossus, Klarna + Tempo, and Pareto.credit
 
 attn is easier to understand when seen next to other projects that work on credit, yield, and onchain underwriting.
 
@@ -11,6 +11,7 @@ Especially relevant points of comparison:
 - **Wildcat.finance** – undercollateralised credit markets for vetted borrowers  
 - **Altitude (Squads.xyz)** – stablecoin business accounts and treasury  
 - **3Jane.xyz** – unsecured credit lines underwritten on verified assets + offchain credit data (EVM-first)  
+- **Pareto.credit** – institutional private credit marketplace + synthetic dollar and savings layer backed by real-world credit lines  
 - **Xitadel.fi** – Liquid Treasury Tokens (LTTs) backed by project treasuries  
 - **Colossus.credit** – stablecoin card and payment-network stack built as an Ethereum L2 (very early / sparse public detail)  
 - **Klarna + Tempo** – consumer BNPL network and USD stablecoin on a payments-focused L1  
@@ -19,7 +20,7 @@ attn.markets focuses on a different object:
 
 > the revenues of apps, creators, DAOs, and networks.
 
-Instead of banking deposits, stake, or pure reputation, attn.markets banks the **revenue stream itself** and turns it into collateral, while also providing ways for those revenues to earn yield when idle.
+Instead of banking deposits, stake, private-credit portfolios, or pure reputation, attn.markets banks the **revenue stream itself** and turns it into collateral, while also providing ways for those revenues to earn yield when idle.
 
 Skim the table and exec summaries first. Expand a project if you want detail.
 
@@ -29,17 +30,18 @@ Skim the table and exec summaries first. Expand a project if you want detail.
 
 | Project                         | Layer / object                                   | What it focuses on                                                                     | Primary users                                      | How it intersects with attn                                                                                  |
 |---------------------------------|---------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| **Avici.money**                | Individual banking + payroll + personal trust/credit layer | Self-custodial accounts and Visa cards, payroll/salary accounts, and a Trust Score that unlocks unsecured loans and (later) mortgages and major credit lines | Individuals, employees, freelancers; eventually small businesses for payroll | Avici.money handles **personal income, payroll, and retail credit** via a Trust Score; attn.markets handles **app / creator / DAO onchain revenue** and entity-level, revenue-backed credit |
-| **Slash**                      | Business banking, cards, and Global USD layer     | Business checking, corporate cards, stablecoin payments, Global USD (USDSL), working capital | SMEs, internet entrepreneurs, Web3 teams, ecommerce, agencies | Slash handles **entity banking, cards, and stablecoin rails**; attn.markets provides **revenue-backed credit and yield**, especially for onchain/Web3 clients who then spend via Slash |
-| **Krak (KRAK app + card)**    | Individual + global money-app layer               | Personal account, P2P transfers, yields, and a multi-asset Mastercard debit card that spends 400+ fiat and crypto assets | Individuals, freelancers, crypto users, remitters  | Krak covers **personal accounts, card, and yield**; attn.markets covers **revenue-backed credit for apps/creators/DAOs** that may ultimately pay users into apps like Krak |
-| **Pye.fi**                     | Stake / validator-yield layer                     | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues                   |
-| **Wildcat.finance**           | Market / reputation credit layer                  | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation         |
-| **Altitude (Squads.xyz)**     | Treasury and payments layer                       | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude (Squads.xyz) holds operating cash; attn.markets structures credit and yield on revenue flows                             |
-| **3Jane.xyz**                 | Credit-account / future-yield layer               | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane.xyz requires linking real-world accounts/credit data; attn.markets sizes lines only on live onchain revenues |
-| **Xitadel.fi**                | Treasury / native-token collateral layer          | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel.fi finances against **treasury tokens**; attn.markets finances against **revenues**. A project can use both at once. |
-| **Colossus.credit**           | Payments / card-network layer (EVM)               | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus.credit targets consumer/merchant payments; attn.markets targets revenue-collateralised credit for onchain businesses |
-| **Klarna + Tempo**            | Consumer BNPL + payments L1 layer                 | BNPL lending, merchant checkout, and a USD stablecoin issued on a payments-optimised L1 for cheaper global payments | Consumers, merchants, BNPL investors; payment and platform partners | Klarna + Tempo target **consumer BNPL and payments**; attn.markets targets **revenue-backed credit to entities**. In principle, Klarna-style BNPL providers or merchants on Tempo could tap attn.markets for entity-level financing against their revenues, while consumer risk stays on their own balance sheet. |
-| **attn.markets**              | Revenue layer                                     | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
+| **Avici.money**                 | Individual banking + payroll + personal trust/credit layer | Self-custodial accounts and Visa cards, payroll/salary accounts, and a Trust Score that unlocks unsecured loans and (later) mortgages and major credit lines | Individuals, employees, freelancers; eventually small businesses for payroll | Avici.money handles **personal income, payroll, and retail credit** via a Trust Score; attn.markets handles **app / creator / DAO onchain revenue** and entity-level, revenue-backed credit |
+| **Slash**                       | Business banking, cards, and Global USD layer     | Business checking, corporate cards, stablecoin payments, Global USD (USDSL), working capital | SMEs, internet entrepreneurs, Web3 teams, ecommerce, agencies | Slash handles **entity banking, cards, and stablecoin rails**; attn.markets provides **revenue-backed credit and yield**, especially for onchain/Web3 clients who then spend via Slash |
+| **Krak (KRAK app + card)**     | Individual + global money-app layer               | Personal account, P2P transfers, yields, and a multi-asset Mastercard debit card that spends 400+ fiat and crypto assets | Individuals, freelancers, crypto users, remitters  | Krak covers **personal accounts, card, and yield**; attn.markets covers **revenue-backed credit for apps/creators/DAOs** that may ultimately pay users into apps like Krak |
+| **Pye.fi**                      | Stake / validator-yield layer                     | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues           |
+| **Wildcat.finance**            | Market / reputation credit layer                  | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation |
+| **Altitude (Squads.xyz)**      | Treasury and payments layer                       | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude (Squads.xyz) holds operating cash; attn.markets structures credit and yield on revenue flows        |
+| **3Jane.xyz**                  | Credit-account / future-yield layer               | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane.xyz requires linking real-world accounts/credit data; attn.markets sizes lines only on live onchain revenues |
+| **Pareto.credit**              | Institutional private credit + synthetic-dollar layer | Credit Vaults that allocate stablecoin deposits into institutional private-credit strategies, plus USP (synthetic dollar) and sUSP (yield-bearing savings token) backed by those credit lines | Institutional lenders and whitelisted borrowers: asset managers, digital asset funds, professional investors | Pareto.credit channels institutional private-credit yield into USP/sUSP; attn.markets channels **onchain protocol/creator revenues** into revenue-backed credit and attnUSD. A project could keep some treasury in USP/sUSP while separately using attn.markets to fund itself against its own onchain revenues. |
+| **Xitadel.fi**                 | Treasury / native-token collateral layer          | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel.fi finances against **treasury tokens**; attn.markets finances against **revenues**. A project can use both at once. |
+| **Colossus.credit**            | Payments / card-network layer (EVM)               | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus.credit targets consumer/merchant payments; attn.markets targets revenue-collateralised credit for onchain businesses |
+| **Klarna + Tempo**             | Consumer BNPL + payments L1 layer                 | BNPL lending, merchant checkout, and a USD stablecoin issued on a payments-optimised L1 for cheaper global payments | Consumers, merchants, BNPL investors; payment and platform partners | Klarna + Tempo target **consumer BNPL and payments**; attn.markets targets **revenue-backed credit to entities**. In principle, Klarna-style BNPL providers or merchants on Tempo could tap attn.markets for entity-level financing against their revenues, while consumer risk stays on their own balance sheet. |
+| **attn.markets**               | Revenue layer                                     | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
 
 ---
 
@@ -420,6 +422,62 @@ They differ in:
 
 ---
 
+## Pareto.credit
+
+- Layer: institutional private credit marketplace + synthetic-dollar / savings layer.  
+- Focus: Credit Vaults that lend stablecoins to whitelisted institutional borrowers, plus USP (a synthetic dollar) and sUSP (a yield-bearing savings token) backed by those credit lines.  
+- Primary users: institutional lenders and borrowers, especially asset managers, digital asset funds, and professional investors.  
+- Difference vs attn.markets: Pareto.credit underwrites **real-world private credit** with KYC’d lenders and whitelisted borrowers; attn.markets underwrites **onchain protocol/creator revenues** with no KYC, focusing on apps, creators, DAOs, and networks.  
+- Relationship: complementary (Pareto as institutional private-credit + synthetic-dollar rail; attn as revenue-native credit for onchain businesses). A project could hold USP/sUSP as a treasury asset while using attn.markets to borrow against its own onchain revenues.
+
+<details>
+<summary>Deep dive</summary>
+
+**Pareto.credit** is a private credit marketplace that connects institutional lenders and borrowers and bridges institutional capital into onchain credit markets.
+
+The core primitive is the **Credit Vault (CV)**:
+
+- Credit Vaults are smart-contract vaults that hold deposited stablecoins and lend them directly to whitelisted borrowers.  
+- Only borrowers that pass offchain diligence and are explicitly whitelisted can draw from a given vault, and only verified users (via privacy-preserving KYC) can provide liquidity.  
+- Vaults operate in **lending cycles** (typically 1–4 weeks) with fixed or variable interest-rate models, allowing high utilisation while keeping duration short and risk observable.  
+- Compliance and verification are baked into the vault flow, making it easier to serve regulated counterparties.
+
+On top of Credit Vaults, Pareto runs **USP** and **sUSP**:
+
+- **USP** is a synthetic dollar ERC-20 minted 1:1 against major stablecoins deposited into the ParetoDollar contract. Those stablecoins are then allocated into Credit Vaults (and a small portion into ERC-4626 yield sources for liquidity), so USP is effectively backed by a portfolio of private-credit exposures plus a peg-stability reserve.  
+- **sUSP** is a staked form of USP. Users stake USP into sUSP to receive the interest generated by the underlying credit portfolio; yield accrues as an increase in sUSP’s redemption rate vs USP, making sUSP an onchain savings asset.  
+- A peg-stability mechanism and dedicated stability fund are designed to keep USP around $1 while allocating credit risk and losses primarily to sUSP holders.
+
+This stack is aimed squarely at:
+
+- asset managers and digital asset funds that want onchain access to **institutional-grade private credit**,  
+- borrowers such as funds, market-makers, and real-world credit platforms that can be onboarded and monitored offchain.
+
+Relative to attn.markets:
+
+- **Collateral and risk**  
+  - Pareto.credit’s positions are backed by **real-world private-credit receivables and institutional strategies**, accessed through KYC/whitelisted vaults and legal agreements.  
+  - attn.markets’ positions are backed by **live onchain revenues** of apps, creators, DAOs, and networks, routed into governed revenue accounts.
+
+- **Users and access model**  
+  - Pareto.credit is institution-first: lenders must clear verification, and borrowers are curated; risk lives in structured private-credit deals.  
+  - attn.markets is onchain-native: there is no KYC, and entities are evaluated by their revenue performance and onchain behaviour.
+
+- **Dollar-like tokens**  
+  - Pareto’s USP aims to maintain a $1 synthetic-dollar profile while yielding via sUSP; its backing is a portfolio of institutional private credit plus reserves.  
+  - Attn’s **attnUSD** is a variable-NAV USD share token whose value is tied to a portfolio of revenue-backed PT/YT positions and stablecoins, not a hard peg.
+
+In a combined stack:
+
+- a protocol or DAO might keep part of its treasury in USP/sUSP to earn yield from institutional private credit,  
+- while simultaneously routing its own protocol/creator revenues into attn.markets for revenue-backed advances and credit lines.
+
+Pareto.credit is thus best viewed as a **bridge for institutional private credit into DeFi**, while attn.markets is a **bridge between onchain revenues and credit/yield**, particularly for Solana-native apps, creators, and DAOs.
+
+</details>
+
+---
+
 ## Xitadel.fi
 
 - Layer: treasury-backed fixed-income via LTTs.  
@@ -574,6 +632,9 @@ They operate at different layers:
 - **3Jane.xyz** – credit account / future-yield layer:  
   unsecured USDC credit lines sized by verified assets and credit scores, plus a yield-bearing USD3/sUSD3 stack  
 
+- **Pareto.credit** – institutional private-credit / synthetic-dollar layer:  
+  Credit Vaults that fund real-world institutional borrowers and a USP/sUSP synthetic-dollar + savings stack backed by those credit lines  
+
 - **Xitadel.fi** – treasury / fixed-income layer:  
   Liquid Treasury Tokens backed by project treasuries, giving investors fixed-income-style exposure to token treasuries  
 
@@ -595,6 +656,7 @@ A mature project can realistically touch several of these at once:
 - treasury-backed bond-style financing via Xitadel.fi  
 - consumer payments or cards via Colossus.credit-style rails  
 - BNPL and checkout via Klarna-like platforms on Tempo or similar L1s  
+- institutional private-credit yield or synthetic dollars via Pareto.credit’s Credit Vaults and USP/sUSP  
 - and revenue-backed financing and yield via attn.markets
 
 attn.markets’s role in that stack is focused and narrow:  
