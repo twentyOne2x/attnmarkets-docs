@@ -1,4 +1,4 @@
-# Where attn Sits Next to Avici, Slash, Krak, Pye, Wildcat, Altitude, 3Jane, Xitadel, Colossus, Klarna + Tempo, and Pareto.credit
+# Where attn Sits Next to Avici, Slash, Krak, Pye, Wildcat, Altitude, 3Jane, Xitadel, Colossus, Moto Card, Klarna + Tempo, and Pareto.credit
 
 attn is easier to understand when seen next to other projects that work on credit, yield, and onchain underwriting.
 
@@ -14,6 +14,7 @@ Especially relevant points of comparison:
 - **Pareto.credit** – institutional private credit marketplace + synthetic dollar and savings layer backed by real-world credit lines  
 - **Xitadel.fi** – Liquid Treasury Tokens (LTTs) backed by project treasuries  
 - **Colossus.credit** – stablecoin card and payment-network stack built as an Ethereum L2 (very early / sparse public detail)  
+- **Moto Card** – invite-only, AI-enabled Visa Infinite credit card pairing a high-yield deposit wallet with consumer credit so deposit yield and rewards help “self-pay” the monthly bill  
 - **Klarna + Tempo** – consumer BNPL network and USD stablecoin on a payments-focused L1  
 
 attn.markets focuses on a different object:
@@ -34,12 +35,13 @@ Skim the table and exec summaries first. Expand a project if you want detail.
 | **Slash**                       | Business banking, cards, and Global USD layer     | Business checking, corporate cards, stablecoin payments, Global USD (USDSL), working capital | SMEs, internet entrepreneurs, Web3 teams, ecommerce, agencies | Slash handles **entity banking, cards, and stablecoin rails**; attn.markets provides **revenue-backed credit and yield**, especially for onchain/Web3 clients who then spend via Slash |
 | **Krak (KRAK app + card)**     | Individual + global money-app layer               | Personal account, P2P transfers, yields, and a multi-asset Mastercard debit card that spends 400+ fiat and crypto assets | Individuals, freelancers, crypto users, remitters  | Krak covers **personal accounts, card, and yield**; attn.markets covers **revenue-backed credit for apps/creators/DAOs** that may ultimately pay users into apps like Krak |
 | **Pye.fi**                      | Stake / validator-yield layer                     | Splitting staked SOL into principal and yield, structuring yield                      | Stakers, infra protocols, yield traders            | Similar PT/YT mental model, but on validator rewards vs attn.markets’s protocol / creator revenues           |
-| **Wildcat.finance**            | Market / reputation credit layer                  | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation |
+| **Wildcat.finance**             | Market / reputation credit layer                  | Under-collateralised loan “markets” based on borrower reputation & terms              | Whitelisted borrowers, stablecoin lenders          | attn.markets uses wired revenues as collateral; Wildcat.finance relies more on market design and borrower reputation |
 | **Altitude (Squads.xyz)**      | Treasury and payments layer                       | Stablecoin business accounts, fiat/stable rails, treasury tooling                     | DAOs, protocols, companies running ops/treasury    | Altitude (Squads.xyz) holds operating cash; attn.markets structures credit and yield on revenue flows        |
 | **3Jane.xyz**                  | Credit-account / future-yield layer               | Unsecured USDC credit lines and USD3 yield-bearing stablecoin, sized via verified assets + credit inputs | Asset-rich users with verifiable credit footprint  | 3Jane.xyz requires linking real-world accounts/credit data; attn.markets sizes lines only on live onchain revenues |
 | **Pareto.credit**              | Institutional private credit + synthetic-dollar layer | Credit Vaults that allocate stablecoin deposits into institutional private-credit strategies, plus USP (synthetic dollar) and sUSP (yield-bearing savings token) backed by those credit lines | Institutional lenders and whitelisted borrowers: asset managers, digital asset funds, professional investors | Pareto.credit channels institutional private-credit yield into USP/sUSP; attn.markets channels **onchain protocol/creator revenues** into revenue-backed credit and attnUSD. A project could keep some treasury in USP/sUSP while separately using attn.markets to fund itself against its own onchain revenues. |
 | **Xitadel.fi**                 | Treasury / native-token collateral layer          | Liquid Treasury Tokens: overcollateralised, fixed-term debt against token treasuries  | Token-rich projects, DAOs, foundations, credit LPs | Xitadel.fi finances against **treasury tokens**; attn.markets finances against **revenues**. A project can use both at once. |
 | **Colossus.credit**            | Payments / card-network layer (EVM)               | Stablecoin credit-card stack and payment-network rails, aiming to turn EMV taps into onchain (ERC-4337) settlements | Merchants, acquirers, issuers, card users in stablecoins | Adjacent only: Colossus.credit targets consumer/merchant payments; attn.markets targets revenue-collateralised credit for onchain businesses |
+| **Moto Card**                  | Consumer AI credit card + savings layer           | Invite-only Visa Infinite credit card for entrepreneurs and crypto users; users deposit funds, earn yield, spend on credit, and let interest plus rewards offset the monthly bill | High-spend individuals, entrepreneurs, tastemakers, crypto power users | Moto Card handles **consumer deposits, yield, and card receivables**; attn.markets handles **revenue-backed credit for apps/creators/DAOs**. Moto itself, or platforms it powers, could tap attn.markets for entity-level financing against their fee and interest revenues while consumer credit risk stays with Moto. |
 | **Klarna + Tempo**             | Consumer BNPL + payments L1 layer                 | BNPL lending, merchant checkout, and a USD stablecoin issued on a payments-optimised L1 for cheaper global payments | Consumers, merchants, BNPL investors; payment and platform partners | Klarna + Tempo target **consumer BNPL and payments**; attn.markets targets **revenue-backed credit to entities**. In principle, Klarna-style BNPL providers or merchants on Tempo could tap attn.markets for entity-level financing against their revenues, while consumer risk stays on their own balance sheet. |
 | **attn.markets**               | Revenue layer                                     | Revenue accounts, revenue-backed credit, pooled revenue yield                         | Apps, DAOs, creators, networks, LPs                | Provides the revenue accounts and PT/YT positions that other layers could plug into                          |
 
@@ -552,6 +554,111 @@ Colossus.credit is adjacent to attn.markets only at the highest level (both are 
 
 ---
 
+## Moto Card
+
+- Layer: consumer AI credit card + savings.  
+- Focus: an invite-only, AI-enabled Visa Infinite credit card that pairs a high-yield deposit wallet with consumer credit so yields and rewards can meaningfully offset the user’s monthly card bill.  
+- Primary users: entrepreneurs, tastemakers, and crypto power users.  
+- Difference vs attn.markets: Moto underwrites **individual cardholders** and optimises for personal spend and yield; attn.markets underwrites **entities and their onchain revenues** (apps, creators, DAOs, networks).  
+- Relationship: complementary (Moto at the consumer card + savings layer; attn at the B2B revenue-backed credit layer behind apps and networks that ultimately pay those consumers).
+
+<details>
+<summary>Deep dive</summary>
+
+### Executive Summary
+
+Moto Card is an exclusive, AI-enabled Visa Infinite credit card designed for entrepreneurs, tastemakers, and crypto power users, leveraging blockchain technology to offer a “self-paying” mechanism where yields on deposits offset monthly balances. It combines a high-yield savings wallet with credit card spending, earning up to 10% interest on deposits and up to 6% back in Moto Points on purchases, redeemable for luxury goods. The card positions itself as a blockchain-powered credit card, allowing users to deposit funds, accrue yield even after they spend, and settle debts monthly for capital efficiency. Integrated AI acts as a personal agent for purchases, reservations, and travel discovery, enhancing the user experience. While details on underlying mechanics are sparse due to its early-stage, waitlist-only status, Moto appears to target crypto-savvy individuals with a blend of fintech and DeFi elements. In contrast to attn.markets’ B2B revenue-backed lending, Moto focuses on consumer-level credit and yield generation.
+
+### How Moto Works
+
+From limited public information, Moto appears to work roughly as follows:
+
+- **One-sentence description**  
+  Moto Card is an AI-powered, blockchain-enabled Visa Infinite credit card that uses deposit yields to “self-pay” monthly debts for a select group of crypto-savvy users.
+
+- **Detailed description**  
+  Moto operates as a hybrid fintech product blending a high-yield crypto/fiat wallet, revolving credit card, and AI concierge, exclusively available via waitlist to entrepreneurs, tastemakers, and crypto power users. Users deposit funds into a wallet, earning up to an advertised 10% interest, which is framed as continuing to accrue even on amounts that have been spent until the monthly balance is repaid, effectively offsetting spending costs (for example, a $10,000 deposit at 10% APR generates roughly $83/month, covering about 8.3% of a $1,000 monthly spend). The card is positioned as true revolving credit, with free spending and monthly statements, where the “self-paying” feature leverages accrued yield to reduce or sometimes fully offset net debt. AI integration provides a chat-based personal agent for tasks like making purchases, booking reservations, or exploring travel, tied directly into the card and wallet. Blockchain is referenced as powering backend elements like yield generation and possibly settlements, although specifics are not disclosed.
+
+- **User signup**  
+  Users join via a waitlist on the website, effectively signing up for a card, a linked wallet/account, and access to the AI assistant. Public information does not fully describe onboarding, but it likely includes standard KYC for compliance, invite or referral gating for exclusivity, and a focus on crypto-native and high-spend users rather than the mass market.
+
+- **Onboarding**  
+  The card is invite-only. It likely includes KYC/AML checks and may focus on crypto power users and entrepreneurs, potentially using offchain data (income, credit file) and/or onchain behaviour. Geography, exact eligibility, and regulator-facing details are not yet clearly disclosed.
+
+- **Payment method**  
+  Moto is positioned as a true credit card rather than a debit or pure charge card. Users receive monthly statements and can, in principle, revolve balances, though the marketing emphasises paying in full to maximise the “self-paying” effect.
+
+- **Deposits**  
+  Users deposit fiat and/or crypto into a Moto wallet. Funds are held in a blockchain-powered or blockchain-adjacent custody setup (infra details and supported chains are not yet fully public). Deposits appear to influence credit limits and act as a form of soft collateral while earning yield.
+
+- **“Self-paying” behaviour**  
+  Yield accrues on deposits over time and is marketed as offsetting the card’s balance automatically or via user election. In the ideal case, if yield plus rewards roughly equals the monthly statement, the card “pays itself.” If the user spends more than the yield generated, they still benefit from a reduced effective APR. Unpaid balances may revolve with interest, but yield is framed as continuing to accrue on the underlying deposit base.
+
+- **AI integration**  
+  A built-in AI agent is exposed through the Moto app or interface. The agent can handle card-related actions (e.g., making purchases, booking reservations, planning trips) and act as a spending and lifestyle concierge for cardholders.
+
+- **Yield mechanics**  
+  Marketing references “up to 10% interest” on deposits, but the specific strategies (DeFi lending, RWAs, market making, staking, internal trading, etc.) are not disclosed. It is likely a mix of yield sources and internal spread-taking, but details remain opaque.
+
+- **Points on spend**  
+  Moto advertises “up to 6% in Moto Points on every purchase,” with a tiered or campaign-based structure not fully detailed publicly. Points are redeemable for flights, hotels, and luxury goods, alongside Visa Infinite-style perks such as concierge and lounges.
+
+- **Cashflow loop (conceptual)**  
+  - User deposits funds into Moto.  
+  - Deposits earn yield (framed as up to 10% APR).  
+  - User spends on the Moto Visa Infinite credit card and earns Moto Points.  
+  - A monthly statement is generated.  
+  - Yield accumulated over the period, plus any points redemption, partially or fully offsets the bill.  
+  - The user pays at least the required amount; if they revolve, standard interest may apply, while yield continues to be earned on deposits.  
+
+- **Yield clarifications**  
+  Marketing suggests yield is paid on the full deposit balance and may continue to accrue even on portions that have effectively been “used” to back spending, as long as the deposit remains. The degree to which this is exact vs illustrative is not yet known; documentation does not fully detail how yield interacts with outstanding credit balances under the hood.
+
+- **Stack / infrastructure**  
+  Moto uses the Visa network (Visa Infinite tier) for global acceptance. Wallet and identity infrastructure publicly mention Privy and blockchain-based components, but exact chains, token formats, and onchain vs offchain ledger splits are not spelled out.
+
+- **Underwriting**  
+  Limits appear to depend on deposits (quasi-collateralised), anticipated spend, and standard underwriting factors such as income or credit score. It is a classic revolving credit construct with monthly statements rather than a simple pay-in-4 BNPL structure.
+
+- **Risk / compliance**  
+  As a crypto-fintech product, Moto almost certainly runs standard KYC/AML and partners with regulated financial institutions for issuing and settlement, but specifics (jurisdiction, licensing stack, regulators, supported geographies) are not yet clearly communicated in public materials.
+
+- **Economics / business model**  
+  On Moto’s side, revenue likely comes from:  
+  - interchange on card spend,  
+  - net interest margin on revolving balances,  
+  - spread between what user deposits earn and what Moto earns on those funds,  
+  - any membership, FX, or ancillary fees.  
+  For end users, the card is “self-paying” to the degree that yield plus rewards approach or exceed monthly spend; beyond that, users still benefit from lower effective cost of credit, but not literally zero.
+
+- **Diagrammatic description (text)**  
+  User deposits funds → [Moto wallet: yield accrues on deposits] → User spends on Visa Infinite card → [AI agent assists with spend and bookings] → Monthly statement generated → Yield and points offset the bill (“self-pay” loop) → User repays balance (full or partial) → Cycle repeats, with deposits continuously working in the background.
+
+### Where Moto Sits Next to attn.markets
+
+- Moto operates at the **consumer layer**, providing individuals with a yield-generating wallet and credit card for personal spend and receivables.  
+- attn.markets operates at the **entity/revenue layer**, providing revenue-backed credit and pooled yield to apps, creators, DAOs, and networks based on onchain earnings.  
+- Moto underwrites **individual cardholders** (and their deposits and credit profiles), while attn.markets underwrites **business and protocol revenues** wired into revenue accounts.  
+- Moto could, in principle, integrate attn.markets on its own balance sheet by using revenue-backed lines to fund part of its yield or rewards commitments.  
+- Shared users (for example, creators using attn.markets to borrow against their revenue) could route those borrowed funds into Moto deposits, using the card for spend while their revenue-backed loans sit with attn.markets.
+
+### Open Questions / Unknowns
+
+- Exact yield strategy: which underlying assets and protocols (RWAs, stablecoin lending desks, DeFi, staking) actually generate the advertised 10% interest?  
+- Credit limit determination: beyond deposits, what mix of credit file, income, and onchain reputation is used to size limits?  
+- Custody details: which blockchains are used, whether balances are tokenised, and how onchain vs offchain accounting is split.  
+- Fees: detailed schedule of FX, annual, late, or cash advance fees, if any.  
+- Licensing and geography: precise legal entity stack, regulators, and supported regions.  
+- AI depth: the concrete capabilities of the AI agent, and whether it can submit onchain or card transactions autonomously or only via user confirmation.  
+- Business model specifics: exact yield spreads, interchange economics, and whether there are premium tiers or memberships.  
+- Partnerships: issuing bank, BIN sponsor, and any disclosed infra partners beyond Visa and Privy.  
+- Repayment and default: how delinquencies are handled—whether deposits are pledged and automatically liquidated, and how revolving APRs are structured.  
+- Launch status: timing, pilot results, and any early user metrics or feedback as the product moves beyond waitlist.
+
+</details>
+
+---
+
 ## Klarna + Tempo
 
 - Layer: consumer BNPL network + payments-focused L1.  
@@ -565,7 +672,7 @@ Colossus.credit is adjacent to attn.markets only at the highest level (both are 
 
 **Klarna** is a large BNPL and checkout network that finances consumer purchases and collects instalments from shoppers on behalf of merchants. Its core risk book is consumer receivables and merchant performance, not protocol-level credit to other apps.
 
-Recently, Klarna announced a **USD-pegged stablecoin** to reduce costs for international payments and FX, and to route more of its settlement flow over crypto rails. That stablecoin is planned to launch on **Tempo**, a dedicated payments Layer 1. Tempo is an **EVM-compatible L1** incubated by Stripe and Paradigm, designed for high-volume, real-world payments with a strong focus on stablecoin transactions and low fees.
+A USD-pegged stablecoin and the **Tempo** payments L1 add a crypto rail: the stablecoin is used to reduce costs for international payments and FX, and to route more settlement flow over a dedicated, EVM-compatible L1 optimised for high-volume, low-cost stablecoin transactions.
 
 In that stack:
 
@@ -641,6 +748,9 @@ They operate at different layers:
 - **Colossus.credit** – payments / card-network layer:  
   stablecoin-native card authorization and settlement rails mapped to onchain transactions  
 
+- **Moto Card** – consumer card + savings + AI layer:  
+  premium, invite-only Visa Infinite credit card with a high-yield deposit wallet and AI agent, marketed as “self-paying” via yield and rewards  
+
 - **Klarna + Tempo** – consumer BNPL + payments L1 layer:  
   BNPL receivables, merchant checkout, and a USD stablecoin on a payments-centric L1 for global payments  
 
@@ -654,7 +764,7 @@ A mature project can realistically touch several of these at once:
 - staking positions structured via Pye.fi  
 - occasional reputation-based or multi-factor credit via Wildcat.finance or 3Jane.xyz  
 - treasury-backed bond-style financing via Xitadel.fi  
-- consumer payments or cards via Colossus.credit-style rails  
+- consumer payments or cards via Colossus.credit-style rails or Moto Card  
 - BNPL and checkout via Klarna-like platforms on Tempo or similar L1s  
 - institutional private-credit yield or synthetic dollars via Pareto.credit’s Credit Vaults and USP/sUSP  
 - and revenue-backed financing and yield via attn.markets
