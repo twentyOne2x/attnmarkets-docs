@@ -9,6 +9,17 @@ const withNextra = nextra({
   // flexsearch: { codeblocks: false },
 })
 
-export default withNextra({
-  reactStrictMode: true
-})
+const nextConfig = {
+  reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/attn-1-pager',
+        destination: '/1-pager',
+        permanent: true,
+      },
+    ]
+  },
+}
+
+export default withNextra(nextConfig)
