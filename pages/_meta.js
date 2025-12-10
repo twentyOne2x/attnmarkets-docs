@@ -73,7 +73,7 @@ const GitHubIcon = (
 );
 
 const meta = {
-  // Header nav items (shown in the top navbar, not in the sidebar)
+  // Header nav items (top navbar only)
   website: {
     title: socialLinkTitle(GlobeIcon, 'Website'),
     href: 'https://attn.markets',
@@ -122,6 +122,7 @@ const meta = {
   roadmap: {
     title: sectionTitle('Roadmap')
   }
+  // No doc entries here – Nextra will auto-detect pages/1-pager.md
 };
 
 export default meta;
