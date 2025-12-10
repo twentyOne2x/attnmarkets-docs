@@ -73,7 +73,7 @@ const GitHubIcon = (
 );
 
 const meta = {
-  // Header nav items (shown in the top navbar, not in the sidebar)
+  // Header nav items (top navbar only)
   website: {
     title: socialLinkTitle(GlobeIcon, 'Website'),
     href: 'https://attn.markets',
@@ -93,35 +93,8 @@ const meta = {
     title: socialLinkTitle(GitHubIcon, 'GitHub'),
     href: 'https://github.com/twentyOne2x/attnmarkets',
     type: 'page'
-  },
-
-  // LEFT SIDEBAR ORDER (top → bottom)
-  // 1) attn 1-pager (points at pages/1-pager.md)
-  '1-pager': {
-    title: sectionTitle('attn 1-pager')
-  },
-
-  // 2) Overview (index.md) – still the default landing page at `/`
-  index: {
-    title: overviewTitle('Overview')
-  },
-
-  // 3) Rest of the sections
-  introduction: {
-    title: sectionTitle('Introduction')
-  },
-  users: {
-    title: sectionTitle('Users')
-  },
-  mechanics: {
-    title: sectionTitle('Mechanics')
-  },
-  tokenomics: {
-    title: sectionTitle('Tokenomics')
-  },
-  roadmap: {
-    title: sectionTitle('Roadmap')
   }
+  // No doc entries here – Nextra will auto-detect pages/1-pager.md
 };
 
 export default meta;
