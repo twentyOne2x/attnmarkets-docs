@@ -97,7 +97,7 @@ const meta = {
 
   // LEFT SIDEBAR ORDER (top → bottom)
   // 1) attn 1-pager (points at pages/attn-1-pager.md)
-  'attn-1-pager': {
+  '1-pager': {
     title: sectionTitle('attn 1-pager')
   },
 
