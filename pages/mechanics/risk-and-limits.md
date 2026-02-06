@@ -1,70 +1,97 @@
 # Risk, Limits, and Concentration Framework
 
-This page describes how attn thinks about **risk** and **limits** on revenue-backed positions. It is an operator-led framework in early versions of the protocol.
-
-It covers:
-
-- what risks are relevant,
-- how facility sizes and limits are set,
-- how concentration and portfolio caps are managed,
-- and how losses are handled.
+attnCredit manages risk through policy-bounded underwriting plus deterministic servicing controls.
+The objective is controlled loss behavior under stress, not discretionary reaction.
 
 ## 1. Risk types
 
-attn focuses on a small set of core risks:
-
-- **Revenue risk** – volatility or decline of the underlying revenues.
-- **Counterparty / execution risk** – teams disappearing, misusing funds, or breaching terms.
-- **Concentration risk** – too much exposure to one project, sector, or launchpad.
-- **Tenor / liquidity risk** – advances or lines that are too long relative to how quickly losses can be realised.
-- **Stablecoin / infra risk** – issues with the stablecoins or infra used by the vault (including Exponent Finance’s SY contracts for PT/YT and Squads Safe for revenue account custody).
-
-Other risks (program, chain-level, legal) are acknowledged but treated separately.
+- **Cashflow risk**
+  Revenue declines, volatility shocks, or unstable fee continuity.
+- **Concentration risk**
+  Overexposure to one borrower, source, or correlated cohort.
+- **Control-integrity risk**
+  Routing changes, signer/config drift, or policy bypass attempts.
+- **Liquidity risk**
+  Redemption and funding pressure at sleeve level.
+- **Operational risk**
+  Execution delays, monitoring faults, or incident response failures.
 
 ## 2. Facility-level limits
 
-For each project / facility, attn sets:
+Each facility is bounded by policy limits such as:
 
-- a **maximum limit** (notional) per project,
-- a **maximum advance size** per position,
-- **maximum revenue share** and **maximum tenor** per position.
+- borrowing base from trailing collectable fees,
+- volatility and concentration haircuts,
+- utilization ceiling and mandatory paydown windows,
+- max outstanding and draw cadence constraints,
+- reserve and DSRA requirements where applicable.
 
-Initial limits are constrained by:
+## 3. Lane-level and portfolio limits
 
-- observed revenue history (level and volatility),
-- quality and redundancy of the revenue account wiring,
-- team and launchpad track record,
-- and overall portfolio utilisation.
+- **Pump lane**
+  - lower borrower caps,
+  - tighter concentration bands,
+  - faster throttling and stricter freeze thresholds.
+- **Settlement lane**
+  - conservative concentration profile,
+  - stronger reporting/covenant expectations,
+  - slower but stricter governance-controlled parameter changes.
 
-These limits are operator-set in early versions and adjusted based on performance and stress tests.
+No early commingling: lane limits and sleeve accounting stay separate.
 
-## 3. Portfolio-level limits
+## 4. Deterministic control modes
 
-At the portfolio level, attn maintains caps on:
+### 4.1 Throttle mode
 
-- **name concentration** – max % of NAV in any single project,
-- **launchpad / ecosystem concentration** – max % per launchpad or vertical,
-- **tenor buckets** – how much of the book can sit in >3m, >6m, etc.,
-- **seniority** – mix of senior vs more subordinated positions.
+Activated when risk worsens but remains serviceable.
+Effects:
 
-New positions are only approved if they fit within these caps. Otherwise they are resized, re-priced, or declined.
+- draw availability reduced,
+- sweep intensity increased,
+- step-up privileges suspended.
 
-## 4. Losses, recoveries, and any buffers
+### 4.2 Freeze mode
 
-Losses primarily hit **YT holders** (i.e. attnUSD LPs), via lower NAV:
+Activated when risk exceeds safe operating range.
+Effects:
 
-- if a position falls short of `R_target`, the shortfall is recognised as a loss,
-- recoveries (late revenue, collateral realisation) are credited back to NAV when and if they materialise.
+- new draws blocked,
+- routing and sweeps continue,
+- operations constrained to servicing and cure actions.
 
-In later phases, the protocol may add explicit **buffers / insurance funds** funded from fees.
+### 4.3 Default/acceleration mode
 
-Those are out of scope for the initial version and will be documented separately if/when live.
+Activated when cure conditions fail or severe events occur.
+Effects:
 
-## 5. Who sets and updates parameters
+- all eligible routed fees prioritize repayment,
+- policy-defined acceleration behavior applies,
+- recovery and resolution actions are logged and reported.
 
-In early versions, risk and limits are set by the **core operator / risk team**:
+## 5. Trigger classes and governance
 
-- parameter changes are reflected in code and in public docs,
-- material changes (e.g. new max tenors, facility size bands) are announced.
+Trigger classes include:
 
-If and when the protocol moves to a more decentralised governance model, this page will be updated to reflect that process. Until then, assume a conservative, operator-led risk framework focused on short maturities and diversified exposure.
+- fee drawdown and volatility shocks,
+- concentration breaches,
+- routing/signing integrity failures,
+- covenant breaches and unresolved exceptions.
+
+Governance scope:
+
+- parameter bands and cap updates,
+- reserve policy,
+- lane-level risk budgets,
+- incident and drill standards.
+
+## 6. LP impact model
+
+- Losses and recoveries are reflected at sleeve level.
+- attnUSD holders are exposed according to sleeve composition.
+- There is no implied principal guarantee.
+
+## 7. Related pages
+
+- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+- [Pricing, Spreads, and Core Parameters](./pricing-and-parameters.md)
+- [For Liquidity Providers](../users/for-liquidity-providers.md)

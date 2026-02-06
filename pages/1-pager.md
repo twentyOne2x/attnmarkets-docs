@@ -1,34 +1,55 @@
-# attn.markets – Revenue-Native Credit on Solana
+# attnCredit - Revenue-Swept Credit on Solana
 
-**Solana-native “revenue bank” that turns onchain income into bankable collateral via governed revenue accounts, revenue-backed financing, and a pooled USD share token (attnUSD).**
-
-Positioning: compared to Avici.money (internet neobank with payroll accounts, spend cards, and a Trust Score for unsecured credit and future mortgages) and Pye.fi (staking-yield PT/YT), attn banks apps / creators / DAOs by slicing protocol & creator revenues into PT/YT-backed credit.
+attnCredit is a **revenue-underwritten, onchain-enforced revolving credit engine**.
+It turns routed onchain fees into lendable facilities with deterministic controls.
 
 ## Product
 
-- Turns protocol / creator / network revenues into a governed **revenue account**, **revenue-backed advances & credit lines**, and a **USD share token (attnUSD)** backed by those positions.  
-- No KYC, no bank linking, no credit scores: everything is sized and enforced on observable **onchain revenues** in jointly governed vaults.
+- **Control plane:** revenue vault setup, signer policy, timelocks, and spending constraints.
+- **Credit engine:** dynamic borrowing base and live limit adjustments.
+- **Servicing engine:** automated sweeps, mandatory paydown checks, and freeze/default actions.
+- **Monitoring and tape:** loan-level reporting, reconciliations, event logs, and incident history.
 
-## What It Enables & For Whom
+## Lanes (explicitly separated)
 
-- **Apps, DAOs, Creators** – Route earnings fees into a revenue account to access non-dilutive advances / revolving credit lines and earn base yield on idle balances.  
-- **Liquidity Providers (funds, DAOs, individuals)** – Deposit stables for **attnUSD**, getting diversified exposure to revenue-backed credit and associated yield.  
-- **Cards / Commerce / BNPL Partners** – Use attn as a revenue-backed credit engine behind cards, wallets, merchant advances, and B2B net terms at the entity level.
+- **Pump lane (wedge / proving ground)**
+  High-yield, high-volatility revenue advances and lines with tight caps, strict automation, and conservative controls.
+- **Settlement lane (serious lane)**
+  Conservative settlement liquidity revolvers for issuer/treasury/capital-markets buyers with institutional reporting.
+- **No early commingling**
+  Separate capital sleeves and lane-specific risk boxes.
 
-## Tech Stack
+## Why this sequencing
 
-- **Solana-native revenue accounts** as governed Squads vaults, separate from operating wallets.  
-- **Fixed-income layer** using Exponent's infrastructure for PT/YT on revenue-bearing positions.  
-- **attnUSD vault** holding stablecoins plus PT/YT, with conservative operator-led risk limits.
+- Pump lane creates live operating proof quickly.
+- The same rails are reused for settlement liquidity.
+- Track record and servicing tape improve institutional financeability.
 
-## Vision
+## What this enables
 
-attn makes onchain revenues behave like a bank account and credit line your project can actually live on: route protocol and creator income into a governed revenue account, turn it into reusable credit, and use that credit to fund builds, pay contributors, top up cards, and offer BNPL / net terms, while LPs hold a single pooled USD token backed by those revenue streams.
+- Fast working-capital access against routed fees for onchain businesses.
+- Bounded lender exposure via sweeps, throttles, and deterministic control modes.
+- A path from experimental flow to institutional-scale facilities.
 
-## Roadmap
+## Tech stack (functional)
 
-Start with guarded mainnet revenue accounts, short advances, and a small curated attnUSD book; then layer in credit lines, launchpad templates, and key spend integrations (cards / commerce / BNPL / streams) over time.
+- Revenue vault and signing controls.
+- Policy engine for limits, haircuts, and lane constraints.
+- Automated servicing and trigger engine.
+- Monitoring/indexing and lender reporting pipeline.
 
-## Tokenomics
+## Roadmap shape
 
-A future **$attn** token is meant to align borrowers, LPs, and risk governance via incentives and fee-sharing, and remains optional for using the core products.
+1. Launch Pump lane with strict controls and small caps.
+2. Produce repeatable servicing tape and incident drills.
+3. Expand settlement lane partnerships with separate capital.
+4. Add allocator layer only after sleeves are proven independently.
+
+## Governance and risk policy
+
+Governance scope centers on:
+
+- sleeve-level exposure caps,
+- parameter bands for limits and throttles,
+- reserve and loss-allocation policy,
+- reporting standards and incident discipline.

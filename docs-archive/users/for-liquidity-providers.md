@@ -1,132 +1,54 @@
 # For Liquidity Providers
 
-This page is for:
+attnCredit gives LPs exposure to revenue-swept credit facilities with explicit control policy and reporting.
 
-- funds  
-- DAOs  
-- yield-focused individuals,
+## What you hold
 
-who want to deploy capital into **revenue-backed yield** rather than only trading tokens.
+LP exposure is organized by **capital sleeve**:
 
----
+- **Pump sleeve:** higher yield, higher volatility, tighter controls.
+- **Settlement sleeve:** conservative profile with stronger institutional requirements.
 
-## What you hold when you hold attnUSD
+attnUSD reflects managed sleeve exposure and portfolio performance.
 
-attnUSD is a **USD-denominated share** backed by:
+## Core protections
 
-- a basket of stablecoins (USDC, USDT, USDe, USDC+),  
-- revenue-backed advances and loans to:
-  - apps  
-  - creators  
-  - DAOs  
-  - other revenue-generating onchain businesses.
+- hard sweeps from routed fees,
+- dynamic borrowing base and cap policy,
+- mandatory paydown discipline,
+- deterministic throttle/freeze/default modes,
+- lane-level concentration and reserve controls.
 
-You deposit stables and receive attnUSD. Over time:
+## No early commingling
 
-- as loans amortise and revenue products pay in (or default),  
-- the vault’s value moves,  
-- and attnUSD tracks that value.
+Pump and Settlement sleeves are separate in early stages.
+LPs should evaluate each sleeve independently.
 
-It is **not** a pure 1:1 stablecoin:
+## Lender-grade tape
 
-- it can trade above or below 1,  
-- depending on performance and losses.
+LP reporting includes:
 
----
+- facility-level balances and utilization,
+- repayment and sweep performance,
+- concentration and sleeve allocation,
+- configuration-change logs,
+- incidents, drills, and resolution timelines.
 
-## Where your yield comes from
+## Risk profile
 
-Yield comes from:
+- This is credit exposure, not principal-guaranteed yield.
+- Losses and recoveries are reflected by sleeve composition.
+- Higher yield sleeves carry higher control-event and volatility risk.
 
-- interest and revenues on revenue advances,  
-- spreads on revenue-backed credit lines,  
-- where applicable, underlying base yield on pledged assets (e.g. if pledged revenues are held in staked SOL or yield-bearing stablecoins),  
-- economics shared from more complex products (e.g. hybrid vesting + revenue structures).
+## Participation model
 
-It does **not** come from:
+1. Select sleeve exposure policy.
+2. Review risk and reporting standards.
+3. Fund and monitor via recurring tape.
+4. Rebalance as lane performance and mandate preferences change.
 
-- pure token emissions without underlying business,  
-- hidden leverage on unrelated risky assets (unless explicitly disclosed).
+## Related pages
 
----
-
-## What risks you take
-
-High-level risks include:
-
-- **Credit risk** – some projects will underperform or default.  
-- **Stablecoin risk** – any basket asset can be impaired.  
-- **Concentration risk** – poor diversification can make one failure more painful.  
-- **Operational and program risk** – Solana, programs, keepers, or routes can fail.
-
-The detailed mechanics live in:
-
-- [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md)  
-- [LP Guide](../mechanics/lp-guide.md)
-
-The key point:
-
-> You are explicitly buying revenue-backed credit risk (plus, in some cases, underlying base yield) in exchange for returns.
-
-This is different from assuming you always get 1:1 back in any circumstance.
-
----
-
-## Example scenarios
-
-<details>
-<summary>Example – Steady performance</summary>
-
-- Vault TVL: $40M in stables and revenue loans.  
-- Over a year:
-  - revenue products make ~8% net yield after losses,  
-  - operations and costs absorb 2%.
-
-Result:
-
-- net ~6% yield flows into the vault,  
-- NAV per share increases from 1.00 to ~1.06,  
-- your attnUSD position tracks that appreciation.
-
-</details>
-
-<details>
-<summary>Example – One large default</summary>
-
-- One large project, representing 10% of the revenue book, fails badly.  
-- Recovery is only 20% of principal on that slice.
-
-Effect:
-
-- ~8% hit to the vault NAV from that position,  
-- partially offset if other positions perform well,  
-- NAV per share could dip from 1.06 to ~0.99, for example.
-
-The exact numbers depend on diversification, reserves, and how the rest of the book performs.
-
-</details>
-
----
-
-## How you can participate
-
-You can choose how far you go down the stack:
-
-1. **attnUSD only**  
-   - treat it as a diversified revenue-backed yield position.
-
-2. **PT/YT and structured products (later phases)**  
-   - buy specific revenue bonds,  
-   - buy or sell specific revenue slices,  
-   - provide liquidity in PT/USDC pools, etc.
-
-The first phase of the protocol is designed so you mainly need to understand:
-
-- what backs attnUSD,  
-- what the yield is,  
-- how defaults and losses are handled.
-
-The detailed mechanics live in:
-
-- [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md)  
-- [LP Guide](../mechanics/lp-guide.md)
+- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)
+- [Pricing, Spreads, and Core Parameters](../mechanics/pricing-and-parameters.md)

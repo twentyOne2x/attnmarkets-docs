@@ -1,265 +1,88 @@
-# How attn Works (Non-Technical)
+# How attnCredit Works (Non-Technical)
 
-This page explains how attn works end-to-end without going into program code.
-
-There are three main pieces:
-
-1. **Revenue accounts** – where your onchain income lands.  
-2. **Products** – advances and credit lines written against that income.  
-3. **attnUSD** – the USD share token held by liquidity providers on the other side.
-
-Everything else (PT, YT, vault accounting) exists to make these three behave in a predictable way.
-
----
+attnCredit gives onchain businesses liquidity against routed fees while enforcing repayment through automation and controls.
 
 ## 1. The actors
 
-There are four main actors:
+- **Borrower:** routes eligible fees and draws from a facility.
+- **attn operator stack:** runs policy, servicing, monitoring, and controls.
+- **LPs / capital providers:** fund sleeves and receive risk-adjusted exposure.
+- **Partners (issuer/treasury stacks):** consume settlement liquidity facilities in the conservative lane.
 
-- **Projects** – apps, DAOs, creators, DePIN networks.  
-- **Launchpads / partners** – who help projects launch and structure products.  
-- **Liquidity providers (LPs)** – who bring stablecoins and want yield.  
-- **attn protocol** – the onchain coordination layer that:
-  - hosts revenue accounts,  
-  - wires up repayment rules,  
-  - interfaces with PT/YT tokenisation,  
-  - and runs the attnUSD vault.
+## 2. Step one: route revenue into a controlled vault
 
----
+A borrower configures fee routing so eligible revenue flows into a controlled vault account.
 
-## 2. Step one: set up a revenue account
+Core purpose:
 
-A project connects its income to an **attn revenue account**.
+- make repayment collectible,
+- make limits measurable,
+- make control actions enforceable.
 
-Examples of revenue sources:
+## 3. Step two: limits are set from observed cashflows
 
-- Pump.fun creator rewards,  
-- protocol fee switches (DEX, lending, perp, infra fees),  
-- x402 AI or DePIN income routed onchain,  
-- other programmatic revenue streams.
+The system computes a dynamic lendable amount using trailing revenue and risk policy.
 
-The revenue account is:
+Inputs include:
 
-- a **jointly governed vault**:
-  - signers: the project (multisig/DAO) + attn,  
-- configured with simple rules:
-  - if **no position is open**, the project can withdraw freely,  
-  - if **a position is open**, an agreed share of new revenues goes first to repayment.
+- revenue continuity and volatility,
+- concentration,
+- enforceability horizon,
+- reserve requirements.
 
-On top of that, the account can:
+## 4. Step three: borrower draws from the facility
 
-- move **unencumbered balances** into safe onchain yield sources (e.g. staked SOL, yield-bearing stablecoins),  
-- while keeping funds instantly available for withdrawals and collateral.
+Borrowers can draw up to current availability, subject to lane and policy rules.
 
-From the project’s point of view, this feels like:
+Two lane contexts:
 
-- “this is where my revenues land”,  
-- “this account has a built-in rule set if I borrow against those revenues”,  
-- “idle balances earn something by default”.
+- **Pump lane:** tighter caps and faster throttles.
+- **Settlement lane:** conservative profile and institutional reporting expectations.
 
----
+## 5. Step four: servicing runs continuously
 
-## 3. Step two: attn measures your revenue and sets limits
+Once a facility is active:
 
-Before you can borrow, attn:
+- routed fees are swept to debt service,
+- utilization discipline is checked continuously,
+- limits update when risk changes.
 
-- reads your **historical revenue data** (onchain traces, indexers, dashboards),  
-- looks at:
-  - level and stability of income,  
-  - concentration (is it all from one position or many?),  
-  - volatility and drawdowns,  
-- and derives **risk limits** for that revenue account.
+## 6. Step five: utilization discipline is enforced
 
-The output is:
+Borrowers cannot remain permanently maxed out.
 
-- a maximum **advance size** (for one-offs),  
-- a maximum **credit line limit** (for revolving facilities),  
-- plus guardrails on:
-  - revenue share %,  
-  - maximum duration,  
-  - and how quickly facilities must amortise.
+If utilization fails policy requirements:
 
-These limits are updated over time as more data arrives.
+- draw capacity tightens,
+- new draws can be frozen,
+- sweep intensity can increase.
 
----
+## 7. Step six: stress controls activate when needed
 
-## 4. Step three: a project picks a product
+If revenue deteriorates or risk spikes:
 
-Once the revenue account exists and limits are set, a project can choose:
+- throttle mode reduces availability,
+- freeze mode stops new draws,
+- acceleration/default mode can route all eligible fees to repayment.
 
-### A) One-off revenue advance
+## 8. Step seven: LPs see sleeve-level exposure and tape
 
-- “Sell X% of the next N days / weeks of revenues for cash now.”
+LPs receive exposure through sleeves (and attnUSD where applicable), with reporting on:
 
-This is good for:
+- balances and utilization,
+- sweep and repayment behavior,
+- incidents and corrective actions,
+- concentration and performance by lane.
 
-- shipping a release,  
-- listings, campaigns, short bursts of hiring,  
-- “bridge the next few weeks” type use-cases.
+## 9. What this is not
 
-### B) Revenue-backed credit line
+- Not an unsecured blank-check credit model.
+- Not a principal-guaranteed cash-equivalent token.
+- Not a single commingled risk pool in early stages.
 
-- “Get a revolving limit sized by your revenues, and repay from income as you draw.”
+## 10. Where to go deeper
 
-This is good for:
-
-- ongoing working capital,  
-- creator “lifestyle lines” backed by predictable earnings,  
-- DAOs and apps that want reusable borrowing capacity.
-
-The UI stays in business language:
-
-- “Advance: 30% of the next 6 weeks for $X today.”  
-- “Credit line: up to $Y, repaid from Z% of monthly revenues.”
-
----
-
-## 5. Step four: what happens onchain when you open a position
-
-Under the hood, attn does three things when a position is opened:
-
-1. **Locks in a share of your future revenues** for a fixed period and/or until a target amount is repaid.  
-2. **Mints claim tokens** (PT and YT) that represent:
-   - the “principal” leg of the position,  
-   - the “yield / cashflow” leg between now and maturity.  
-3. **Matches you with capital**:
-   - attnUSD vault (or other LP capital) pays you out in stablecoins,  
-   - in exchange for those cashflow claims on your revenue.
-
-You only see:
-
-- the cash in your wallet or treasury,  
-- the open “advance” or “credit line” in your dashboard,  
-- the share of revenues that is now committed to repayment.
-
-LPs only see:
-
-- their attnUSD balance,  
-- the current share price / yield,  
-- high-level portfolio metrics.
-
-The PT/YT layer exists so that products of different shapes can be standardised and risk-managed in one system.
-
-(Details on PT/YT live in [PT, YT, and attnUSD – Technical Design](./pt-yt-attnusd.md).)
-
----
-
-## 6. Step five: how repayment works
-
-Every time new revenue hits the revenue account while a position is open:
-
-1. The attn logic checks:
-   - which product positions are active,  
-   - their agreed **revenue share** and **repayment priority**,  
-   - how much each one still needs to be repaid.
-2. It splits incoming revenues accordingly:
-   - first into **repayment buckets** for open product positions,  
-   - then any leftover stays in the project’s free balance (which can earn base yield).
-3. It updates onchain state:
-   - outstanding principal per position,  
-   - how much revenue has been collected,  
-   - whether a position is fully repaid, in good standing, or in default.
-
-For a one-off advance:
-
-- once the **target repayment amount** has been collected,  
-- that position is automatically marked as complete,  
-- the revenue share drops back to 0%,  
-- and all future revenues go back to the project (unless another position is active).
-
-For a credit line:
-
-- revenue shares are applied to **whatever is currently drawn**,  
-- as you repay and draw again, the same rules apply,  
-- limits can adjust over time as performance improves or deteriorates.
-
----
-
-## 7. Step six: what LPs see via attnUSD
-
-LPs deposit stablecoins into an **attnUSD vault**.
-
-In exchange, they receive attnUSD, a **USD-denominated share token** whose value is backed by:
-
-- a stablecoin basket (USDC, USDT, USDe, USDC+),  
-- plus a portfolio of revenue-backed advances and credit lines.
-
-Over time:
-
-- as positions pay in, default, and recover,  
-- the vault’s **net asset value (NAV)** moves,  
-- and the attnUSD share price tracks that NAV.
-
-Yield comes from:
-
-- interest and fees on revenue from opened positions,  
-- sometimes the underlying base yield on pledged assets,  
-- minus losses, operating costs, and reserves.
-
-LPs do not have to understand each individual position. They mainly care about:
-
-- what backs attnUSD,  
-- performance and risk metrics,  
-- diversification.
-
-(Details live in [For Liquidity Providers](../users/for-liquidity-providers.md) and the LP Guide.)
-
----
-
-## 8. Failure modes and protections (high-level)
-
-If a project underperforms:
-
-- their revenues may be lower than expected,  
-- repayment may take longer or may not reach the target amount by maturity.
-
-The protocol’s response includes:
-
-- **position-level controls**:
-  - conservative initial limits (LTV, term, revenue share),  
-  - automatic stoppage of new borrowing when performance breaks thresholds,  
-  - the ability to restructure or extend positions on-chain if both sides agree.  
-- **portfolio-level controls**:
-  - concentration limits per project, sector, and revenue type,  
-  - buffers and reserves at the attnUSD vault level,  
-  - diversified exposure across many independent revenue streams.
-
-Losses from bad positions:
-
-- are first absorbed by any reserves,  
-- then by the attnUSD vault NAV,  
-- and therefore ultimately by attnUSD holders.
-
-attnUSD is explicitly **not** a guarantee of 1:1 return of principal; it is a tokenised exposure to revenue-backed credit risk.
-
----
-
-## 9. Implementation notes
-
-Two concrete implementation choices matter under the hood:
-
-- **Revenue account infra**  
-  - Revenue accounts are implemented as Squads Safe multisig vaults on Solana.  
-  - This gives jointly governed custody and routing for protocol and creator revenues without taking over a project’s entire treasury.
-
-- **PT/YT and yield infra**  
-  - PT/YT positions are represented via Exponent Finance’s Standardised Yield (SY) contracts on Solana.  
-  - SY is used to represent revenue-bearing positions and strip them into PT and YT in a standard way that other protocols can integrate with.
-
-
----
-## 10. Mapping back to the user-facing story
-
-From a project’s perspective, everything above reduces to:
-
-- “This is my **revenue account**.”  
-- “These are my **advances** and **credit line** backed by that revenue.”  
-- “This is my **available balance**, some of which can earn yield while idle.”
-
-From an LP’s perspective, it reduces to:
-
-- “I deposit stables and receive **attnUSD**.”  
-- “attnUSD gives me diversified exposure to **revenue-backed products** instead of just token price.”  
-- “My return is the vault’s performance, marked transparently on-chain.”
-
-From attn’s perspective, PT/YT and vault mechanics are the glue that makes these experiences consistent and auditable across many different revenue sources and position shapes.
+- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+- [Risk, limits, and control modes](./risk-and-limits.md)
+- [Pricing and parameter policy](./pricing-and-parameters.md)
+- [For Liquidity Providers](../users/for-liquidity-providers.md)

@@ -1,83 +1,44 @@
 # The Missing Layer for Onchain Revenues
 
-Onchain infrastructure makes it easy to:
+Onchain systems make fee generation visible, but they do not automatically make those fees financeable.
 
-- launch tokens,  
-- route trades through DEXs,  
-- turn on fee switches and revenue PDAs,  
-- and track protocol and app revenues via dashboards and indexers.
+The missing piece is a credit control layer that turns recurring onchain cashflows into underwritable, enforceable facilities.
 
-What is still missing is a **product layer on top of those revenues**: a way for recurring onchain income to behave like an asset that can support advances, credit lines, pooled yield, and basic “cash management” (earning something on idle balances) in a predictable way.
+## What is missing today
 
----
+Most projects still run revenue in ways that are hard to finance:
 
-## How revenues behave today
+- fee flows land in generic wallets,
+- repayment priorities are not enforced,
+- treasury and operating balances are mixed,
+- there is limited lender-grade reporting on servicing behavior.
 
-For most projects, revenues:
+Even with public dashboards, capital providers often lack a clean, enforceable way to fund against those flows.
 
-- land in a generic wallet or PDA,  
-- are moved around manually when someone remembers,  
-- are mixed with other funds (treasury, speculation, runway),  
-- are not bound by clear rules on who gets paid when.
+## What attn adds
 
-That usually means there is **no**:
+attn focuses on that missing layer with **attnCredit**:
 
-- designated **revenue account** with simple, enforceable rules,  
-- standard way to **pledge those revenues** as collateral,  
-- shared template for **repayment waterfalls** or priorities,  
-- clean instrument that gives outside capital a **defined claim on that income** instead of on the token,  
-- default way for those balances to earn yield without breaking accounting or risk assumptions.
+- controlled revenue-account routing,
+- policy-bounded underwriting,
+- automated repayment sweeps,
+- deterministic stress and default modes,
+- lender-grade tape and operations visibility.
 
-As a result, teams with real income still tend to rely on:
+This shifts the model from discretionary repayment to serviced repayment.
 
-- repeated token sales or emissions,  
-- ad-hoc OTC arrangements,  
-- or under-investing relative to what their revenues could support,  
-- while a large portion of revenues sits idle in non-yielding wallets.
+## Why this matters
 
----
+When fee flows are controlled and serviceable, projects can access working capital without depending only on token sales or ad hoc bilateral financing.
 
-## What capital can and cannot see
+Capital providers can evaluate exposure using:
 
-Capital providers can now see:
+- repayment behavior,
+- concentration and volatility controls,
+- documented incident and governance actions.
 
-- protocol and app revenue numbers on aggregators,  
-- fee switches and routing on-chain,  
-- basic growth and retention metrics.
+## Next pages
 
-What they still cannot buy easily is **a standardised, enforceable slice of those revenues**:
-
-- there is no canonical “revenue account + rules” they can underwrite,  
-- no widely used primitive for “X% of revenues for Y weeks with these enforceable terms,  
-- no USD numeraire built explicitly on a diversified book of such positions.
-
-Most credit risk therefore remains either:
-
-- fully undercollateralised and reputation-based, or  
-- overcollateralised against volatile tokens,
-
-rather than being anchored in contractual revenue flows.
-
----
-
-## The gap attn focuses on
-
-attn is built around this specific missing layer.
-
-It is **Solana-native** and relies only on **onchain revenue routing**:
-- no identity binding
-- no banking rails
-- no credit-bureau inputs
-
-The protocol’s job is to turn onchain revenues into **bankable collateral** by:
-
-- giving them a governed place to land (a revenue account),  
-- wiring predictable rules for how they can be pledged and repaid,  
-- and aggregating those positions into a pooled USD share token for LPs.
-
-This page is about the *why*.  
-The next ones cover the *how*:
-
-- [Banking the internet of revenue](./banking-the-internet-of-revenue.md) – product view  
-- [How attn works (non-technical)](../mechanics/how-it-works-nontechnical.md) – step-by-step flows  
-- [PT, YT, and attnUSD – Technical Design](../mechanics/pt-yt-attnusd.md) – under-the-hood model
+- [Banking the internet of revenue](./banking-the-internet-of-revenue.md)
+- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)

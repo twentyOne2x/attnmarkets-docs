@@ -1,67 +1,76 @@
 # Architecture Overview
 
-This page sketches the high-level architecture of attn.  
-Details may evolve; this is a working map for developers and integrators.
-
----
+attnCredit is organized around control, underwriting, servicing, and reporting.
+The architecture is designed so repayment enforcement and risk controls are observable and deterministic.
 
 ## 1. Core components
 
-- **Revenue Accounts**
-  - Squads Safe / multisig vaults on Solana that receive protocol and creator revenues.  
-  - Host routing logic for repayment, base yield, and withdrawals.
+- **Revenue Account Layer**
+  - Controlled vault destinations for eligible fee flows.
+  - Routing verification and account health checks.
 
-- **Position Engine**
-  - Responsible for:
-    - creating and tracking advances and credit line draws,  
-    - defining revenue share schedules and maturities,  
-    - interfacing with yield-stripping infra (PT/YT).
+- **Control Plane**
+  - Signer policy, timelocks, and restricted config-change paths.
+  - Guardrails for payout permissions and emergency mode transitions.
 
-- **PT/YT Layer**
-  - Implemented on Exponent Finance’s Standardised Yield (SY) fixed-income infra:  
-    - represent revenue-bearing positions as SY-like tokens,  
-    - strip into PT and YT,  
-    - expose them for vault accounting and potential secondary markets.
+- **Credit Engine**
+  - Computes borrowing base from trailing collectable revenue.
+  - Applies haircuts, concentration controls, and lane/borrower caps.
 
-- **attnUSD Vault**
-  - Holds stablecoins and PT/YT positions.  
-  - Mints and burns attnUSD.  
-  - Computes NAV and enforces portfolio limits.
+- **Servicing Engine**
+  - Executes sweeps, utilization checks, mandatory paydown enforcement.
+  - Handles throttle/freeze/default state transitions.
 
-- **Risk & Limits Engine**
-  - Stores per-project and portfolio limits.  
-  - Approves or rejects new positions based on risk data.  
-  - Applies haircuts for pricing and NAV.
+- **Risk Engine**
+  - Monitors drawdown, volatility, concentration, and control-integrity signals.
+  - Emits trigger events to tighten limits or escalate modes.
 
-- **Offchain / Hybrid Services**
-  - Monitoring:
-    - revenue data feeds,  
-    - health checks on routes and programs.  
-  - Governance and operations:
-    - parameter changes,  
-    - manual interventions in emergencies.
+- **Monitoring and Tape**
+  - Produces facility-level reporting, reconciliations, and incident logs.
+  - Maintains operational audit history for lenders and governance.
 
----
+- **Capital Sleeves and attnUSD**
+  - Separate Pump and Settlement sleeves.
+  - attnUSD reflects sleeve-level portfolio exposure and performance.
 
 ## 2. Data flows (simplified)
 
-1. **Revenue in**
-   - Protocol / creator configures fee switch / rewards to flow into a Revenue Account.  
-   - Revenue Account reports balances and flows to the Position Engine and Risk Engine.
+1. **Onboard and route**
+   - Borrower routes eligible fees to controlled revenue accounts.
+   - Control plane validates config and policy compliance.
 
-2. **Position creation**
-   - Project requests an advance or draw from a credit line.  
-   - Risk Engine checks limits and parameters.  
-   - Position Engine creates a new RBP and strips it into PT/YT via PT/YT Layer.  
-   - attnUSD Vault (or another LP) purchases the YT leg; funds are sent to the project.
+2. **Underwrite and size**
+   - Credit engine computes initial limit and policy bounds.
+   - Facility is assigned to the appropriate sleeve policy.
 
-3. **Repayment and yield**
-   - Incoming revenues are split according to routing rules.  
-   - Cashflows allocated to each open position are tracked and credited against YT.  
-   - Vault NAV updates based on realised flows and updated marks.
+3. **Draw and serve**
+   - Borrower draws within current availability.
+   - Servicing engine runs sweeps and utilization discipline checks.
 
-4. **Withdrawals and redemptions**
-   - Projects withdraw unencumbered revenues from their Revenue Accounts.  
-   - LPs deposit/withdraw from attnUSD, which adjusts vault holdings in stables and PT/YT.
+4. **Monitor and adjust**
+   - Risk engine watches live signals.
+   - Limits tighten or loosen according to policy and lane constraints.
 
-Further diagrams and sequence charts can be added as the implementation solidifies.
+5. **Escalate if needed**
+   - Triggered transitions move facility into throttle, freeze, or default handling.
+   - Routing continues to prioritize debt service during stress modes.
+
+6. **Report and reconcile**
+   - Monitoring outputs lender tape and governance summaries.
+   - LP-facing metrics roll up by sleeve and portfolio.
+
+## 3. Lane separation in architecture
+
+- **Pump lane**
+  - Higher volatility assumptions, tighter caps, faster control reactions.
+- **Settlement lane**
+  - Conservative underwriting, stricter reporting/governance profile.
+- **No early commingling**
+  - Separate sleeve accounting and risk limits in early phases.
+
+## 4. Related pages
+
+- [How attnCredit works (non-technical)](./how-it-works-nontechnical.md)
+- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+- [Risk, Limits, and Concentration Framework](./risk-and-limits.md)
+- [Pricing, Spreads, and Core Parameters](./pricing-and-parameters.md)

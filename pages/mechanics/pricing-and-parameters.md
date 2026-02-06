@@ -1,71 +1,69 @@
 # Pricing, Spreads, and Core Parameters
 
-This page explains how attn thinks about **pricing** revenue-backed positions and setting core parameters like tenors, revenue shares, and rates.
-
-It is descriptive of the intended framework and may change as more data and feedback arrive.
+Pricing is policy-driven and lane-specific.
+Rates reflect cashflow volatility, enforceability strength, operational cost, and expected loss behavior.
 
 ## 1. Objectives
 
-Pricing aims to:
+- price risk transparently,
+- reward stable repayment behavior,
+- tighten economics under stress,
+- keep lane risk boxes distinct.
 
-- offer projects **useful, non-punitive financing**,
-- offer LPs **risk-appropriate yield**,
-- keep the book **short-dated and granular** enough to react to new information.
+## 2. Core knobs per facility
 
-Practically, this means:
+- **Borrowing base inputs**
+  Trailing fees, continuity, concentration, and volatility haircuts.
+- **Target repayment profile**
+  Principal plus fees over policy-defined service windows.
+- **Utilization discipline**
+  Mandatory paydown thresholds and windows.
+- **Control-mode multipliers**
+  Throttle/freeze/default behavior modifies availability and economics.
+- **Reserve settings**
+  DSRA/reserve requirements where policy applies.
 
-- shorter tenors and higher payback speeds for more volatile revenues,
-- lower spreads and longer tenors only for the most stable, diversified revenues.
+## 3. Pump lane policy
 
-## 2. Core knobs per product
+Pump lane pricing reflects high-volatility cashflows and tighter control operations.
 
-Every advance / tranche from a credit line is defined by:
+Typical characteristics:
 
-- **Advance amount** `A`
-- **Target repayment** `R_target` (principal + fees)
-- **Revenue share** `α` (share of defined revenues routed)
-- **Maximum tenor** `T` (hard maturity date)
+- higher base rates,
+- tighter caps,
+- faster repricing when risk signals worsen,
+- stricter step-up criteria.
 
-From these, an **implied APR / IRR band** can be computed under a base revenue scenario. Pricing is set so that:
+## 4. Settlement lane policy
 
-- under “base case” revenues, LPs earn a target spread,
-- under mild underperformance, returns are still acceptable,
-- under severe underperformance, the protocol can recognise and contain losses quickly.
+Settlement lane pricing reflects conservative underwriting and institutional reporting requirements.
 
-## 3. Rate bands and segmentation
+Typical characteristics:
 
-Initial pricing is likely to use **bands** rather than continuous curves, e.g.:
-
-- Tier A: very stable, diversified protocol revenues → lower spreads, longer tenors.
-- Tier B: solid but more volatile apps / tokens → mid spreads, shorter tenors.
-- Tier C: highly volatile or early-stage revenues → high spreads, very short tenors.
-
-Where a project sits is driven by:
-
-- historical revenue volatility,
-- concentration (single venue vs many),
-- strength of the revenue account wiring and enforcement,
-- launchpad / partner support.
-
-## 4. attnUSD target profile
-
-The attnUSD vault targets:
-
-- a **net yield range** (after losses and costs) rather than a fixed rate,
-- a mix of:
-  - safer, shorter-dated positions to keep liquidity and optionality,
-  - a controlled allocation to higher-spread, higher-volatility positions.
-
-Base yield from yield-bearing stables or staked assets, where used, is treated as a **bonus**, not the main source of return.
+- lower volatility assumptions,
+- tighter eligibility and concentration standards,
+- slower but governance-bounded repricing,
+- stronger covenant and reporting expectations.
 
 ## 5. Dynamic adjustments
 
-Over time, pricing and parameters can be adjusted based on:
+Pricing and limits adjust based on observed behavior:
 
-- realised default and recovery rates,
-- LP demand and target attnUSD size,
-- competitive conditions in the broader market.
+- consistent repayments can improve availability within policy,
+- adverse signals tighten limits and can increase effective cost,
+- unresolved stress transitions facilities into stricter control modes.
 
-Changes are applied only to **new positions**; existing positions keep their agreed terms.
+## 6. Governance cadence
 
-A more quantitative spec (curves, scorecards, target bands) will be added as the protocol matures and moves from “hand-tuned conservative” to “data-driven” parameter setting.
+Governance reviews and updates:
+
+- parameter bands by lane,
+- cap frameworks and concentration thresholds,
+- reserve policy,
+- disclosure and reporting standards.
+
+## 7. Related pages
+
+- [Risk, Limits, and Concentration Framework](./risk-and-limits.md)
+- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+- [Roadmap (Indicative)](../roadmap.md)

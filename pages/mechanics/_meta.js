@@ -13,7 +13,7 @@ const sidebar = {
     title: itemTitle('Revenue accounts')
   },
   'pt-yt-attnusd': {
-    title: itemTitle('PT / YT / attnUSD')
+    title: itemTitle('attnCredit engine')
   },
   'risk-and-limits': {
     title: itemTitle('Risk & limits')

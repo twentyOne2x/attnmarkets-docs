@@ -1,356 +1,125 @@
-# PT, YT, and attnUSD – Technical Design
+# attnCredit Engine and attnUSD
 
-This page describes the lower-level objects that sit under attn’s user-facing concepts:
+This page is the canonical technical model for **attnCredit**.
 
-- **Revenue account** → the underlying cashflow source.  
-- **Principal Token (PT)** → the “principal leg” of a revenue position.  
-- **Yield Token (YT)** → the “cashflow leg” between now and a defined maturity.  
-- **attnUSD** → a vault share token that holds a portfolio of PT/YT positions and stablecoins.
+attnCredit is a revenue-underwritten, onchain-enforced revolving credit system where repayment is serviced from routed cashflows.
 
-The goals are to:
+## 1. Core objects
 
-- standardise how revenue-backed positions are represented on-chain,  
-- make them composable with fixed-income infrastructure on Solana, using Exponent Finance’s “Standardised Yield” (SY) framework for PT/YT representation,
-- and give LPs and integrators a clear picture of what backs attnUSD.
+- **Revenue account / vault**
+  Controlled destination for eligible fee flows.
+- **Facility**
+  Revolving credit agreement with dynamic limits and servicing rules.
+- **Borrowing base**
+  Risk-adjusted lendable amount derived from observed collectable revenue.
+- **Sleeve**
+  Capital bucket with its own risk policy (Pump lane or Settlement lane).
+- **attnUSD**
+  LP share in one or more managed sleeves, marked from underlying facility performance.
 
-This is a conceptual specification rather than a formal program spec.
+## 2. Control plane
 
----
+The control plane enforces collection and repayment integrity:
 
-## 1. Objects and terminology
+- approved routing into controlled vaults,
+- signer policy and timelocks for sensitive config updates,
+- restricted payout paths during stress/default modes,
+- auditability for config changes and operational actions.
 
-### 1.1 Revenue Account
+See also: [Revenue Accounts and Signing Model](./revenue-accounts-and-signing-model.md).
 
-A **Revenue Account** is a jointly controlled onchain vault (typically a Squads Safe) that:
+## 3. Credit policy
 
-- receives protocol / creator / network revenues,  
-- enforces **routing rules** when one or more financing positions are active,  
-- can deploy **unencumbered balances** into safe yield sources.
+Each facility computes lendable capacity from cashflow quality and enforceability.
 
-From the PT/YT system’s perspective, a revenue account is:
+Policy components:
 
-- a source of **cashflows over time**,  
-- associated with a specific project and risk profile,  
-- referenced by an identifier `rev_id`.
+- trailing revenue windows,
+- concentration and volatility haircuts,
+- enforceability horizon,
+- reserve requirements (including DSRA thresholds where required),
+- lane-level and borrower-level caps.
 
-### 1.2 Revenue-Bearing Position (RBP)
+## 4. Servicing policy
 
-To interface with yield-stripping infra, we define a logical **Revenue-Bearing Position (RBP)**:
+Servicing is continuous and rule-based:
 
-- a token or virtual position whose value derives from the **discounted future cashflows** of a revenue account over some horizon.
+- **Hard sweeps:** routed fees are swept to debt service according to policy.
+- **Mandatory paydown:** utilization must periodically drop below policy thresholds.
+- **Dynamic limits:** availability updates as revenue and risk signals change.
+- **Step controls:** well-performing facilities can step up within cap rules.
 
-In practice:
+## 5. Shock policy
 
-- the RBP is an internal abstraction (not necessarily a freely transferable token),  
-- attn can wrap it as a standardised “yield-bearing token” type if the infra provider expects that (e.g. an SY-like token in Exponent’s model).
+When risk deteriorates, controls escalate deterministically:
 
-Each RBP is tagged by:
+- **Throttle mode:** reduce draw availability and increase sweep intensity.
+- **Protect mode:** tighten parameter bands and require faster deleveraging.
+- **Freeze mode:** block new draws while repayment routing remains active.
 
-- an underlying revenue account `rev_id`,  
-- a **maturity** date `T`,  
-- a **notional** amount (e.g. a USD-equivalent measure of expected flows).
+Typical trigger classes:
 
-### 1.3 Principal Token (PT)
+- sudden fee drawdowns,
+- volatility regime shifts,
+- routing/control integrity failures,
+- covenant breaches.
 
-A **Principal Token (PT)** is an SPL token that represents the “principal leg” of an RBP:
+## 6. Default and acceleration policy
 
-- 1 PT is designed to redeem for a fixed **principal amount** of the underlying at maturity `T`,  
-- PTs are **non-yield-bearing**: they do not accrue revenue between `t0` (position open) and `T`,  
-- their market value before maturity reflects:
-  - time to maturity,  
-  - discount rates,  
-  - perceived credit / revenue risk.
+If stress is not cured, facilities enter deterministic default handling:
 
-For attn, PT is primarily a **bookkeeping and hedging tool**:
+- new borrowing remains frozen,
+- all eligible routed fees service repayment,
+- acceleration rules apply where policy requires,
+- cure and resolution states are logged for audit and reporting.
 
-- the protocol can hold PTs to represent the “residual” after selling cashflows,  
-- or PTs can be used in future structured products (e.g. PT/USDC pools).
+## 7. Capital segmentation (two lanes)
 
-### 1.4 Yield Token (YT)
+### 7.1 Pump lane (wedge / proving ground)
 
-A **Yield Token (YT)** is an SPL token that represents the “yield leg” of an RBP:
+- high-volatility borrower profile,
+- tighter caps and faster control reactions,
+- high-yield pricing consistent with tail risk and operating cost,
+- fully automated policy enforcement.
 
-- 1 YT is entitled to the **cashflows** generated by the underlying RBP between `t0` and maturity `T`,  
-- YTs generally have **no claim** at or after maturity (their value decays to 0 as `t → T`),  
-- their market value reflects:
-  - expected future revenue over the period,  
-  - risk of underperformance or default,  
-  - time to maturity and discount rates.
+### 7.2 Settlement lane (serious lane)
 
-In attn, the YT is the key object for **revenue-backed positions**:
+- conservative settlement liquidity profile,
+- stricter reporting and governance requirements,
+- lower-variance underwriting box,
+- buyer profile: issuer/treasury/capital markets.
 
-- advances and credit lines largely correspond to allocating YT (or YT-like flows) to capital providers,  
-- the project retains PT (and often some YT-like upside beyond what is pledged).
+### 7.3 No early commingling
 
-### 1.5 attnUSD
+Lanes operate with separate sleeves and risk boxes in early stages.
 
-**attnUSD** is the share token of a vault that holds:
+## 8. attnUSD model
 
-- a basket of stablecoins (USDC, USDT, USDe, USDC+),  
-- a portfolio of PT and YT positions across many revenue accounts,  
-- and optionally some buffer / reserve assets.
+attnUSD is a portfolio share over managed sleeve exposure:
 
-Let:
+- NAV reflects sleeve composition, facility performance, reserves, and realized losses/recoveries.
+- There is no implied 1:1 principal guarantee.
+- Disclosure is sleeve-explicit (allocation, utilization, performance, incidents).
 
-- `NAV(t)` = total marked value of the vault’s assets minus liabilities at time `t`,  
-- `S(t)` = total supply of attnUSD at time `t`.
+See also: [For Liquidity Providers](../users/for-liquidity-providers.md).
 
-Then:
+## 9. Lender-grade tape
 
-- the **attnUSD share price** is `P(t) = NAV(t) / S(t)`,  
-- LPs deposit stablecoins to mint attnUSD at or near `P(t)`,  
-- LPs burn attnUSD to withdraw a pro-rata share of the underlying.
+The reporting package includes:
 
-Yield for LPs is encoded in how `P(t)` changes over time.
+- facility-level balances, utilization, and repayment flows,
+- sweep performance and exceptions,
+- configuration-change logs and approvals,
+- incident timeline and drill outcomes,
+- lane/sleeve exposure snapshots and concentration metrics.
 
----
+Related pages:
 
-## 2. Yield-stripped representation of revenue positions
+- [Risk, Limits, and Concentration Framework](./risk-and-limits.md)
+- [Pricing, Spreads, and Core Parameters](./pricing-and-parameters.md)
 
-### 2.1 Mapping a position into PT/YT
+## 10. Legacy note (PT/YT)
 
-When a revenue-backed position is opened, we conceptually:
-
-1. Define the **position term**:
-   - a maturity `T`,  
-   - a target repayment amount `R_target` (principal + fees),  
-   - a revenue share schedule (e.g. `α`% of relevant revenues between `t0` and `T`),  
-   - a priority level (waterfall position).
-
-2. Construct an **RBP** representing the cashflows:
-   - from the relevant share(s) of the revenue account,  
-   - over the window `[t0, T]`,  
-   - up to the cap `R_target` (where applicable).
-
-3. Perform a **yield strip**:
-   - mint `PT_position` representing “principal” at `T`,  
-   - mint `YT_position` representing the project’s obligations on revenue flows over `[t0, T]`.
-
-In an Exponent-style implementation:
-
-- the RBP can be represented as an SY token (standardised yield-bearing token),  
-- PT and YT are then derived from that SY position via the infra’s stripping logic,  
-- attn treats those PT/YT tokens as the canonical representation of the position on-chain.
-
-For many attn positions:
-
-- the **economic exposure** is heavily concentrated in the YT leg,  
-- PT may be structured to represent residual claims or collateral reversion after maturity.
-
-### 2.2 Lifecycle of YT
-
-YT behaviour over time:
-
-- At `t0` (position open), YT has full exposure to future revenue in the position window.  
-- As revenues arrive and are routed to the position:
-  - some portion of the economic value “realises”,  
-  - the outstanding risk on the YT’s remaining flows decreases.  
-- At or after `T`:
-  - YT either has been fully paid through `R_target` being reached,  
-  - or whatever shortfall exists is recognised as a **loss** for the YT holder.
-
-In many designs:
-
-- YT ceases to have any claim after `T`; it is economically exhausted,  
-- if the system allows, some “tail” recovery can occur via restructuring, but that is a separate action.
-
-### 2.3 Lifecycle of PT
-
-PT behaviour over time depends on how much of the underlying is tied to the position:
-
-- It can be configured to:
-  - represent residual claims to revenue beyond `T`,  
-  - represent a right to any unencumbered portion of the RBP at maturity,  
-  - or be a purely internal hedging instrument.
-
-Because attn is focused on **finite-horizon positions backed by live revenues**, PT usage in early versions may be constrained to:
-
-- internal accounting of “what principal is expected to come back at maturity”,  
-- future structured products (e.g. principal-only pools for more conservative LPs).
-
----
-
-## 3. One-off revenue advances under the hood
-
-Consider a one-off advance:
-
-- Project wants upfront `A` USDC.  
-- attn sets:
-  - revenue share `α` (e.g. 30%),  
-  - term `[t0, T]` (e.g. 6 weeks),  
-  - target repayment `R_target = A + fees`.
-
-Onchain:
-
-1. A **position record** is created referencing:
-   - the project’s revenue account,  
-   - `(α, T, R_target)`,  
-   - priority in the repayment waterfall.
-
-2. A corresponding **RBP_position** is defined and yield-stripped into `(PT_position, YT_position)`.
-
-3. **Capital match**:
-   - the attnUSD vault (or another LP source) buys `YT_position` from the position at a price close to `A`,  
-   - `A` USDC (minus any origination costs) is sent to the project,  
-   - `YT_position` is held by the vault as an asset.
-
-4. As revenues hit the revenue account:
-   - the routing logic applies `α`% of relevant flows to `R_position`,  
-   - once `R_position >= R_target`, the position is closed and `YT_position` is considered fully paid.
-
-The vault’s return on this position is:
-
-- realised cashflows from the revenue share,  
-- minus `A` and any allocated losses / costs,  
-- expressed in how the YT position is marked over time and finally settled.
-
----
-
-## 4. Revenue-backed credit lines under the hood
-
-A revenue-backed credit line is a **standing facility** rather than a single static strip.
-
-Parameters may include:
-
-- a maximum limit `L_max`,  
-- a base revenue share `α` applied when the line is drawn,  
-- dynamic adjustments based on utilisation and performance.
-
-Lifecycle:
-
-1. **Facility setup**:
-   - a facility object is created pointing to the revenue account,  
-   - risk limits and revenue share curves are stored,  
-   - no PT/YT is minted yet (no drawn amount).
-
-2. **Draw events**:
-   - when the project draws `ΔA` from the line,  
-   - the system creates a new “draw tranche”:
-     - with its own maturity `T_i` and `R_target_i`,  
-     - a corresponding `(PT_i, YT_i)` strip,  
-     - purchased by the vault in exchange for `ΔA`.
-
-3. **Repayment**:
-   - revenue routing applies the facility’s rules to current utilisation,  
-   - cashflows are assigned to each `YT_i` until its `R_target_i` is reached,  
-   - drawn balance reduces accordingly; the facility can be reused.
-
-From the vault’s perspective:
-
-- a credit line is a **collection of YT tranches** with staggered terms and exposures,  
-- each tranche can be marked and risk-managed separately,  
-- line-level limits ensure no single facility dominates the portfolio.
-
----
-
-## 5. attnUSD vault mechanics
-
-### 5.1 Asset set
-
-The attnUSD vault can hold:
-
-- **Stablecoins** – USDC, USDT, USDe, USDC+.  
-- **Yield-stripped positions** – PT and YT from many revenue accounts and facilities.  
-- **Reserves / buffers** – safe assets or idle stables for liquidity management.
-
-### 5.2 NAV and pricing
-
-At any time `t`, the vault computes:
-
-- `NAV_stables(t)` – value of pure stablecoin holdings (usually at par, unless impaired).  
-- `NAV_PT(t)` – value of PT positions, using conservative discount curves and risk haircuts.  
-- `NAV_YT(t)` – value of YT positions, based on:
-  - realised revenue to date,  
-  - projected future revenue over remaining terms,  
-  - probabilistic default and recovery assumptions.  
-- `NAV_reserves(t)` – any additional reserve assets.
-
-Then:
-
-- `NAV(t) = NAV_stables(t) + NAV_PT(t) + NAV_YT(t) + NAV_reserves(t)`  
-- share price `P(t) = NAV(t) / S(t)`.
-
-### 5.3 Minting and redemption
-
-When an LP **deposits** stablecoins:
-
-- they send stables into the vault,  
-- the vault mints new attnUSD such that:
-  - the LP receives attnUSD at or very close to current `P(t)`,  
-  - minor deviations can be used to cover minting / redemption costs.
-
-When an LP **redeems** attnUSD:
-
-- they burn attnUSD,  
-- the vault returns a mix of:
-  - stablecoins,  
-  - potentially very liquid PT/YT if redemptions are large (later phases),  
-- again, targeting withdrawals at or near current `P(t)`.
-
-### 5.4 Losses and recoveries
-
-If a set of YT positions underperforms badly:
-
-- expected cashflows drop,  
-- their marked value is written down,  
-- `NAV(t)` decreases, and so does `P(t)`.
-
-Recoveries (e.g. renegotiations, late revenue, collateral unwinds) can:
-
-- partially restore YT or PT value,  
-- be reflected in higher `NAV(t)` and `P(t)` later.
-
-attnUSD is not intended to behave like a guaranteed 1:1 stable.
-
----
-
-## 6. Relationship to user-facing concepts
-
-The PT/YT and vault system maps back to the higher-level language as follows:
-
-- **“Revenue account”**  
-  → underlying source of cashflows referenced by RBPs.
-
-- **“Advance”**  
-  → a finite-horizon YT position sold to the vault, plus any internal PT held as residual.
-
-- **“Credit line”**  
-  → a collection of YT tranches spanning multiple draws, governed by a single facility.
-
-- **“attnUSD yield”**  
-  → aggregate performance of:
-    - YT positions across all positions,  
-    - any PT appreciation / hedge,  
-    - and base yield on underlying balances.
-
-This separation allows:
-
-- front-end UX to stay in plain business terms (advance, line, revenue share),  
-- back-end risk and liquidity management to operate in a standardised fixed-income vocabulary (PT, YT, maturities, haircuts, NAV).
-
----
-
-## 7. Implementation and infra notes
-
-- The yield-stripping mechanism (PT/YT minting and redemption) is implemented using **Exponent Finance’s Standardised Yield (SY) infra** on Solana.  
-- attn treats this infra as:
-  - the canonical way to turn a yield-bearing position (here, revenue) into PT/YT,  
-  - a shared standard that other protocols can integrate with,  
-  - an auditable onchain representation of credit exposures.
-
-In early versions, some of these details may be simplified or kept internal:
-
-- PT may be non-transferable or rarely used,  
-- only a subset of YT positions may be exposed to external secondary markets,  
-- pricing models will err on the side of conservative haircuts and shorter maturities.
-
-As the system matures, PT/YT and attnUSD can form the basis for:
-
-- secondary markets for specific revenue bonds,  
-- structured products (e.g. PT-only pools for lower-risk LPs),  
-- integrations with other protocols that understand standardised yield tokens.
-
-The invariant across versions is:
-
-- **every advance or credit line is backed by explicit, tokenised claims on well-defined revenue streams**,  
-- and **attnUSD only takes risk through these tokenised positions and stablecoins**, not through opaque leverage or unrelated exposures.
+Earlier versions of these docs described positions with PT/YT vocabulary.
+That abstraction is now legacy context, not the primary product model.
+The canonical model is facility underwriting + servicing + control modes as described above.
