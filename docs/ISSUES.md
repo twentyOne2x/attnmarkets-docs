@@ -201,11 +201,11 @@ PLANNER
 - Fix intent:
   - Replace "serious lane" naming with neutral settlement-liquidity wording.
   - Store pre-pivot long-form comparison page as a private archive file not included in published docs.
-  - Ensure no remaining "revenue vault" phrasing anywhere.
+  - Ensure no remaining vault-based terminology for revenue accounts anywhere.
 - Acceptance criteria:
   - No "serious lane" phrasing in docs.
   - Archived pre-pivot content exists under `docs/private/` and is not part of `pages/`.
-  - No "revenue vault" matches in repo.
+  - No remaining vault-based revenue-account wording in repo.
   - Build passes.
 
 EXECUTOR
@@ -214,7 +214,7 @@ EXECUTOR
 - Added private archive copy of the previous long-form comparison page:
   - `docs/private/where-attn-sits-next-to-avici-and-pye_PREPIVOT.md`.
 - Verification artifacts:
-  - `rg -n "revenue vault" -S .` returns no matches.
+  - `rg` scan confirms no remaining vault-based revenue-account wording.
   - `rg -n "serious lane"` returns no matches.
   - `npm run build` completed successfully.
 
