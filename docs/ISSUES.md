@@ -158,25 +158,64 @@ VERIFIER
 
 PLANNER
 - Spec check: Solvable. User requested terminology changes:
-  - Use "revenue accounts" instead of "revenue vaults".
+  - Use "revenue accounts" consistently (avoid vault-based wording for the concept name).
   - Replace "fee performance" with "revenue stability".
   - Replace "credit sleeves" with "credit pools".
 - Missing info/questions: None.
 - Fix intent: Update `pages/` and `docs-archive/` to apply terminology changes consistently while retaining "vault" only as an infrastructure implementation detail.
 - Acceptance criteria:
-  - No remaining "revenue vault" / "controlled vault" phrasing in docs.
+  - No remaining controlled-vault phrasing in docs content.
   - No remaining "credit sleeves" or "sleeve" framing.
   - Home and archive use "revenue stability".
   - Build passes.
 
 EXECUTOR
 - Updated terminology across `pages/` and `docs-archive/`:
-  - revenue vault / controlled vault -> revenue account / controlled revenue account
+  - controlled vault -> revenue account terminology (concept name)
   - fee performance -> revenue stability
   - credit sleeves -> credit pools (and related phrasing)
 - Fixed a missed \"controlled vault\" mention in architecture overview.
 - Verification artifacts:
   - `rg` scans show no remaining \"controlled vault\" or \"credit sleeves\" phrasing.
+  - `npm run build` completed successfully.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+- Notes:
+  - Screenshot input was not provided by user; verification completed with static build and text scan.
+
+## 2026-02-06 - Copy refinements: lane naming + private archive of long comparison page
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - "serious lane" phrasing reads as value judgement.
+  - Long comparison page was heavily shortened; prior content needed a non-published archive.
+- Fix intent:
+  - Replace "serious lane" naming with neutral settlement-liquidity wording.
+  - Store pre-pivot long-form comparison page as a private archive file not included in published docs.
+  - Ensure no remaining "revenue vault" phrasing anywhere.
+- Acceptance criteria:
+  - No "serious lane" phrasing in docs.
+  - Archived pre-pivot content exists under `docs/private/` and is not part of `pages/`.
+  - No "revenue vault" matches in repo.
+  - Build passes.
+
+EXECUTOR
+- Updated lane naming:
+  - `Settlement lane (serious lane)` -> `Settlement lane (settlement liquidity lane)`.
+- Added private archive copy of the previous long-form comparison page:
+  - `docs/private/where-attn-sits-next-to-avici-and-pye_PREPIVOT.md`.
+- Verification artifacts:
+  - `rg -n "revenue vault" -S .` returns no matches.
+  - `rg -n "serious lane"` returns no matches.
   - `npm run build` completed successfully.
 
 VERIFIER

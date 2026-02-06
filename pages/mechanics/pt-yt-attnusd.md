@@ -82,7 +82,7 @@ If stress is not cured, facilities enter deterministic default handling:
 - high-yield pricing consistent with tail risk and operating cost,
 - fully automated policy enforcement.
 
-### 7.2 Settlement lane (serious lane)
+### 7.2 Settlement lane (settlement liquidity lane)
 
 - conservative settlement liquidity profile,
 - stricter reporting and governance requirements,

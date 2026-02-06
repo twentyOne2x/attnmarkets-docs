@@ -14,7 +14,7 @@ It turns routed onchain fees into lendable facilities with deterministic control
 
 - **Pump lane (wedge / proving ground)**
   High-yield, high-volatility revenue advances and lines with tight caps, strict automation, and conservative controls.
-- **Settlement lane (serious lane)**
+- **Settlement lane (settlement liquidity lane)**
   Conservative settlement liquidity revolvers for issuer/treasury/capital-markets buyers with institutional reporting.
 - **No early commingling**
   Separate credit pools and lane-specific risk boxes.

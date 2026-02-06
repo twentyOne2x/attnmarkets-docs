@@ -15,7 +15,7 @@ The product center is **attnCredit**:
 attn scales in two explicitly separated lanes:
 
 - **Pump lane (wedge):** high-yield, high-volatility, tightly capped, fully automated.
-- **Settlement lane (serious):** conservative settlement liquidity facilities for issuer/treasury buyers.
+- **Settlement lane (settlement liquidity):** conservative settlement liquidity facilities for issuer/treasury buyers.
 
 These lanes are separate in early stages, with no capital commingling.
 
