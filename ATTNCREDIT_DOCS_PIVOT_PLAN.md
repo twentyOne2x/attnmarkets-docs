@@ -116,7 +116,7 @@ Avoid:
 - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/banking-the-internet-of-revenue.md`
   - Replace PT/YT under-the-hood sections with attnCredit servicing flow.
 
-- `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/where-attn-sits-next-to-avici-and-pye.md`
+- `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.md`
   - Keep comparison, but frame attn as credit/control-plane layer first.
 
 - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/who-attn-is-for.md`

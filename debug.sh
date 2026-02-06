@@ -6,7 +6,7 @@ FILES=(
 
 'pages/introduction/banking-the-internet-of-revenue.md'
 'pages/introduction/the-missing-layer-for-onchain-revenues.md'
-'pages/introduction/where-attn-sits-next-to-avici-and-pye.md'
+'pages/introduction/attn-in-context.md'
 'pages/introduction/who-attn-is-for.md'
 'pages/users/for-apps-daos-and-builders.md'
 'pages/users/for-cards-and-commerce-partners.md'

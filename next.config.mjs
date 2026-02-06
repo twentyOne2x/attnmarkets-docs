@@ -18,6 +18,11 @@ const nextConfig = {
         destination: '/1-pager',
         permanent: true,
       },
+      {
+        source: '/introduction/where-attn-sits-next-to-avici-and-pye',
+        destination: '/introduction/attn-in-context',
+        permanent: true,
+      },
     ]
   },
 }

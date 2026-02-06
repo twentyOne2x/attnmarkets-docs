@@ -12,7 +12,7 @@ const sidebar = {
   'vision-attn': {
     title: itemTitle('Vision')
   },
-  'where-attn-sits-next-to-avici-and-pye': {
+  'attn-in-context': {
     title: itemTitle('attn in context')
   },
   'who-attn-is-for': {
