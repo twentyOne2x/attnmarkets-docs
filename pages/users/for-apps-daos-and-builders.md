@@ -5,7 +5,7 @@ attnCredit helps onchain teams finance operations against routed fee cashflows w
 ## What attn provides
 
 1. **Controlled revenue accounts**
-   Fee flows route into policy-governed vaults for enforceable servicing.
+   Fee flows route into policy-governed revenue accounts for enforceable servicing.
 2. **Revenue-swept advances**
    Short-cycle upfront liquidity against defined repayment shares.
 3. **Revenue-backed revolving facilities**

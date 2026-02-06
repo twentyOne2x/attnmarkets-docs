@@ -12,7 +12,7 @@ The objective is controlled loss behavior under stress, not discretionary reacti
 - **Control-integrity risk**
   Routing changes, signer/config drift, or policy bypass attempts.
 - **Liquidity risk**
-  Redemption and funding pressure at sleeve level.
+  Redemption and funding pressure at credit pool level.
 - **Operational risk**
   Execution delays, monitoring faults, or incident response failures.
 
@@ -37,7 +37,7 @@ Each facility is bounded by policy limits such as:
   - stronger reporting/covenant expectations,
   - slower but stricter governance-controlled parameter changes.
 
-No early commingling: lane limits and sleeve accounting stay separate.
+No early commingling: lane limits and credit pool accounting stay separate.
 
 ## 4. Deterministic control modes
 
@@ -86,8 +86,8 @@ Governance scope:
 
 ## 6. LP impact model
 
-- Losses and recoveries are reflected at sleeve level.
-- attnUSD holders are exposed according to sleeve composition.
+- Losses and recoveries are reflected at credit pool level.
+- attnUSD holders are exposed according to credit pool composition.
 - There is no implied principal guarantee.
 
 ## 7. Related pages

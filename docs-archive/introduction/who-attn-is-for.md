@@ -7,14 +7,14 @@ attnCredit serves borrowers, LPs, and infrastructure partners who need enforceab
 Best fit for teams that have:
 
 - recurring or high-frequency onchain fee flow,
-- willingness to route fees through controlled vaults,
+- willingness to route fees through controlled revenue accounts,
 - need for faster working-capital access.
 
 ## 2. Liquidity providers and credit funds
 
 Best fit for LPs that want:
 
-- sleeve-specific credit exposure,
+- pool-specific exposure,
 - deterministic control policies,
 - lender-grade reporting and audit trails.
 

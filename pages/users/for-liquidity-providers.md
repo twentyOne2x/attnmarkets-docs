@@ -4,12 +4,12 @@ attnCredit gives LPs exposure to revenue-swept credit facilities with explicit c
 
 ## What you hold
 
-LP exposure is organized by **capital sleeve**:
+LP exposure is organized by **credit pool**:
 
-- **Pump sleeve:** higher yield, higher volatility, tighter controls.
-- **Settlement sleeve:** conservative profile with stronger institutional requirements.
+- **Pump credit pool:** higher yield, higher volatility, tighter controls.
+- **Settlement credit pool:** conservative profile with stronger institutional requirements.
 
-attnUSD reflects managed sleeve exposure and portfolio performance.
+attnUSD reflects managed credit pool exposure and portfolio performance.
 
 ## Core protections
 
@@ -21,8 +21,8 @@ attnUSD reflects managed sleeve exposure and portfolio performance.
 
 ## No early commingling
 
-Pump and Settlement sleeves are separate in early stages.
-LPs should evaluate each sleeve independently.
+Pump and Settlement credit pools are separate in early stages.
+LPs should evaluate each credit pool independently.
 
 ## Lender-grade tape
 
@@ -30,19 +30,19 @@ LP reporting includes:
 
 - facility-level balances and utilization,
 - repayment and sweep performance,
-- concentration and sleeve allocation,
+- concentration and credit pool allocation,
 - configuration-change logs,
 - incidents, drills, and resolution timelines.
 
 ## Risk profile
 
 - This is credit exposure, not principal-guaranteed yield.
-- Losses and recoveries are reflected by sleeve composition.
-- Higher yield sleeves carry higher control-event and volatility risk.
+- Losses and recoveries are reflected by credit pool composition.
+- Higher yield credit pools carry higher control-event and volatility risk.
 
 ## Participation model
 
-1. Select sleeve exposure policy.
+1. Select credit pool exposure policy.
 2. Review risk and reporting standards.
 3. Fund and monitor via recurring tape.
 4. Rebalance as lane performance and mandate preferences change.

@@ -6,22 +6,22 @@ attnCredit is a revenue-underwritten, onchain-enforced revolving credit system w
 
 ## 1. Core objects
 
-- **Revenue account / vault**
-  Controlled destination for eligible fee flows.
+- **Revenue account**
+  Controlled destination for eligible fee flows (typically implemented as a programmable multisig vault).
 - **Facility**
   Revolving credit agreement with dynamic limits and servicing rules.
 - **Borrowing base**
   Risk-adjusted lendable amount derived from observed collectable revenue.
-- **Sleeve**
+- **Credit pool**
   Capital bucket with its own risk policy (Pump lane or Settlement lane).
 - **attnUSD**
-  LP share in one or more managed sleeves, marked from underlying facility performance.
+  LP share in one or more managed credit pools, marked from underlying facility performance.
 
 ## 2. Control plane
 
 The control plane enforces collection and repayment integrity:
 
-- approved routing into controlled vaults,
+- approved routing into controlled revenue accounts,
 - signer policy and timelocks for sensitive config updates,
 - restricted payout paths during stress/default modes,
 - auditability for config changes and operational actions.
@@ -91,15 +91,15 @@ If stress is not cured, facilities enter deterministic default handling:
 
 ### 7.3 No early commingling
 
-Lanes operate with separate sleeves and risk boxes in early stages.
+Lanes operate with separate credit pools and risk boxes in early stages.
 
 ## 8. attnUSD model
 
-attnUSD is a portfolio share over managed sleeve exposure:
+attnUSD is a portfolio share over managed credit pool exposure:
 
-- NAV reflects sleeve composition, facility performance, reserves, and realized losses/recoveries.
+- NAV reflects credit pool composition, facility performance, reserves, and realized losses/recoveries.
 - There is no implied 1:1 principal guarantee.
-- Disclosure is sleeve-explicit (allocation, utilization, performance, incidents).
+- Disclosure is credit-pool-explicit (allocation, utilization, performance, incidents).
 
 See also: [For Liquidity Providers](../users/for-liquidity-providers.md).
 
@@ -111,7 +111,7 @@ The reporting package includes:
 - sweep performance and exceptions,
 - configuration-change logs and approvals,
 - incident timeline and drill outcomes,
-- lane/sleeve exposure snapshots and concentration metrics.
+- lane/credit-pool exposure snapshots and concentration metrics.
 
 Related pages:
 

@@ -4,13 +4,13 @@ attn builds **attnCredit**: a revenue-underwritten, onchain-enforced revolving c
 
 At a high level:
 
-- borrowers route fees into controlled revenue vaults,
+- borrowers route fees into controlled revenue accounts,
 - repayment is enforced through hard sweeps from routed cashflows,
-- limits adjust dynamically as fee performance changes,
+- limits adjust dynamically as revenue stability changes,
 - utilization discipline prevents permanent maxed-out borrowing,
 - deterministic freeze/default modes protect capital when risk spikes.
 
-attn also offers **attnUSD**, an LP share in managed credit sleeves with explicit risk and reporting.
+attn also offers **attnUSD**, an LP share in managed credit pools with explicit risk and reporting.
 
 ## Where to start
 

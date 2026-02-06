@@ -29,9 +29,9 @@ The architecture is designed so repayment enforcement and risk controls are obse
   - Produces facility-level reporting, reconciliations, and incident logs.
   - Maintains operational audit history for lenders and governance.
 
-- **Capital Sleeves and attnUSD**
-  - Separate Pump and Settlement sleeves.
-  - attnUSD reflects sleeve-level portfolio exposure and performance.
+- **Credit Pools and attnUSD**
+  - Separate Pump and Settlement credit pools.
+  - attnUSD reflects pool-level portfolio exposure and performance.
 
 ## 2. Data flows (simplified)
 
@@ -41,7 +41,7 @@ The architecture is designed so repayment enforcement and risk controls are obse
 
 2. **Underwrite and size**
    - Credit engine computes initial limit and policy bounds.
-   - Facility is assigned to the appropriate sleeve policy.
+   - Facility is assigned to the appropriate credit pool policy.
 
 3. **Draw and serve**
    - Borrower draws within current availability.
@@ -57,7 +57,7 @@ The architecture is designed so repayment enforcement and risk controls are obse
 
 6. **Report and reconcile**
    - Monitoring outputs lender tape and governance summaries.
-   - LP-facing metrics roll up by sleeve and portfolio.
+   - LP-facing metrics roll up by credit pool and portfolio.
 
 ## 3. Lane separation in architecture
 
@@ -66,7 +66,7 @@ The architecture is designed so repayment enforcement and risk controls are obse
 - **Settlement lane**
   - Conservative underwriting, stricter reporting/governance profile.
 - **No early commingling**
-  - Separate sleeve accounting and risk limits in early phases.
+  - Separate credit pool accounting and risk limits in early phases.
 
 ## 4. Related pages
 

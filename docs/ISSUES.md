@@ -144,3 +144,30 @@ EXECUTOR
 VERIFIER
 - Compare proofs to acceptance criteria: PASS/FAIL.
 - If FAIL, loop back with updated context.
+
+## 2026-02-06 - Terminology updates: revenue accounts, revenue stability, credit pools
+
+- [x] report captured
+- [x] context added
+- [ ] fix applied
+- [ ] tests run
+- [ ] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested terminology changes:
+  - Use "revenue accounts" instead of "revenue vaults".
+  - Replace "fee performance" with "revenue stability".
+  - Replace "credit sleeves" with "credit pools".
+- Missing info/questions: None.
+- Fix intent: Update `pages/` and `docs-archive/` to apply terminology changes consistently while retaining "vault" only as an infrastructure implementation detail.
+- Acceptance criteria:
+  - No remaining "revenue vault" / "controlled vault" phrasing in docs.
+  - No remaining "credit sleeves" or "sleeve" framing.
+  - Home and archive use "revenue stability".
+  - Build passes.
+
+EXECUTOR
+- Apply wording changes across the docs and archive mirrors.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS/FAIL.

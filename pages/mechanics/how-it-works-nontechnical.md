@@ -6,12 +6,12 @@ attnCredit gives onchain businesses liquidity against routed fees while enforcin
 
 - **Borrower:** routes eligible fees and draws from a facility.
 - **attn operator stack:** runs policy, servicing, monitoring, and controls.
-- **LPs / capital providers:** fund sleeves and receive risk-adjusted exposure.
+- **LPs / capital providers:** fund credit pools and receive risk-adjusted exposure.
 - **Partners (issuer/treasury stacks):** consume settlement liquidity facilities in the conservative lane.
 
-## 2. Step one: route revenue into a controlled vault
+## 2. Step one: route revenue into a controlled revenue account
 
-A borrower configures fee routing so eligible revenue flows into a controlled vault account.
+A borrower configures fee routing so eligible revenue flows into a controlled revenue account.
 
 Core purpose:
 
@@ -65,9 +65,9 @@ If revenue deteriorates or risk spikes:
 - freeze mode stops new draws,
 - acceleration/default mode can route all eligible fees to repayment.
 
-## 8. Step seven: LPs see sleeve-level exposure and tape
+## 8. Step seven: LPs see credit pool exposure and tape
 
-LPs receive exposure through sleeves (and attnUSD where applicable), with reporting on:
+LPs receive exposure through credit pools (and attnUSD where applicable), with reporting on:
 
 - balances and utilization,
 - sweep and repayment behavior,

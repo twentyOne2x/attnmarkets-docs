@@ -29,7 +29,7 @@ attn may interoperate with fixed-income ecosystems over time, but the product ce
 - facility underwriting,
 - repayment enforcement,
 - deterministic stress and default handling,
-- sleeve-level capital segregation.
+- pool-level capital segregation.
 
 ## 4. Positioning language to keep consistent
 

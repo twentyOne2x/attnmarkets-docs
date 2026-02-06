@@ -33,7 +33,7 @@ These lanes are separate in early stages, with no capital commingling.
 
 ## 4. What LPs and credit partners get
 
-- explicit sleeve-level exposure,
+- explicit pool-level exposure,
 - deterministic control modes,
 - recurring facility-level reporting,
 - clear governance on caps and risk parameters.

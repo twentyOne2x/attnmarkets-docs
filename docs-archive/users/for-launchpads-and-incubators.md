@@ -29,7 +29,7 @@ attnCredit can be embedded as a financing layer for projects with routed onchain
 - mandatory paydown and utilization discipline,
 - dynamic limit updates under changing revenue,
 - deterministic throttle/freeze/default controls,
-- no early commingling between high-volatility and conservative sleeves.
+- no early commingling between high-volatility and conservative credit pools.
 
 ## Related pages
 

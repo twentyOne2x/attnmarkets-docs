@@ -5,7 +5,7 @@ It turns routed onchain fees into lendable facilities with deterministic control
 
 ## Product
 
-- **Control plane:** revenue vault setup, signer policy, timelocks, and spending constraints.
+- **Control plane:** revenue account setup, signer policy, timelocks, and spending constraints.
 - **Credit engine:** dynamic borrowing base and live limit adjustments.
 - **Servicing engine:** automated sweeps, mandatory paydown checks, and freeze/default actions.
 - **Monitoring and tape:** loan-level reporting, reconciliations, event logs, and incident history.
@@ -17,7 +17,7 @@ It turns routed onchain fees into lendable facilities with deterministic control
 - **Settlement lane (serious lane)**
   Conservative settlement liquidity revolvers for issuer/treasury/capital-markets buyers with institutional reporting.
 - **No early commingling**
-  Separate capital sleeves and lane-specific risk boxes.
+  Separate credit pools and lane-specific risk boxes.
 
 ## Why this sequencing
 
@@ -33,7 +33,7 @@ It turns routed onchain fees into lendable facilities with deterministic control
 
 ## Tech stack (functional)
 
-- Revenue vault and signing controls.
+- Revenue account and signing controls.
 - Policy engine for limits, haircuts, and lane constraints.
 - Automated servicing and trigger engine.
 - Monitoring/indexing and lender reporting pipeline.
@@ -43,13 +43,13 @@ It turns routed onchain fees into lendable facilities with deterministic control
 1. Launch Pump lane with strict controls and small caps.
 2. Produce repeatable servicing tape and incident drills.
 3. Expand settlement lane partnerships with separate capital.
-4. Add allocator layer only after sleeves are proven independently.
+4. Add allocator layer only after credit pools are proven independently.
 
 ## Governance and risk policy
 
 Governance scope centers on:
 
-- sleeve-level exposure caps,
+- pool-level exposure caps,
 - parameter bands for limits and throttles,
 - reserve and loss-allocation policy,
 - reporting standards and incident discipline.

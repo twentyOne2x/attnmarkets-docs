@@ -15,7 +15,7 @@ The attnCredit model combines:
 
 ### 2.1 Revenue-swept advances
 
-- borrower routes fees into a controlled vault,
+- borrower routes fees into a controlled revenue account,
 - facility is sized from risk-adjusted trailing revenue,
 - repayment is serviced directly from routed flows.
 
@@ -27,7 +27,7 @@ The attnCredit model combines:
 
 ## 3. attnUSD for LP exposure
 
-attnUSD represents sleeve-level exposure to managed facility portfolios.
+attnUSD represents pool-level exposure to managed facility portfolios.
 It is not framed as principal-guaranteed yield.
 
 ## 4. Lane strategy
@@ -35,7 +35,7 @@ It is not framed as principal-guaranteed yield.
 - **Pump lane:** proving ground for high-volatility flow with strict controls.
 - **Settlement lane:** conservative settlement liquidity facilities for institutional buyer profiles.
 
-Early-stage sleeve separation avoids commingled risk.
+Early-stage credit pool separation avoids commingled risk.
 
 ## 5. Why this matters
 
