@@ -6,7 +6,7 @@ The architecture is designed so repayment enforcement and risk controls are obse
 ## 1. Core components
 
 - **Revenue Account Layer**
-  - Controlled vault destinations for eligible fee flows.
+  - Controlled revenue account destinations for eligible fee flows.
   - Routing verification and account health checks.
 
 - **Control Plane**
