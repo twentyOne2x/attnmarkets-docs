@@ -222,3 +222,37 @@ VERIFIER
 - Acceptance criteria check: PASS.
 - Notes:
   - Screenshot input was not provided by user; verification completed with static build and text scan.
+
+## 2026-02-14 - Replace docs favicon with attn-frontend icon
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested using the same browser tab icon (favicon) as `attn-frontend`.
+- Missing info/questions: None.
+- Context + suspected cause: Docs repo has a legacy gradient favicon set under `public/` that does not match the current `attn-frontend` brand icon.
+- Fix intent:
+  - Replace docs `public/favicon.svg` with `attn-frontend` icon.
+  - Regenerate `public/favicon.ico` and `public/favicon_io/*` icon set to match.
+  - Optionally add explicit `<link rel="icon">` tags if required by the docs theme.
+- Acceptance criteria:
+  - Favicon assets in `public/` match `attn-frontend` icon.
+  - `npm run build` passes.
+
+EXECUTOR
+- Replaced favicon assets to match `attn-frontend` icon:
+  - `public/favicon.svg`
+  - `public/favicon.ico`
+  - `public/favicon_io/*` icon set
+- Verification artifacts:
+  - `npm run build` completed successfully.
+  - `file` output confirms favicon assets are valid SVG/ICO/PNG.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+- Notes:
+  - Screenshot input was not provided by user; verification completed via successful build and asset-type checks.
