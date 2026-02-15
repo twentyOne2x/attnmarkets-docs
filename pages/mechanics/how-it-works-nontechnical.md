@@ -12,6 +12,7 @@ attnCredit gives onchain businesses liquidity against routed fees while enforcin
 ## 2. Step one: route revenue into a controlled revenue account
 
 A borrower configures fee routing so eligible revenue flows into a controlled revenue account.
+In v1 this is typically implemented as a Squads-managed revenue account (timelocked config + spending limits) so servicing routes are verifiable onchain.
 
 Core purpose:
 

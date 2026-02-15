@@ -7,7 +7,7 @@ attnCredit is a revenue-underwritten, onchain-enforced revolving credit system w
 ## 1. Core objects
 
 - **Revenue account**
-  Controlled destination for eligible fee flows (typically implemented as a programmable multisig vault).
+  Controlled destination for eligible fee flows (typically a Squads multisig + vault setup with timelocks and spending-limit allowlists).
 - **Facility**
   Revolving credit agreement with dynamic limits and servicing rules.
 - **Borrowing base**
@@ -23,6 +23,7 @@ The control plane enforces collection and repayment integrity:
 
 - approved routing into controlled revenue accounts,
 - signer policy and timelocks for sensitive config updates,
+- spending-limit allowlists that constrain automated sweeps to approved destinations,
 - restricted payout paths during stress/default modes,
 - auditability for config changes and operational actions.
 

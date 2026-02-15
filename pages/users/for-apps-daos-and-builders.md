@@ -32,6 +32,7 @@ Teams typically use proceeds for:
 ### Revenue account setup
 
 Borrowers configure routing into controlled accounts and define policy-compatible operating permissions.
+In v1 this is typically implemented as a Squads multisig + vault setup with timelocked config changes and spending-limit allowlists for servicing routes.
 
 ### Facility sizing
 

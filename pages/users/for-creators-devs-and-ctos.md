@@ -23,6 +23,9 @@ Your eligible earnings are routed into a configured revenue account with clear p
 
 This makes repayment legible and auditable.
 
+Implementation note (v1): this is typically implemented as a Squads-controlled revenue account (timelocked config + spending limits),
+so sweeps to repayment can run without giving an executor broad permissions.
+
 ### 2. Revenue-swept advances
 
 You can take a short-dated advance against a policy-defined share of expected earnings.

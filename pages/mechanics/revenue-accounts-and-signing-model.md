@@ -4,25 +4,28 @@ This page describes the assumptions around custody, signatures, and vault design
 
 ---
 
-## 1. CreatorVault / Revenue Account design
+## 1. Revenue Account (v1) design
 
-Revenue accounts are intended to be:
+A "revenue account" is not a special protocol-owned account type. In v1 it is implemented as a
+Squads v4 multisig control plane plus a small set of vault token accounts (SPL token accounts)
+that receive routed fees.
 
-- **programmable vaults** living on Solana, implemented as Squads Safe multisig vaults,  
-- jointly controlled by:
-  - the project (team / DAO multisig),  
-  - and attn (or another designated risk agent in later versions).
+Typical layout:
 
-Key properties:
+- V0 collector (optional): receives upstream fees when the source can only pay a single address.
+- V1 pledged revenue: the primary "income hub" that is pledged for servicing.
+- V2 ops: borrower operating vault (where draws land; ops spend happens from here).
+- V3 DSRA (optional): debt service reserve vault for conservative lanes.
 
-- **Deterministic routing**
-  - when no positions are open, withdrawals are single-signer (project only),  
-  - when positions are open, revenue splits and repayment flows are enforced by program logic.
+What makes it "controlled":
 
-- **Separation of concerns**
-  - operating wallets remain under the project’s control,  
-  - the Revenue Account sits as a dedicated “income hub” with clear rules,  
-  - attn does not co-sign day-to-day ops spending, only configuration of the revenue module.
+- Timelocked governance on the Squads multisig for config changes (members/threshold/spending limits).
+- Spending limits installed on pledged vaults that allow only a narrow set of money-moves.
+- A constrained executor/sweeper key that can use those spending limits to run servicing, but cannot weaken config.
+
+In v1, attn does not need to be a co-signer on the borrower multisig. Enforceability comes from
+verifiable onchain invariants (timelock + allowlists) and continuous monitoring. Later versions
+can add additional guardians/risk signers if desired.
 
 ---
 
@@ -31,15 +34,16 @@ Key properties:
 Squads (and similar primitives) provide:
 
 - **battle-tested multisig and role management**,  
-- **upgrade and authority controls** for program-owned accounts,  
+- **timelocked configuration changes**,  
+- **spending-limit primitives** to constrain automated execution,  
 - **SOC 2-style operational discipline** around access and changes (for Squads Labs-run infra).
 
 For attn, this matters because:
 
 - credit is extended against the assumption that:
-  - revenues will continue to flow into a given vault,  
-  - routing rules cannot be unilaterally bypassed,  
-  - configuration changes are transparent and (where needed) delayed or gated.
+  - eligible revenues will continue to flow into the pledged vault path,  
+  - automated servicing routes cannot be broadened without an onchain config change,  
+  - weakening changes are transparent and (where needed) delayed or gated.
 
 By anchoring revenue accounts in Squads:
 
@@ -49,48 +53,80 @@ By anchoring revenue accounts in Squads:
 
 ---
 
-## 3. Signing model
+## 3. Signing and authority model (v1)
 
-A typical pattern:
+There are three distinct authority surfaces:
 
-- **Configuration changes**
-  - adding / removing signers,  
-  - changing revenue routing rules,  
-  - enabling new facilities or changing caps,  
-  require:
-  - multisig approval (project signers), plus  
-  - attn (or a designated risk signer).
+- Borrower governance (Squads multisig)
+  - proposes/votes/executes configuration changes (timelocked).
 
-- **Operational withdrawals**
-  - when no debt is outstanding:
-    - project-only signatures can move unencumbered funds out.  
-  - when debt is outstanding:
-    - routing logic first allocates the agreed share of new revenues to positions,  
-    - remaining, unencumbered amounts are withdrawable by the project.
+- Borrower operational authority (ops vault)
+  - draws land into the ops vault,
+  - ops spending remains a borrower decision under its own governance policy.
 
-- **Emergency controls**
-  - in severe cases (bugs, exploits, governance attacks),  
-  - a pre-agreed emergency playbook can:
-    - pause new positions,  
-    - freeze revenue routing changes,  
-    - redirect inflows to a temporary safe until governance decides.
+- Executor / sweeper (restricted)
+  - is not a multisig member,
+  - can only move funds under pre-installed spending limits,
+  - cannot add/remove members, modify timelocks, or change spending limits.
 
-Exact thresholds (e.g. M-of-N signers, presence of independent guardians, timelocks) are configuration choices and should be set conservatively.
+Typical allowlisted paths:
+
+- collector -> pledged revenue
+- pledged revenue -> repayment destination authority
+- pledged revenue -> DSRA (optional)
+- DSRA -> repayment destination authority
+
+Important nuance:
+
+- Spending limits allowlist destination authority pubkeys, not token-account addresses.
+  - For attnCreditline repayment, the destination authority is the facility's vault authority PDA (not the repayment vault token account).
+
+If the borrower weakens these controls (e.g. lowers timelock/threshold, adds delegates, broadens destinations, enables residual routes),
+it is treated as a control-integrity failure and will affect facility status/limits.
 
 ---
 
-## 4. Assumptions and limitations
+## 4. Upstream routing vs lockboxes (fee routers)
+
+Best case:
+
+- upstream programs can route fees directly into the borrower's collector/pledged vault token accounts.
+
+When a revenue source cannot pay an arbitrary destination (hardcoded collectors, PDA-only flows), an intermediate lockbox / receiver router
+can be inserted upstream to forward funds into the pledged vault. The key requirement is that once funds enter the revenue account control
+plane, servicing routes are still governed by timelocks + allowlisted spending limits.
+
+### Pump.fun creator rewards (fee sharing)
+
+Pump creator rewards have their own, Pump-specific control surface.
+
+If fee sharing is enabled for a Pump mint:
+
+- the Pump bonding curve `creator` becomes a **fee sharing config PDA** (not your wallet, not a Squads vault),
+- the **actual recipients and split** are stored in that config (`shareholders[]`), and
+- “transfer coin ownership” means transferring who can edit that config (`admin`),
+- “remove creator share permissions” is a permanent lock bit (`admin_revoked`).
+
+So the check that matters for credit is not “`creator == pledged vault`”, but:
+
+- the fee sharing config exists and is active,
+- pledged Squads vault(s) appear in the recipients list for the agreed share (often 100% in v1),
+- and either the config is locked (`admin_revoked = true`) or the admin is behind a timelock + continuously monitored.
+
+---
+
+## 5. Assumptions and limitations
 
 The model assumes:
 
-- projects are willing to route a meaningful share of revenues through a governed vault,  
+- projects are willing to route a meaningful share of revenues through the pledged vault path,  
 - participants accept that:
   - credit terms depend heavily on the integrity of this setup,  
-  - bypassing it will immediately affect access to future credit.
+  - bypassing or weakening it will immediately affect access to future credit.
 
 It does **not** assume:
 
 - that attn controls the entire protocol or treasury,  
-- that all project spending is gated through the Revenue Account.
+- that all project spending is gated through the pledged path.
 
 Revenue accounts are a narrow, opinionated piece of infra designed to make onchain revenues **bankable** without taking over governance of the entire project.

@@ -20,7 +20,7 @@ attnCredit can be embedded as a financing layer for projects with routed onchain
 ## Integration model
 
 1. Verify project fee-routing readiness.
-2. Configure vault/control policy.
+2. Configure revenue-account control policy (timelock + spending limits).
 3. Apply underwriting and lane assignment.
 4. Start servicing and reporting loops.
 

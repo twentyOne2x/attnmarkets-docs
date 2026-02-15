@@ -6,11 +6,11 @@ The architecture is designed so repayment enforcement and risk controls are obse
 ## 1. Core components
 
 - **Revenue Account Layer**
-  - Controlled revenue account destinations for eligible fee flows.
-  - Routing verification and account health checks.
+  - Controlled revenue account destinations for eligible fee flows (typically Squads multisig vaults with timelocked config changes and spending-limit allowlists).
+  - Routing verification and control-integrity checks (timelock / threshold / spending limits).
 
 - **Control Plane**
-  - Signer policy, timelocks, and restricted config-change paths.
+  - Signer policy, timelocks, spending limits, and restricted config-change paths.
   - Guardrails for payout permissions and emergency mode transitions.
 
 - **Credit Engine**
