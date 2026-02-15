@@ -12,7 +12,7 @@ that receive routed fees.
 
 Typical layout:
 
-- V0 collector (optional): receives upstream fees when the source can only pay a single address.
+- V0 collector (optional): intake vault (only needed when upstream cannot pay V1 directly).
 - V1 pledged revenue: the primary "income hub" that is pledged for servicing.
 - V2 ops: borrower operating vault (where draws land; ops spend happens from here).
 - V3 DSRA (optional): debt service reserve vault for conservative lanes.
