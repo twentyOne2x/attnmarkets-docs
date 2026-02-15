@@ -314,7 +314,7 @@ Primary job:
 
 Key state:
 - `PoolState` (PDA, seeded by share mint)
-- `ShareMint` (mint authority = `PoolState` PDA)
+- `ShareMint` (share issuance controlled by `PoolState` PDA)
 - `PoolVault` (USDC token account owned by `PoolVaultAuthority` PDA)
 - `FacilityRegistry` (list of facilities, max 16)
 - `BorrowerCap` (per borrower squads cap)
@@ -360,7 +360,7 @@ NAV:
 
 Effects:
 - transfers USDC `depositor_asset_ata -> pool_vault`
-- mints pool shares to `depositor_share_ata` using `PoolState` PDA as mint authority
+- mints pool shares to `depositor_share_ata` with `PoolState` PDA as the controlling signer for issuance
 
 #### `request_withdraw(shares_in, min_amount_out_usdc)`
 
@@ -481,4 +481,3 @@ If you’re debugging end-to-end, treat this as the core contract:
 
 1) Protocol does accounting + vault custody.
 2) Offchain enforces revenue routing assumptions via Squads invariants, and drives the repayment cadence.
-

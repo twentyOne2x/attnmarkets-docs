@@ -250,18 +250,13 @@ Operationally, “weakening” is meant to trigger monitoring escalation and (of
 
 There are multiple, different “authority surfaces” in the product. Don’t conflate them:
 
-### 5.1 SPL mint authority / freeze authority transfer (onboarding wizard)
+### 5.1 Non-Pump token admin keys (separate from Pump fee ownership)
 
-In the `attn-credit` onboarding wizard, for *non-Pump* SPL mints where the connected wallet is the **current mint authority**:
-
-- the borrower can transfer:
-  - **mint authority**, and (when present)
-  - **freeze authority**
-  to the **BorrowerSquads multisig pubkey**.
+In the `attn-credit` onboarding wizard, some *non-Pump* assets may have optional flows to move **token-level admin keys** behind the **BorrowerSquads multisig pubkey**.
 
 Intent:
-- prevent single-signer minting/freezing after onboarding
-- concentrate “token admin” powers behind the same timelocked multisig that governs the revenue vaults
+- reduce single-signer “token admin” risk after onboarding
+- keep token admin changes subject to the same timelock + monitoring posture used for the revenue vault control plane
 
 This is separate from the revenue vault indices: it’s about *token admin* risk, not USDC routing.
 
