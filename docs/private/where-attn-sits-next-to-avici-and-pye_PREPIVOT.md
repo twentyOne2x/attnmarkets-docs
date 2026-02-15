@@ -301,7 +301,7 @@ Protection there comes from:
 attn.markets is more prescriptive about what backs the loan:
 
 - credit is explicitly backed by tokenised revenue streams:
-  - revenues are routed into a dual-controlled vault (e.g. Squads 2/2)  
+  - revenues are routed into a governed revenue account (e.g. Squads with timelocks + spending limits)  
   - those revenues mint PT (principal) and YT (future revenue) claims  
   - advances and credit lines are written directly against those PT/YT/SY positions
 
