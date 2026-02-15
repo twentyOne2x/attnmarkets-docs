@@ -256,3 +256,37 @@ VERIFIER
 - Acceptance criteria check: PASS.
 - Notes:
   - Screenshot input was not provided by user; verification completed via successful build and asset-type checks.
+
+## 2026-02-15 - Enable Vercel Analytics on docs site
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided; verified via build output)
+
+PLANNER
+- Spec check: Solvable. This repo is a Next.js docs site (Nextra) deployed on Vercel; Vercel Analytics can be enabled by adding `@vercel/analytics` and mounting `<Analytics />`.
+- Missing info/questions: None.
+- Context + suspected cause: Docs site (`docs.attn.markets`) is a separate repo and does not yet mount Vercel Analytics.
+- Fix intent: Add Vercel Analytics dependency and render `<Analytics />` in `pages/_app.jsx`.
+- Acceptance criteria:
+  - `package.json` includes `@vercel/analytics`.
+  - `pages/_app.jsx` renders `<Analytics />`.
+  - Build passes: `npm run build`.
+- Executor prompt (files, constraints, tests):
+  - Update `package.json` (add `@vercel/analytics`).
+  - Update `pages/_app.jsx` to import and render `<Analytics />`.
+  - Run `npm install` and `npm run build` and record proofs here.
+
+EXECUTOR
+- Added Vercel Analytics and mounted it in the docs app shell:
+  - `package.json`
+  - `pages/_app.jsx`
+  - `package-lock.json`
+- Proofs:
+  - `npm run build` PASS
+
+VERIFIER
+- Acceptance criteria check: PASS.
+

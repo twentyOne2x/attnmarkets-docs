@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
     "next": "13.5.6",
     "nextra": "^3.0.0",
     "nextra-theme-docs": "^3.0.0",
