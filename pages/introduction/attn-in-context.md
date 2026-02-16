@@ -8,6 +8,9 @@ attn's focus is **attnCredit**: revenue-underwritten, onchain-enforced revolving
 
 These are common points of comparison:
 
+- **creditcoop.xyz** - credit cooperative / bridge funding against future cash flows (receivables + settlement liquidity)
+- **Yumi.finance** - onchain BNPL rails (credit-as-a-feature for platforms)
+- **Pyra.fi** - consumer neobank: invest paycheck into yield assets + spend via DeFi credit (no forced selling)
 - **Avici.money** - internet neobank with payroll accounts, spend cards, and a personal credit roadmap
 - **Slash** - business banking, corporate cards, and global USD accounts for entities
 - **Krak (Kraken KRAK app + card)** - consumer money app with multi-asset card rails
@@ -25,6 +28,9 @@ Skim the matrix first. The goal is not perfect taxonomy; it's a quick map for BD
 
 | Project | Layer / object | What it focuses on | Primary users / buyers | How it intersects with attn |
 | --- | --- | --- | --- | --- |
+| **creditcoop.xyz** | Receivables + settlement liquidity | Bridge funding against future cash flows (incl. onchain receivables) | Card programs, neobanks, payments stacks | Direct neighbor: creditcoop is a liquidity provider against receivables; attn is the onchain **enforcement + servicing** layer (routed revenue accounts, sweeps, deterministic control modes) that makes those receivables financeable |
+| **Yumi.finance** | BNPL / credit-as-a-feature | Onchain BNPL rails; integrates credit without building underwriting + financing in-house | Neobanks/card programs, checkout/payroll platforms, fintech apps | Yumi is a credit product surface; attn is the **entity-level** credit + servicing + enforcement layer against routed revenues. A platform can pair end-user BNPL with attn-style revenue-swept facilities |
+| **Pyra.fi** | Consumer neobank + DeFi credit + card | Invest paychecks into yield assets; spend using DeFi loans instead of selling assets | Individuals / retail users | Adjacent: Pyra is a distribution endpoint and spends credit; attn can underwrite the **company's** settlement/working-capital needs against fee revenues and routed receivables (not consumer underwriting) |
 | **Avici.money** | Individual banking + payroll + personal credit | Accounts, cards, payroll networks, consumer underwriting and credit distribution | Individuals, employees, freelancers; eventually payroll operators | Avici targets **people** and payroll rails; attn targets **entities** and their **onchain revenue accounts** for working capital and settlement liquidity |
 | **Slash** | Business banking + cards + rails | Regulated entity accounts, corporate cards, payment rails, working capital UX | SMEs, internet businesses, Web3 teams | Slash is a spend/ops surface; attn can sit behind as a revenue-underwritten credit and servicing layer for entities with onchain fees |
 | **Krak** | Consumer money app + card rails | Retail balances, P2P, spend, and consumer distribution | Individuals and retail users | Adjacent: Krak is a distribution endpoint; attn is financing for the fee-generating entities that pay into or interact with consumer rails |
@@ -49,4 +55,3 @@ Skim the matrix first. The goal is not perfect taxonomy; it's a quick map for BD
 - [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [For Cards, Commerce, and Settlement Partners](../users/for-cards-and-commerce-partners.md)
 - [For Liquidity Providers](../users/for-liquidity-providers.md)
-
