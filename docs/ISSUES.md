@@ -45,6 +45,48 @@ VERIFIER
 - Notes:
   - Screenshot input was not provided by user; verification was completed via successful static build and terminology scans.
 
+## 2026-02-16 - Clarify config authority posture + add FAQ (public docs)
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided; verified via build output)
+
+PLANNER
+- Spec check: Solvable. Public docs should not imply "2-of-2 co-signing on everything"; the enforceability posture is "timelocked rails + spending limits + monitoring + freeze", with an explicit requirement that config cannot be changed instantly (Squads v4 `config_authority` posture).
+- Missing info/questions: None.
+- Context + suspected cause:
+  - Some public copy can be read as "shared custody / co-signing" rather than "borrower ops remain borrower-controlled; lender controls config integrity and protocol-level state."
+  - Squads v4 config authority nuance is critical: a timelock only matters if config cannot be changed instantly via `config_authority`.
+- Fix intent:
+  - Update `pages/mechanics/revenue-accounts-and-signing-model.md` to:
+    - explain config authority (autonomous vs controlled) at a high level,
+    - describe the practical posture during an active credit position (config pinned + rails monitored),
+    - add an FAQ section that answers the most common "do I need to co-sign everything?" and "what do you control?" questions.
+  - Update `pages/mechanics/architecture-overview.md` to reflect config authority as a control-integrity surface.
+- Acceptance criteria:
+  - `pages/mechanics/revenue-accounts-and-signing-model.md` includes a short config authority explanation and an FAQ at the bottom.
+  - `pages/mechanics/architecture-overview.md` mentions config authority in the revenue account layer/control integrity framing.
+  - Build passes: `npm run build`.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/mechanics/revenue-accounts-and-signing-model.md`
+    - `pages/mechanics/architecture-overview.md`
+  - Verify:
+    - `npm run build`
+
+EXECUTOR
+- Updated public mechanics copy to clarify config authority posture and added an FAQ:
+  - `pages/mechanics/revenue-accounts-and-signing-model.md`
+  - `pages/mechanics/architecture-overview.md`
+- Proofs:
+  - `npm run build` PASS
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
 ## 2026-02-06 - attnCredit pivot P1 pages (architecture/risk/pricing/users)
 
 - [x] report captured

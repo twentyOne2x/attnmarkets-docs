@@ -7,7 +7,7 @@ The architecture is designed so repayment enforcement and risk controls are obse
 
 - **Revenue Account Layer**
   - Controlled revenue account destinations for eligible fee flows (typically Squads multisig vaults with timelocked config changes and spending-limit allowlists).
-  - Routing verification and control-integrity checks (timelock / threshold / spending limits).
+  - Routing verification and control-integrity checks (timelock / threshold / spending limits / config authority posture).
   - Two-safes model: borrower safe holds the revenue accounts; a separate pool governance safe controls facility state transitions (activate/freeze/unfreeze).
 
 - **Control Plane**

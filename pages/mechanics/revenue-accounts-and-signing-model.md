@@ -97,6 +97,30 @@ At onboarding (and continuously), a conservative baseline posture includes:
 Note: Squads v4 has a distinct `config_authority` concept for certain safe configuration operations. If a borrower safe uses a separate config authority key,
 it should be treated as a privileged risk surface and pinned/monitored by policy.
 
+### 3.3 Config authority (why timelocks can be bypassed)
+
+Squads v4 has two ways a safe's configuration can be governed:
+
+- **Autonomous safe**: there is no privileged config-admin key. Config changes go through member approvals and the timelock.
+- **Controlled safe**: a specific **config authority** key can sign certain config changes directly.
+
+For attnCredit, the timelock story only works if config cannot be changed instantly.
+
+So while a credit position is active, we require one of these to be true:
+
+- the safe is autonomous (config authority is the default "no one" value), or
+- the config authority is pinned to the expected key (so config changes can't happen without that key).
+
+In both cases, config changes are auditable onchain and treated as a monitored control surface.
+
+### 3.4 Position lifecycle (what changes at open/close)
+
+High level:
+
+- **Before activation**: the borrower configures the revenue account rails (vaults + spending limits + timelock) and we verify the posture.
+- **While active**: the borrower can operate normally from the ops vault, but the rails that protect debt service cannot be widened instantly.
+- **At close**: returning or changing config authority is possible, but it is an explicit action (not an automatic protocol behavior).
+
 If these controls weaken (lower timelock/threshold, new delegates, broader destinations, residual routes enabled),
 it is treated as a control-integrity failure and can trigger rapid throttle/freeze actions at the protocol layer.
 
@@ -162,3 +186,30 @@ It does **not** assume:
 - that all project spending is gated through the pledged path.
 
 Revenue accounts are a narrow, opinionated piece of infra designed to make onchain revenues **bankable** without taking over governance of the entire project.
+
+---
+
+## 6. FAQ
+
+**Do I need to co-sign everything with attn?**
+
+No. In v1, attn does not need to be a member on the borrower safe. The borrower controls day-to-day ops spending. Enforceability comes from verified rails and protocol-level control actions.
+
+**What does attn control, then?**
+
+Two things:
+
+- the protocol facility state (activate, freeze/unfreeze) via lender/pool governance, and
+- the integrity of the revenue account rails (timelock, spending-limit allowlists, and config posture) via verification + monitoring.
+
+**Can the borrower change the rules instantly?**
+
+Not if the posture is valid. A borrower safe must be configured so that config changes are timelocked (autonomous) or require a pinned config authority key (controlled). Any weakening attempts are detectable and can trigger freeze.
+
+**What does “transfer coin ownership” mean for Pump?**
+
+It refers to Pump's fee sharing configuration: who can edit the fee recipients and whether that config is locked. It is not a statement about transferring the token mint itself.
+
+**Does attn custody funds?**
+
+No. Funds live in onchain accounts controlled by the borrower's safe and its vault authorities. attnCredit is designed to be non-custodial while still making repayment controls enforceable.
