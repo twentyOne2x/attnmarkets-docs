@@ -290,3 +290,47 @@ EXECUTOR
 VERIFIER
 - Acceptance criteria check: PASS.
 
+## 2026-02-16 - Update public docs: Pump fee sharing + Squads safe requirements
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided; verified via build output)
+
+PLANNER
+- Spec check: Solvable. Public docs need to reflect the latest shared KB notes on Pump fee sharing + Squads safe enforceability assumptions for attnCredit v1.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - Shared KB notes were updated on 2026-02-16 and include newer/clearer mental models for:
+    - Pump fee sharing: `SharingConfig` (recipients) vs admin/lock controls, and
+    - Squads safe enforceability: "two safes" (borrower vs pool governance) plus baseline posture checks.
+  - The docs site has relevant public copy, but it does not yet explicitly include the "two safes" mental model or the baseline borrower-safe checks.
+- Fix intent:
+  - Update the public mechanics page that defines revenue account custody/signing assumptions to incorporate:
+    - the Pump fee sharing mental model (creator -> SharingConfig PDA; recipients and lock semantics),
+    - the "two safes" control-plane model (BorrowerSquads vs PoolGov),
+    - a concise list of baseline borrower safe requirements (timelock + spending limits + separation of keys).
+- Acceptance criteria:
+  - `pages/mechanics/revenue-accounts-and-signing-model.md` includes:
+    - an explicit "two safes" explanation (borrower safe vs lender/pool governance safe),
+    - a baseline borrower safe requirements list that matches current v1 posture (timelock >= 7d, non-trivial multisig, sweeper separation, strict spending-limit allowlists, no delegates),
+    - Pump fee sharing section updated to reflect SharingConfig recipients + admin + permanent lock semantics.
+  - Build passes: `npm run build`.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/mechanics/revenue-accounts-and-signing-model.md`
+    - `pages/mechanics/architecture-overview.md`
+  - Verify:
+    - `npm run build`
+
+EXECUTOR
+- Updated public mechanics copy to match current shared KB mental models:
+  - `pages/mechanics/revenue-accounts-and-signing-model.md`
+  - `pages/mechanics/architecture-overview.md`
+- Proofs:
+  - `npm run build` PASS
+
+VERIFIER
+- Acceptance criteria check: PASS.

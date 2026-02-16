@@ -55,10 +55,10 @@ By anchoring revenue accounts in Squads:
 
 ## 3. Signing and authority model (v1)
 
-There are three distinct authority surfaces:
+There are four distinct authority surfaces:
 
-- Borrower governance (Squads multisig)
-  - proposes/votes/executes configuration changes (timelocked).
+- Borrower governance (borrower safe / Squads multisig)
+  - executes configuration changes under the multisig policy (timelocked where applicable).
 
 - Borrower operational authority (ops vault)
   - draws land into the ops vault,
@@ -68,6 +68,37 @@ There are three distinct authority surfaces:
   - is not a multisig member,
   - can only move funds under pre-installed spending limits,
   - cannot add/remove members, modify timelocks, or change spending limits.
+
+- Lender / pool governance (separate safe)
+  - controls facility state at the protocol layer (activate, freeze/unfreeze),
+  - can tighten parameters within policy when control integrity weakens.
+
+### 3.1 Two safes (two control planes)
+
+In v1 we treat these as separate objects:
+
+- Borrower safe: holds the borrower's treasury plus the revenue account vault template (collector/pledged/ops/DSRA).
+- Pool governance safe: holds the governance signing authority for facility control actions.
+
+Key point: being a signer on pool governance does not make you a signer on the borrower safe, and vice versa.
+
+### 3.2 Baseline borrower safe requirements (v1)
+
+At onboarding (and continuously), a conservative baseline posture includes:
+
+- timelock at least 7 days,
+- non-trivial multisig (>=2 members, threshold >=2),
+- pledged vault token accounts are owned by the expected vault authorities and have no delegates,
+- the draw/ops authority is pinned to the ops vault authority,
+- the executor/sweeper key is not a multisig member and cannot act as the ops/draw authority,
+- spending limits exist and implement a strict allowlist of paths (see below),
+- residual route to ops is disabled by default (no pledged -> ops spending limit).
+
+Note: Squads v4 has a distinct `config_authority` concept for certain safe configuration operations. If a borrower safe uses a separate config authority key,
+it should be treated as a privileged risk surface and pinned/monitored by policy.
+
+If these controls weaken (lower timelock/threshold, new delegates, broader destinations, residual routes enabled),
+it is treated as a control-integrity failure and can trigger rapid throttle/freeze actions at the protocol layer.
 
 Typical allowlisted paths:
 
@@ -80,9 +111,6 @@ Important nuance:
 
 - Spending limits allowlist destination authority pubkeys, not token-account addresses.
   - For attnCreditline repayment, the destination authority is the facility's vault authority PDA (not the repayment vault token account).
-
-If the borrower weakens these controls (e.g. lowers timelock/threshold, adds delegates, broadens destinations, enables residual routes),
-it is treated as a control-integrity failure and will affect facility status/limits.
 
 ---
 
@@ -104,6 +132,7 @@ If fee sharing is enabled for a Pump mint:
 
 - the Pump bonding curve `creator` becomes a **fee sharing config PDA** (not your wallet, not a Squads vault),
 - the **actual recipients and split** are stored in that config (`shareholders[]`), and
+- fees accrue into a Pump creator-fee vault keyed by that config, and are distributed to `shareholders[]`,
 - “transfer coin ownership” means transferring who can edit that config (`admin`),
 - “remove creator share permissions” is a permanent lock bit (`admin_revoked`).
 
@@ -112,6 +141,9 @@ So the check that matters for credit is not “`creator == pledged vault`”, bu
 - the fee sharing config exists and is active,
 - pledged Squads vault(s) appear in the recipients list for the agreed share (often 100% in v1),
 - and either the config is locked (`admin_revoked = true`) or the admin is behind a timelock + continuously monitored.
+
+Operational note: permanently locking the fee sharing config is an onchain admin action. If the `admin` is a program-controlled address (for example a Squads vault PDA),
+the lock must be executed through that controlling program so the PDA can sign.
 
 ---
 
