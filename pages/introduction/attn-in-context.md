@@ -22,26 +22,131 @@ These are common points of comparison:
 - **Colossus.credit** - stablecoin card and payment-network stack (early)
 - **Klarna + Tempo** - consumer BNPL network + payments-focused L1 narrative
 
-Skim the matrix first. The goal is not perfect taxonomy; it's a quick map for BD, partners, and capital.
+Skim the summary first. The goal is not perfect taxonomy; it's a quick map for BD, partners, and capital.
 
-## At a glance (matrix)
+## 3 quick takeaways
 
-| Project | Layer / object | What it focuses on | Primary users / buyers | How it intersects with attn |
-| --- | --- | --- | --- | --- |
-| **creditcoop.xyz** | Receivables + settlement liquidity | Bridge funding against future cash flows (incl. onchain receivables) | Card programs, neobanks, payments stacks | Direct neighbor: creditcoop is a liquidity provider against receivables; attn is the onchain **enforcement + servicing** layer (routed revenue accounts, sweeps, deterministic control modes) that makes those receivables financeable |
-| **Yumi.finance** | BNPL / credit-as-a-feature | Onchain BNPL rails; integrates credit without building underwriting + financing in-house | Neobanks/card programs, checkout/payroll platforms, fintech apps | Yumi is a credit product surface; attn is the **entity-level** credit + servicing + enforcement layer against routed revenues. A platform can pair end-user BNPL with attn-style revenue-swept facilities |
-| **Pyra.fi** | Consumer neobank + DeFi credit + card | Invest paychecks into yield assets; spend using DeFi loans instead of selling assets | Individuals / retail users | Adjacent: Pyra is a distribution endpoint and spends credit; attn can underwrite the **company's** settlement/working-capital needs against fee revenues and routed receivables (not consumer underwriting) |
-| **Avici.money** | Individual banking + payroll + personal credit | Accounts, cards, payroll networks, consumer underwriting and credit distribution | Individuals, employees, freelancers; eventually payroll operators | Avici targets **people** and payroll rails; attn targets **entities** and their **onchain revenue accounts** for working capital and settlement liquidity |
-| **Slash** | Business banking + cards + rails | Regulated entity accounts, corporate cards, payment rails, working capital UX | SMEs, internet businesses, Web3 teams | Slash is a spend/ops surface; attn can sit behind as a revenue-underwritten credit and servicing layer for entities with onchain fees |
-| **Krak** | Consumer money app + card rails | Retail balances, P2P, spend, and consumer distribution | Individuals and retail users | Adjacent: Krak is a distribution endpoint; attn is financing for the fee-generating entities that pay into or interact with consumer rails |
-| **Pye.fi** | Yield and rate structuring | Tokenized rate products (staking yield and beyond) | Yield users, traders, infra protocols | Pye structures yield as a traded object; attn structures **credit servicing and enforcement** around routed revenues. Interop is possible, but the core object differs |
-| **Wildcat.finance** | Market-based credit | Under-collateralized lending markets with negotiated terms | Whitelisted borrowers and stable lenders | Wildcat is market/term design; attn is a servicing-first model with **hard sweeps**, dynamic limits, and deterministic stress modes anchored in routed cashflows |
-| **Altitude (Squads.xyz)** | Treasury and ops | Business accounts, safes, payouts, accounting-friendly flows | DAOs, protocols, ops teams | Complementary: Altitude holds operating cash; attn provides credit servicing and repayment controls on routed revenue accounts |
-| **3Jane.xyz** | Credit accounts and yield stablecoins | Unsecured lines and yield products sized via offchain/verified inputs | Asset-rich users with verifiable credit footprint | 3Jane underwrites via offchain verification; attn underwrites from onchain revenue stability and enforceable routing controls |
-| **Xitadel.fi** | Treasury / native-token collateral | Fixed-term debt against token treasuries | Token-rich projects, DAOs, credit pools | Xitadel finances against treasury assets; attn finances against **live routed revenue**. A project may use both (treasury debt + revenue facility) |
-| **Colossus.credit** | Payments network + card stack | Stablecoin payments and card-network primitives | Merchants, acquirers, issuers (aspirational) | Adjacent: payments rails and settlement primitives can consume liquidity facilities; attn is a credit + servicing layer that can plug in where routed receivables exist |
-| **Klarna + Tempo** | Consumer BNPL + payments infra | Consumer underwriting, merchant checkout, and payments rails narrative | Consumers, merchants, BNPL capital | Klarna/BNPL is consumer risk; attn is **entity-level** revenue-swept credit. In principle, merchants or platforms can use attn for working capital while consumer risk stays separate |
-| **attn (attnCredit)** | Revenue credit + servicing control plane | Revenue accounts, revenue-swept facilities, dynamic limits, deterministic control modes, lender-grade tape | Onchain fee businesses, LPs, issuer/treasury stacks | Provides the enforcement and servicing rails that make onchain revenue financeable without relying on token collateral alone |
+- **attn is the control layer:** underwriting + servicing + enforceability rails around routed revenue.
+- **attn targets entity-level revenue risk, not consumer credit underwriting.**
+- **attn can sit behind distribution/payment products** (cards, payroll, checkout) as their working-capital and settlement-liquidity engine.
+
+> **Condensed comparison summary**
+>
+> attn = enforcement + servicing + reporting against routed revenue.
+
+## At a glance (expand by project)
+
+<details>
+<summary><strong>creditcoop.xyz</strong> — Receivables + settlement liquidity</summary>
+
+- **Focus:** Bridge funding against future cash flows (including onchain receivables).
+- **Primary users / buyers:** Card programs, neobanks, payments stacks.
+- **How it intersects with attn:** creditcoop is a liquidity provider against receivables; attn is the onchain enforcement + servicing layer that makes those receivables financeable.
+</details>
+
+<details>
+<summary><strong>Yumi.finance</strong> — BNPL / credit-as-a-feature</summary>
+
+- **Focus:** Onchain BNPL rails for platforms that do not want to build underwriting + financing from scratch.
+- **Primary users / buyers:** Neobanks, card programs, checkout/payroll platforms, fintech apps.
+- **How it intersects with attn:** Yumi is a credit product surface; attn is the entity-level credit + servicing + enforcement layer against routed revenues.
+</details>
+
+<details>
+<summary><strong>Pyra.fi</strong> — Consumer neobank + DeFi credit + card</summary>
+
+- **Focus:** Invest paychecks into yield assets; spend using DeFi credit.
+- **Primary users / buyers:** Individuals / retail users.
+- **How it intersects with attn:** Pyra is a distribution endpoint; attn underwrites company settlement/working-capital needs against fee revenues and routed receivables.
+</details>
+
+<details>
+<summary><strong>Avici.money</strong> — Individual banking + payroll + personal credit</summary>
+
+- **Focus:** Accounts, cards, payroll networks, and consumer underwriting.
+- **Primary users / buyers:** Individuals, employees, freelancers, payroll operators.
+- **How it intersects with attn:** Avici targets people; attn targets entities and their onchain revenue accounts.
+</details>
+
+<details>
+<summary><strong>Slash</strong> — Business banking + cards + rails</summary>
+
+- **Focus:** Regulated entity accounts, corporate cards, payment rails, working-capital UX.
+- **Primary users / buyers:** SMEs, internet businesses, Web3 teams.
+- **How it intersects with attn:** Slash is a spend/ops surface; attn can sit behind it as revenue-underwritten credit and servicing.
+</details>
+
+<details>
+<summary><strong>Krak (Kraken KRAK app + card)</strong> — Consumer money app + card rails</summary>
+
+- **Focus:** Retail balances, P2P, spend, consumer distribution.
+- **Primary users / buyers:** Individuals / retail users.
+- **How it intersects with attn:** Krak is a distribution endpoint; attn finances fee-generating entities operating around those rails.
+</details>
+
+<details>
+<summary><strong>Pye.fi</strong> — Yield and rate structuring</summary>
+
+- **Focus:** Tokenized rate products (staking yield and beyond).
+- **Primary users / buyers:** Yield users, traders, infrastructure protocols.
+- **How it intersects with attn:** Pye structures yield as the object; attn structures credit servicing/enforcement around routed revenues.
+</details>
+
+<details>
+<summary><strong>Wildcat.finance</strong> — Market-based credit</summary>
+
+- **Focus:** Undercollateralized lending markets with negotiated terms.
+- **Primary users / buyers:** Whitelisted borrowers and stable lenders.
+- **How it intersects with attn:** Wildcat is market/term design; attn is servicing-first with hard sweeps, dynamic limits, and deterministic stress modes.
+</details>
+
+<details>
+<summary><strong>Altitude (Squads.xyz)</strong> — Treasury and ops</summary>
+
+- **Focus:** Business accounts, safes, payouts, accounting-friendly operations.
+- **Primary users / buyers:** DAOs, protocols, ops teams.
+- **How it intersects with attn:** Altitude holds operating cash; attn provides credit servicing and repayment controls on routed revenue accounts.
+</details>
+
+<details>
+<summary><strong>3Jane.xyz</strong> — Credit accounts and yield stablecoins</summary>
+
+- **Focus:** Unsecured lines and yield products sized via offchain/verified inputs.
+- **Primary users / buyers:** Asset-rich users with verifiable credit footprints.
+- **How it intersects with attn:** 3Jane underwrites via offchain verification; attn underwrites from onchain revenue stability and enforceable routing controls.
+</details>
+
+<details>
+<summary><strong>Xitadel.fi</strong> — Treasury / native-token collateral</summary>
+
+- **Focus:** Fixed-term debt against token treasuries.
+- **Primary users / buyers:** Token-rich projects, DAOs, credit pools.
+- **How it intersects with attn:** Xitadel finances treasury assets; attn finances live routed revenue.
+</details>
+
+<details>
+<summary><strong>Colossus.credit</strong> — Payments network + card stack</summary>
+
+- **Focus:** Stablecoin payments and card-network primitives.
+- **Primary users / buyers:** Merchants, acquirers, issuers.
+- **How it intersects with attn:** Payment rails can consume liquidity facilities; attn can provide the credit + servicing layer where routed receivables exist.
+</details>
+
+<details>
+<summary><strong>Klarna + Tempo</strong> — Consumer BNPL + payments infra</summary>
+
+- **Focus:** Consumer underwriting, merchant checkout, and payment rails.
+- **Primary users / buyers:** Consumers, merchants, BNPL capital.
+- **How it intersects with attn:** consumer BNPL risk is separate; attn provides entity-level revenue-swept credit for merchants/platforms.
+</details>
+
+<details>
+<summary><strong>attn (attnCredit)</strong> — Revenue credit + servicing control plane</summary>
+
+- **Focus:** Revenue accounts, revenue-swept facilities, dynamic limits, deterministic control modes, lender-grade tape.
+- **Primary users / buyers:** Onchain fee businesses, LPs, issuer/treasury stacks.
+- **How it intersects with others:** attn supplies the enforcement and servicing rails that make onchain revenue financeable without relying only on token collateral.
+</details>
 
 ## What to take away
 

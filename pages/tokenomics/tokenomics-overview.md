@@ -2,6 +2,12 @@
 
 Tokenomics and governance are designed to support durable credit operations, not short-term incentive extraction.
 
+## Current status
+
+- There is **no live attn token today**.
+- Token design, if introduced, is TBD.
+- Governance implementation details are TBD.
+
 ## 1. Core principles
 
 - prioritize solvency and servicing reliability,

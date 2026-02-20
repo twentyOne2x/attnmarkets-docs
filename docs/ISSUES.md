@@ -42,8 +42,369 @@ EXECUTOR
 
 VERIFIER
 - Acceptance criteria check: PASS.
+
+## 2026-02-20 - Tokenomics clarity: explicit current status (no token today)
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested explicit token status language to reduce speculation.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - `/tokenomics/tokenomics-overview` describes directional governance/tokenomics but does not explicitly state present-day token status.
+- Fix intent:
+  - Add a clear "Current status" statement:
+    - no live attn token today,
+    - token design/scope TBD,
+    - governance implementation TBD.
+- Acceptance criteria:
+  - Target page clearly states there is no token today.
+  - Status statement is explicit and non-speculative.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/tokenomics/tokenomics-overview.md` only.
+  - Keep language short and explicit.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/tokenomics/tokenomics-overview.md`:
+  - Added explicit `Current status` section:
+    - no live token today,
+    - token design is TBD,
+    - governance implementation is TBD.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/tokenomics/tokenomics-overview` generated successfully).
+  - `rg -n "Current status|no live attn token today|TBD" pages/tokenomics/tokenomics-overview.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Mechanics UX: add inline glossary tooltips on attnCredit engine page
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested inline glossary tooltips that match app labels on `/mechanics/pt-yt-attnusd`.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - The page is technically complete but dense; key terms are not self-defined inline.
+  - Readers need fast definitions for terms like borrowing base, throttle, and DSRA without leaving the page.
+- Fix intent:
+  - Add inline hover glossary tooltips (`abbr` + `title`) to key terms while preserving existing structure/copy.
+- Acceptance criteria:
+  - Target page includes inline glossary tooltips for key terms (borrowing base, DSRA, hard sweeps, mandatory paydown, throttle/protect/freeze modes, attnUSD).
+  - Labels remain aligned with app terminology.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/mechanics/pt-yt-attnusd.md` only.
+  - Keep wording concise and avoid changing model semantics.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/mechanics/pt-yt-attnusd.md`:
+  - Added inline glossary tooltip wrappers (`abbr` with `title`) for key terms:
+    - Borrowing base
+    - attnUSD
+    - DSRA
+    - Hard sweeps
+    - Mandatory paydown
+    - Dynamic limits
+    - Step controls
+    - Throttle mode
+    - Protect mode
+    - Freeze mode
+  - Added short page hint: `Hover highlighted terms for quick glossary definitions.`
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/mechanics/pt-yt-attnusd` generated successfully).
+  - `rg -n "abbr title=|Borrowing base|DSRA|Hard sweeps|Mandatory paydown|Throttle mode|Protect mode|Freeze mode" pages/mechanics/pt-yt-attnusd.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Trust page clarity: add plain-English "Who can move funds?" section
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a plain-English "Who can move funds?" section on the trust-critical signing model page.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - The page covers custody/signing mechanics but does not provide a single role-based answer for who can move funds during an active facility.
+  - This creates repeated confusion around "co-signer on everything" vs "frozen config + monitored rails."
+- Fix intent:
+  - Add a concise section that explicitly separates powers of:
+    - borrower governance / ops,
+    - automated sweeper,
+    - attn / lender governance.
+  - Clarify that config authority posture determines whether config can be changed instantly.
+- Acceptance criteria:
+  - `pages/mechanics/revenue-accounts-and-signing-model.md` contains a clearly labeled plain-English "Who can move funds?" section.
+  - Section states borrower vs sweeper vs attn permissions in simple language and aligns with v1 enforcement posture.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/mechanics/revenue-accounts-and-signing-model.md` only.
+  - Keep wording short and user-trust oriented.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/mechanics/revenue-accounts-and-signing-model.md`:
+  - Added `Who can move funds? (plain English)` subsection.
+  - Explicitly separated permissions for:
+    - borrower governance/ops,
+    - automated sweeper,
+    - attn/lender governance.
+  - Added concise config-authority nuance (autonomous vs controlled safe posture).
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/mechanics/revenue-accounts-and-signing-model` generated successfully).
+  - `rg -n "Who can move funds\\? \\(plain English\\)|Borrower \\(governance \\+ ops\\)|Automated sweeper|attn / lender governance|Config-authority nuance" pages/mechanics/revenue-accounts-and-signing-model.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Creator page UX: add typical flow timeline + demo CTA
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a timeline-style "Typical flow" addition for `/users/for-creators-devs-and-ctos`.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - Page explains value and mechanics but lacks a one-glance end-to-end flow diagram.
+  - CTA to the demo app is implicit, not direct.
+- Fix intent:
+  - Add a "Typical flow (timeline)" section showing:
+    - Apply -> Route fees -> Draw -> Sweeps -> Close
+  - Add direct demo CTA link.
+- Acceptance criteria:
+  - Target page includes a clearly labeled timeline section with the requested sequence.
+  - Target page includes direct demo app link.
+  - Existing related pages remain intact.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/users/for-creators-devs-and-ctos.md` only.
+  - Keep concise creator-facing tone.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/users/for-creators-devs-and-ctos.md`:
+  - Added `Typical flow (timeline)` section with requested sequence:
+    - `Apply -> Route fees -> Draw -> Sweeps -> Close`
+  - Added a short five-step timeline walkthrough under the diagram.
+  - Added direct demo CTA link under related pages:
+    - `View demo app` -> `https://app.attn.markets/credit-line`
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/users/for-creators-devs-and-ctos` generated successfully).
+  - `rg -n "Typical flow \\(timeline\\)|Apply -> Route fees -> Draw -> Sweeps -> Close|View demo app" pages/users/for-creators-devs-and-ctos.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Borrower page UX: add implementation checklist + direct estimate CTA
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested an implementation checklist on `/users/for-apps-daos-and-builders` and clearer next action for estimating a line.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - The page explains borrower value and enforcement model but lacks a concrete implementation checklist.
+  - There is no direct "Estimate credit line" action on the page.
+- Fix intent:
+  - Add an "Implementation checklist" section covering:
+    - routing readiness,
+    - multisig setup,
+    - policy constraints.
+  - Add a direct `Estimate credit line` link.
+- Acceptance criteria:
+  - Page includes an implementation checklist with the three requested categories.
+  - Page includes a direct `Estimate credit line` link.
+  - Existing related links remain intact.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/users/for-apps-daos-and-builders.md` only.
+  - Keep concise borrower-facing tone.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/users/for-apps-daos-and-builders.md`:
+  - Added `Implementation checklist` section covering:
+    - routing readiness,
+    - multisig setup,
+    - policy constraints.
+  - Added direct next-step CTA link:
+    - `Estimate credit line` -> `https://app.attn.markets/credit-line`
+  - Kept existing related pages section unchanged.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/users/for-apps-daos-and-builders` generated successfully).
+  - `rg -n "Implementation checklist|Routing readiness|Multisig setup|Policy constraints|Estimate credit line" pages/users/for-apps-daos-and-builders.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - attn-in-context UX: top takeaways + mobile-friendly comparison cards
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested improving `/introduction/attn-in-context` with a concise summary and a mobile-friendly alternative to the large matrix.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - The page currently relies on a large 5-column matrix that is hard to scan on mobile.
+  - Core positioning exists but lacks an explicit top-level "top 3 takeaways" summary.
+- Fix intent:
+  - Add a "3 quick takeaways" section near the top.
+  - Add a condensed summary line: `attn = enforcement + servicing + reporting against routed revenue`.
+  - Replace the large matrix with expandable project cards (`<details>`) for better mobile UX.
+- Acceptance criteria:
+  - Page includes top takeaways + condensed comparison summary.
+  - Comparison section is rendered as collapsible project cards instead of a giant matrix.
+  - Related page links remain intact.
+  - Build/knowledge checks pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update `pages/introduction/attn-in-context.md`.
+  - Keep existing comparison meaning; improve structure and scanability.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/introduction/attn-in-context.md`:
+  - Added `3 quick takeaways` above the comparison details.
+  - Added condensed summary callout:
+    - `attn = enforcement + servicing + reporting against routed revenue.`
+  - Replaced the large matrix with expandable project cards using `<details>` blocks for mobile-friendly scanning.
+  - Kept `Related pages` links unchanged.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/introduction/attn-in-context` generated successfully).
+  - `rg -n "3 quick takeaways|Condensed comparison summary|At a glance \\(expand by project\\)|<details>|attn = enforcement \\+ servicing \\+ reporting against routed revenue" pages/introduction/attn-in-context.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Intro page clarity: add 30-second borrower example box
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a concrete borrower story on `/introduction/the-missing-layer-for-onchain-revenues`.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - The page explains the abstract problem clearly but lacks an immediate concrete flow example.
+- Fix intent:
+  - Add a short "30-second example" box showing the flow:
+    - pump.fun creator routes fees
+    - attn estimates a credit line
+    - automated sweeps repay
+- Acceptance criteria:
+  - Target page includes a clearly labeled example box with the above flow.
+  - Existing section order and links remain intact.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/introduction/the-missing-layer-for-onchain-revenues.md` only.
+  - Keep copy concise and non-technical.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/introduction/the-missing-layer-for-onchain-revenues.md`:
+  - Added a "30-second example" callout directly after "What attn adds."
+  - Example flow now explicitly states:
+    - pump.fun creator routes fees into controlled revenue account
+    - attn estimates a credit line
+    - automated sweeps route fees to repayment
+- Proofs:
+  - `rg -n "30-second example|Example: a pump.fun creator|estimates a credit line|automated sweeps" pages/introduction/the-missing-layer-for-onchain-revenues.md` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/introduction/the-missing-layer-for-onchain-revenues` generated successfully).
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - 1-pager CTA finish: add Next actions panel + punctuation polish
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a clearer end-state CTA panel on `/1-pager` plus a punctuation cleanup in the lanes section.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - The 1-pager is scannable but ends without clear next-step actions.
+  - The "No early commingling" lane bullet currently reads as two separate lines without punctuation.
+- Fix intent:
+  - Add a bottom "Next actions" block with:
+    - Estimate credit line
+    - View demo dashboard
+    - Read non-technical overview
+  - Tighten the lane bullet punctuation for polish.
+- Acceptance criteria:
+  - `pages/1-pager.md` contains a clear bottom next-action section with those three actions.
+  - The no-commingling lane line has corrected punctuation.
+  - Build passes: `python3 scripts/knowledge_check.py`.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/1-pager.md` only.
+  - Keep tone concise and product-forward.
+  - Run `python3 scripts/knowledge_check.py` after edits.
+
+EXECUTOR
+- Updated `pages/1-pager.md`:
+  - Fixed lane punctuation:
+    - `No early commingling` line now reads: `No early commingling: separate credit pools and lane-specific risk boxes.`
+  - Added bottom CTA section:
+    - `Estimate credit line` -> `https://app.attn.markets/credit-line`
+    - `View demo dashboard` -> `https://app.attn.markets/monitoring`
+    - `Read non-technical overview` -> `./mechanics/how-it-works-nontechnical.md`
+- Proofs:
+  - `rg -n "No early commingling|Next actions|What to do next|Estimate credit line|View demo dashboard|Read non-technical overview" pages/1-pager.md` confirms expected copy/links.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/1-pager` generated successfully).
+
+VERIFIER
+- Acceptance criteria check: PASS.
 - Notes:
-  - Screenshot input was not provided by user; verification was completed via successful static build and terminology scans.
+  - Screenshot input was not provided by user; verification was completed via text checks + successful build.
 
 ## 2026-02-16 - Clarify config authority posture + add FAQ (public docs)
 
