@@ -58,6 +58,21 @@ Projects should be explicit about:
 - what control policies govern stress behavior,
 - how this reduces dependence on repeated token issuance.
 
+## Implementation checklist
+
+Before going live, confirm:
+
+1. **Routing readiness**
+   Identify eligible fee streams, route them into controlled revenue accounts, and verify repayment-priority routing works as expected.
+2. **Multisig setup**
+   Configure a production-safe multisig posture (signer separation, timelock configuration, and spending-limit allowlists for servicing paths).
+3. **Policy constraints**
+   Pre-define utilization discipline, sweep behavior, throttle/freeze triggers, and escalation/default handling so controls are explicit before the first draw.
+
+## Next action
+
+- [Estimate credit line](https://app.attn.markets/credit-line)
+
 ## Related pages
 
 - [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)

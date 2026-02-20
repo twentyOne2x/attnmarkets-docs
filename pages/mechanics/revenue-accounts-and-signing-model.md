@@ -136,6 +136,30 @@ Important nuance:
 - Spending limits allowlist destination authority pubkeys, not token-account addresses.
   - For attnCreditline repayment, the destination authority is the facility's vault authority PDA (not the repayment vault token account).
 
+### 3.5 Who can move funds? (plain English)
+
+During an active facility, think of permissions this way:
+
+- **Borrower (governance + ops)**
+  - can run normal business spending from the ops vault under borrower safe policy,
+  - can propose config changes, but cannot instantly widen repayment rails when posture is valid.
+
+- **Automated sweeper (restricted executor key)**
+  - can move funds only on pre-installed allowlisted paths (for example collector -> pledged -> repayment/DSRA),
+  - cannot send funds to arbitrary destinations,
+  - cannot change multisig members, timelock, spending limits, or config posture.
+
+- **attn / lender governance**
+  - does not custody the borrower treasury and is not required to co-sign day-to-day ops spending,
+  - controls facility state at the protocol layer (activate, throttle/freeze, unfreeze under policy),
+  - monitors rail integrity and can freeze quickly if weakening is detected.
+
+Config-authority nuance:
+
+- If the borrower safe is **autonomous**, config changes must go through approvals + timelock.
+- If the safe is **controlled**, the pinned config authority key can approve config changes.
+- For enforceability, a live facility requires either autonomous config posture or a pinned/expected config authority posture.
+
 ---
 
 ## 4. Upstream routing vs lockboxes (fee routers)

@@ -44,6 +44,23 @@ As flow continuity improves, facilities can move from one-off advances to revolv
 - mandatory utilization discipline,
 - deterministic throttle/freeze behavior under stress.
 
+## Typical flow (timeline)
+
+```text
+Apply -> Route fees -> Draw -> Sweeps -> Close
+```
+
+1. **Apply**
+   Share recent fee-flow history and operating requirements.
+2. **Route fees**
+   Configure eligible earnings into the controlled revenue account.
+3. **Draw**
+   Access short-cycle advance liquidity within approved policy limits.
+4. **Sweeps**
+   Automated repayment sweeps run from routed earnings while the facility is active.
+5. **Close**
+   Facility winds down after repayment and returns to normal operating policy.
+
 ## Optional collateral extensions
 
 For larger tickets, launchpad or DAO structures can add collateral overlays while keeping repayment anchored in routed earnings.
@@ -60,6 +77,7 @@ Teams should disclose:
 
 ## Related pages
 
+- [View demo app](https://app.attn.markets/credit-line)
 - [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
 - [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)

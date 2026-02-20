@@ -27,6 +27,10 @@ attn focuses on that missing layer with **attnCredit**:
 
 This shifts the model from discretionary repayment to serviced repayment.
 
+> **30-second example**
+>
+> Example: a pump.fun creator routes fees into a controlled revenue account -> attn estimates a credit line -> automated sweeps route fees to repayment.
+
 ## Why this matters
 
 When fee flows are controlled and serviceable, projects can access working capital without depending only on token sales or ad hoc bilateral financing.

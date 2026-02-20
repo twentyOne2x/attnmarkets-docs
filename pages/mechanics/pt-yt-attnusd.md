@@ -4,17 +4,19 @@ This page is the canonical technical model for **attnCredit**.
 
 attnCredit is a revenue-underwritten, onchain-enforced revolving credit system where repayment is serviced from routed cashflows.
 
+Hover highlighted terms for quick glossary definitions.
+
 ## 1. Core objects
 
 - **Revenue account**
   Controlled destination for eligible fee flows (typically a Squads multisig + vault setup with timelocks and spending-limit allowlists).
 - **Facility**
   Revolving credit agreement with dynamic limits and servicing rules.
-- **Borrowing base**
+- **<abbr title="Risk-adjusted lendable amount calculated from collectable routed revenue.">Borrowing base</abbr>**
   Risk-adjusted lendable amount derived from observed collectable revenue.
 - **Credit pool**
   Capital bucket with its own risk policy (Pump lane or Settlement lane).
-- **attnUSD**
+- **<abbr title="LP portfolio share token over managed credit pool exposure and performance.">attnUSD</abbr>**
   LP share in one or more managed credit pools, marked from underlying facility performance.
 
 ## 2. Control plane
@@ -38,25 +40,25 @@ Policy components:
 - trailing revenue windows,
 - concentration and volatility haircuts,
 - enforceability horizon,
-- reserve requirements (including DSRA thresholds where required),
+- reserve requirements (including <abbr title="Debt Service Reserve Account: reserve buffer for scheduled debt service under policy.">DSRA</abbr> thresholds where required),
 - lane-level and borrower-level caps.
 
 ## 4. Servicing policy
 
 Servicing is continuous and rule-based:
 
-- **Hard sweeps:** routed fees are swept to debt service according to policy.
-- **Mandatory paydown:** utilization must periodically drop below policy thresholds.
-- **Dynamic limits:** availability updates as revenue and risk signals change.
-- **Step controls:** well-performing facilities can step up within cap rules.
+- **<abbr title="Automated repayment sweeps from routed revenue into debt service paths.">Hard sweeps</abbr>:** routed fees are swept to debt service according to policy.
+- **<abbr title="Rule that requires utilization to drop below configured thresholds on schedule.">Mandatory paydown</abbr>:** utilization must periodically drop below policy thresholds.
+- **<abbr title="Real-time availability updates based on revenue and risk signal changes.">Dynamic limits</abbr>:** availability updates as revenue and risk signals change.
+- **<abbr title="Controlled increases in facility capacity when performance conditions are met.">Step controls</abbr>:** well-performing facilities can step up within cap rules.
 
 ## 5. Shock policy
 
 When risk deteriorates, controls escalate deterministically:
 
-- **Throttle mode:** reduce draw availability and increase sweep intensity.
-- **Protect mode:** tighten parameter bands and require faster deleveraging.
-- **Freeze mode:** block new draws while repayment routing remains active.
+- **<abbr title="First stress mode: reduce draw availability and increase sweep intensity.">Throttle mode</abbr>:** reduce draw availability and increase sweep intensity.
+- **<abbr title="Intermediate stress mode: tighten parameter bands and require faster deleveraging.">Protect mode</abbr>:** tighten parameter bands and require faster deleveraging.
+- **<abbr title="Hard stop mode: block new draws while repayment routing stays active.">Freeze mode</abbr>:** block new draws while repayment routing remains active.
 
 Typical trigger classes:
 
@@ -96,7 +98,7 @@ Lanes operate with separate credit pools and risk boxes in early stages.
 
 ## 8. attnUSD model
 
-attnUSD is a portfolio share over managed credit pool exposure:
+<abbr title="LP portfolio share token over managed credit pool exposure and performance.">attnUSD</abbr> is a portfolio share over managed credit pool exposure:
 
 - NAV reflects credit pool composition, facility performance, reserves, and realized losses/recoveries.
 - There is no implied 1:1 principal guarantee.
