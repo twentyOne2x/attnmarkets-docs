@@ -9,6 +9,7 @@ attn's focus is **attnCredit**: revenue-underwritten, onchain-enforced revolving
 These are common points of comparison:
 
 - **creditcoop.xyz** - credit cooperative / bridge funding against future cash flows (receivables + settlement liquidity)
+- **claw.credit** - autonomous credit for AI agents on Solana; agents can apply for lines and spend on x402 services (underwritten by t54 risk engine)
 - **Yumi.finance** - onchain BNPL rails (credit-as-a-feature for platforms)
 - **Pyra.fi** - consumer neobank: invest paycheck into yield assets + spend via DeFi credit (no forced selling)
 - **Avici.money** - internet neobank with payroll accounts, spend cards, and a personal credit roadmap
@@ -42,6 +43,14 @@ Skim the summary first. The goal is not perfect taxonomy; it's a quick map for B
 - **Focus:** Bridge funding against future cash flows (including onchain receivables).
 - **Primary users / buyers:** Card programs, neobanks, payments stacks.
 - **How it intersects with attn:** creditcoop is a liquidity provider against receivables; attn is the onchain enforcement + servicing layer that makes those receivables financeable.
+</details>
+
+<details>
+<summary><strong>claw.credit</strong> — Autonomous credit for AI agents</summary>
+
+- **Focus:** Autonomous credit lines for AI agents on Solana that can be spent across x402 services without manual wallet top-ups.
+- **Primary users / buyers:** Agent builders, operators, and agent-first application stacks.
+- **How it intersects with attn:** claw.credit is agent-native credit execution; attn is the revenue-account control, servicing, and enforceability layer for entity-level onchain revenue.
 </details>
 
 <details>

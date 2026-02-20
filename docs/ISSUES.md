@@ -43,6 +43,184 @@ EXECUTOR
 VERIFIER
 - Acceptance criteria check: PASS.
 
+## 2026-02-20 - Roadmap UX: add command-style action rail CTA
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a command-line style CTA rail on roadmap so readers have immediate next steps.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - `/roadmap` currently communicates milestones but has no explicit "do this now" action path.
+  - This creates drop-off at the moment of interest.
+- Fix intent:
+  - Add a compact action rail directly under title/introduction:
+    - `> OPEN DEMO`
+    - `> REQUEST ACCESS`
+  - Add concise microcopy clarifying pilot access posture.
+- Acceptance criteria:
+  - Roadmap page shows two command-style CTA links near top.
+  - Microcopy states: pilot permissioned, demo public.
+  - Links point to demo and request-access destinations.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/roadmap.md` only.
+  - Preserve roadmap content structure.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/roadmap.md`:
+  - Added top-level `Action rail` directly under roadmap intro.
+  - Added command-style CTA links:
+    - `> OPEN DEMO` -> `https://app.attn.markets/credit-line`
+    - `> REQUEST ACCESS` -> `https://attn.markets/request-access`
+  - Added microcopy:
+    - `Pilot is permissioned. Demo is public.`
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/roadmap` generated successfully).
+  - `rg -n "Action rail|OPEN DEMO|REQUEST ACCESS|Pilot is permissioned\\. Demo is public\\." pages/roadmap.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Roadmap UX: add contextual micro-CTAs per phase
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested contextual micro-CTAs inside each roadmap phase to convert intent into action.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - Roadmap phase blocks read like internal notes and do not provide phase-specific next actions.
+  - Users cannot self-select by phase context (borrower vs LP vs settlement partner).
+- Fix intent:
+  - Add a low-weight "If this is you" line with one link under each phase block.
+  - Keep links tertiary (text links), not button-style.
+- Acceptance criteria:
+  - Each phase block (0-4) includes one contextual micro-CTA line.
+  - Existing phase content remains intact.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/roadmap.md` only.
+  - Keep command-line tone and low visual weight.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/roadmap.md`:
+  - Added one contextual micro-CTA line under each phase block (0 through 4).
+  - Kept these as low-weight text links (tertiary style), not buttons.
+  - Mapped phase context to relevant action/link:
+    - Phase 0 -> Estimate credit line
+    - Phase 1 -> Request access
+    - Phase 2 -> For Liquidity Providers
+    - Phase 3 -> For Cards, Commerce, and Settlement Partners
+    - Phase 4 -> For Launchpads & Incubators
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/roadmap` generated successfully).
+  - `rg -n "If this is you|Estimate credit line|Request access|For Liquidity Providers|For Cards, Commerce, and Settlement Partners|For Launchpads & Incubators" pages/roadmap.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Roadmap UX: add sticky bottom CTA bar
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a sticky bottom CTA bar for roadmap end-of-scroll conversion.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - Roadmap now has top action rail + per-phase links, but mobile/end-of-page users can still lose the primary action.
+- Fix intent:
+  - Add a thin sticky bottom bar on roadmap with:
+    - one primary command CTA (`> REQUEST ACCESS`),
+    - one low-weight fallback link (`Demo`).
+  - Place the sticky block after hero/action-rail so it appears once users move into content.
+- Acceptance criteria:
+  - Roadmap includes sticky bottom CTA bar with one primary action.
+  - Primary action points to request-access flow.
+  - Optional fallback demo link present as low-weight text.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/roadmap.md` only.
+  - Keep command-line visual tone and minimal footprint.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/roadmap.md`:
+  - Added a thin sticky bottom CTA bar directly below the hero/action-rail section.
+  - Bar includes:
+    - primary command CTA: `> REQUEST ACCESS` -> `https://attn.markets/request-access`
+    - low-weight fallback link: `Demo` -> `https://app.attn.markets/credit-line`
+  - Kept visual footprint minimal with command-line tone.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/roadmap` generated successfully).
+  - `rg -n "Want in\\?|REQUEST ACCESS|Demo|position: sticky; bottom: 0" pages/roadmap.md` -> expected matches present.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-20 - Roadmap CTA hierarchy: permissioned-alpha ordering
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested CTA hierarchy update for permissioned alpha.
+- Missing info/questions: None.
+- Context + suspected cause:
+  - Roadmap action rail currently lists demo before request access.
+  - In permissioned alpha, conversion should prioritize access request first.
+- Fix intent:
+  - Reorder top action-rail CTAs to:
+    - primary: `> REQUEST ACCESS`
+    - secondary: `> OPEN DEMO`
+  - Keep sticky bar unchanged (already request-access first).
+- Acceptance criteria:
+  - Top action rail presents request access first.
+  - Demo remains present as secondary fallback.
+  - Build/knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/roadmap.md` only.
+  - Keep command-style tone and existing links.
+  - Run `python3 scripts/knowledge_check.py` and `npm run build`.
+
+EXECUTOR
+- Updated `pages/roadmap.md`:
+  - Reordered top action-rail CTAs for permissioned alpha hierarchy:
+    - primary first: `> REQUEST ACCESS`
+    - secondary second: `> OPEN DEMO`
+  - Kept sticky bar ordering unchanged (already request-access first).
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/roadmap` generated successfully).
+  - `rg -n "> REQUEST ACCESS|> OPEN DEMO" pages/roadmap.md` -> request access appears first in action rail.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
 ## 2026-02-20 - Tokenomics clarity: explicit current status (no token today)
 
 - [x] report captured
@@ -737,3 +915,85 @@ EXECUTOR
 
 VERIFIER
 - Acceptance criteria check: PASS.
+
+## 2026-02-20 - Add `claw.credit` to attn-in-context comparison set (below creditcoop)
+PLANNER
+- Spec check: solvable. User requested adding `claw.credit` to `attn-in-context` docs and placing it at the top, right below `creditcoop.xyz`.
+- Missing info/questions: none.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - `pages/introduction/attn-in-context.md` currently lists comparison projects but does not include `claw.credit`.
+- Fix intent:
+  1) Add `claw.credit` entry directly below `creditcoop.xyz` in the top comparison bullet list.
+  2) Add corresponding expanded `<details>` section near the top of the project detail list.
+- Acceptance criteria:
+  - `claw.credit` appears immediately below `creditcoop.xyz` in the comparison list.
+  - `claw.credit` has an expanded details block near the top of the section.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/introduction/attn-in-context.md` only.
+  - Keep tone consistent with existing adjacent-project entries.
+  - Verify with `rg` and `python3 scripts/knowledge_check.py`.
+
+EXECUTOR
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (not requested)
+- Implemented:
+  - Added `claw.credit` directly below `creditcoop.xyz` in the top comparison-set list.
+  - Added a `claw.credit` expanded `<details>` section directly below the `creditcoop.xyz` detail section.
+  - File updated:
+    - `pages/introduction/attn-in-context.md`
+- Proofs:
+  - `rg -n "creditcoop\\.xyz|claw\\.credit|Autonomous credit for AI agents|x402|t54 risk engine" pages/introduction/attn-in-context.md` -> expected matches present with `claw.credit` at top placement.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: `claw.credit` appears immediately below `creditcoop.xyz` in the comparison list.
+  - PASS: `claw.credit` details block is present near the top (immediately after `creditcoop.xyz` details).
+
+## 2026-02-20 - Sync docs favicon with frontend favicon assets
+PLANNER
+- Spec check: solvable. User requested updating docs favicon to match frontend.
+- Missing info/questions: none.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - `attnmarkets-docs/public/favicon.svg` and `public/favicon.ico` hashes differ from `attn-frontend/apps/attncredit-landing/public/` source assets.
+- Fix intent:
+  1) Copy frontend `favicon.svg` and `favicon.ico` into docs repo public assets.
+  2) Verify hashes now match frontend source files.
+- Acceptance criteria:
+  - Docs `public/favicon.svg` and `public/favicon.ico` match frontend assets.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update only:
+    - `public/favicon.svg`
+    - `public/favicon.ico`
+  - Verify with `shasum` and run `python3 scripts/knowledge_check.py`.
+
+EXECUTOR
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (not requested)
+- Implemented:
+  - Copied frontend favicon assets into docs:
+    - `public/favicon.svg`
+    - `public/favicon.ico`
+- Proofs:
+  - `shasum` comparison now matches exactly between:
+    - `/Users/user/PycharmProjects/attn-frontend/apps/attncredit-landing/public/favicon.svg`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/public/favicon.svg`
+    - `/Users/user/PycharmProjects/attn-frontend/apps/attncredit-landing/public/favicon.ico`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/public/favicon.ico`
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: docs `public/favicon.svg` and `public/favicon.ico` now match frontend assets.
