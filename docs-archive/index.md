@@ -1,6 +1,6 @@
 # Welcome to attn
 
-attn builds **attnCredit**: a revenue-underwritten, onchain-enforced revolving credit engine for onchain businesses.
+attn builds **attnCredit**: a revolving credit engine for onchain businesses, repaid automatically from routed revenue.
 
 At a high level:
 

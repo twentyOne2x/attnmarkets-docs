@@ -2,7 +2,7 @@
 
 attn is easiest to understand when seen next to other projects that work on credit, payments, yield, and underwriting.
 
-attn's focus is **attnCredit**: revenue-underwritten, onchain-enforced revolving credit and servicing against **routed onchain revenue accounts**.
+attn's focus is **attnCredit**: revolving credit for onchain businesses, repaid automatically from **routed onchain revenue accounts**.
 
 ## The comparison set
 
@@ -49,4 +49,3 @@ Skim the matrix first. The goal is not perfect taxonomy; it's a quick map for BD
 - [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [For Cards, Commerce, and Settlement Partners](../users/for-cards-and-commerce-partners.md)
 - [For Liquidity Providers](../users/for-liquidity-providers.md)
-

@@ -2,7 +2,7 @@
 
 This page is the canonical technical model for **attnCredit**.
 
-attnCredit is a revenue-underwritten, onchain-enforced revolving credit system where repayment is serviced from routed cashflows.
+attnCredit is a revolving credit system for onchain businesses, with repayment automated from routed cashflows.
 
 Hover highlighted terms for quick glossary definitions.
 

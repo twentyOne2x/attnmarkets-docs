@@ -4,7 +4,7 @@
 
 Reposition the docs from a **PT/YT-led framing** to an **attnCredit-led framing**:
 
-- `attnCredit` = revenue-underwritten, onchain-enforced revolving credit.
+- `attnCredit` = revolving credit for onchain businesses, repaid automatically from routed revenue.
 - Core controls = routed revenue accounts, automated sweeps, dynamic limits, mandatory paydown, freeze/default modes, and lender-grade monitoring tape.
 - PT/YT should no longer be the primary user mental model.
 

@@ -65,7 +65,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     x: 0.92,
     y: 0.93,
     narrative:
-      "Revenue-underwritten, onchain-enforced revolving credit + servicing against routed onchain revenue accounts.",
+      "Revolving credit for onchain businesses, repaid automatically from routed onchain revenue accounts.",
     creditModel:
       "Entity credit enforced via routed revenue + automated servicing/sweeps (onchain).",
     why: [

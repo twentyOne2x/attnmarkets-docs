@@ -1,6 +1,6 @@
 # attnCredit - Revenue-Swept Credit on Solana
 
-attnCredit is a **revenue-underwritten, onchain-enforced revolving credit engine**.
+attnCredit is **revolving credit for onchain businesses, repaid automatically from routed revenue**.
 It turns routed onchain fees into lendable facilities with deterministic controls.
 
 ## Product

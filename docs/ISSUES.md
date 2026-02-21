@@ -92,6 +92,65 @@ EXECUTOR
 VERIFIER
 - Compare proofs to acceptance criteria: PASS.
 
+## 2026-02-21 - Copy tone: replace pompous attnCredit tagline across docs
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested replacing the line "Revenue-underwritten, onchain-enforced revolving credit + servicing against routed onchain revenue accounts." with a less pompous phrasing across docs.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current wording is precise but overly dense/marketing-heavy for scan reading.
+  - The same tone appears in multiple live docs surfaces and component narrative copy.
+- Fix intent:
+  1) Replace the exact sentence with a plain-language equivalent.
+  2) Normalize close variants in live docs intros to the same simpler wording.
+  3) Apply the same normalization in matching archive pages for consistency.
+- Acceptance criteria:
+  - All live docs references use plain language instead of the current phrase.
+  - `attn-in-context` intro and quadrant `attn` narrative use the updated wording.
+  - Build + knowledge check pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update copy in:
+    - `components/quadrantMapData.ts`
+    - `pages/index.md`
+    - `pages/1-pager.md`
+    - `pages/introduction/attn-in-context.mdx`
+    - `pages/mechanics/pt-yt-attnusd.md`
+    - matching files under `docs-archive/`
+  - Keep meaning unchanged; only simplify tone.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated wording to a plain-language standard:
+  - New canonical line: "revolving credit for onchain businesses, repaid automatically from routed revenue."
+- Applied to live docs and component copy:
+  - `components/quadrantMapData.ts`
+  - `pages/index.md`
+  - `pages/1-pager.md`
+  - `pages/introduction/attn-in-context.mdx`
+  - `pages/mechanics/pt-yt-attnusd.md`
+- Synced matching archive/internal docs for consistency:
+  - `docs-archive/index.md`
+  - `docs-archive/introduction/attn-in-context.md`
+  - `docs-archive/mechanics/pt-yt-attnusd.md`
+  - `ATTNCREDIT_DOCS_PIVOT_PLAN.md`
+- Proofs:
+  - `rg -n "Revenue-underwritten, onchain-enforced revolving credit \\+ servicing against routed onchain revenue accounts\\.|revenue-underwritten, onchain-enforced revolving credit" /Users/user/PycharmProjects/attnmarkets-docs` -> only historical mention in `docs/ISSUES.md`.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
 ## 2026-02-20 - Roadmap UX: add command-style action rail CTA
 
 - [x] report captured
