@@ -1,0 +1,101 @@
+import QuadrantScatterMap from "../../components/QuadrantScatterMap";
+
+# attn in context: adjacent protocols and fintech layers
+
+attn is easiest to understand when seen next to other projects working on credit, payments, yield, and underwriting.
+
+attn's focus is **attnCredit**: revenue-underwritten, onchain-enforced revolving credit and servicing against **routed onchain revenue accounts**.
+
+## Credit control landscape
+
+<QuadrantScatterMap asOf="2026-02-21" />
+
+## How to interpret this
+
+- **Hover on any dot** to see rationale and primary links.
+- **Click any dot** to pin details.
+- **Execution plane means where enforcement actually happens, not where the UI is.**
+
+## The comparison set (grouped by narrative)
+
+As of **2026-02-21**, this is a practical BD map, not perfect taxonomy.
+
+### 1) Enforcement-first entity credit (revenue / receivables)
+
+- **attn (attnCredit)**
+- **creditcoop.xyz**
+- **YouLend**
+- **Pipe**
+
+### 2) Provider-of-providers issuing + settlement infrastructure
+
+- **Rain**
+
+### 3) Embedded credit rails (credit-as-a-feature)
+
+- **Yumi.finance**
+
+### 4) Agent-native credit + spend surfaces
+
+- **claw.credit**
+- **Frames (frames.ag/tools)**
+- **Sponge (paysponge.com)**
+
+### 5) Market-based credit + debt issuance
+
+- **Wildcat.finance**
+- **3Jane.xyz**
+- **Xitadel.fi**
+
+### 6) Consumer spend surfaces
+
+- **Krak (Kraken)**
+- **Avici.money**
+- **Pyra.fi**
+- **KAST (kast.xyz)**
+- **OffGrid (offgrid.cash)**
+
+### 7) Business money surfaces (distribution endpoints)
+
+- **Slash**
+- **Altitude (Squads.xyz)**
+
+### 8) Payments rails / payments-L1 narratives
+
+- **Klarna + Tempo**
+- **Colossus.credit**
+
+### 9) Adjacent (not primarily credit)
+
+- **Pye.fi** (tokenized principal/yield claims on staked validator revenue streams)
+
+## 3 quick takeaways
+
+- **attn is a control layer:** underwriting + servicing + enforceability rails around routed revenue.
+- **attn targets entity-level revenue risk, not consumer-credit distribution.**
+- **attn can sit behind cards, commerce, treasury, and agent spend surfaces** as working-capital and settlement-liquidity infrastructure.
+
+## attn relevance by cluster
+
+### Revenue/receivables credit
+
+Credit Coop, YouLend, and Pipe are closest on core mechanic (revenue-aligned repayment), but differ by rails and regulatory wrapper.
+
+### Agent economy surfaces
+
+Frames and Sponge are spend/control surfaces. claw.credit is credit execution. These can consume a back-end credit+servicing layer when routed revenue exists.
+
+### Distribution surfaces
+
+Krak, Avici, Pyra, Slash, and Altitude are where end-users or operators interact. They are generally complements, not direct substitutes, for attn's control-plane position.
+
+### Market and rails narratives
+
+Wildcat/3Jane/Xitadel emphasize market or issuance models; Klarna+Tempo/Colossus emphasize payments rails. attn's differentiator remains enforceable servicing around routed revenue accounts.
+
+## Related pages
+
+- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [For Cards, Commerce, and Settlement Partners](../users/for-cards-and-commerce-partners.md)
+- [For Liquidity Providers](../users/for-liquidity-providers.md)

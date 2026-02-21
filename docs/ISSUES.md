@@ -43,6 +43,55 @@ EXECUTOR
 VERIFIER
 - Acceptance criteria check: PASS.
 
+## 2026-02-21 - Quadrant tooltip UX: allow interacting with hover pane without pinning
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested that the hover tooltip panel itself be interactable so the cursor can move from the dot into the panel.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Hover tooltip was non-interactive unless pinned.
+  - Root cause in chart component:
+    - Tooltip used `pointerEvents: tooltip.pinned ? "auto" : "none"`.
+    - Dot `mouseleave` immediately cleared non-pinned tooltip.
+- Fix intent:
+  1) Keep hover tooltip open briefly while moving from marker to tooltip.
+  2) Make non-pinned tooltip pointer-interactive.
+  3) Preserve existing pin/close behavior (click pin, outside click close, Esc close).
+- Acceptance criteria:
+  - User can move cursor from dot into tooltip without it disappearing.
+  - Links/buttons in hover tooltip are interactable without pinning.
+  - Existing pinned behavior still works.
+  - Build + knowledge check pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx` only.
+  - Add hover-dismiss delay with cancellation when tooltip is hovered.
+  - Keep click-to-pin and outside-click/Esc close logic intact.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Implemented in `components/QuadrantScatterMap.tsx`:
+  - Added hover-dismiss timer (`hideTimerRef`) and tooltip-hover tracking (`tooltipHoverRef`).
+  - Changed `hideHover()` from immediate close to delayed close (160ms) with cancellation if tooltip is hovered.
+  - Enabled tooltip pointer interaction for both pinned and non-pinned states.
+  - Added tooltip `onMouseEnter`/`onMouseLeave` handlers to keep/clear hover state.
+  - Kept pin behavior and outside-click/Esc close behavior unchanged.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
 ## 2026-02-20 - Roadmap UX: add command-style action rail CTA
 
 - [x] report captured
@@ -997,3 +1046,372 @@ EXECUTOR
 VERIFIER
 - Compare proofs to acceptance criteria: PASS
   - PASS: docs `public/favicon.svg` and `public/favicon.ico` now match frontend assets.
+
+## 2026-02-20 - Docs visual system alignment with landing style (background + global theming)
+PLANNER
+- Spec check: solvable. User requested docs visuals to match landing page styling, specifically background style and overall look.
+- Missing info/questions: none.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Docs currently use mostly default Nextra dark theme with limited sidebar/copy-button overrides.
+  - Landing uses a distinct black + white + teal system with specific typography and border treatments.
+- Fix intent:
+  1) Introduce global docs CSS overrides to align with landing tokens:
+     - base background, pattern, colors, borders, typography, link accents, code/table styles.
+  2) Align Nextra chrome (top nav, sidebar, TOC, footer surfaces) to the landing visual language.
+  3) Update docs logo/theme settings for consistent branding treatment.
+- Acceptance criteria:
+  - Docs background and shell feel visually consistent with landing (black base, subtle pattern, white text, teal accent).
+  - Nav/sidebar/content/toc/components use matching color and border system.
+  - Build and knowledge checks pass.
+- Complexity: medium
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `styles/sidebar.css` (global theme overrides)
+    - `theme.config.jsx` (logo/theme tuning)
+    - optionally `pages/_app.jsx` only if additional style imports are needed
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (not requested)
+- Implemented:
+  - Updated docs theme config logo + hue tuning for landing-aligned branding:
+    - `theme.config.jsx`
+  - Added global visual-system overrides to match landing style:
+    - base background to `#080808`
+    - nav/sidebar/footer surfaces + borders
+    - typography + accents + link styling
+    - code/table/blockquote/details treatments
+    - square-edged controls and landing-style button feel
+    - file: `styles/sidebar.css`
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (static build completed for all routes).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: docs background + shell now align with landing dark style (black base, border system, white/teal palette).
+  - PASS: nav/sidebar/content/toc/components use landing-like border/typography/button treatment.
+  - PASS: knowledge check and production build both succeed.
+
+## 2026-02-21 - attn-in-context: scan-first clustering + interactive quadrant maps (Rain/YouLend/Pipe/Frames/Sponge)
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a scan-first rewrite for the `attn-in-context` page with grouped narratives at top and interactive classification maps, including specific additions (Rain, YouLend, Pipe, Frames, Sponge).
+- Missing info/questions: None blocking.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Existing page is mostly project-by-project prose and less scannable for BD narrative mapping.
+  - Map primitives/components are not present in this docs repo yet.
+- Fix intent:
+  1) Add shared project dataset file for quadrant classifications + sources.
+  2) Add ASCII map component with hover/focus tooltips and plane legend.
+  3) Add scatter map component with color + shape fallback for accessibility.
+  4) Convert `attn-in-context` page to MDX and rewrite top into clustered narrative bullets, then embed both maps.
+- Acceptance criteria:
+  - `attn-in-context` starts with grouped narrative clusters that are easy to scan.
+  - Page includes both ASCII map and scatter map with hover/focus context.
+  - Dataset + map include Rain, YouLend, Pipe, Frames, and Sponge.
+  - Build and knowledge checks pass.
+- Complexity: medium
+- Plan: `docs/plans/active/2026-02-21-attn-in-context-quadrant-map.md`
+- Executor prompt (files, constraints, tests):
+  - Update/add:
+    - `components/quadrantMapData.ts`
+    - `components/AsciiQuadrantMap.tsx`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx` (replace `.md`)
+  - Preserve existing unrelated local changes.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+- Implemented:
+  - Added shared project map dataset:
+    - `components/quadrantMapData.ts`
+  - Added interactive ASCII map with hover/focus tooltips and execution-plane legend:
+    - `components/AsciiQuadrantMap.tsx`
+  - Added optional scatter chart with color + shape fallback markers:
+    - `components/QuadrantScatterMap.tsx`
+  - Replaced the page with MDX and rewrote top into scan-first grouped narratives, then embedded both maps:
+    - deleted `pages/introduction/attn-in-context.md`
+    - added `pages/introduction/attn-in-context.mdx`
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; route `/introduction/attn-in-context` generated successfully.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: page now starts with grouped narrative clusters.
+  - PASS: both ASCII and scatter maps are embedded with hover/focus details.
+  - PASS: dataset/map include Rain, YouLend, Pipe, Frames, and Sponge.
+  - PASS: knowledge check and production build succeeded.
+
+## 2026-02-21 - Quadrant scatter UX: dots-only chart + hover list + pinnable details panel
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested replacing the always-labeled scatter with a readable interactive variant: dots-only chart, right-side hover list, shared details panel, and click-to-pin interaction.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current scatter map labels all nodes directly on-chart, causing overlap and poor readability.
+  - Tooltip content exists but long-form rationale/source reading is still cumbersome.
+- Fix intent:
+  1) Replace scatter chart with dots-only interaction model.
+  2) Add right-side grouped project list and synchronized hover behavior.
+  3) Add readable details panel with rationale + sources and pin/clear control.
+  4) Refresh map data source with updated project wording and source links.
+- Acceptance criteria:
+  - Chart renders dots only by default (optional label toggle acceptable).
+  - Hovering dot or list item updates details panel.
+  - Clicking dot/list item pins selection; clear pin control works.
+  - Build and knowledge checks pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+  - Keep existing `attn-in-context` page wiring unchanged.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+- Implemented:
+  - Replaced `components/quadrantMapData.ts` with updated classifications and source notes.
+  - Replaced `components/QuadrantScatterMap.tsx` with interactive dots-only chart:
+    - right-side grouped name list
+    - shared details panel driven by hover/focus from either dots or list items
+    - click-to-pin and clear-pin behavior
+    - optional chart label toggle
+    - color + shape legend fallback
+  - Kept `attn-in-context` MDX wiring unchanged.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; route `/introduction/attn-in-context` generated successfully.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: chart is dots-only by default.
+  - PASS: hover on dot or list item updates details panel.
+  - PASS: click pin and clear-pin workflow works.
+  - PASS: knowledge check and production build succeeded.
+
+## 2026-02-21 - Quadrant scatter update: full-bleed white chart + tooltip-only details + pin on click
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested replacing the current scatter map with a larger full-bleed white-background variant that removes side panel/list, uses tooltip-only details, and supports click-to-pin with Esc to clear.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Previous iteration still used a side list/details panel pattern and did not match the requested full-bleed white tooltip-only interaction model.
+- Fix intent:
+  1) Replace `components/QuadrantScatterMap.tsx` with the requested drop-in implementation.
+  2) Update MDX usage to pass `fullBleed`.
+  3) Keep current `quadrantMapData.ts` compatibility and map rendering stable.
+- Acceptance criteria:
+  - Chart is full-bleed and white-background regardless of docs theme.
+  - Dots are primary marks (no always-on labels unless toggle enabled).
+  - Hover shows tooltip details; click pins tooltip; Esc clears pin.
+  - Build and knowledge checks pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Replaced `components/QuadrantScatterMap.tsx` with full-bleed white chart + tooltip-only interaction + pin/unpin behavior.
+  - Updated `pages/introduction/attn-in-context.mdx` usage to:
+    - `<QuadrantScatterMap asOf="2026-02-21" fullBleed />`
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; route `/introduction/attn-in-context` generated successfully.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: full-bleed white chart rendering implemented.
+  - PASS: tooltip-only details with click pin and Esc clear implemented.
+  - PASS: build and knowledge check succeeded.
+
+## 2026-02-21 - Quadrant polish: full-name labels, lowercase attn, dim styling, remove ASCII/axes, outside-click close
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested content + interaction polish for the quadrant page and chart.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Labels use mixed shorthand names and ATTN uppercase.
+  - Page still includes ASCII section and axis narrative text.
+  - Pinned tooltip only closes via Esc/Close; outside-click close is missing.
+  - Quadrant styling/axis labels are visually heavy or mispositioned.
+- Fix intent:
+  1) Update labels to full names/domains where practical and force `attn` lowercase.
+  2) Dim chart visual intensity.
+  3) Remove ASCII map and axis prose from docs page.
+  4) Remove axis labels from chart.
+  5) Add outside-click behavior to close pinned tooltip.
+  6) Verify YouLend “amount advanced” in primary sources and reflect exact/unknown status.
+- Acceptance criteria:
+  - No ASCII map rendered on `attn-in-context` page.
+  - Axis explanatory text removed from page and axis labels removed from chart.
+  - Tooltip pin closes when clicking outside tooltip.
+  - `attn` label appears in lowercase.
+  - Full-name/domain labels appear on chart for comparison set.
+  - Build + knowledge checks pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/introduction/attn-in-context.mdx`
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Updated project labels in `components/quadrantMapData.ts` to domain-style names and forced `attn` lowercase.
+  - Added explicit YouLend scale note that cumulative credit-advanced total is not explicitly disclosed in the 2026-01-08 update.
+  - Dimmed chart palette and quadrant shading in `components/QuadrantScatterMap.tsx`.
+  - Removed chart axis labels from `components/QuadrantScatterMap.tsx`.
+  - Added outside-click close behavior for pinned tooltips in `components/QuadrantScatterMap.tsx` (Esc still supported).
+  - Removed ASCII map and axis prose from `pages/introduction/attn-in-context.mdx`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; route `/introduction/attn-in-context` generated successfully.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: ASCII map removed from the page.
+  - PASS: axis explanatory copy removed from page and axis labels removed from chart.
+  - PASS: pinned tooltip now closes on outside click.
+  - PASS: `attn` appears lowercase in map labels.
+  - PASS: full-name/domain labels applied across plotted projects.
+  - PASS: build and knowledge check both succeeded.
+
+## 2026-02-21 - Quadrant legend placement: move execution-plane legend to top-right inside chart
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested moving the circle/square/triangle legend to the top-right of the quadrant.
+- Type: docs
+- Status: completed
+- Fix intent:
+  1) Render legend as a floating element inside `.chartWrap` at top-right.
+  2) Remove duplicate legend row below chart.
+  3) Keep scale callouts and interaction hints below chart.
+
+EXECUTOR
+- Implemented in `components/QuadrantScatterMap.tsx`:
+  - Added `.floatingLegend` block inside the chart at top-right.
+  - Removed duplicated bottom legend row.
+  - Ensured tooltip overlays above legend with z-index.
+- Proofs:
+  - `npm run build` -> PASS.
+
+VERIFIER
+- Acceptance criteria check: PASS.
+
+## 2026-02-21 - Quadrant signal: add potential-client tag without consuming color/shape channels
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested showing “potential client” on the quadrant while color and shape are already used for execution-plane encoding.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Existing map already uses color (execution plane) and marker shape (accessibility fallback), leaving no clear third visual channel for commercial fit.
+- Fix intent:
+  1) Add a text-based signal (`[PC]`) to labels for potential-client candidates.
+  2) Add a tooltip chip for potential-client projects.
+  3) Add legend hint describing the `[PC]` signal.
+  4) Mark requested projects as potential clients and keep unknowns untagged.
+- Acceptance criteria:
+  - Potential-client projects show `[PC]` in map labels.
+  - Tooltip explicitly indicates “Potential client” where applicable.
+  - Legend explains the `[PC]` tag.
+  - Build and knowledge checks pass.
+
+EXECUTOR
+- Implemented:
+  - Updated `components/quadrantMapData.ts`:
+    - Added `potentialClient?: boolean` to `ProjectInfo`.
+    - Set `potentialClient: true` for:
+      - `yumi.finance`
+      - `pyra.fi`
+      - `frames.ag/tools`
+      - `paysponge.com`
+      - `squads.xyz/altitude`
+    - Left `kraken.com/krak` and `slash.com` untagged (unknown) per user direction.
+  - Updated `components/QuadrantScatterMap.tsx`:
+    - Added label formatter to render `[PC]` suffix on-chart for tagged projects.
+    - Added “Potential client” chip in tooltip details.
+    - Added legend hint: ``[PC]`` marks potential client candidates.
+- Proofs:
+  - `rg -n "potentialClient|\[PC\]|Potential client" components/quadrantMapData.ts components/QuadrantScatterMap.tsx` (pass)
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` (pass)
+
+VERIFIER
+- Acceptance criteria check: PASS.

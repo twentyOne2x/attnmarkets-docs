@@ -8,7 +8,12 @@ import { useConfig } from 'nextra-theme-docs'
 import CopyPageButton from './components/CopyPageButton.jsx'
 
 const config = {
-  logo: <span>attn.markets docs</span>,
+  logo: (
+    <span className="attn-docs-logo">
+      <span className="attn-docs-logo__brand">attn.markets</span>
+      <span className="attn-docs-logo__suffix">// docs</span>
+    </span>
+  ),
 
   project: {
     link: 'https://github.com/twentyOne2x/attnmarkets-docs'
@@ -46,7 +51,7 @@ const config = {
     storageKey: 'attn-docs-theme'
   },
 
-  primaryHue: 210,
+  primaryHue: 165,
 
   // Sidebar & TOC behavior
   sidebar: {
