@@ -421,7 +421,14 @@ function computeLabelPlacements(args: {
     const sideJitterY = [0, -16, 16, -30, 30, -44, 44];
 
     const candidatesRaw: Array<{ x: number; y: number }> = [];
-    const radialOffsets = [baseGap, baseGap + 24, baseGap + 52, baseGap + 80];
+    const radialOffsets = [
+      baseGap,
+      baseGap + 24,
+      baseGap + 52,
+      baseGap + 80,
+      baseGap + 112,
+      baseGap + 140,
+    ];
     const angleOffsetsDeg = [0, -22, 22, -44, 44, -66, 66, -95, 95, 180];
     for (const r of radialOffsets) {
       for (const deg of angleOffsetsDeg) {
@@ -580,7 +587,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     fill: "#ffe6cf",
     dash: "12 6",
     connectivity: 0.42,
-    labelDistanceMultiplier: 1.95,
+    labelDistanceMultiplier: 1.45,
     projectIds: ["krak", "avici", "pyra", "kast", "offgrid"],
   },
   {
@@ -998,26 +1005,8 @@ export default function QuadrantScatterMap(props: {
       y2: yMidLocal - 20 + 14,
     });
 
-    const topAxisText = "Back-end infrastructure";
-    const topAxisW = estimateTextWidth(topAxisText, 36);
-    takenRects.push({
-      x1: xMidLocal + 16 - 10,
-      y1: yToSvg(1) + 44 - 28,
-      x2: xMidLocal + 16 + topAxisW + 10,
-      y2: yToSvg(1) + 44 + 12,
-    });
-
-    const bottomAxisText = "User-facing distribution";
-    const bottomAxisW = estimateTextWidth(bottomAxisText, 36);
-    takenRects.push({
-      x1: xMidLocal + 16 - 10,
-      y1: yToSvg(0) - 16 - 28,
-      x2: xMidLocal + 16 + bottomAxisW + 10,
-      y2: yToSvg(0) - 16 + 12,
-    });
-
-    const labelHeight = 52;
-    const labelPadX = 22;
+    const labelHeight = 46;
+    const labelPadX = 16;
 
     for (const zone of zones) {
       if (!zone.label || !zone.bounds) continue;
@@ -1223,6 +1212,7 @@ export default function QuadrantScatterMap(props: {
         </div>
 
         <div className="chartWrap" ref={chartWrapRef}>
+          <div className="axisTitleOutside axisTitleTop">Back-end infrastructure</div>
           <svg
             ref={svgRef}
             viewBox={`0 0 ${width} ${height}`}
@@ -1308,17 +1298,17 @@ export default function QuadrantScatterMap(props: {
                         {zone.labelAnchorX && zone.labelAnchorY ? (
                           <line
                             x1={
-                              zone.labelAnchorX > zone.labelX + estimateTextWidth(zone.label, 30) / 2
-                                ? zone.labelX + estimateTextWidth(zone.label, 30) / 2 + 6
-                                : zone.labelAnchorX < zone.labelX - estimateTextWidth(zone.label, 30) / 2
-                                  ? zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 6
+                              zone.labelAnchorX > zone.labelX + estimateTextWidth(zone.label, 30) / 2 + 16
+                                ? zone.labelX + estimateTextWidth(zone.label, 30) / 2 + 16
+                                : zone.labelAnchorX < zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 16
+                                  ? zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 16
                                   : zone.labelX
                             }
                             y1={
                               zone.labelAnchorY > zone.labelY + 2
-                                ? zone.labelY + 31
+                                ? zone.labelY + 28
                                 : zone.labelAnchorY < zone.labelY - 2
-                                  ? zone.labelY - 31
+                                  ? zone.labelY - 28
                                   : zone.labelY
                             }
                             x2={zone.labelAnchorX}
@@ -1331,11 +1321,11 @@ export default function QuadrantScatterMap(props: {
                           />
                         ) : null}
                         <rect
-                          x={zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 22}
-                          y={zone.labelY - 26}
-                          width={estimateTextWidth(zone.label, 30) + 44}
-                          height={52}
-                          rx={26}
+                          x={zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 16}
+                          y={zone.labelY - 23}
+                          width={estimateTextWidth(zone.label, 30) + 32}
+                          height={46}
+                          rx={23}
                           fill="#ffffff"
                           opacity={1}
                           stroke={zone.stroke}
@@ -1439,29 +1429,6 @@ export default function QuadrantScatterMap(props: {
             >
               Programmatic controls →
             </text>
-            <text
-              x={xMid + 16}
-              y={yToSvg(1) + 44}
-              fontSize={36}
-              fontWeight={800}
-              textAnchor="start"
-              fill="#1f3253"
-              opacity={0.92}
-            >
-              Back-end infrastructure
-            </text>
-            <text
-              x={xMid + 16}
-              y={yToSvg(0) - 16}
-              fontSize={36}
-              fontWeight={800}
-              textAnchor="start"
-              fill="#1f3253"
-              opacity={0.92}
-            >
-              User-facing distribution
-            </text>
-
             {/* Points + labels */}
             {projects.map((p) => {
               const cx = xToSvg(p.x);
@@ -1597,6 +1564,7 @@ export default function QuadrantScatterMap(props: {
             })}
 
           </svg>
+          <div className="axisTitleOutside axisTitleBottom">User-facing distribution</div>
 
           {clusterHoverRender ? (
             <>
@@ -1831,6 +1799,30 @@ export default function QuadrantScatterMap(props: {
 
         .chartWrap {
           position: relative;
+          padding-top: 34px;
+          padding-bottom: 40px;
+        }
+
+        .axisTitleOutside {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 6;
+          font-size: 38px;
+          font-weight: 850;
+          color: rgba(31, 50, 83, 0.96);
+          letter-spacing: 0.005em;
+          white-space: nowrap;
+          pointer-events: none;
+          text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+        }
+
+        .axisTitleTop {
+          top: 2px;
+        }
+
+        .axisTitleBottom {
+          bottom: 4px;
         }
 
         .legendInline {
