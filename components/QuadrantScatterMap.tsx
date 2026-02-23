@@ -176,15 +176,23 @@ function projectLabelMetrics(text: string, baseFont: number) {
 }
 
 function clusterLabelMetrics(text: string, baseFont: number) {
-  return adaptiveLabelMetrics({
-    text,
-    baseFont,
-    minFont: 20,
-    maxPillWidth: 360,
-    basePadX: 10,
-    minPadX: 4,
-    padY: 4,
-  });
+  const len = Math.max(1, text.length);
+  const shrink = clamp((len - 18) / 18, 0, 1);
+  const fontSize = clamp(baseFont - shrink * 8, 20, baseFont);
+  const padX = clamp(8 - shrink * 5, 3, 8);
+  const padY = 4;
+  const textWidth = estimateTextWidth(text, fontSize);
+  const pillW = textWidth + padX * 2;
+  const pillH = fontSize * 1.25 + padY * 2;
+
+  return {
+    fontSize,
+    padX,
+    padY,
+    textWidth,
+    pillW,
+    pillH,
+  };
 }
 
 function boundsForPoints(points: Point[]) {
@@ -1192,7 +1200,6 @@ export default function QuadrantScatterMap(props: {
         zone.labelFontSize = labelMetrics.fontSize;
         zone.labelPillWidth = labelMetrics.pillW;
         zone.labelPillHeight = labelMetrics.pillH;
-        zone.labelTextLength = labelMetrics.textLength;
         let anchorX = best.ax;
         let anchorY = best.ay;
         if (zone.boundaryPoints?.length) {
@@ -1392,9 +1399,6 @@ export default function QuadrantScatterMap(props: {
                           const zoneHalfH = zonePillH / 2;
                           const zoneFontSize =
                             zone.labelFontSize ?? clusterLabelMetrics(zone.label ?? "", 30).fontSize;
-                          const zoneTextLength =
-                            zone.labelTextLength ??
-                            clusterLabelMetrics(zone.label ?? "", 30).textLength;
 
                           return (
                             <>
@@ -1443,8 +1447,6 @@ export default function QuadrantScatterMap(props: {
                           fontSize={zoneFontSize}
                           fontWeight={900}
                           fill="#1a2f52"
-                          textLength={zoneTextLength}
-                          lengthAdjust={zoneTextLength ? "spacingAndGlyphs" : undefined}
                         >
                           {zone.label}
                         </text>
