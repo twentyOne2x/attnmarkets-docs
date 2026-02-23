@@ -232,7 +232,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
 
   paypal_working_capital: {
     id: "paypal_working_capital",
-    label: "paypal.com/working-capital",
+    label: "PayPal Working Capital",
     stack: "Back-end infrastructure",
     controlPrimitive: "Programmatic controls",
     plane: "web2",
@@ -271,7 +271,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
 
   shopify_capital: {
     id: "shopify_capital",
-    label: "shopify.com/capital",
+    label: "Shopify Capital",
     stack: "Back-end infrastructure",
     controlPrimitive: "Programmatic controls",
     plane: "web2",
@@ -640,7 +640,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
 
   altitude: {
     id: "altitude",
-    label: "squads.xyz/altitude",
+    label: "Squads Altitude",
     stack: "User-facing distribution",
     controlPrimitive: "Mixed / not primary",
     plane: "hybrid",
@@ -662,7 +662,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
 
   kast: {
     id: "kast",
-    label: "kast.xyz",
+    label: "KAST",
     stack: "User-facing distribution",
     controlPrimitive: "Mixed / not primary",
     plane: "hybrid",

@@ -89,6 +89,9 @@ type ClusterHoverState = {
   label: string;
   x: number;
   y: number;
+  stroke: string;
+  targetX?: number;
+  targetY?: number;
 };
 
 type Rect = { x1: number; y1: number; x2: number; y2: number };
@@ -315,7 +318,6 @@ function computeLabelPlacements(args: {
   const labelH = fontSize * 1.25;
   const padX = 6;
   const padY = 4;
-  const gap = 10;
 
   const placed: Record<string, { x: number; y: number; rect: Rect }> = {};
   const taken: Rect[] = [];
@@ -342,27 +344,33 @@ function computeLabelPlacements(args: {
       };
     };
 
-    const yAbove = cy - markerSize / 2 - gap - labelH / 2;
-    const yBelow = cy + markerSize / 2 + gap + labelH / 2;
+    const baseGap = markerSize / 2 + 8 + labelH / 2;
+    const preferBelowFirst = p.y > 0.55;
+    const verticalOffsets = preferBelowFirst
+      ? [baseGap, -baseGap, baseGap + 18, -baseGap - 18]
+      : [-baseGap, baseGap, -baseGap - 18, baseGap + 18];
+    const horizontalJitter = [0, -18, 18, -36, 36, -54, 54];
+    const sideGap = halfW + markerSize / 2 + 14;
+    const sideJitterY = [0, -16, 16, -30, 30];
 
-    // Prefer top/bottom. Add small x jitters only if needed.
-    const preferBelowFirst = p.y > 0.55; // top-half labels below reduces top-edge clipping
-    const yFirst = preferBelowFirst ? yBelow : yAbove;
-    const ySecond = preferBelowFirst ? yAbove : yBelow;
-
-    const candidatesRaw: Array<{ x: number; y: number }> = [
-      { x: cx, y: yFirst },
-      { x: cx, y: ySecond },
-      { x: cx - 18, y: yFirst },
-      { x: cx + 18, y: yFirst },
-      { x: cx - 18, y: ySecond },
-      { x: cx + 18, y: ySecond },
-    ];
+    const candidatesRaw: Array<{ x: number; y: number }> = [];
+    for (const v of verticalOffsets) {
+      for (const j of horizontalJitter) {
+        candidatesRaw.push({ x: cx + j, y: cy + v });
+      }
+    }
+    for (const jy of sideJitterY) {
+      candidatesRaw.push({ x: cx - sideGap, y: cy + jy });
+      candidatesRaw.push({ x: cx + sideGap, y: cy + jy });
+    }
 
     let chosen: { x: number; y: number; rect: Rect } | null = null;
+    let bestScore = Number.POSITIVE_INFINITY;
 
     for (const c of candidatesRaw) {
-      const { x, y } = inBounds(c.x, c.y);
+      const bounded = inBounds(c.x, c.y);
+      const x = bounded.x;
+      const y = bounded.y;
 
       const rect: Rect = {
         x1: x - halfW - padX,
@@ -371,14 +379,17 @@ function computeLabelPlacements(args: {
         y2: y + labelH / 2 + padY,
       };
 
-      const overlaps = taken.some((t) => rectsOverlap(rect, t));
-      if (!overlaps) {
-        chosen = { x, y, rect };
-        break;
+      let overlapCount = 0;
+      for (const t of taken) {
+        if (rectsOverlap(rect, t)) overlapCount += 1;
       }
 
-      if (!chosen) {
-        // keep best-effort fallback as the first candidate (still clamped)
+      const dist = Math.hypot(x - cx, y - cy);
+      const clampPenalty = Math.abs(c.x - x) + Math.abs(c.y - y);
+      const score = overlapCount * 100000 + dist * 1.15 + clampPenalty * 2.2;
+
+      if (score < bestScore) {
+        bestScore = score;
         chosen = { x, y, rect };
       }
     }
@@ -400,6 +411,7 @@ type ClusterDef = {
   dash: string;
   projectIds: string[];
   connectivity?: number;
+  labelPlacement?: "top" | "bottom-right" | "auto";
 };
 
 type ClusterZone = {
@@ -411,16 +423,22 @@ type ClusterZone = {
   label?: string;
   labelX?: number;
   labelY?: number;
+  labelAnchorX?: number;
+  labelAnchorY?: number;
+  bounds?: { minX: number; maxX: number; minY: number; maxY: number };
+  labelPlacement?: "top" | "bottom-right" | "auto";
+  boundaryPoints?: Point[];
 };
 
 const CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "entity_credit",
-    label: "Revenue Credit",
+    label: "Revenue & Receivables Credit",
     stroke: "#2f6fdf",
     fill: "#d6e5ff",
     dash: "0",
     connectivity: 0.45,
+    labelPlacement: "bottom-right",
     projectIds: [
       "attn",
       "creditcoop",
@@ -433,7 +451,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "provider_of_providers",
-    label: "Issuer Infra",
+    label: "Provider-of-Providers Infra",
     stroke: "#4668b8",
     fill: "#dde4ff",
     dash: "6 6",
@@ -441,7 +459,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "embedded_credit_rails",
-    label: "Embedded Credit",
+    label: "Embedded Credit Rails",
     stroke: "#6d57c4",
     fill: "#e5dcff",
     dash: "8 5",
@@ -449,7 +467,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "agent_credit_spend",
-    label: "Agent Finance",
+    label: "Agent Credit + Spend",
     stroke: "#c55d93",
     fill: "#ffe0ef",
     dash: "10 6",
@@ -458,7 +476,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "market_credit_debt",
-    label: "Credit Markets",
+    label: "Credit Markets + Debt Issuance",
     stroke: "#5f66a8",
     fill: "#dde2ff",
     dash: "4 5",
@@ -467,7 +485,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "consumer_spend",
-    label: "Consumer Spend",
+    label: "Consumer Spend Apps",
     stroke: "#cd7d2f",
     fill: "#ffe6cf",
     dash: "12 6",
@@ -476,7 +494,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "business_money",
-    label: "Business Money",
+    label: "Business Treasury Stack",
     stroke: "#2f9471",
     fill: "#d6f4e7",
     dash: "2 4",
@@ -485,7 +503,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "payments_rails",
-    label: "Payments Rails",
+    label: "Payments Rails / L1 Narratives",
     stroke: "#a150ac",
     fill: "#f1ddf4",
     dash: "14 7",
@@ -511,6 +529,7 @@ export default function QuadrantScatterMap(props: {
   const projects = useMemo(() => Object.values(PROJECTS), []);
   const totalProjects = projects.length;
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const chartWrapRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const lastTooltipIdRef = useRef<string | null>(null);
@@ -585,24 +604,24 @@ export default function QuadrantScatterMap(props: {
   const yMid = yToSvg(0.5);
 
   const getLocalFromSvgPoint = (svgX: number, svgY: number) => {
-    const card = containerRef.current;
+    const wrap = chartWrapRef.current;
     const svg = svgRef.current;
-    if (!card || !svg) return { x: svgX, y: svgY };
+    if (!wrap || !svg) return { x: svgX, y: svgY };
 
-    const cardRect = card.getBoundingClientRect();
+    const wrapRect = wrap.getBoundingClientRect();
     const svgRect = svg.getBoundingClientRect();
-    const x = svgRect.left - cardRect.left + (svgX / width) * svgRect.width;
-    const y = svgRect.top - cardRect.top + (svgY / height) * svgRect.height;
+    const x = svgRect.left - wrapRect.left + (svgX / width) * svgRect.width;
+    const y = svgRect.top - wrapRect.top + (svgY / height) * svgRect.height;
     return { x, y };
   };
 
   const getLocalFromClientPoint = (clientX: number, clientY: number) => {
-    const card = containerRef.current;
-    if (!card) return { x: clientX, y: clientY };
-    const cardRect = card.getBoundingClientRect();
+    const wrap = chartWrapRef.current;
+    if (!wrap) return { x: clientX, y: clientY };
+    const wrapRect = wrap.getBoundingClientRect();
     return {
-      x: clientX - cardRect.left,
-      y: clientY - cardRect.top,
+      x: clientX - wrapRect.left,
+      y: clientY - wrapRect.top,
     };
   };
 
@@ -637,10 +656,28 @@ export default function QuadrantScatterMap(props: {
     });
   };
 
-  const showClusterHover = (label: string, clientX: number, clientY: number) => {
+  const showClusterHover = (
+    label: string,
+    stroke: string,
+    clientX: number,
+    clientY: number,
+    targetSvgX?: number,
+    targetSvgY?: number,
+  ) => {
     if (tooltip?.pinned) return;
     const { x, y } = getLocalFromClientPoint(clientX, clientY);
-    setClusterHover({ label, x, y });
+    const target =
+      targetSvgX !== undefined && targetSvgY !== undefined
+        ? getLocalFromSvgPoint(targetSvgX, targetSvgY)
+        : null;
+    setClusterHover({
+      label,
+      x,
+      y,
+      stroke,
+      targetX: target?.x,
+      targetY: target?.y,
+    });
   };
 
   const moveClusterHover = (clientX: number, clientY: number) => {
@@ -664,7 +701,7 @@ export default function QuadrantScatterMap(props: {
   const tooltipStyle: React.CSSProperties = useMemo(() => {
     if (!tooltip) return { display: "none" };
 
-    const el = containerRef.current;
+    const el = chartWrapRef.current;
     const w = el?.clientWidth ?? 900;
     const h = el?.clientHeight ?? 600;
 
@@ -692,25 +729,52 @@ export default function QuadrantScatterMap(props: {
     };
   }, [tooltip]);
 
-  const clusterHoverStyle: React.CSSProperties = useMemo(() => {
-    if (!clusterHover || tooltip) return { display: "none" };
+  const clusterHoverRender = useMemo(() => {
+    if (!clusterHover || tooltip) return null;
 
-    const el = containerRef.current;
+    const el = chartWrapRef.current;
     const w = el?.clientWidth ?? 900;
     const h = el?.clientHeight ?? 600;
 
-    const boxW = clamp(estimateTextWidth(clusterHover.label, 15) + 24, 130, 320);
-    const boxH = 34;
-    const gap = 12;
+    const boxW = clamp(estimateTextWidth(clusterHover.label, 16) + 28, 140, 360);
+    const boxH = 36;
+    const gap = 44;
     const edge = 10;
 
-    const x = clamp(clusterHover.x + gap, edge, w - boxW - edge);
-    const y = clamp(clusterHover.y + gap, edge, h - boxH - edge);
+    let x = clusterHover.x + gap;
+    let y = clusterHover.y + gap;
+
+    if (x + boxW > w - edge) x = clusterHover.x - boxW - gap;
+    if (y + boxH > h - edge) y = clusterHover.y - boxH - gap;
+
+    x = clamp(x, edge, w - boxW - edge);
+    y = clamp(y, edge, h - boxH - edge);
+
+    // Prefer pointing to cluster anchor when available, fallback to nearest bubble edge.
+    const x2 =
+      clusterHover.targetX !== undefined
+        ? clamp(clusterHover.targetX, 6, w - 6)
+        : clamp(clusterHover.x, x, x + boxW);
+    const y2 =
+      clusterHover.targetY !== undefined
+        ? clamp(clusterHover.targetY, 6, h - 6)
+        : clamp(clusterHover.y, y, y + boxH);
 
     return {
-      left: x,
-      top: y,
-      width: boxW,
+      width: w,
+      height: h,
+      bubbleStyle: {
+        left: x,
+        top: y,
+        width: boxW,
+      } satisfies React.CSSProperties,
+      guide: {
+        x1: clusterHover.x,
+        y1: clusterHover.y,
+        x2,
+        y2,
+      },
+      stroke: clusterHover.stroke,
     };
   }, [clusterHover, tooltip]);
 
@@ -792,6 +856,7 @@ export default function QuadrantScatterMap(props: {
         if (boundary.length < 3) continue;
         const path = smoothClosedPath(boundary);
         if (!path) continue;
+        const boundaryBounds = boundsForPoints(boundary);
 
         zones.push({
           id: `${def.id}-${groupIdx}`,
@@ -800,20 +865,208 @@ export default function QuadrantScatterMap(props: {
           dash: def.dash,
           path,
           label: groupIdx === 0 ? def.label : undefined,
-          labelX:
-            groupIdx === 0
-              ? clamp((spread.minX + spread.maxX) / 2, plotLeft + 36, plotRight - 36)
-              : undefined,
-          labelY:
-            groupIdx === 0
-              ? clamp(spread.minY - 18, plotTop + 14, plotBottom - 14)
-              : undefined,
+          bounds: groupIdx === 0 ? boundaryBounds : undefined,
+          labelPlacement: groupIdx === 0 ? def.labelPlacement ?? "top" : undefined,
+          boundaryPoints: groupIdx === 0 ? boundary : undefined,
+        });
+      }
+    }
+
+    const normalizeAngle = (a: number) => {
+      let v = a;
+      while (v <= -Math.PI) v += Math.PI * 2;
+      while (v > Math.PI) v -= Math.PI * 2;
+      return v;
+    };
+    const angleDistance = (a: number, b: number) => Math.abs(normalizeAngle(a - b));
+
+    // Place cluster titles with collision avoidance (against project labels + other clusters).
+    const takenRects: Rect[] = Object.values(labelPlacements).map((lp) => ({
+      x1: lp.rect.x1 - 6,
+      y1: lp.rect.y1 - 6,
+      x2: lp.rect.x2 + 6,
+      y2: lp.rect.y2 + 6,
+    }));
+
+    const plotCenterX = (plotLeft + plotRight) / 2;
+    const plotCenterY = (plotTop + plotBottom) / 2;
+    const xMidLocal = xToSvg(0.5);
+    const yMidLocal = yToSvg(0.5);
+
+    // Keep cluster labels away from large axis titles.
+    const leftAxisText = "← Reputation / legal";
+    const leftAxisW = estimateTextWidth(leftAxisText, 36);
+    takenRects.push({
+      x1: xToSvg(0) + 28 - 10,
+      y1: yMidLocal - 20 - 28,
+      x2: xToSvg(0) + 28 + leftAxisW + 10,
+      y2: yMidLocal - 20 + 14,
+    });
+
+    const rightAxisText = "Programmatic controls →";
+    const rightAxisW = estimateTextWidth(rightAxisText, 36);
+    takenRects.push({
+      x1: xToSvg(1) - 28 - rightAxisW - 10,
+      y1: yMidLocal - 20 - 28,
+      x2: xToSvg(1) - 28 + 10,
+      y2: yMidLocal - 20 + 14,
+    });
+
+    const topAxisText = "Back-end infrastructure";
+    const topAxisW = estimateTextWidth(topAxisText, 36);
+    takenRects.push({
+      x1: xMidLocal + 16 - 10,
+      y1: yToSvg(1) + 44 - 28,
+      x2: xMidLocal + 16 + topAxisW + 10,
+      y2: yToSvg(1) + 44 + 12,
+    });
+
+    const bottomAxisText = "User-facing distribution";
+    const bottomAxisW = estimateTextWidth(bottomAxisText, 36);
+    takenRects.push({
+      x1: xMidLocal + 16 - 10,
+      y1: yToSvg(0) - 16 - 28,
+      x2: xMidLocal + 16 + bottomAxisW + 10,
+      y2: yToSvg(0) - 16 + 12,
+    });
+
+    const labelHeight = 52;
+    const labelPadX = 22;
+
+    for (const zone of zones) {
+      if (!zone.label || !zone.bounds) continue;
+      const labelW = estimateTextWidth(zone.label, 30) + labelPadX * 2;
+      const halfW = labelW / 2;
+      const halfH = labelHeight / 2;
+      const b = zone.bounds;
+      const centerX = (b.minX + b.maxX) / 2;
+      const centerY = (b.minY + b.maxY) / 2;
+      const autoAngle = Math.atan2(centerY - plotCenterY, centerX - plotCenterX);
+      const preferredAngle =
+        zone.labelPlacement === "bottom-right"
+          ? (58 * Math.PI) / 180
+          : zone.labelPlacement === "top"
+            ? -Math.PI / 2
+            : autoAngle;
+
+      const inBounds = (x: number, y: number) => ({
+        x: clamp(x, plotLeft + halfW + 6, plotRight - halfW - 6),
+        y: clamp(y, plotTop + halfH + 6, plotBottom - halfH - 6),
+      });
+
+      const angleOffsetsDeg =
+        zone.labelPlacement === "bottom-right"
+          ? [0, -22, 22, -44, 44, -70, 70, 180]
+          : [0, -25, 25, -50, 50, -75, 75, 180];
+      const radialOffsets = [34, 52, 70];
+      const candidates: Array<{ x: number; y: number; ax: number; ay: number; angle: number }> = [];
+
+      for (const deg of angleOffsetsDeg) {
+        const ang = preferredAngle + (deg * Math.PI) / 180;
+        const dx = Math.cos(ang);
+        const dy = Math.sin(ang);
+
+        const tx = dx > 0 ? (b.maxX - centerX) / dx : dx < 0 ? (b.minX - centerX) / dx : Infinity;
+        const ty = dy > 0 ? (b.maxY - centerY) / dy : dy < 0 ? (b.minY - centerY) / dy : Infinity;
+        const tRect = Math.min(tx > 0 ? tx : Infinity, ty > 0 ? ty : Infinity);
+        const t = Number.isFinite(tRect) ? tRect : 0;
+        const anchorX = centerX + dx * t;
+        const anchorY = centerY + dy * t;
+
+        for (const ro of radialOffsets) {
+          candidates.push({
+            x: anchorX + dx * (ro + Math.max(halfW, halfH) * 0.18),
+            y: anchorY + dy * (ro + Math.max(halfW, halfH) * 0.18),
+            ax: anchorX,
+            ay: anchorY,
+            angle: ang,
+          });
+        }
+      }
+
+      let best: { x: number; y: number; ax: number; ay: number; rect: Rect } | null = null;
+      let bestScore = Number.POSITIVE_INFINITY;
+
+      for (let i = 0; i < candidates.length; i += 1) {
+        const c = candidates[i];
+        const bounded = inBounds(c.x, c.y);
+        const x = bounded.x;
+        const y = bounded.y;
+        const rect: Rect = {
+          x1: x - halfW,
+          y1: y - halfH,
+          x2: x + halfW,
+          y2: y + halfH,
+        };
+
+        let overlapCount = 0;
+        let overlapArea = 0;
+        for (const t of takenRects) {
+          if (!rectsOverlap(rect, t)) continue;
+          overlapCount += 1;
+          const ix = Math.max(0, Math.min(rect.x2, t.x2) - Math.max(rect.x1, t.x1));
+          const iy = Math.max(0, Math.min(rect.y2, t.y2) - Math.max(rect.y1, t.y1));
+          overlapArea += ix * iy;
+        }
+
+        const clampPenalty = Math.abs(c.x - x) + Math.abs(c.y - y);
+        const anchorDist = Math.hypot(c.ax - x, c.ay - y);
+        const anglePenalty = angleDistance(c.angle, preferredAngle) * 140;
+        const preferencePenalty = i * 8;
+        const midBandDownwardPenalty =
+          zone.labelPlacement === "auto" &&
+          centerY > yMidLocal - 40 &&
+          centerY < yMidLocal + 160 &&
+          y > centerY + 16
+            ? (y - (centerY + 16)) * 3.5
+            : 0;
+        const score =
+          overlapCount * 100000 +
+          overlapArea * 50 +
+          anchorDist * 0.42 +
+          clampPenalty * 2.8 +
+          anglePenalty +
+          midBandDownwardPenalty +
+          preferencePenalty;
+
+        if (score < bestScore) {
+          bestScore = score;
+          best = { x, y, ax: c.ax, ay: c.ay, rect };
+        }
+      }
+
+      if (best) {
+        zone.labelX = best.x;
+        zone.labelY = best.y;
+        let anchorX = best.ax;
+        let anchorY = best.ay;
+        if (zone.boundaryPoints?.length) {
+          let nearest = zone.boundaryPoints[0];
+          let nearestD2 = (nearest.x - best.x) ** 2 + (nearest.y - best.y) ** 2;
+          for (let i = 1; i < zone.boundaryPoints.length; i += 1) {
+            const bp = zone.boundaryPoints[i];
+            const d2 = (bp.x - best.x) ** 2 + (bp.y - best.y) ** 2;
+            if (d2 < nearestD2) {
+              nearest = bp;
+              nearestD2 = d2;
+            }
+          }
+          anchorX = nearest.x;
+          anchorY = nearest.y;
+        }
+        zone.labelAnchorX = clamp(anchorX, plotLeft + 8, plotRight - 8);
+        zone.labelAnchorY = clamp(anchorY, plotTop + 8, plotBottom - 8);
+        takenRects.push({
+          x1: best.rect.x1 - 4,
+          y1: best.rect.y1 - 4,
+          x2: best.rect.x2 + 4,
+          y2: best.rect.y2 + 4,
         });
       }
     }
 
     return zones;
-  }, [pad, plotW, plotH, projects, xToSvg, yToSvg]);
+  }, [pad, plotW, plotH, projects, xToSvg, yToSvg, labelPlacements]);
 
   const visibleClusterIds = useMemo(() => {
     return new Set(clusterZones.map((z) => z.id.replace(/-\d+$/, "")));
@@ -882,7 +1135,7 @@ export default function QuadrantScatterMap(props: {
           </div>
         </div>
 
-        <div className="chartWrap">
+        <div className="chartWrap" ref={chartWrapRef}>
           <svg
             ref={svgRef}
             viewBox={`0 0 ${width} ${height}`}
@@ -925,43 +1178,95 @@ export default function QuadrantScatterMap(props: {
                       strokeDasharray={zone.dash}
                       strokeLinejoin="round"
                       strokeLinecap="round"
-                      onMouseEnter={(e) => showClusterHover(hoverLabel, e.clientX, e.clientY)}
+                      onMouseEnter={(e) =>
+                        showClusterHover(
+                          hoverLabel,
+                          zone.stroke,
+                          e.clientX,
+                          e.clientY,
+                          zone.labelX,
+                          zone.labelY,
+                        )}
                       onMouseMove={(e) => moveClusterHover(e.clientX, e.clientY)}
                       onMouseLeave={hideClusterHover}
                       onFocus={(e) => {
                         const r = (e.currentTarget as SVGPathElement).getBoundingClientRect();
-                        showClusterHover(hoverLabel, r.left + r.width / 2, r.top + r.height / 2);
+                        showClusterHover(
+                          hoverLabel,
+                          zone.stroke,
+                          r.left + r.width / 2,
+                          r.top + r.height / 2,
+                          zone.labelX,
+                          zone.labelY,
+                        );
                       }}
                       onBlur={hideClusterHover}
                       tabIndex={0}
                       aria-label={hoverLabel}
                     />
                     {zone.label && zone.labelX && zone.labelY ? (
-                      <>
+                      <g
+                        onMouseEnter={(e) =>
+                          showClusterHover(
+                            hoverLabel,
+                            zone.stroke,
+                            e.clientX,
+                            e.clientY,
+                            zone.labelX,
+                            zone.labelY,
+                          )}
+                        onMouseMove={(e) => moveClusterHover(e.clientX, e.clientY)}
+                        onMouseLeave={hideClusterHover}
+                      >
+                        {zone.labelAnchorX && zone.labelAnchorY ? (
+                          <line
+                            x1={
+                              zone.labelAnchorX > zone.labelX + estimateTextWidth(zone.label, 30) / 2
+                                ? zone.labelX + estimateTextWidth(zone.label, 30) / 2 + 6
+                                : zone.labelAnchorX < zone.labelX - estimateTextWidth(zone.label, 30) / 2
+                                  ? zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 6
+                                  : zone.labelX
+                            }
+                            y1={
+                              zone.labelAnchorY > zone.labelY + 2
+                                ? zone.labelY + 31
+                                : zone.labelAnchorY < zone.labelY - 2
+                                  ? zone.labelY - 31
+                                  : zone.labelY
+                            }
+                            x2={zone.labelAnchorX}
+                            y2={zone.labelAnchorY}
+                            stroke={zone.stroke}
+                            strokeOpacity={1}
+                            strokeWidth={3.1}
+                            strokeDasharray="2 6"
+                            strokeLinecap="round"
+                          />
+                        ) : null}
                         <rect
-                          x={zone.labelX - estimateTextWidth(zone.label, 20) / 2 - 12}
-                          y={zone.labelY - 16}
-                          width={estimateTextWidth(zone.label, 20) + 24}
-                          height={32}
-                          rx={16}
+                          x={zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 22}
+                          y={zone.labelY - 26}
+                          width={estimateTextWidth(zone.label, 30) + 44}
+                          height={52}
+                          rx={26}
                           fill="#ffffff"
-                          opacity={0.99}
+                          opacity={1}
                           stroke={zone.stroke}
-                          strokeOpacity={0.95}
-                          strokeWidth={2.2}
+                          strokeOpacity={0.98}
+                          strokeWidth={2.8}
                         />
                         <text
                           x={zone.labelX}
                           y={zone.labelY + 1}
                           textAnchor="middle"
                           dominantBaseline="middle"
-                          fontSize={20}
+                          fontSize={30}
                           fontWeight={900}
                           fill="#1a2f52"
                         >
                           {zone.label}
                         </text>
-                      </>
+                      </g>
                     ) : null}
                   </g>
                 );
@@ -1163,9 +1468,9 @@ export default function QuadrantScatterMap(props: {
                     fontSize={fontSize}
                     fill="#102d55"
                     opacity={1}
-                    style={{ fontWeight: 780 }}
+                    style={{ fontWeight: 740, letterSpacing: "0.005em" }}
                     stroke="#ffffff"
-                    strokeWidth={3.4}
+                    strokeWidth={2.6}
                     paintOrder="stroke fill"
                   >
                     {labelText}
@@ -1176,9 +1481,43 @@ export default function QuadrantScatterMap(props: {
 
           </svg>
 
-          <div className="clusterHover" style={clusterHoverStyle}>
-            {clusterHover?.label}
-          </div>
+          {clusterHoverRender ? (
+            <>
+              <svg
+                className="clusterHoverGuide"
+                viewBox={`0 0 ${clusterHoverRender.width} ${clusterHoverRender.height}`}
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <defs>
+                  <marker
+                    id="cluster-hover-arrow"
+                    markerWidth="8"
+                    markerHeight="8"
+                    refX="7"
+                    refY="4"
+                    orient="auto"
+                  >
+                    <path d="M 0 0 L 8 4 L 0 8 z" fill={clusterHoverRender.stroke} />
+                  </marker>
+                </defs>
+                <line
+                  x1={clusterHoverRender.guide.x1}
+                  y1={clusterHoverRender.guide.y1}
+                  x2={clusterHoverRender.guide.x2}
+                  y2={clusterHoverRender.guide.y2}
+                  stroke={clusterHoverRender.stroke}
+                  strokeWidth={2}
+                  strokeDasharray="5 5"
+                  strokeOpacity={0.95}
+                  markerEnd="url(#cluster-hover-arrow)"
+                />
+              </svg>
+              <div className="clusterHover" style={clusterHoverRender.bubbleStyle}>
+                {clusterHover?.label}
+              </div>
+            </>
+          ) : null}
 
           {/* Tooltip overlay */}
           <div
@@ -1413,6 +1752,15 @@ export default function QuadrantScatterMap(props: {
           color: #1f3253;
           white-space: nowrap;
           box-shadow: 0 8px 20px rgba(31, 50, 83, 0.14);
+        }
+
+        .clusterHoverGuide {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 13;
+          pointer-events: none;
         }
 
         .tooltipHeader {
