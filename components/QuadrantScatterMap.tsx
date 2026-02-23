@@ -197,20 +197,23 @@ function buildOrganicBoundary(args: {
   members: Point[];
   foreign: Point[];
   bounds: { left: number; right: number; top: number; bottom: number };
+  includeRadius?: number;
 }) {
   const c = centroid(args.members);
   const b = boundsForPoints(args.members);
   const diag = Math.hypot(b.maxX - b.minX, b.maxY - b.minY);
+  const includeRadius = args.includeRadius ?? 30;
+  const includeRadiusSq = includeRadius * includeRadius;
 
   // Deterministic, tighter envelope around member points (no random wobble).
-  const sigmaMember = clamp(diag * 0.42 + 26, 34, 82);
-  const sigmaForeign = sigmaMember * 0.72;
-  const minR = clamp(sigmaMember * 0.42, 20, 46);
-  const maxR = clamp(diag * 0.78 + sigmaMember * 0.72, 72, 220);
-  const baseThreshold = clamp(0.52 - args.members.length * 0.028, 0.36, 0.5);
-  const foreignClearance = sigmaMember * 0.62;
+  const sigmaMember = clamp(diag * 0.33 + 16, 24, 60);
+  const sigmaForeign = sigmaMember * 0.7;
+  const minR = clamp(sigmaMember * 0.28, 12, 30);
+  const maxR = clamp(diag * 0.56 + sigmaMember * 0.42, 46, 150);
+  const baseThreshold = clamp(0.67 - args.members.length * 0.018, 0.5, 0.64);
+  const foreignClearance = sigmaMember * 0.4;
 
-  const samples = 120;
+  const samples = 96;
   const radialStep = 2.5;
   const raw: Point[] = [];
 
@@ -225,11 +228,16 @@ function buildOrganicBoundary(args: {
       const dy = m.y - c.y;
       const proj = dx * Math.cos(t) + dy * Math.sin(t);
       const perp = Math.abs(-dx * Math.sin(t) + dy * Math.cos(t));
-      const lobe = proj + clamp(32 - perp * 0.96, 0, 32);
+      // Ensure the boundary covers the full rendered dot/ring, not just center points.
+      if (perp <= includeRadius) {
+        const circleReach = proj + Math.sqrt(Math.max(0, includeRadiusSq - perp * perp));
+        memberRay = Math.max(memberRay, circleReach + 2);
+      }
+      const lobe = proj + clamp(18 - Math.max(0, perp - includeRadius) * 0.9, 0, 18);
       memberRay = Math.max(memberRay, lobe);
     }
 
-    let bestR = Math.max(minR, memberRay + 6);
+    let bestR = Math.max(minR, memberRay + 2);
     let found = false;
     for (let r = Math.max(minR, memberRay); r <= maxR; r += radialStep) {
       const p = {
@@ -248,7 +256,7 @@ function buildOrganicBoundary(args: {
     }
 
     if (!found) {
-      bestR = Math.max(bestR, memberRay + 3);
+      bestR = Math.max(bestR, memberRay + 1);
     }
 
     raw.push({
@@ -259,16 +267,50 @@ function buildOrganicBoundary(args: {
 
   // Smoothing pass for cleaner fluid edges.
   let smooth = raw;
-  for (let pass = 0; pass < 4; pass += 1) {
+  for (let pass = 0; pass < 5; pass += 1) {
     smooth = smooth.map((p, i) => {
       const prev = smooth[(i - 1 + smooth.length) % smooth.length];
       const next = smooth[(i + 1) % smooth.length];
       return {
-        x: prev.x * 0.22 + p.x * 0.56 + next.x * 0.22,
-        y: prev.y * 0.22 + p.y * 0.56 + next.y * 0.22,
+        x: prev.x * 0.24 + p.x * 0.52 + next.x * 0.24,
+        y: prev.y * 0.24 + p.y * 0.52 + next.y * 0.24,
       };
     });
   }
+
+  const tighten = clamp(0.91 + Math.min(args.members.length, 8) * 0.005, 0.915, 0.95);
+  smooth = smooth.map((p) => ({
+    x: clamp(c.x + (p.x - c.x) * tighten, args.bounds.left, args.bounds.right),
+    y: clamp(c.y + (p.y - c.y) * tighten, args.bounds.top, args.bounds.bottom),
+  }));
+
+  // Final guard: never let smoothing/tightening cut through member dots.
+  smooth = smooth.map((p) => {
+    const dx0 = p.x - c.x;
+    const dy0 = p.y - c.y;
+    const angle = Math.atan2(dy0, dx0);
+    const ux = Math.cos(angle);
+    const uy = Math.sin(angle);
+    const currentR = Math.hypot(dx0, dy0);
+
+    let requiredR = minR;
+    for (const m of args.members) {
+      const dx = m.x - c.x;
+      const dy = m.y - c.y;
+      const proj = dx * ux + dy * uy;
+      const perp = Math.abs(-dx * uy + dy * ux);
+      if (perp <= includeRadius) {
+        const circleReach = proj + Math.sqrt(Math.max(0, includeRadiusSq - perp * perp));
+        requiredR = Math.max(requiredR, circleReach + 2);
+      }
+    }
+
+    const finalR = Math.max(currentR, requiredR);
+    return {
+      x: clamp(c.x + ux * finalR, args.bounds.left, args.bounds.right),
+      y: clamp(c.y + uy * finalR, args.bounds.top, args.bounds.bottom),
+    };
+  });
 
   return smooth;
 }
@@ -436,7 +478,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     label: "Revenue & Receivables Credit",
     stroke: "#2f6fdf",
     fill: "#d6e5ff",
-    dash: "0",
+    dash: "10 8",
     connectivity: 0.45,
     labelPlacement: "bottom-right",
     projectIds: [
@@ -795,7 +837,8 @@ export default function QuadrantScatterMap(props: {
   }, [projects, pad, plotW, plotH, fontSize, markerSize]);
 
   const clusterZones = useMemo(() => {
-    const edgeInset = 12;
+    // Keep cluster envelopes allowed up to the plot border so edge dots remain enclosed.
+    const edgeInset = 0;
     const plotLeft = pad + edgeInset;
     const plotRight = pad + plotW - edgeInset;
     const plotTop = pad + edgeInset;
