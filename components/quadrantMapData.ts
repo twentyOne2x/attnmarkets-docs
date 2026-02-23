@@ -95,8 +95,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     stack: "Back-end infrastructure",
     controlPrimitive: "Programmatic controls",
     plane: "web3",
-    x: 0.85,
-    y: 0.87,
+    x: 0.9,
+    y: 0.83,
     narrative:
       "Receivables + settlement liquidity financing with programmable cashflow routing (Spigot).",
     creditModel:
@@ -124,18 +124,17 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     stack: "Back-end infrastructure",
     controlPrimitive: "Programmatic controls",
     plane: "web2",
-    x: 0.78,
-    y: 0.9,
+    x: 0.82,
+    y: 0.89,
     narrative:
       "Embedded financing provider (merchant cash advance / revenue-based funding) distributed via partners.",
     creditModel:
       "Revenue-based financing with settlement/payment account routing a specified % of incoming sales revenue (offchain).",
     scale: [
-      "Public cumulative credit-advanced total is not explicitly disclosed in the 2026-01-08 update.",
-      "370,000 businesses funded (as of 2026-01-08).",
       "Castlelake/YouLend release reported over $1.3bn of SMB financings across the UK and Europe (2024-10-21).",
       "$230m revenue (FY ended 2025-03-31).",
-      "$12m profit (FY ended 2025-03-31).",
+      "370,000 businesses funded (as of 2026-01-08).",
+      "Public cumulative credit-advanced total is not explicitly disclosed in the 2026-01-08 update.",
     ],
     why: [
       "Repayments described as proportional to sales.",
@@ -168,13 +167,17 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     stack: "Back-end infrastructure",
     controlPrimitive: "Programmatic controls",
     plane: "web2",
-    x: 0.72,
-    y: 0.82,
+    x: 0.73,
+    y: 0.78,
     narrative:
       "Embedded working capital / merchant cash advance with revenue-aligned payments (offchain).",
     creditModel:
       "Merchant cash advance (MCA): customer sells a portion of future revenue; paid as a % of revenue.",
-    scale: ["~15,000 advances originated in the last 18 months; >$250m total (Pipe recap post)."],
+    scale: [
+      ">$250m advanced in the last 18 months (Pipe 2025 recap).",
+      "~15,000 advances originated in the last 18 months (Pipe 2025 recap).",
+      "Public lifetime cumulative total is not explicitly disclosed in the 2025 recap.",
+    ],
     why: [
       "Pipe’s Capital product describes MCA paid as a percentage of revenue.",
       "Pipe’s own 2025 recap quantifies originations and total dollars advanced.",
@@ -189,13 +192,129 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://pipe.com/products/capital",
   },
 
+  clearco: {
+    id: "clearco",
+    label: "clear.co",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.66,
+    y: 0.83,
+    narrative:
+      "Ecommerce/SaaS growth funding with fixed or rolling capacity, structured around future receivables.",
+    creditModel:
+      "Non-dilutive funding (including cash advance variants) with predictable capped weekly payments and receivables-based security interest.",
+    scale: [
+      "$3B+ funding deployed (as shown on clear.co pages, fetched 2026-02-22).",
+      "10,000+ brands/businesses funded (as shown on clear.co pages, fetched 2026-02-22).",
+      "Decisions/funding timing messaging includes as little as 24-48 hours (page copy).",
+    ],
+    why: [
+      "Positioned as recurring working-capital infrastructure for scaling operators, not a consumer app.",
+      "Funding structures are tied to receivables/cashflow outcomes with defined payment mechanics.",
+    ],
+    sources: [
+      {
+        label: "Clearco home (positioning + scale claims)",
+        url: "https://www.clear.co/",
+      },
+      {
+        label: "Ecommerce funding overview (fixed/rolling capacity + structures)",
+        url: "https://www.clear.co/ecommerce-funding",
+      },
+      {
+        label: "FAQ copy (security interest in purchased future receivables)",
+        url: "https://www.clear.co/ecommerce-funding",
+      },
+    ],
+    href: "https://www.clear.co/",
+  },
+
+  paypal_working_capital: {
+    id: "paypal_working_capital",
+    label: "paypal.com/working-capital",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.84,
+    y: 0.84,
+    narrative:
+      "Merchant working-capital financing tied to PayPal payment flows and repayment from processed sales.",
+    creditModel:
+      "Merchant financing where repayment is linked to future sales volume flowing through PayPal rails.",
+    scale: [
+      "$2.2bn merchant receivables purchased (FY2025).",
+      "$1.806bn merchant loans/advances/interest/fees receivable outstanding (2025-12-31).",
+      "PayPal FY2025: $33.172bn revenue, $5.233bn net income (15.8% net margin; 18.3% operating margin).",
+      "PayPal Working Capital standalone revenue/profit is not separately disclosed in the FY2025 10-K.",
+    ],
+    why: [
+      "Repayment is mechanically tied to merchant sales processed on PayPal rails.",
+      "Maps to the same revenue/receivables-credit lane as other receipt-captured working-capital models.",
+    ],
+    sources: [
+      {
+        label: "PayPal FY2025 10-K (merchant receivables + consolidated statements)",
+        url: "https://www.sec.gov/Archives/edgar/data/1633917/000163391726000024/pypl-20251231.htm",
+      },
+      {
+        label: "PayPal FY2023 10-K (historical merchant receivables series)",
+        url: "https://www.sec.gov/Archives/edgar/data/1633917/000163391724000024/pypl-20231231.htm",
+      },
+      {
+        label: "PayPal Working Capital page",
+        url: "https://www.paypal.com/us/business/financial-services/working-capital-loan",
+      },
+    ],
+    href: "https://www.paypal.com/us/business/financial-services/working-capital-loan",
+  },
+
+  shopify_capital: {
+    id: "shopify_capital",
+    label: "shopify.com/capital",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.76,
+    y: 0.93,
+    narrative:
+      "Merchant loans and MCAs embedded in Shopify's commerce stack with repayment tied to merchant sales.",
+    creditModel:
+      "Merchant loans/MCAs inside Shopify Capital; repayments are linked to platform payment activity.",
+    scale: [
+      "$4.014bn purchases and originations of loans (FY2025 cash-flow line).",
+      "$1.784bn loans and merchant cash advances, net (2025-12-31).",
+      "Shopify FY2025: $11.556bn revenue, $1.231bn net income (10.7% net margin; 12.7% operating margin).",
+      "Shopify Capital standalone revenue/profit is not separately disclosed in the FY2025 10-K.",
+    ],
+    why: [
+      "Financing is embedded in merchant operations and repaid through platform-linked commerce flows.",
+      "Fits the same revenue/receivables credit lane as other working-capital engines.",
+    ],
+    sources: [
+      {
+        label: "Shopify FY2025 10-K (capital balances + consolidated statements)",
+        url: "https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm",
+      },
+      {
+        label: "Shopify Capital product page",
+        url: "https://www.shopify.com/capital",
+      },
+      {
+        label: "Shopify Q4/FY2025 release (cash-flow loan-originations line)",
+        url: "https://s27.q4cdn.com/572064924/files/doc_financials/2025/q4/Shopify_Investor_Press_Release_Q4-25_FINAL.pdf",
+      },
+    ],
+    href: "https://www.shopify.com/capital",
+  },
+
   rain: {
     id: "rain",
     label: "rain.xyz",
     stack: "Back-end infrastructure",
     controlPrimitive: "Mixed / not primary",
     plane: "hybrid",
-    x: 0.62,
+    x: 0.58,
     y: 0.9,
     narrative:
       "Issuing + stablecoin settlement infrastructure powering downstream card programs (provider-of-providers).",
@@ -613,9 +732,22 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     plane: "web3",
     x: 0.58,
     y: 0.84,
-    narrative: "Payments network + card stack narrative (early).",
-    why: ["Rails/network framing; not primarily a credit enforcement product."],
-    sources: [{ label: "Colossus site", url: "https://colossus.credit/" }],
+    narrative:
+      "Closed-loop stablecoin card-network thesis: direct crypto settlement while using existing EMV terminals and acquirer distribution.",
+    creditModel:
+      "Network/settlement infrastructure rather than a standalone underwriting product; framed as replacing incumbent card-network economics.",
+    why: [
+      "Public pages claim EMV compatibility and settlement at existing terminals.",
+      "Positioning emphasizes acquirer integration and reduced dependence on incumbent Visa/Mastercard network layers.",
+      "Still best treated as rails/network adjacency rather than core credit enforcement.",
+    ],
+    sources: [
+      { label: "Colossus site", url: "https://colossus.credit/" },
+      {
+        label: "Founders, Inc. portfolio note (acquirers + EMV + existing stack)",
+        url: "https://f.inc/portfolio/colossus/",
+      },
+    ],
     href: "https://colossus.credit/",
   },
 

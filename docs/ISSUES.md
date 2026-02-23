@@ -1,5 +1,626 @@
 # ISSUES
 
+## 2026-02-23 - Tighten cluster inclusion visuals + full-diagram capture
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User asked for a full picture of the diagram and tighter, clearer cluster inclusion boundaries.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Organic envelopes still felt loose and occasionally ambiguous.
+  - Inclusion was hard to read from zone shape alone.
+- Fix intent:
+  1) Tighten/smooth zone geometry (less wobble, tighter hull behavior).
+  2) Add exact per-project inclusion signals tied to cluster color.
+  3) Capture and provide a full-diagram screenshot.
+- Acceptance criteria:
+  - Cluster boundaries look smoother/tighter.
+  - It is clear which projects are included/excluded.
+  - Build/checks pass and screenshot is captured.
+- Complexity: small
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Tightened deterministic organic boundary generation (removed wobble randomness, tighter thresholds/radii, stronger smoothing).
+  - Tightened connected-component threshold for less spillover.
+  - Added exact inclusion cues:
+    - cluster-colored ring around each included project dot when clusters are enabled
+    - cluster-colored border on each included project label pill
+  - Updated cluster key hint to explain exact inclusion via dot/label outlines.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS.
+  - Screenshots:
+    - `/tmp/attn-quadrant-full-diagram-latest.png`
+    - `/tmp/attn-quadrant-diagram-crop3-full.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-23 - Add PayPal Working Capital + Shopify Capital to revenue-credit map
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User asked to confirm revenue-credit membership and add PayPal/Shopify with financing + revenue + profit/margin data.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Map omitted PayPal Working Capital and Shopify Capital despite direct relevance to the revenue/receivables lane.
+  - User needed sourced scale metrics in the hover details.
+- Fix intent:
+  1) Add PayPal and Shopify project rows to `quadrantMapData.ts`.
+  2) Add both to the Revenue Credit cluster in `QuadrantScatterMap.tsx`.
+  3) Update `attn-in-context.mdx` comparison list and fit text.
+- Acceptance criteria:
+  - Both projects visible on map in Revenue Credit zone.
+  - Hover includes financing + company revenue/profit/margin + disclosure caveat.
+  - Build + knowledge checks pass; screenshot captured.
+- Complexity: small
+
+EXECUTOR
+- Updated `components/quadrantMapData.ts`:
+  - Added `paypal_working_capital` and `shopify_capital` entries with classification, coordinates, scale bullets, rationale, and primary sources.
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Added both IDs to the `Revenue Credit` cluster.
+- Updated `pages/introduction/attn-in-context.mdx`:
+  - Added PayPal/Shopify under `Enforcement-first entity credit`.
+  - Updated fit text to include both.
+- Data sources used:
+  - Existing research pack: `attn-growth/research/credit/attn_credit_market_sizing/v2.5/pump_a.md` (+ CSV extracts) for financing series.
+  - Primary filings/pages:
+    - PayPal FY2025 10-K, FY2023 10-K, Working Capital page
+    - Shopify FY2025 10-K, Shopify Capital page, FY2025 release PDF
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/introduction/attn-in-context` generated).
+  - Screenshots:
+    - `/tmp/attn-quadrant-paypal-shopify.png`
+    - `/tmp/attn-quadrant-paypal-shopify-full.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Tighten freeform cluster fit (less random, more project-hugging)
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User asked to keep freeform clusters but make them tighter and less random so they wrap projects more precisely.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current organic boundary parameters produce too much wobble amplitude and expansion margin.
+  - Label pills are readable, but boundary area still feels loose around some groups.
+- Fix intent:
+  1) Reduce wobble randomness and expansion radius.
+  2) Increase repulsion from non-member points to avoid spillover.
+  3) Keep freeform aesthetic while tightening envelope around member dots.
+- Acceptance criteria:
+  - Zones remain freeform and smooth.
+  - Zones hug member projects noticeably tighter.
+  - Reduced accidental inclusion of nearby out-of-cluster points.
+  - Build + knowledge checks pass.
+  - Updated screenshot captured.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx` only.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+  - Capture updated screenshot from `/introduction/attn-in-context`.
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Tightened organic boundary generation (smaller radial expansion, lower wobble amplitude, stronger foreign-point clearance).
+  - Reduced proximity threshold for cluster subgrouping so distant points split more aggressively and zones stay compact.
+  - Increased boundary smoothing while retaining freeform curvature.
+  - Further smoothed/tightened envelopes (less wobble noise, tighter fit around member points).
+  - Moved cluster naming out of the plot area into a dedicated `Cluster key` strip for readability.
+  - Kept all project labels on top of zones and added explicit project count in the hint (`Showing 23 projects`) so no points appear “missing.”
+- Updated `pages/introduction/attn-in-context.mdx`:
+  - Renamed section headers for clarity (`How to read this map`, `Market segments (grouped by narrative)`, `3 BD takeaways`, `attn fit by segment`).
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Updated screenshots:
+    - `/tmp/attn-quadrant-tight-fit-v3.png`
+    - `/tmp/attn-quadrant-tight-fit-v3-map.png`
+    - `/tmp/attn-quadrant-tight-smooth-v6-map.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Full cluster visual refresh: wobbly freeform shapes + upgraded naming
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested a full visual refresh: true freeform wobbly clusters (not circles + connectors), better cluster naming, and generally improved aesthetics.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current local-union geometry still reads like circles connected by segments.
+  - Cluster naming and top-level titling still feel generic.
+- Fix intent:
+  1) Replace circle/bridge rendering with organic path-based cluster geometry.
+  2) Improve cluster names and main chart title.
+  3) Keep existing interaction behavior unchanged.
+- Acceptance criteria:
+  - Clusters render as wobbly freeform blobs.
+  - Cluster names/titles are upgraded and more legible.
+  - Build + knowledge checks pass.
+  - Updated screenshot captured.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx`.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+  - Capture updated screenshot.
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Reworked organic cluster boundaries with stronger wobble/lobe shaping so zones read as freeform blobs rather than circles + connectors.
+  - Improved boundary behavior to keep zones near member points while discouraging drift into nearby non-member points.
+  - Added collision-aware cluster label placement so zone names avoid project label overlap and stay readable.
+  - Upgraded cluster names (for example: `Revenue Credit Core`, `Credit Markets + Issuance`, `Agent Finance + Spend`) and map title (`Strategic Credit, Spend & Settlement Map`).
+  - Increased zone stroke contrast and tuned fill opacity for cleaner readability.
+- Updated `pages/introduction/attn-in-context.mdx` section title to:
+  - `Strategic credit, spend, and settlement map`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Updated screenshots:
+    - `/tmp/attn-quadrant-wobbly-refresh-v2.png`
+    - `/tmp/attn-quadrant-wobbly-refresh-v2-map.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Add clear.co to quadrant map
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested adding `https://www.clear.co/` to the map.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - `clear.co` was missing from current comparison universe despite being in scope for revenue/receivables-style funding comparators.
+- Fix intent:
+  1) Add a `clear.co` project entry in `quadrantMapData.ts`.
+  2) Place it in the revenue-credit cluster in `QuadrantScatterMap.tsx`.
+- Acceptance criteria:
+  - `clear.co` appears on the interactive map with hover details + sources.
+  - Build and knowledge checks pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated `components/quadrantMapData.ts`:
+  - Added `clearco` entry (`label: clear.co`) with:
+    - classification (`Back-end infrastructure`, `Programmatic controls`, `web2`)
+    - coordinates
+    - narrative/credit model/why text
+    - scale bullets and sources from official Clearco pages.
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Added `clearco` to `Revenue Credit` cluster `projectIds`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Visual check: no new screenshot requested for this incremental add; map-render proof covered by successful build and previous screenshoted flow.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Zone geometry refinement: avoid enclosing other subindustry points
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested zones that are more freeform and avoid encompassing projects from other subindustries.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current subgroup zones still rely on hulls, which can cover nearby non-member points.
+  - The visual result can imply false cluster membership.
+- Fix intent:
+  1) Replace hull-based zone rendering with local organic unions (point bubbles + selective bridges).
+  2) Only connect member points when bridge segments do not pass too close to non-member points.
+  3) Keep current labels, interactions, and toggle behavior.
+- Acceptance criteria:
+  - Zone visuals stay around member points and avoid swallowing nearby non-member dots.
+  - Zones remain freeform and readable.
+  - Build + knowledge check pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx`.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+  - Capture updated screenshot(s).
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Replaced hull-only zone geometry with organic local unions (member circles + selective bridges).
+  - Added MST-based bridge generation inside each subgroup so only nearby members connect.
+  - Added bridge rejection when segment passes too close to non-member points (`pointToSegmentDistance` clearance check), reducing cross-subindustry enclosure.
+  - Preserved labels, hover/pin behavior, and zone toggle.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Updated screenshots:
+    - `/tmp/attn-quadrant-organic-avoid-on.png`
+    - `/tmp/attn-quadrant-organic-avoid-off.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Zone readability pass: clearer names + distinct backgrounds/borders
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested nicer cluster names plus clearer visual distinction via different background and border treatments.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Existing labels and zone strokes were too similar in tone/weight, making cluster boundaries hard to parse.
+  - Similar label backgrounds and mostly solid borders reduced visual separation between clusters.
+- Fix intent:
+  1) Rename cluster labels to clearer commercial names.
+  2) Add per-cluster style tokens (fill, stroke, label background, dash pattern).
+  3) Refresh chart background so zone fills have better contrast.
+- Acceptance criteria:
+  - Zone names are clearer and easier to scan.
+  - Cluster borders are visually distinct from each other.
+  - Background contrast improves readability.
+  - Build + knowledge check pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx`.
+  - Keep all existing hover/pin/toggle behavior intact.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Replaced cluster labels with clearer commercial names (for example: `Revenue Credit`, `Credit Markets`, `Agent Spend Surfaces`, `Consumer Spend Apps`, `Business Money Stack`).
+  - Added per-cluster styling tokens (`fill`, `stroke`, `labelBg`, `dash`) to make each zone visually distinct.
+  - Applied differentiated border styles via `strokeDasharray` and stronger zone stroke contrast.
+  - Refreshed the chart background with a soft gradient and tuned quadrant shading for better separation.
+  - Updated cluster label pills to use cluster-specific backgrounds/borders.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Updated screenshot:
+    - `/tmp/attn-quadrant-styled-zones-on.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Cluster zones should wrap nearby dots only (avoid long cross-map blobs)
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested cluster zones that neatly wrap relevant nearby dots and avoid sweeping across unrelated dots/space.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current freeform hull generation still creates long bridges for sparse clusters (for example, clusters with one point far from the others).
+  - Those bridges reduce readability and make zone intent unclear.
+- Fix intent:
+  1) Split each cluster into proximity-based connected subgroups before drawing zones.
+  2) Draw blob zones only for subgroups with 2+ points.
+  3) Keep labels readable and attach label pills to subgroup zones.
+  4) Capture fresh screenshots after the zone rewrite.
+- Acceptance criteria:
+  - Zone overlays no longer span large cross-map diagonals between distant points.
+  - Zones mostly “hug” nearby grouped dots and avoid unrelated regions.
+  - Build + knowledge check pass.
+  - Updated screenshot(s) captured.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx`.
+  - Preserve existing hover/pin behavior, legend, and toggle.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+  - Capture screenshots from `/introduction/attn-in-context`.
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Added proximity-connected subgrouping for each cluster (`connectedPointComponents`) before zone rendering.
+  - Rendered zones only for subgroup components with 2+ points (so distant singleton outliers no longer force long bridge blobs).
+  - Kept freeform blob shape generation for each subgroup.
+  - Moved zone label pills to a top render layer so labels stay readable above project tags.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Updated screenshots:
+    - `/tmp/attn-quadrant-clustered-readable-zones-on.png`
+    - `/tmp/attn-quadrant-clustered-readable-zones-off.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Quadrant readability: freeform cluster zones + stronger name visibility
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested (1) fresh screenshots, (2) significantly more visible zone names, and (3) cluster zones that wrap around points with a freeform look instead of rounded rectangles.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current cluster overlay uses rounded rectangles, which reads as rigid boxes and can look noisy over dense points.
+  - Zone labels are currently too subtle relative to chart background and dot labels.
+- Fix intent:
+  1) Replace rectangular zone rendering with freeform closed paths computed from cluster points.
+  2) Increase zone label visual weight (font, contrast, pill styling).
+  3) Improve project name visibility (larger, higher contrast).
+  4) Capture fresh screenshots after implementation.
+- Acceptance criteria:
+  - With `Show cluster zones` enabled, zones appear as freeform blob-like shapes around point groups.
+  - Zone names are visibly easier to read than the prior version.
+  - Fresh screenshots are captured and shared.
+  - Build + knowledge check pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx` only.
+  - Preserve existing hover/pin behavior and zone toggle.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+  - Capture screenshot(s) of the updated map.
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Replaced rounded-rectangle cluster overlays with freeform blob zones generated from cluster-point hulls.
+  - Kept the 2+ firm rule and zone toggle behavior unchanged.
+  - Increased zone label visibility (larger font, stronger pill contrast/stroke, text stroke).
+  - Increased project name and marker sizes for better scan readability.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Updated screenshots:
+    - `/tmp/attn-quadrant-freeform-zones-on.png`
+    - `/tmp/attn-quadrant-freeform-zones-off.png`
+    - `/tmp/attn-quadrant-freeform-tooltip.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Cluster overlay readability: shorter names + hide single-firm zones
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested cleaner zone names and no zone rendering for clusters with only one firm.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Original zone labels were too long and reduced readability.
+  - Single-firm zones added visual clutter without grouping value.
+- Fix intent:
+  1) Shorten cluster labels to 1-2 words.
+  2) Render cluster zones only when group size is 2+.
+  3) Keep overlay toggle and all tooltip/point behavior unchanged.
+- Acceptance criteria:
+  - Zone labels are visibly shorter and easier to scan.
+  - No zone appears for one-firm clusters (e.g., Rain-only, Yumi-only, Pye-only).
+  - Build + knowledge check pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx`.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Shortened cluster labels to concise names (`Entity credit`, `Agent spend`, `Market credit`, `Consumer spend`, `Business surfaces`, `Payments rails`, etc.).
+  - Changed zone rendering rule to only draw zones when a cluster has 2+ projects (`if (points.length < 2) continue`).
+  - Slightly increased zone label font and opacity for readability.
+- Proofs:
+  - `rg -n "label: \\\"Entity credit\\\"|label: \\\"Agent spend\\\"|label: \\\"Payments rails\\\"|points.length < 2" components/QuadrantScatterMap.tsx` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Updated screenshot captured at `/tmp/attn-quadrant-clusters-v2.png`.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Quadrant UX: toggleable commercial cluster zones overlay
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: Solvable. User requested seeing a design with smooth rounded color-coded cluster zones and cluster names beneath current point encoding.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current map encodes execution plane and potential-client markers well, but commercial grouping remains implicit.
+  - User wants visual grouping by business/commercial cluster without losing existing dot semantics.
+- Fix intent:
+  1) Add soft rounded cluster zones behind points with cluster labels.
+  2) Keep this optional via `Show cluster zones` toggle to avoid clutter.
+  3) Preserve current point/label/tooltip interactions and legends.
+- Acceptance criteria:
+  - Cluster zones render with low-opacity fills and rounded boundaries.
+  - Cluster names appear on-zone.
+  - Toggle can hide/show zones without affecting point interactions.
+  - Build + knowledge check pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx` only.
+  - Use the requested 9 commercial clusters for zone membership.
+  - Keep zone styling subtle so dots/names remain readable.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Added 9 commercial cluster definitions matching user grouping.
+  - Computed rounded low-opacity cluster zones from grouped project coordinates.
+  - Rendered zone labels as pill chips on top of each zone.
+  - Added `Show cluster zones` toggle (default on) in top-right controls.
+  - Kept existing point shapes, potential-client rings, and tooltip interactions intact.
+- Proofs:
+  - `rg -n "CLUSTER_DEFS|clusterZones|Show cluster zones|clusterToggle" components/QuadrantScatterMap.tsx` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+  - Local screenshot captured at `/tmp/attn-quadrant-clusters.png`.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Tooltip UX: reset hover pane scroll on item change
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested that if the hover pane is scrolled, selecting/hovering another item should reset pane scroll to the top.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Tooltip content is scrollable (`overflow: auto`) and persists scroll position across item changes.
+  - When switching items, inherited scroll offset can hide top-of-card context.
+- Fix intent:
+  1) Track active tooltip item id.
+  2) When tooltip id changes, programmatically set `tooltipRef.scrollTop = 0`.
+  3) Preserve existing hover/pin/outside-click behavior.
+- Acceptance criteria:
+  - Scroll a tooltip pane, hover another point, pane starts at top.
+  - Existing pin/close behavior continues to work.
+  - Build + knowledge check pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx`.
+  - Add item-change scroll reset using existing tooltip ref.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Added `lastTooltipIdRef` to track the previously active tooltip item.
+  - Added effect on `tooltip?.id` that resets `tooltipRef.current.scrollTop = 0` whenever the active item changes.
+  - Kept hover, pin, outside-click-close, and Esc-close behavior unchanged.
+- Proofs:
+  - `rg -n "lastTooltipIdRef|scrollTop = 0" components/QuadrantScatterMap.tsx` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-22 - Colossus positioning update: direct-crypto terminal settlement narrative
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested reflecting that Colossus uses payment terminals and bypasses Visa/Mastercard via direct crypto settlement.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Existing map entry was too generic ("payments network + card stack narrative").
+  - Primary pages now provide stronger positioning language around EMV compatibility, acquirer integration, and closed-loop stablecoin settlement.
+- Fix intent:
+  1) Update Colossus narrative and rationale in `quadrantMapData.ts`.
+  2) Add explicit credit/rails note clarifying it is network infrastructure, not underwriting.
+  3) Add supporting source from Founders, Inc. portfolio page alongside colossus.credit.
+- Acceptance criteria:
+  - Colossus tooltip clearly describes direct-crypto settlement positioning with existing terminal compatibility.
+  - Entry still classifies as adjacency/rails, not core credit enforcement.
+  - Build + knowledge check pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `components/quadrantMapData.ts` only.
+  - Keep claims tied to publicly stated positioning (avoid over-claiming implementation status).
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated `components/quadrantMapData.ts`:
+  - Rewrote `colossus` narrative to explicitly describe direct-crypto settlement positioning with existing EMV terminals/acquirer distribution.
+  - Added `creditModel` clarification that this is network/settlement infrastructure rather than underwriting.
+  - Expanded `why` bullets to capture terminal compatibility, acquirer route, and adjacency classification.
+  - Added source link to `https://f.inc/portfolio/colossus/` alongside `https://colossus.credit/`.
+- Proofs:
+  - `curl -Ls https://colossus.credit/` -> includes claims around EMV compatibility, existing terminals, and acquirer-focused model.
+  - `curl -Ls https://f.inc/portfolio/colossus/` -> portfolio copy describes stablecoin settlement via existing acquirer/EMV stack.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
 ## 2026-02-06 - Pivot docs from PT/YT framing to attnCredit (P0)
 
 - [x] report captured
@@ -42,6 +663,56 @@ EXECUTOR
 
 VERIFIER
 - Acceptance criteria check: PASS.
+
+## 2026-02-22 - Quadrant scale ordering: show hard metrics first
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested YouLend tooltip scale lines in a specific order with hard numbers first and caveat last, and the same data-first spirit for other projects.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Tooltip already renders `scale` before narrative, but YouLend list order led with caveat text.
+  - Pipe scale was one compressed line, not aligned with the desired data-first style.
+- Fix intent:
+  1) Reorder YouLend `scale` lines to: $1.3bn, $230m, 370k, caveat.
+  2) Reformat Pipe `scale` into data-first bullets with caveat last.
+  3) Keep source links unchanged.
+- Acceptance criteria:
+  - YouLend scale order matches user-provided order.
+  - Pipe scale follows the same “metrics first, caveat last” style.
+  - Build + knowledge check pass.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `components/quadrantMapData.ts` only.
+  - Keep existing sources intact and avoid changing chart logic.
+  - Verify with:
+    - `python3 scripts/knowledge_check.py`
+    - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build`
+
+EXECUTOR
+- Updated `components/quadrantMapData.ts`:
+  - `youlend.scale` reordered to:
+    1) Castlelake/YouLend $1.3bn UK+EU financings (2024-10-21)
+    2) $230m revenue (FY ended 2025-03-31)
+    3) 370,000 businesses funded (as of 2026-01-08)
+    4) Public cumulative credit-advanced total not explicitly disclosed (2026-01-08)
+  - `pipe.scale` expanded and reordered to:
+    1) >$250m advanced in last 18 months
+    2) ~15,000 advances in last 18 months
+    3) public lifetime cumulative total not explicitly disclosed (2025 recap)
+- Proofs:
+  - `rg -n "scale:\\s*\\[|Castlelake/YouLend|Public cumulative credit-advanced|Public lifetime cumulative total|Pipe 2025 recap" components/quadrantMapData.ts` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `pnpm -C /Users/user/PycharmProjects/attnmarkets-docs build` -> PASS (`/introduction/attn-in-context` generated).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
 
 ## 2026-02-21 - Quadrant tooltip UX: allow interacting with hover pane without pinning
 

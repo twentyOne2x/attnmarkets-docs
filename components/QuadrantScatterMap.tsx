@@ -85,7 +85,14 @@ type TooltipState = {
   pinned: boolean;
 };
 
+type ClusterHoverState = {
+  label: string;
+  x: number;
+  y: number;
+};
+
 type Rect = { x1: number; y1: number; x2: number; y2: number };
+type Point = { x: number; y: number };
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
@@ -98,6 +105,199 @@ function rectsOverlap(a: Rect, b: Rect) {
 function estimateTextWidth(text: string, fontSize: number) {
   // Simple monospace-ish estimate; good enough for collision avoidance.
   return Math.max(42, text.length * fontSize * 0.62);
+}
+
+function boundsForPoints(points: Point[]) {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+
+  for (const p of points) {
+    minX = Math.min(minX, p.x);
+    maxX = Math.max(maxX, p.x);
+    minY = Math.min(minY, p.y);
+    maxY = Math.max(maxY, p.y);
+  }
+
+  return { minX, maxX, minY, maxY };
+}
+
+function pointDistance(a: Point, b: Point) {
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+function centroid(points: Point[]) {
+  if (!points.length) return { x: 0, y: 0 };
+  let sx = 0;
+  let sy = 0;
+  for (const p of points) {
+    sx += p.x;
+    sy += p.y;
+  }
+  return { x: sx / points.length, y: sy / points.length };
+}
+
+function fieldScore(
+  sample: Point,
+  members: Point[],
+  foreign: Point[],
+  sigmaMember: number,
+  sigmaForeign: number,
+) {
+  const sm2 = sigmaMember * sigmaMember * 2;
+  const sf2 = sigmaForeign * sigmaForeign * 2;
+
+  let positive = 0;
+  let negative = 0;
+  let nearestForeign = Number.POSITIVE_INFINITY;
+
+  for (const m of members) {
+    const dx = sample.x - m.x;
+    const dy = sample.y - m.y;
+    positive += Math.exp(-(dx * dx + dy * dy) / sm2);
+  }
+  for (const f of foreign) {
+    const dx = sample.x - f.x;
+    const dy = sample.y - f.y;
+    const d2 = dx * dx + dy * dy;
+    negative += Math.exp(-d2 / sf2);
+    nearestForeign = Math.min(nearestForeign, Math.sqrt(d2));
+  }
+
+  return { value: positive - negative * 0.92, nearestForeign };
+}
+
+function smoothClosedPath(points: Point[]) {
+  if (points.length < 3) return "";
+
+  const toFixed = (n: number) => Number(n.toFixed(1));
+  const last = points[points.length - 1];
+  const first = points[0];
+  const startX = toFixed((last.x + first.x) / 2);
+  const startY = toFixed((last.y + first.y) / 2);
+  let d = `M ${startX} ${startY}`;
+
+  for (let i = 0; i < points.length; i += 1) {
+    const p = points[i];
+    const next = points[(i + 1) % points.length];
+    const mx = toFixed((p.x + next.x) / 2);
+    const my = toFixed((p.y + next.y) / 2);
+    d += ` Q ${toFixed(p.x)} ${toFixed(p.y)} ${mx} ${my}`;
+  }
+
+  d += " Z";
+  return d;
+}
+
+function buildOrganicBoundary(args: {
+  members: Point[];
+  foreign: Point[];
+  bounds: { left: number; right: number; top: number; bottom: number };
+}) {
+  const c = centroid(args.members);
+  const b = boundsForPoints(args.members);
+  const diag = Math.hypot(b.maxX - b.minX, b.maxY - b.minY);
+
+  // Deterministic, tighter envelope around member points (no random wobble).
+  const sigmaMember = clamp(diag * 0.42 + 26, 34, 82);
+  const sigmaForeign = sigmaMember * 0.72;
+  const minR = clamp(sigmaMember * 0.42, 20, 46);
+  const maxR = clamp(diag * 0.78 + sigmaMember * 0.72, 72, 220);
+  const baseThreshold = clamp(0.52 - args.members.length * 0.028, 0.36, 0.5);
+  const foreignClearance = sigmaMember * 0.62;
+
+  const samples = 120;
+  const radialStep = 2.5;
+  const raw: Point[] = [];
+
+  for (let i = 0; i < samples; i += 1) {
+    const t = (i / samples) * Math.PI * 2;
+    const wobble = 1;
+    const ySkew = 1;
+
+    let memberRay = minR;
+    for (const m of args.members) {
+      const dx = m.x - c.x;
+      const dy = m.y - c.y;
+      const proj = dx * Math.cos(t) + dy * Math.sin(t);
+      const perp = Math.abs(-dx * Math.sin(t) + dy * Math.cos(t));
+      const lobe = proj + clamp(32 - perp * 0.96, 0, 32);
+      memberRay = Math.max(memberRay, lobe);
+    }
+
+    let bestR = Math.max(minR, memberRay + 6);
+    let found = false;
+    for (let r = Math.max(minR, memberRay); r <= maxR; r += radialStep) {
+      const p = {
+        x: clamp(c.x + Math.cos(t) * r * wobble, args.bounds.left, args.bounds.right),
+        y: clamp(c.y + Math.sin(t) * r * wobble * ySkew, args.bounds.top, args.bounds.bottom),
+      };
+      const score = fieldScore(p, args.members, args.foreign, sigmaMember, sigmaForeign);
+      const acceptable = score.value >= baseThreshold && score.nearestForeign >= foreignClearance;
+
+      if (acceptable) {
+        found = true;
+        bestR = r;
+      } else if (found) {
+        break;
+      }
+    }
+
+    if (!found) {
+      bestR = Math.max(bestR, memberRay + 3);
+    }
+
+    raw.push({
+      x: clamp(c.x + Math.cos(t) * bestR * wobble, args.bounds.left, args.bounds.right),
+      y: clamp(c.y + Math.sin(t) * bestR * wobble * ySkew, args.bounds.top, args.bounds.bottom),
+    });
+  }
+
+  // Smoothing pass for cleaner fluid edges.
+  let smooth = raw;
+  for (let pass = 0; pass < 4; pass += 1) {
+    smooth = smooth.map((p, i) => {
+      const prev = smooth[(i - 1 + smooth.length) % smooth.length];
+      const next = smooth[(i + 1) % smooth.length];
+      return {
+        x: prev.x * 0.22 + p.x * 0.56 + next.x * 0.22,
+        y: prev.y * 0.22 + p.y * 0.56 + next.y * 0.22,
+      };
+    });
+  }
+
+  return smooth;
+}
+
+function connectedPointComponents(points: Point[], threshold: number) {
+  const components: Point[][] = [];
+  const visited = new Array(points.length).fill(false);
+
+  for (let i = 0; i < points.length; i += 1) {
+    if (visited[i]) continue;
+    const stack = [i];
+    visited[i] = true;
+    const indices: number[] = [];
+
+    while (stack.length) {
+      const idx = stack.pop();
+      if (idx === undefined) continue;
+      indices.push(idx);
+
+      for (let j = 0; j < points.length; j += 1) {
+        if (visited[j]) continue;
+        if (pointDistance(points[idx], points[j]) <= threshold) {
+          visited[j] = true;
+          stack.push(j);
+        }
+      }
+    }
+
+    components.push(indices.map((k) => points[k]));
+  }
+
+  return components;
 }
 
 function computeLabelPlacements(args: {
@@ -192,6 +392,115 @@ function computeLabelPlacements(args: {
   return placed;
 }
 
+type ClusterDef = {
+  id: string;
+  label: string;
+  stroke: string;
+  fill: string;
+  dash: string;
+  projectIds: string[];
+  connectivity?: number;
+};
+
+type ClusterZone = {
+  id: string;
+  stroke: string;
+  fill: string;
+  dash: string;
+  path: string;
+  label?: string;
+  labelX?: number;
+  labelY?: number;
+};
+
+const CLUSTER_DEFS: ClusterDef[] = [
+  {
+    id: "entity_credit",
+    label: "Revenue Credit",
+    stroke: "#2f6fdf",
+    fill: "#d6e5ff",
+    dash: "0",
+    connectivity: 0.45,
+    projectIds: [
+      "attn",
+      "creditcoop",
+      "youlend",
+      "pipe",
+      "clearco",
+      "paypal_working_capital",
+      "shopify_capital",
+    ],
+  },
+  {
+    id: "provider_of_providers",
+    label: "Issuer Infra",
+    stroke: "#4668b8",
+    fill: "#dde4ff",
+    dash: "6 6",
+    projectIds: ["rain"],
+  },
+  {
+    id: "embedded_credit_rails",
+    label: "Embedded Credit",
+    stroke: "#6d57c4",
+    fill: "#e5dcff",
+    dash: "8 5",
+    projectIds: ["yumi"],
+  },
+  {
+    id: "agent_credit_spend",
+    label: "Agent Finance",
+    stroke: "#c55d93",
+    fill: "#ffe0ef",
+    dash: "10 6",
+    connectivity: 0.46,
+    projectIds: ["claw", "frames", "sponge"],
+  },
+  {
+    id: "market_credit_debt",
+    label: "Credit Markets",
+    stroke: "#5f66a8",
+    fill: "#dde2ff",
+    dash: "4 5",
+    connectivity: 0.68,
+    projectIds: ["wildcat", "threejane", "xitadel"],
+  },
+  {
+    id: "consumer_spend",
+    label: "Consumer Spend",
+    stroke: "#cd7d2f",
+    fill: "#ffe6cf",
+    dash: "12 6",
+    connectivity: 0.42,
+    projectIds: ["krak", "avici", "pyra", "kast", "offgrid"],
+  },
+  {
+    id: "business_money",
+    label: "Business Money",
+    stroke: "#2f9471",
+    fill: "#d6f4e7",
+    dash: "2 4",
+    connectivity: 0.55,
+    projectIds: ["slash", "altitude"],
+  },
+  {
+    id: "payments_rails",
+    label: "Payments Rails",
+    stroke: "#a150ac",
+    fill: "#f1ddf4",
+    dash: "14 7",
+    projectIds: ["klarna_tempo", "colossus"],
+  },
+  {
+    id: "adjacent",
+    label: "Adjacent",
+    stroke: "#6f7f99",
+    fill: "#e4e9f1",
+    dash: "5 7",
+    projectIds: ["pye"],
+  },
+];
+
 export default function QuadrantScatterMap(props: {
   asOf?: string;
   maxWidth?: number; // embedded sizing control
@@ -200,13 +509,17 @@ export default function QuadrantScatterMap(props: {
   const maxWidth = props.maxWidth ?? 2200;
 
   const projects = useMemo(() => Object.values(PROJECTS), []);
+  const totalProjects = projects.length;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const lastTooltipIdRef = useRef<string | null>(null);
   const hideTimerRef = useRef<number | null>(null);
   const tooltipHoverRef = useRef(false);
 
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const [clusterHover, setClusterHover] = useState<ClusterHoverState | null>(null);
+  const [showClusters, setShowClusters] = useState(true);
 
   const clearHideTimer = () => {
     if (hideTimerRef.current !== null) {
@@ -231,6 +544,10 @@ export default function QuadrantScatterMap(props: {
   }, []);
 
   useEffect(() => {
+    if (!showClusters) setClusterHover(null);
+  }, [showClusters]);
+
+  useEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
       if (!tooltip?.pinned) return;
       const target = e.target as Node | null;
@@ -240,6 +557,19 @@ export default function QuadrantScatterMap(props: {
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [tooltip?.pinned]);
+
+  useEffect(() => {
+    if (!tooltip?.id) {
+      lastTooltipIdRef.current = null;
+      return;
+    }
+
+    if (lastTooltipIdRef.current !== tooltip.id && tooltipRef.current) {
+      tooltipRef.current.scrollTop = 0;
+    }
+
+    lastTooltipIdRef.current = tooltip.id;
+  }, [tooltip?.id]);
 
   // Larger embedded canvas with tighter gutters so the plot fills the card.
   const width = 1600;
@@ -266,8 +596,19 @@ export default function QuadrantScatterMap(props: {
     return { x, y };
   };
 
+  const getLocalFromClientPoint = (clientX: number, clientY: number) => {
+    const card = containerRef.current;
+    if (!card) return { x: clientX, y: clientY };
+    const cardRect = card.getBoundingClientRect();
+    return {
+      x: clientX - cardRect.left,
+      y: clientY - cardRect.top,
+    };
+  };
+
   const showHover = (id: string, svgX: number, svgY: number) => {
     clearHideTimer();
+    setClusterHover(null);
     setTooltip((prev) => {
       if (prev?.pinned) return prev;
       const { x, y } = getLocalFromSvgPoint(svgX, svgY);
@@ -288,10 +629,32 @@ export default function QuadrantScatterMap(props: {
 
   const togglePin = (id: string, svgX: number, svgY: number) => {
     clearHideTimer();
+    setClusterHover(null);
     const { x, y } = getLocalFromSvgPoint(svgX, svgY);
     setTooltip((prev) => {
       if (prev?.pinned && prev.id === id) return null;
       return { id, x, y, pinned: true };
+    });
+  };
+
+  const showClusterHover = (label: string, clientX: number, clientY: number) => {
+    if (tooltip?.pinned) return;
+    const { x, y } = getLocalFromClientPoint(clientX, clientY);
+    setClusterHover({ label, x, y });
+  };
+
+  const moveClusterHover = (clientX: number, clientY: number) => {
+    setClusterHover((prev) => {
+      if (!prev || tooltip?.pinned) return prev;
+      const { x, y } = getLocalFromClientPoint(clientX, clientY);
+      return { ...prev, x, y };
+    });
+  };
+
+  const hideClusterHover = () => {
+    setClusterHover((prev) => {
+      if (!prev) return prev;
+      return null;
     });
   };
 
@@ -329,8 +692,30 @@ export default function QuadrantScatterMap(props: {
     };
   }, [tooltip]);
 
-  const fontSize = 24;
-  const markerSize = 28;
+  const clusterHoverStyle: React.CSSProperties = useMemo(() => {
+    if (!clusterHover || tooltip) return { display: "none" };
+
+    const el = containerRef.current;
+    const w = el?.clientWidth ?? 900;
+    const h = el?.clientHeight ?? 600;
+
+    const boxW = clamp(estimateTextWidth(clusterHover.label, 15) + 24, 130, 320);
+    const boxH = 34;
+    const gap = 12;
+    const edge = 10;
+
+    const x = clamp(clusterHover.x + gap, edge, w - boxW - edge);
+    const y = clamp(clusterHover.y + gap, edge, h - boxH - edge);
+
+    return {
+      left: x,
+      top: y,
+      width: boxW,
+    };
+  }, [clusterHover, tooltip]);
+
+  const fontSize = 30;
+  const markerSize = 34;
 
   const labelPlacements = useMemo(() => {
     return computeLabelPlacements({
@@ -345,6 +730,114 @@ export default function QuadrantScatterMap(props: {
     });
   }, [projects, pad, plotW, plotH, fontSize, markerSize]);
 
+  const clusterZones = useMemo(() => {
+    const edgeInset = 12;
+    const plotLeft = pad + edgeInset;
+    const plotRight = pad + plotW - edgeInset;
+    const plotTop = pad + edgeInset;
+    const plotBottom = pad + plotH - edgeInset;
+
+    const allCenters = new Map(
+      projects.map((p) => [p.id, { x: xToSvg(p.x), y: yToSvg(p.y) }]),
+    );
+
+    const zones: ClusterZone[] = [];
+
+    for (const def of CLUSTER_DEFS) {
+      const members = def.projectIds
+        .map((id) => PROJECTS[id])
+        .filter((p): p is ProjectInfo => Boolean(p));
+
+      if (members.length < 2) continue;
+
+      const centers = members
+        .map((p) => allCenters.get(p.id))
+        .filter((pt): pt is Point => Boolean(pt));
+      if (centers.length < 2) continue;
+
+      const foreignCenters = projects
+        .filter((p) => !def.projectIds.includes(p.id))
+        .map((p) => allCenters.get(p.id))
+        .filter((pt): pt is Point => Boolean(pt));
+
+      const spread = boundsForPoints(centers);
+      const spreadDiag = Math.hypot(spread.maxX - spread.minX, spread.maxY - spread.minY);
+      const proximityThreshold = clamp(spreadDiag * (def.connectivity ?? 0.34), 90, 210);
+
+      const connectedGroups = connectedPointComponents(centers, proximityThreshold);
+      const drawableGroups = connectedGroups.filter((g) => g.length >= 2);
+      if (!drawableGroups.length) continue;
+
+      const groupsSorted = [...drawableGroups].sort((a, b) => {
+        if (b.length !== a.length) return b.length - a.length;
+        const ba = boundsForPoints(a);
+        const bb = boundsForPoints(b);
+        const aa = (ba.maxX - ba.minX) * (ba.maxY - ba.minY);
+        const ab = (bb.maxX - bb.minX) * (bb.maxY - bb.minY);
+        return ab - aa;
+      });
+
+      for (let groupIdx = 0; groupIdx < groupsSorted.length; groupIdx += 1) {
+        const group = groupsSorted[groupIdx];
+        const boundary = buildOrganicBoundary({
+          members: group,
+          foreign: foreignCenters,
+          bounds: {
+            left: plotLeft,
+            right: plotRight,
+            top: plotTop,
+            bottom: plotBottom,
+          },
+        });
+        if (boundary.length < 3) continue;
+        const path = smoothClosedPath(boundary);
+        if (!path) continue;
+
+        zones.push({
+          id: `${def.id}-${groupIdx}`,
+          stroke: def.stroke,
+          fill: def.fill,
+          dash: def.dash,
+          path,
+          label: groupIdx === 0 ? def.label : undefined,
+          labelX:
+            groupIdx === 0
+              ? clamp((spread.minX + spread.maxX) / 2, plotLeft + 36, plotRight - 36)
+              : undefined,
+          labelY:
+            groupIdx === 0
+              ? clamp(spread.minY - 18, plotTop + 14, plotBottom - 14)
+              : undefined,
+        });
+      }
+    }
+
+    return zones;
+  }, [pad, plotW, plotH, projects, xToSvg, yToSvg]);
+
+  const visibleClusterIds = useMemo(() => {
+    return new Set(clusterZones.map((z) => z.id.replace(/-\d+$/, "")));
+  }, [clusterZones]);
+
+  const clusterLegend = useMemo(() => {
+    return CLUSTER_DEFS.filter((def) => visibleClusterIds.has(def.id)).map((def) => ({
+      id: def.id,
+      label: def.label,
+      stroke: def.stroke,
+      fill: def.fill,
+    }));
+  }, [visibleClusterIds]);
+
+  const clusterByProject = useMemo(() => {
+    const m = new Map<string, ClusterDef>();
+    for (const def of CLUSTER_DEFS) {
+      for (const id of def.projectIds) {
+        if (PROJECTS[id]) m.set(id, def);
+      }
+    }
+    return m;
+  }, []);
+
   return (
     <div
       className="wrap"
@@ -358,10 +851,20 @@ export default function QuadrantScatterMap(props: {
       <div className="card" ref={containerRef}>
         <div className="topBar">
           <div className="topLeft">
-            <div className="title">Credit Control Landscape — as of {asOf}</div>
-            <div className="hint">hover for details click a dot to pin. esc clears</div>
+            <div className="title">Strategic Credit, Spend & Settlement Map — as of {asOf}</div>
+            <div className="hint">
+              Hover for details. Click a dot to pin. Esc clears. Showing {totalProjects} projects.
+            </div>
           </div>
           <div className="topRight">
+            <label className="clusterToggle">
+              <input
+                type="checkbox"
+                checked={showClusters}
+                onChange={(e) => setShowClusters(e.target.checked)}
+              />
+              <span>Show strategy clusters</span>
+            </label>
             <div className="legendInline" aria-label="Execution plane legend">
               <span className="legendItem">
                 <MiniMarker plane="web3" /> Web3-native (circle)
@@ -387,14 +890,83 @@ export default function QuadrantScatterMap(props: {
             aria-label="Quadrant scatter plot"
             style={{ width: "100%", height: "auto", display: "block" }}
           >
-            {/* Dim-blue background */}
-            <rect x="0" y="0" width={width} height={height} fill="#e8f0ff" />
+            <defs>
+              <linearGradient id="quad-bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#f5f9ff" />
+                <stop offset="100%" stopColor="#e4efff" />
+              </linearGradient>
+            </defs>
+
+            {/* Refreshed background for stronger zone contrast */}
+            <rect x="0" y="0" width={width} height={height} fill="url(#quad-bg)" />
 
             {/* Subtle quadrant shading */}
-            <rect x={pad} y={pad} width={plotW / 2} height={plotH / 2} fill="#35527f" opacity={0.07} />
-            <rect x={pad + plotW / 2} y={pad} width={plotW / 2} height={plotH / 2} fill="#35527f" opacity={0.04} />
-            <rect x={pad} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#35527f" opacity={0.04} />
-            <rect x={pad + plotW / 2} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#35527f" opacity={0.07} />
+            <rect x={pad} y={pad} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.065} />
+            <rect x={pad + plotW / 2} y={pad} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.035} />
+            <rect x={pad} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.035} />
+            <rect x={pad + plotW / 2} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.065} />
+
+            {/* Optional commercial cluster zones */}
+            {showClusters
+              ? clusterZones.map((zone) => {
+                const baseClusterId = zone.id.replace(/-\d+$/, "");
+                const clusterDef = CLUSTER_DEFS.find((def) => def.id === baseClusterId);
+                const hoverLabel = clusterDef?.label ?? zone.label ?? "Cluster";
+
+                return (
+                  <g key={zone.id}>
+                    <path
+                      d={zone.path}
+                      fill={zone.fill}
+                      fillOpacity={0.18}
+                      stroke={zone.stroke}
+                      strokeOpacity={0.92}
+                      strokeWidth={2.6}
+                      strokeDasharray={zone.dash}
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      onMouseEnter={(e) => showClusterHover(hoverLabel, e.clientX, e.clientY)}
+                      onMouseMove={(e) => moveClusterHover(e.clientX, e.clientY)}
+                      onMouseLeave={hideClusterHover}
+                      onFocus={(e) => {
+                        const r = (e.currentTarget as SVGPathElement).getBoundingClientRect();
+                        showClusterHover(hoverLabel, r.left + r.width / 2, r.top + r.height / 2);
+                      }}
+                      onBlur={hideClusterHover}
+                      tabIndex={0}
+                      aria-label={hoverLabel}
+                    />
+                    {zone.label && zone.labelX && zone.labelY ? (
+                      <>
+                        <rect
+                          x={zone.labelX - estimateTextWidth(zone.label, 20) / 2 - 12}
+                          y={zone.labelY - 16}
+                          width={estimateTextWidth(zone.label, 20) + 24}
+                          height={32}
+                          rx={16}
+                          fill="#ffffff"
+                          opacity={0.99}
+                          stroke={zone.stroke}
+                          strokeOpacity={0.95}
+                          strokeWidth={2.2}
+                        />
+                        <text
+                          x={zone.labelX}
+                          y={zone.labelY + 1}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                          fontSize={20}
+                          fontWeight={900}
+                          fill="#1a2f52"
+                        >
+                          {zone.label}
+                        </text>
+                      </>
+                    ) : null}
+                  </g>
+                );
+              })
+            : null}
 
             {/* Plot border */}
             <rect
@@ -504,6 +1076,7 @@ export default function QuadrantScatterMap(props: {
               const cy = yToSvg(p.y);
               const isActive = tooltip?.id === p.id;
               const size = isActive ? 36 : markerSize;
+              const cluster = showClusters ? clusterByProject.get(p.id) : undefined;
 
               const lp = labelPlacements[p.id];
               const labelX = lp?.x ?? cx;
@@ -542,11 +1115,23 @@ export default function QuadrantScatterMap(props: {
                     />
                   ) : null}
 
+                  {cluster ? (
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={size / 2 + 5}
+                      fill="none"
+                      stroke={cluster.stroke}
+                      strokeWidth={2.2}
+                      strokeOpacity={0.9}
+                    />
+                  ) : null}
+
                   {p.potentialClient ? (
                     <circle
                       cx={cx}
                       cy={cy}
-                      r={size / 2 + 6}
+                      r={size / 2 + 9}
                       fill="none"
                       stroke="#dc2626"
                       strokeWidth={2}
@@ -562,10 +1147,11 @@ export default function QuadrantScatterMap(props: {
                     width={labelW + 12}
                     height={labelH + 8}
                     rx={8}
-                    fill="#edf4ff"
-                    opacity={0.95}
-                    stroke="#35527f"
-                    strokeOpacity={0.2}
+                    fill="#f7fbff"
+                    opacity={0.98}
+                    stroke={cluster?.stroke ?? "#35527f"}
+                    strokeWidth={cluster ? 1.8 : 1}
+                    strokeOpacity={cluster ? 0.62 : 0.34}
                   />
 
                   {/* Label text */}
@@ -575,16 +1161,24 @@ export default function QuadrantScatterMap(props: {
                     textAnchor="middle"
                     dominantBaseline="middle"
                     fontSize={fontSize}
-                    fill="#1f3253"
-                    opacity={0.96}
-                    style={{ fontWeight: 650 }}
+                    fill="#102d55"
+                    opacity={1}
+                    style={{ fontWeight: 780 }}
+                    stroke="#ffffff"
+                    strokeWidth={3.4}
+                    paintOrder="stroke fill"
                   >
                     {labelText}
                   </text>
                 </g>
               );
             })}
+
           </svg>
+
+          <div className="clusterHover" style={clusterHoverStyle}>
+            {clusterHover?.label}
+          </div>
 
           {/* Tooltip overlay */}
           <div
@@ -689,6 +1283,28 @@ export default function QuadrantScatterMap(props: {
         </div>
 
         <div className="legend">
+          {showClusters ? (
+            <div className="clusterKey">
+              <div className="clusterKeyTitle">Visible cluster zones</div>
+              <div className="clusterKeyRow">
+                {clusterLegend.map((item) => (
+                  <span
+                    key={item.id}
+                    className="clusterPill"
+                    style={{
+                      borderColor: item.stroke,
+                      background: item.fill,
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                ))}
+              </div>
+              <div className="clusterKeyHint">
+                Zones are drawn only when 2+ projects are close enough on the map. Dot/label outlines use cluster colors for exact inclusion.
+              </div>
+            </div>
+          ) : null}
           <div className="legendHint">
             Hover a dot for details. Click a dot to pin tooltip (links clickable). Click outside or press Esc to close.
           </div>
@@ -701,9 +1317,9 @@ export default function QuadrantScatterMap(props: {
         }
 
         .card {
-          background: #edf3ff;
+          background: #f7faff;
           color: #1f3253;
-          border: 1px solid rgba(53, 82, 127, 0.34);
+          border: 1px solid rgba(53, 82, 127, 0.28);
           border-radius: 16px;
           padding: 2px;
           box-shadow: 0 10px 30px rgba(31, 50, 83, 0.12);
@@ -732,6 +1348,24 @@ export default function QuadrantScatterMap(props: {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+          gap: 6px;
+        }
+        .clusterToggle {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 12px;
+          font-weight: 700;
+          color: rgba(31, 50, 83, 0.85);
+          border: 1px solid rgba(53, 82, 127, 0.24);
+          border-radius: 10px;
+          padding: 6px 10px;
+          background: rgba(245, 250, 255, 0.95);
+          box-shadow: 0 6px 14px rgba(31, 50, 83, 0.08);
+          user-select: none;
+        }
+        .clusterToggle input {
+          margin: 0;
         }
         .hint {
           font-size: 12px;
@@ -749,7 +1383,7 @@ export default function QuadrantScatterMap(props: {
           gap: 6px;
           border: 1px solid rgba(53, 82, 127, 0.24);
           border-radius: 10px;
-          background: rgba(232, 241, 255, 0.95);
+          background: rgba(245, 250, 255, 0.95);
           padding: 8px 10px;
           font-size: 12px;
           box-shadow: 0 8px 20px rgba(31, 50, 83, 0.1);
@@ -757,13 +1391,28 @@ export default function QuadrantScatterMap(props: {
 
         .tooltip {
           position: absolute;
-          z-index: 12;
+          z-index: 20;
           border: 1px solid rgba(53, 82, 127, 0.26);
           background: rgba(232, 241, 255, 0.98);
           border-radius: 14px;
           padding: 12px;
           box-shadow: 0 18px 50px rgba(31, 50, 83, 0.2);
           overflow: auto;
+        }
+
+        .clusterHover {
+          position: absolute;
+          z-index: 14;
+          pointer-events: none;
+          border: 1px solid rgba(53, 82, 127, 0.34);
+          background: rgba(255, 255, 255, 0.98);
+          border-radius: 999px;
+          padding: 7px 11px;
+          font-size: 14px;
+          font-weight: 800;
+          color: #1f3253;
+          white-space: nowrap;
+          box-shadow: 0 8px 20px rgba(31, 50, 83, 0.14);
         }
 
         .tooltipHeader {
@@ -853,6 +1502,40 @@ export default function QuadrantScatterMap(props: {
           margin-top: 8px;
           padding-top: 8px;
           border-top: 1px solid rgba(53, 82, 127, 0.24);
+        }
+        .clusterKey {
+          margin-bottom: 8px;
+          padding: 8px 10px;
+          border: 1px solid rgba(53, 82, 127, 0.24);
+          border-radius: 10px;
+          background: rgba(245, 250, 255, 0.88);
+        }
+        .clusterKeyTitle {
+          font-size: 12px;
+          font-weight: 800;
+          color: rgba(31, 50, 83, 0.85);
+          margin-bottom: 6px;
+        }
+        .clusterKeyRow {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .clusterKeyHint {
+          margin-top: 6px;
+          font-size: 11px;
+          color: rgba(31, 50, 83, 0.7);
+        }
+        .clusterPill {
+          display: inline-flex;
+          align-items: center;
+          padding: 4px 9px;
+          border-radius: 999px;
+          border: 2px solid transparent;
+          font-size: 12px;
+          font-weight: 800;
+          color: #133b6e;
+          line-height: 1.2;
         }
         .legendTitle {
           font-weight: 900;
