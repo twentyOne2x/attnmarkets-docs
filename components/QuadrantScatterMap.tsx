@@ -1390,6 +1390,22 @@ export default function QuadrantScatterMap(props: {
               const labelText = p.label;
               const labelW = estimateTextWidth(labelText, fontSize);
               const labelH = fontSize * 1.25;
+              const labelHalfW = labelW / 2 + 6;
+              const labelHalfH = labelH / 2 + 4;
+
+              const dx = labelX - cx;
+              const dy = labelY - cy;
+              const dist = Math.hypot(dx, dy);
+              const leaderNeeded = dist > size * 1.05;
+              const ux = dist > 0 ? dx / dist : 0;
+              const uy = dist > 0 ? dy / dist : 0;
+              const rayScaleX = ux !== 0 ? labelHalfW / Math.abs(ux) : Number.POSITIVE_INFINITY;
+              const rayScaleY = uy !== 0 ? labelHalfH / Math.abs(uy) : Number.POSITIVE_INFINITY;
+              const rayScale = Math.min(rayScaleX, rayScaleY);
+              const leaderStartX = cx + ux * (size / 2 + 3);
+              const leaderStartY = cy + uy * (size / 2 + 3);
+              const leaderEndX = labelX - ux * rayScale;
+              const leaderEndY = labelY - uy * rayScale;
 
               return (
                 <g
@@ -1444,6 +1460,20 @@ export default function QuadrantScatterMap(props: {
                   ) : null}
 
                   <Marker plane={p.plane} cx={cx} cy={cy} size={size} />
+
+                  {leaderNeeded ? (
+                    <line
+                      x1={leaderStartX}
+                      y1={leaderStartY}
+                      x2={leaderEndX}
+                      y2={leaderEndY}
+                      stroke={cluster?.stroke ?? "#5576ab"}
+                      strokeOpacity={0.9}
+                      strokeWidth={2.3}
+                      strokeDasharray="2 6"
+                      strokeLinecap="round"
+                    />
+                  ) : null}
 
                   {/* Label background */}
                   <rect
