@@ -105,6 +105,17 @@ function rectsOverlap(a: Rect, b: Rect) {
   return !(a.x2 < b.x1 || a.x1 > b.x2 || a.y2 < b.y1 || a.y1 > b.y2);
 }
 
+function normalizeAngle(a: number) {
+  let v = a;
+  while (v <= -Math.PI) v += Math.PI * 2;
+  while (v > Math.PI) v -= Math.PI * 2;
+  return v;
+}
+
+function angleDistance(a: number, b: number) {
+  return Math.abs(normalizeAngle(a - b));
+}
+
 function estimateTextWidth(text: string, fontSize: number) {
   // Simple monospace-ish estimate; good enough for collision avoidance.
   return Math.max(42, text.length * fontSize * 0.62);
@@ -363,6 +374,9 @@ function computeLabelPlacements(args: {
 
   const placed: Record<string, { x: number; y: number; rect: Rect }> = {};
   const taken: Rect[] = [];
+  const centers = new Map(
+    projects.map((p) => [p.id, { x: xToSvg(p.x), y: yToSvg(p.y), project: p }]),
+  );
 
   // Deterministic order helps: place top-heavy first.
   const ordered = [...projects].sort((a, b) => b.y - a.y);
@@ -386,16 +400,35 @@ function computeLabelPlacements(args: {
       };
     };
 
-    const baseGap = markerSize / 2 + 8 + labelH / 2;
     const preferBelowFirst = p.y > 0.55;
-    const verticalOffsets = preferBelowFirst
-      ? [baseGap, -baseGap, baseGap + 18, -baseGap - 18]
-      : [-baseGap, baseGap, -baseGap - 18, baseGap + 18];
-    const horizontalJitter = [0, -18, 18, -36, 36, -54, 54];
-    const sideGap = halfW + markerSize / 2 + 14;
-    const sideJitterY = [0, -16, 16, -30, 30];
+    const neighborCandidates = projects
+      .filter((q) => q.id !== p.id)
+      .map((q) => centers.get(q.id))
+      .filter((pt): pt is { x: number; y: number; project: ProjectInfo } => Boolean(pt))
+      .map((pt) => ({ x: pt.x, y: pt.y, d: Math.hypot(pt.x - cx, pt.y - cy) }))
+      .filter((pt) => pt.d <= 260);
+    let preferredAngle = preferBelowFirst ? Math.PI / 2 : -Math.PI / 2;
+    if (neighborCandidates.length) {
+      const nC = centroid(neighborCandidates.map((pt) => ({ x: pt.x, y: pt.y })));
+      preferredAngle = normalizeAngle(Math.atan2(nC.y - cy, nC.x - cx) + Math.PI);
+    }
+
+    const crowdBoost = clamp((neighborCandidates.length - 2) * 4, 0, 26);
+    const baseGap = markerSize / 2 + 10 + labelH / 2 + crowdBoost;
+    const verticalOffsets = preferBelowFirst ? [baseGap, -baseGap] : [-baseGap, baseGap];
+    const horizontalJitter = [0, -18, 18, -36, 36, -54, 54, -78, 78];
+    const sideGap = halfW + markerSize / 2 + 18 + crowdBoost * 0.6;
+    const sideJitterY = [0, -16, 16, -30, 30, -44, 44];
 
     const candidatesRaw: Array<{ x: number; y: number }> = [];
+    const radialOffsets = [baseGap, baseGap + 24, baseGap + 52, baseGap + 80];
+    const angleOffsetsDeg = [0, -22, 22, -44, 44, -66, 66, -95, 95, 180];
+    for (const r of radialOffsets) {
+      for (const deg of angleOffsetsDeg) {
+        const a = preferredAngle + (deg * Math.PI) / 180;
+        candidatesRaw.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
+      }
+    }
     for (const v of verticalOffsets) {
       for (const j of horizontalJitter) {
         candidatesRaw.push({ x: cx + j, y: cy + v });
@@ -422,13 +455,25 @@ function computeLabelPlacements(args: {
       };
 
       let overlapCount = 0;
+      let overlapArea = 0;
       for (const t of taken) {
-        if (rectsOverlap(rect, t)) overlapCount += 1;
+        if (!rectsOverlap(rect, t)) continue;
+        overlapCount += 1;
+        const ix = Math.max(0, Math.min(rect.x2, t.x2) - Math.max(rect.x1, t.x1));
+        const iy = Math.max(0, Math.min(rect.y2, t.y2) - Math.max(rect.y1, t.y1));
+        overlapArea += ix * iy;
       }
 
       const dist = Math.hypot(x - cx, y - cy);
       const clampPenalty = Math.abs(c.x - x) + Math.abs(c.y - y);
-      const score = overlapCount * 100000 + dist * 1.15 + clampPenalty * 2.2;
+      const candidateAngle = Math.atan2(y - cy, x - cx);
+      const anglePenalty = angleDistance(candidateAngle, preferredAngle) * 70;
+      const score =
+        overlapCount * 1000000 +
+        overlapArea * 75 +
+        dist * 1.05 +
+        clampPenalty * 2.5 +
+        anglePenalty;
 
       if (score < bestScore) {
         bestScore = score;
@@ -454,6 +499,7 @@ type ClusterDef = {
   projectIds: string[];
   connectivity?: number;
   labelPlacement?: "top" | "bottom-right" | "auto";
+  labelDistanceMultiplier?: number;
 };
 
 type ClusterZone = {
@@ -469,6 +515,7 @@ type ClusterZone = {
   labelAnchorY?: number;
   bounds?: { minX: number; maxX: number; minY: number; maxY: number };
   labelPlacement?: "top" | "bottom-right" | "auto";
+  labelDistanceMultiplier?: number;
   boundaryPoints?: Point[];
 };
 
@@ -514,6 +561,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     fill: "#ffe0ef",
     dash: "10 6",
     connectivity: 0.46,
+    labelDistanceMultiplier: 1.9,
     projectIds: ["claw", "frames", "sponge"],
   },
   {
@@ -532,6 +580,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     fill: "#ffe6cf",
     dash: "12 6",
     connectivity: 0.42,
+    labelDistanceMultiplier: 1.95,
     projectIds: ["krak", "avici", "pyra", "kast", "offgrid"],
   },
   {
@@ -541,6 +590,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     fill: "#d6f4e7",
     dash: "2 4",
     connectivity: 0.55,
+    labelDistanceMultiplier: 1.85,
     projectIds: ["slash", "altitude"],
   },
   {
@@ -910,18 +960,11 @@ export default function QuadrantScatterMap(props: {
           label: groupIdx === 0 ? def.label : undefined,
           bounds: groupIdx === 0 ? boundaryBounds : undefined,
           labelPlacement: groupIdx === 0 ? def.labelPlacement ?? "top" : undefined,
+          labelDistanceMultiplier: groupIdx === 0 ? def.labelDistanceMultiplier ?? 1 : undefined,
           boundaryPoints: groupIdx === 0 ? boundary : undefined,
         });
       }
     }
-
-    const normalizeAngle = (a: number) => {
-      let v = a;
-      while (v <= -Math.PI) v += Math.PI * 2;
-      while (v > Math.PI) v -= Math.PI * 2;
-      return v;
-    };
-    const angleDistance = (a: number, b: number) => Math.abs(normalizeAngle(a - b));
 
     // Place cluster titles with collision avoidance (against project labels + other clusters).
     const takenRects: Rect[] = Object.values(labelPlacements).map((lp) => ({
@@ -1001,7 +1044,8 @@ export default function QuadrantScatterMap(props: {
         zone.labelPlacement === "bottom-right"
           ? [0, -22, 22, -44, 44, -70, 70, 180]
           : [0, -25, 25, -50, 50, -75, 75, 180];
-      const radialOffsets = [34, 52, 70];
+      const distanceMultiplier = zone.labelDistanceMultiplier ?? 1;
+      const radialOffsets = [34, 56, 82].map((v) => v * distanceMultiplier);
       const candidates: Array<{ x: number; y: number; ax: number; ay: number; angle: number }> = [];
 
       for (const deg of angleOffsetsDeg) {
