@@ -483,6 +483,13 @@ function computeLabelPlacements(args: {
       const nC = centroid(neighborCandidates.map((pt) => ({ x: pt.x, y: pt.y })));
       preferredAngle = normalizeAngle(Math.atan2(nC.y - cy, nC.x - cx) + Math.PI);
     }
+    if (p.id === "sponge") {
+      // Keep paysponge.com label at south-east (bottom-right) of the dot.
+      preferredAngle = Math.PI / 4;
+    } else if (p.id === "creditcoop") {
+      // Keep creditcoop.xyz label top-right of the dot (attn-style pill placement).
+      preferredAngle = -Math.PI / 4;
+    }
 
     const crowdBoost = clamp((neighborCandidates.length - 2) * 4, 0, 26);
     const baseGap = markerSize / 2 + 10 + halfH + crowdBoost;
@@ -546,12 +553,67 @@ function computeLabelPlacements(args: {
       const clampPenalty = Math.abs(c.x - x) + Math.abs(c.y - y);
       const candidateAngle = Math.atan2(y - cy, x - cx);
       const anglePenalty = angleDistance(candidateAngle, preferredAngle) * 70;
+      const spongeMinRightCenterX = cx + halfW * 0.45 + markerSize / 2 + 10;
+      const spongeMinLowerCenterY = cy + Math.max(10, halfH * 0.2);
+      const spongeMinLeaderDistance = halfW + markerSize * 0.85 + 20;
+      const creditcoopMinRightCenterX = cx + halfW * 0.35 + markerSize / 2 + 8;
+      const creditcoopMaxUpperCenterY = cy - Math.max(10, halfH * 0.2);
+      const creditcoopTargetDistance = halfW + markerSize * 0.58 + 10;
+      const forcedSidePenalty =
+        p.id === "sponge"
+          ? x < spongeMinRightCenterX
+            ? 3200000
+            : 0
+          : 0;
+      const forcedDistancePenalty =
+        p.id === "sponge"
+          ? dist < spongeMinLeaderDistance
+            ? 220000
+            : 0
+          : 0;
+      const forcedBelowPenalty =
+        p.id === "sponge"
+          ? y < spongeMinLowerCenterY
+            ? 2800000
+            : 0
+          : 0;
+      const forcedCreditcoopRightPenalty =
+        p.id === "creditcoop"
+          ? x < creditcoopMinRightCenterX
+            ? 2600000
+            : 0
+          : 0;
+      const forcedCreditcoopAbovePenalty =
+        p.id === "creditcoop"
+          ? y > creditcoopMaxUpperCenterY
+            ? 2600000
+            : 0
+          : 0;
+      const forcedCreditcoopDistancePenalty =
+        p.id === "creditcoop"
+          ? dist < creditcoopTargetDistance * 0.72
+            ? 200000
+            : 0
+          : 0;
+      const forcedCreditcoopFarPenalty =
+        p.id === "creditcoop"
+          ? dist > creditcoopTargetDistance * 1.22
+            ? 360000
+            : 0
+          : 0;
       const score =
         overlapCount * 1000000 +
         overlapArea * 75 +
         dist * 1.05 +
         clampPenalty * 2.5 +
-        anglePenalty;
+        anglePenalty +
+        forcedSidePenalty +
+        forcedDistancePenalty +
+        forcedBelowPenalty +
+        forcedCreditcoopRightPenalty +
+        forcedCreditcoopAbovePenalty +
+        forcedCreditcoopDistancePenalty +
+        forcedCreditcoopFarPenalty;
 
       if (score < bestScore) {
         bestScore = score;
@@ -965,6 +1027,8 @@ export default function QuadrantScatterMap(props: {
 
   const fontSize = 30;
   const markerSize = 34;
+  const axisSideLabelFontSize = 46;
+  const axisSideLabelYOffset = -26;
 
   const labelPlacements = useMemo(() => {
     return computeLabelPlacements({
@@ -1074,21 +1138,23 @@ export default function QuadrantScatterMap(props: {
 
     // Keep cluster labels away from large axis titles.
     const leftAxisText = "← Reputation / legal";
-    const leftAxisW = estimateTextWidth(leftAxisText, 36);
+    const leftAxisW = estimateTextWidth(leftAxisText, axisSideLabelFontSize);
+    const leftAxisY = yMidLocal + axisSideLabelYOffset;
     takenRects.push({
       x1: xToSvg(0) + 28 - 10,
-      y1: yMidLocal - 20 - 28,
+      y1: leftAxisY - axisSideLabelFontSize * 0.95,
       x2: xToSvg(0) + 28 + leftAxisW + 10,
-      y2: yMidLocal - 20 + 14,
+      y2: leftAxisY + axisSideLabelFontSize * 0.44,
     });
 
     const rightAxisText = "Programmatic controls →";
-    const rightAxisW = estimateTextWidth(rightAxisText, 36);
+    const rightAxisW = estimateTextWidth(rightAxisText, axisSideLabelFontSize);
+    const rightAxisY = yMidLocal + axisSideLabelYOffset;
     takenRects.push({
       x1: xToSvg(1) - 28 - rightAxisW - 10,
-      y1: yMidLocal - 20 - 28,
+      y1: rightAxisY - axisSideLabelFontSize * 0.95,
       x2: xToSvg(1) - 28 + 10,
-      y2: yMidLocal - 20 + 14,
+      y2: rightAxisY + axisSideLabelFontSize * 0.44,
     });
 
     for (const zone of zones) {
@@ -1228,7 +1294,17 @@ export default function QuadrantScatterMap(props: {
     }
 
     return zones;
-  }, [pad, plotW, plotH, projects, xToSvg, yToSvg, labelPlacements]);
+  }, [
+    pad,
+    plotW,
+    plotH,
+    projects,
+    xToSvg,
+    yToSvg,
+    labelPlacements,
+    axisSideLabelFontSize,
+    axisSideLabelYOffset,
+  ]);
 
   const visibleClusterIds = useMemo(() => {
     return new Set(clusterZones.map((z) => z.id.replace(/-\d+$/, "")));
@@ -1519,8 +1595,8 @@ export default function QuadrantScatterMap(props: {
             {/* Axis labels (larger + bold, one per side) */}
             <text
               x={xToSvg(0) + 28}
-              y={yMid - 20}
-              fontSize={36}
+              y={yMid + axisSideLabelYOffset}
+              fontSize={axisSideLabelFontSize}
               fontWeight={800}
               textAnchor="start"
               fill="#1f3253"
@@ -1530,8 +1606,8 @@ export default function QuadrantScatterMap(props: {
             </text>
             <text
               x={xToSvg(1) - 28}
-              y={yMid - 20}
-              fontSize={36}
+              y={yMid + axisSideLabelYOffset}
+              fontSize={axisSideLabelFontSize}
               fontWeight={800}
               textAnchor="end"
               fill="#1f3253"
@@ -1561,7 +1637,7 @@ export default function QuadrantScatterMap(props: {
               const dx = labelX - cx;
               const dy = labelY - cy;
               const dist = Math.hypot(dx, dy);
-              const leaderNeeded = dist > size * 1.05;
+              const leaderNeeded = p.id !== "creditcoop" && (p.id === "sponge" || dist > size * 1.05);
               const ux = dist > 0 ? dx / dist : 0;
               const uy = dist > 0 ? dy / dist : 0;
               const rayScaleX = ux !== 0 ? labelHalfW / Math.abs(ux) : Number.POSITIVE_INFINITY;
@@ -1857,7 +1933,8 @@ export default function QuadrantScatterMap(props: {
         }
         .title {
           font-weight: 900;
-          font-size: 16px;
+          font-size: 24px;
+          line-height: 1.1;
         }
         .topRight {
           display: flex;
