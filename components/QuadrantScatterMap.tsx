@@ -90,8 +90,6 @@ type ClusterHoverState = {
   x: number;
   y: number;
   stroke: string;
-  targetX?: number;
-  targetY?: number;
 };
 
 type Rect = { x1: number; y1: number; x2: number; y2: number };
@@ -119,6 +117,74 @@ function angleDistance(a: number, b: number) {
 function estimateTextWidth(text: string, fontSize: number) {
   // Simple monospace-ish estimate; good enough for collision avoidance.
   return Math.max(42, text.length * fontSize * 0.62);
+}
+
+type LabelMetrics = {
+  fontSize: number;
+  padX: number;
+  padY: number;
+  textWidth: number;
+  pillW: number;
+  pillH: number;
+  textLength?: number;
+};
+
+function adaptiveLabelMetrics(args: {
+  text: string;
+  baseFont: number;
+  minFont: number;
+  maxPillWidth: number;
+  basePadX: number;
+  minPadX: number;
+  padY: number;
+}): LabelMetrics {
+  const len = Math.max(1, args.text.length);
+  const lengthFactor = clamp((len - 10) / 20, 0, 1);
+  const padX = clamp(
+    args.basePadX - lengthFactor * (args.basePadX - args.minPadX),
+    args.minPadX,
+    args.basePadX,
+  );
+  const capFont = (args.maxPillWidth - padX * 2) / (len * 0.62);
+  const fontSize = clamp(Math.min(args.baseFont, capFont), args.minFont, args.baseFont);
+  const textWidth = estimateTextWidth(args.text, fontSize);
+  const rawPillW = textWidth + padX * 2;
+  const pillW = Math.min(args.maxPillWidth, rawPillW);
+  const pillH = fontSize * 1.25 + args.padY * 2;
+
+  return {
+    fontSize,
+    padX,
+    padY: args.padY,
+    textWidth,
+    pillW,
+    pillH,
+    textLength: rawPillW > args.maxPillWidth ? Math.max(24, pillW - padX * 2) : undefined,
+  };
+}
+
+function projectLabelMetrics(text: string, baseFont: number) {
+  return adaptiveLabelMetrics({
+    text,
+    baseFont,
+    minFont: 18,
+    maxPillWidth: 270,
+    basePadX: 6,
+    minPadX: 2,
+    padY: 3,
+  });
+}
+
+function clusterLabelMetrics(text: string, baseFont: number) {
+  return adaptiveLabelMetrics({
+    text,
+    baseFont,
+    minFont: 20,
+    maxPillWidth: 360,
+    basePadX: 10,
+    minPadX: 4,
+    padY: 4,
+  });
 }
 
 function boundsForPoints(points: Point[]) {
@@ -368,10 +434,6 @@ function computeLabelPlacements(args: {
 }) {
   const { projects, xToSvg, yToSvg, pad, plotW, plotH, fontSize, markerSize } = args;
 
-  const labelH = fontSize * 1.25;
-  const padX = 6;
-  const padY = 4;
-
   const placed: Record<string, { x: number; y: number; rect: Rect }> = {};
   const taken: Rect[] = [];
   const centers = new Map(
@@ -385,14 +447,15 @@ function computeLabelPlacements(args: {
     const cx = xToSvg(p.x);
     const cy = yToSvg(p.y);
 
-    const w = estimateTextWidth(p.label, fontSize);
-    const halfW = w / 2;
+    const metrics = projectLabelMetrics(p.label, fontSize);
+    const halfW = metrics.pillW / 2;
+    const halfH = metrics.pillH / 2;
 
     const inBounds = (x: number, y: number) => {
-      const minX = pad + halfW + padX + 4;
-      const maxX = pad + plotW - halfW - padX - 4;
-      const minY = pad + labelH / 2 + padY + 4;
-      const maxY = pad + plotH - labelH / 2 - padY - 4;
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
 
       return {
         x: clamp(x, minX, maxX),
@@ -414,7 +477,7 @@ function computeLabelPlacements(args: {
     }
 
     const crowdBoost = clamp((neighborCandidates.length - 2) * 4, 0, 26);
-    const baseGap = markerSize / 2 + 10 + labelH / 2 + crowdBoost;
+    const baseGap = markerSize / 2 + 10 + halfH + crowdBoost;
     const verticalOffsets = preferBelowFirst ? [baseGap, -baseGap] : [-baseGap, baseGap];
     const horizontalJitter = [0, -18, 18, -36, 36, -54, 54, -78, 78];
     const sideGap = halfW + markerSize / 2 + 18 + crowdBoost * 0.6;
@@ -454,11 +517,11 @@ function computeLabelPlacements(args: {
       const x = bounded.x;
       const y = bounded.y;
 
-      const rect: Rect = {
-        x1: x - halfW - padX,
-        y1: y - labelH / 2 - padY,
-        x2: x + halfW + padX,
-        y2: y + labelH / 2 + padY,
+        const rect: Rect = {
+        x1: x - halfW,
+        y1: y - halfH,
+        x2: x + halfW,
+        y2: y + halfH,
       };
 
       let overlapCount = 0;
@@ -518,6 +581,10 @@ type ClusterZone = {
   label?: string;
   labelX?: number;
   labelY?: number;
+  labelFontSize?: number;
+  labelPillWidth?: number;
+  labelPillHeight?: number;
+  labelTextLength?: number;
   labelAnchorX?: number;
   labelAnchorY?: number;
   bounds?: { minX: number; maxX: number; minY: number; maxY: number };
@@ -638,6 +705,7 @@ export default function QuadrantScatterMap(props: {
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [clusterHover, setClusterHover] = useState<ClusterHoverState | null>(null);
   const [showClusters, setShowClusters] = useState(true);
+  const [view, setView] = useState({ zoom: 1, panX: 0, panY: 0 });
 
   const clearHideTimer = () => {
     if (hideTimerRef.current !== null) {
@@ -701,17 +769,58 @@ export default function QuadrantScatterMap(props: {
   const yToSvg = (y: number) => pad + (1 - clamp(y, 0, 1)) * plotH;
   const xMid = xToSvg(0.5);
   const yMid = yToSvg(0.5);
+  const MIN_ZOOM = 1;
+  const MAX_ZOOM = 2.6;
 
-  const getLocalFromSvgPoint = (svgX: number, svgY: number) => {
-    const wrap = chartWrapRef.current;
+  const clampPan = (zoom: number, panX: number, panY: number) => {
+    const minPanX = width - width * zoom;
+    const minPanY = height - height * zoom;
+    return {
+      panX: clamp(panX, minPanX, 0),
+      panY: clamp(panY, minPanY, 0),
+    };
+  };
+
+  const clientToSvgPoint = (clientX: number, clientY: number) => {
     const svg = svgRef.current;
-    if (!wrap || !svg) return { x: svgX, y: svgY };
-
-    const wrapRect = wrap.getBoundingClientRect();
+    if (!svg) return { x: width / 2, y: height / 2 };
     const svgRect = svg.getBoundingClientRect();
-    const x = svgRect.left - wrapRect.left + (svgX / width) * svgRect.width;
-    const y = svgRect.top - wrapRect.top + (svgY / height) * svgRect.height;
-    return { x, y };
+    return {
+      x: ((clientX - svgRect.left) / svgRect.width) * width,
+      y: ((clientY - svgRect.top) / svgRect.height) * height,
+    };
+  };
+
+  const zoomAt = (clientX: number, clientY: number, factor: number) => {
+    setView((prev) => {
+      const focus = clientToSvgPoint(clientX, clientY);
+      const nextZoom = clamp(prev.zoom * factor, MIN_ZOOM, MAX_ZOOM);
+      const worldX = (focus.x - prev.panX) / prev.zoom;
+      const worldY = (focus.y - prev.panY) / prev.zoom;
+      const nextPanX = focus.x - worldX * nextZoom;
+      const nextPanY = focus.y - worldY * nextZoom;
+      const clamped = clampPan(nextZoom, nextPanX, nextPanY);
+      return { zoom: nextZoom, panX: clamped.panX, panY: clamped.panY };
+    });
+  };
+
+  const zoomAtCenter = (factor: number) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, factor);
+  };
+
+  const resetZoom = () => {
+    setView({ zoom: 1, panX: 0, panY: 0 });
+  };
+
+  const onChartWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    // Use ctrl/cmd + wheel (or pinch) for diagram zoom; regular wheel keeps page scroll.
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    const factor = Math.exp(-e.deltaY * 0.0015);
+    zoomAt(e.clientX, e.clientY, factor);
   };
 
   const getLocalFromClientPoint = (clientX: number, clientY: number) => {
@@ -724,12 +833,12 @@ export default function QuadrantScatterMap(props: {
     };
   };
 
-  const showHover = (id: string, svgX: number, svgY: number) => {
+  const showHover = (id: string, clientX: number, clientY: number) => {
     clearHideTimer();
     setClusterHover(null);
     setTooltip((prev) => {
       if (prev?.pinned) return prev;
-      const { x, y } = getLocalFromSvgPoint(svgX, svgY);
+      const { x, y } = getLocalFromClientPoint(clientX, clientY);
       return { id, x, y, pinned: false };
     });
   };
@@ -745,37 +854,24 @@ export default function QuadrantScatterMap(props: {
     }, 160);
   };
 
-  const togglePin = (id: string, svgX: number, svgY: number) => {
+  const togglePin = (id: string, clientX: number, clientY: number) => {
     clearHideTimer();
     setClusterHover(null);
-    const { x, y } = getLocalFromSvgPoint(svgX, svgY);
+    const { x, y } = getLocalFromClientPoint(clientX, clientY);
     setTooltip((prev) => {
       if (prev?.pinned && prev.id === id) return null;
       return { id, x, y, pinned: true };
     });
   };
 
-  const showClusterHover = (
-    label: string,
-    stroke: string,
-    clientX: number,
-    clientY: number,
-    targetSvgX?: number,
-    targetSvgY?: number,
-  ) => {
+  const showClusterHover = (label: string, stroke: string, clientX: number, clientY: number) => {
     if (tooltip?.pinned) return;
     const { x, y } = getLocalFromClientPoint(clientX, clientY);
-    const target =
-      targetSvgX !== undefined && targetSvgY !== undefined
-        ? getLocalFromSvgPoint(targetSvgX, targetSvgY)
-        : null;
     setClusterHover({
       label,
       x,
       y,
       stroke,
-      targetX: target?.x,
-      targetY: target?.y,
     });
   };
 
@@ -849,30 +945,12 @@ export default function QuadrantScatterMap(props: {
     x = clamp(x, edge, w - boxW - edge);
     y = clamp(y, edge, h - boxH - edge);
 
-    // Prefer pointing to cluster anchor when available, fallback to nearest bubble edge.
-    const x2 =
-      clusterHover.targetX !== undefined
-        ? clamp(clusterHover.targetX, 6, w - 6)
-        : clamp(clusterHover.x, x, x + boxW);
-    const y2 =
-      clusterHover.targetY !== undefined
-        ? clamp(clusterHover.targetY, 6, h - 6)
-        : clamp(clusterHover.y, y, y + boxH);
-
     return {
-      width: w,
-      height: h,
       bubbleStyle: {
         left: x,
         top: y,
         width: boxW,
       } satisfies React.CSSProperties,
-      guide: {
-        x1: clusterHover.x,
-        y1: clusterHover.y,
-        x2,
-        y2,
-      },
       stroke: clusterHover.stroke,
     };
   }, [clusterHover, tooltip]);
@@ -1005,14 +1083,11 @@ export default function QuadrantScatterMap(props: {
       y2: yMidLocal - 20 + 14,
     });
 
-    const labelHeight = 46;
-    const labelPadX = 16;
-
     for (const zone of zones) {
       if (!zone.label || !zone.bounds) continue;
-      const labelW = estimateTextWidth(zone.label, 30) + labelPadX * 2;
-      const halfW = labelW / 2;
-      const halfH = labelHeight / 2;
+      const labelMetrics = clusterLabelMetrics(zone.label, 30);
+      const halfW = labelMetrics.pillW / 2;
+      const halfH = labelMetrics.pillH / 2;
       const b = zone.bounds;
       const centerX = (b.minX + b.maxX) / 2;
       const centerY = (b.minY + b.maxY) / 2;
@@ -1114,6 +1189,10 @@ export default function QuadrantScatterMap(props: {
       if (best) {
         zone.labelX = best.x;
         zone.labelY = best.y;
+        zone.labelFontSize = labelMetrics.fontSize;
+        zone.labelPillWidth = labelMetrics.pillW;
+        zone.labelPillHeight = labelMetrics.pillH;
+        zone.labelTextLength = labelMetrics.textLength;
         let anchorX = best.ax;
         let anchorY = best.ay;
         if (zone.boundaryPoints?.length) {
@@ -1166,6 +1245,7 @@ export default function QuadrantScatterMap(props: {
     }
     return m;
   }, []);
+  const zoomTransform = `matrix(${view.zoom} 0 0 ${view.zoom} ${view.panX} ${view.panY})`;
 
   return (
     <div
@@ -1194,6 +1274,19 @@ export default function QuadrantScatterMap(props: {
               />
               <span>Show strategy clusters</span>
             </label>
+            <div className="zoomControls" aria-label="Map zoom controls">
+              <button type="button" className="zoomBtn" onClick={() => zoomAtCenter(1 / 1.16)}>
+                -
+              </button>
+              <div className="zoomValue">{Math.round(view.zoom * 100)}%</div>
+              <button type="button" className="zoomBtn" onClick={() => zoomAtCenter(1.16)}>
+                +
+              </button>
+              <button type="button" className="zoomReset" onClick={resetZoom}>
+                Reset
+              </button>
+            </div>
+            <div className="zoomHint">Pinch or Ctrl/Cmd+wheel on map to zoom</div>
             <div className="legendInline" aria-label="Execution plane legend">
               <span className="legendItem">
                 <MiniMarker plane="web3" /> Web3-native (circle)
@@ -1211,7 +1304,7 @@ export default function QuadrantScatterMap(props: {
           </div>
         </div>
 
-        <div className="chartWrap" ref={chartWrapRef}>
+        <div className="chartWrap" ref={chartWrapRef} onWheel={onChartWheel}>
           <div className="axisTitleOutside axisTitleTop">Back-end infrastructure</div>
           <svg
             ref={svgRef}
@@ -1230,11 +1323,12 @@ export default function QuadrantScatterMap(props: {
             {/* Refreshed background for stronger zone contrast */}
             <rect x="0" y="0" width={width} height={height} fill="url(#quad-bg)" />
 
-            {/* Subtle quadrant shading */}
-            <rect x={pad} y={pad} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.065} />
-            <rect x={pad + plotW / 2} y={pad} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.035} />
-            <rect x={pad} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.035} />
-            <rect x={pad + plotW / 2} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.065} />
+            <g transform={zoomTransform}>
+              {/* Subtle quadrant shading */}
+              <rect x={pad} y={pad} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.065} />
+              <rect x={pad + plotW / 2} y={pad} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.035} />
+              <rect x={pad} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.035} />
+              <rect x={pad + plotW / 2} y={pad + plotH / 2} width={plotW / 2} height={plotH / 2} fill="#33588a" opacity={0.065} />
 
             {/* Optional commercial cluster zones */}
             {showClusters
@@ -1261,8 +1355,6 @@ export default function QuadrantScatterMap(props: {
                           zone.stroke,
                           e.clientX,
                           e.clientY,
-                          zone.labelX,
-                          zone.labelY,
                         )}
                       onMouseMove={(e) => moveClusterHover(e.clientX, e.clientY)}
                       onMouseLeave={hideClusterHover}
@@ -1273,8 +1365,6 @@ export default function QuadrantScatterMap(props: {
                           zone.stroke,
                           r.left + r.width / 2,
                           r.top + r.height / 2,
-                          zone.labelX,
-                          zone.labelY,
                         );
                       }}
                       onBlur={hideClusterHover}
@@ -1289,26 +1379,39 @@ export default function QuadrantScatterMap(props: {
                             zone.stroke,
                             e.clientX,
                             e.clientY,
-                            zone.labelX,
-                            zone.labelY,
                           )}
                         onMouseMove={(e) => moveClusterHover(e.clientX, e.clientY)}
                         onMouseLeave={hideClusterHover}
                       >
+                        {(() => {
+                          const zonePillW =
+                            zone.labelPillWidth ?? clusterLabelMetrics(zone.label ?? "", 30).pillW;
+                          const zonePillH =
+                            zone.labelPillHeight ?? clusterLabelMetrics(zone.label ?? "", 30).pillH;
+                          const zoneHalfW = zonePillW / 2;
+                          const zoneHalfH = zonePillH / 2;
+                          const zoneFontSize =
+                            zone.labelFontSize ?? clusterLabelMetrics(zone.label ?? "", 30).fontSize;
+                          const zoneTextLength =
+                            zone.labelTextLength ??
+                            clusterLabelMetrics(zone.label ?? "", 30).textLength;
+
+                          return (
+                            <>
                         {zone.labelAnchorX && zone.labelAnchorY ? (
                           <line
                             x1={
-                              zone.labelAnchorX > zone.labelX + estimateTextWidth(zone.label, 30) / 2 + 16
-                                ? zone.labelX + estimateTextWidth(zone.label, 30) / 2 + 16
-                                : zone.labelAnchorX < zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 16
-                                  ? zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 16
+                              zone.labelAnchorX > zone.labelX + zoneHalfW + 10
+                                ? zone.labelX + zoneHalfW + 10
+                                : zone.labelAnchorX < zone.labelX - zoneHalfW - 10
+                                  ? zone.labelX - zoneHalfW - 10
                                   : zone.labelX
                             }
                             y1={
                               zone.labelAnchorY > zone.labelY + 2
-                                ? zone.labelY + 28
+                                ? zone.labelY + zoneHalfH + 6
                                 : zone.labelAnchorY < zone.labelY - 2
-                                  ? zone.labelY - 28
+                                  ? zone.labelY - zoneHalfH - 6
                                   : zone.labelY
                             }
                             x2={zone.labelAnchorX}
@@ -1321,11 +1424,11 @@ export default function QuadrantScatterMap(props: {
                           />
                         ) : null}
                         <rect
-                          x={zone.labelX - estimateTextWidth(zone.label, 30) / 2 - 16}
-                          y={zone.labelY - 23}
-                          width={estimateTextWidth(zone.label, 30) + 32}
-                          height={46}
-                          rx={23}
+                          x={zone.labelX - zoneHalfW}
+                          y={zone.labelY - zoneHalfH}
+                          width={zonePillW}
+                          height={zonePillH}
+                          rx={Math.max(10, zoneHalfH)}
                           fill="#ffffff"
                           opacity={1}
                           stroke={zone.stroke}
@@ -1337,12 +1440,17 @@ export default function QuadrantScatterMap(props: {
                           y={zone.labelY + 1}
                           textAnchor="middle"
                           dominantBaseline="middle"
-                          fontSize={30}
+                          fontSize={zoneFontSize}
                           fontWeight={900}
                           fill="#1a2f52"
+                          textLength={zoneTextLength}
+                          lengthAdjust={zoneTextLength ? "spacingAndGlyphs" : undefined}
                         >
                           {zone.label}
                         </text>
+                            </>
+                          );
+                        })()}
                       </g>
                     ) : null}
                   </g>
@@ -1442,10 +1550,11 @@ export default function QuadrantScatterMap(props: {
               const labelY = lp?.y ?? cy - 26;
 
               const labelText = p.label;
-              const labelW = estimateTextWidth(labelText, fontSize);
-              const labelH = fontSize * 1.25;
-              const labelHalfW = labelW / 2 + 6;
-              const labelHalfH = labelH / 2 + 4;
+              const labelMetrics = projectLabelMetrics(labelText, fontSize);
+              const labelW = labelMetrics.pillW;
+              const labelH = labelMetrics.pillH;
+              const labelHalfW = labelW / 2;
+              const labelHalfH = labelH / 2;
 
               const dx = labelX - cx;
               const dy = labelY - cy;
@@ -1468,11 +1577,14 @@ export default function QuadrantScatterMap(props: {
                   role="button"
                   aria-label={p.label}
                   style={{ cursor: "pointer" }}
-                  onMouseEnter={() => showHover(p.id, cx, cy)}
+                  onMouseEnter={(e) => showHover(p.id, e.clientX, e.clientY)}
                   onMouseLeave={() => hideHover()}
-                  onFocus={() => showHover(p.id, cx, cy)}
+                  onFocus={(e) => {
+                    const r = (e.currentTarget as SVGGElement).getBoundingClientRect();
+                    showHover(p.id, r.left + r.width / 2, r.top + r.height / 2);
+                  }}
                   onBlur={() => hideHover()}
-                  onClick={() => togglePin(p.id, cx, cy)}
+                  onClick={(e) => togglePin(p.id, e.clientX, e.clientY)}
                 >
                   {/* Big invisible hit target */}
                   <circle cx={cx} cy={cy} r={36} fill="transparent" />
@@ -1531,11 +1643,11 @@ export default function QuadrantScatterMap(props: {
 
                   {/* Label background */}
                   <rect
-                    x={labelX - labelW / 2 - 6}
-                    y={labelY - labelH / 2 - 4}
-                    width={labelW + 12}
-                    height={labelH + 8}
-                    rx={8}
+                    x={labelX - labelHalfW}
+                    y={labelY - labelHalfH}
+                    width={labelW}
+                    height={labelH}
+                    rx={Math.max(8, labelHalfH)}
                     fill="#f7fbff"
                     opacity={0.98}
                     stroke={cluster?.stroke ?? "#35527f"}
@@ -1549,59 +1661,36 @@ export default function QuadrantScatterMap(props: {
                     y={labelY}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    fontSize={fontSize}
+                    fontSize={labelMetrics.fontSize}
                     fill="#102d55"
                     opacity={1}
                     style={{ fontWeight: 740, letterSpacing: "0.005em" }}
                     stroke="#ffffff"
                     strokeWidth={2.6}
                     paintOrder="stroke fill"
+                    textLength={labelMetrics.textLength}
+                    lengthAdjust={labelMetrics.textLength ? "spacingAndGlyphs" : undefined}
                   >
                     {labelText}
                   </text>
                 </g>
               );
             })}
+            </g>
 
           </svg>
           <div className="axisTitleOutside axisTitleBottom">User-facing distribution</div>
 
           {clusterHoverRender ? (
-            <>
-              <svg
-                className="clusterHoverGuide"
-                viewBox={`0 0 ${clusterHoverRender.width} ${clusterHoverRender.height}`}
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                <defs>
-                  <marker
-                    id="cluster-hover-arrow"
-                    markerWidth="8"
-                    markerHeight="8"
-                    refX="7"
-                    refY="4"
-                    orient="auto"
-                  >
-                    <path d="M 0 0 L 8 4 L 0 8 z" fill={clusterHoverRender.stroke} />
-                  </marker>
-                </defs>
-                <line
-                  x1={clusterHoverRender.guide.x1}
-                  y1={clusterHoverRender.guide.y1}
-                  x2={clusterHoverRender.guide.x2}
-                  y2={clusterHoverRender.guide.y2}
-                  stroke={clusterHoverRender.stroke}
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  strokeOpacity={0.95}
-                  markerEnd="url(#cluster-hover-arrow)"
-                />
-              </svg>
-              <div className="clusterHover" style={clusterHoverRender.bubbleStyle}>
-                {clusterHover?.label}
-              </div>
-            </>
+            <div
+              className="clusterHover"
+              style={{
+                ...clusterHoverRender.bubbleStyle,
+                borderColor: clusterHoverRender.stroke,
+              }}
+            >
+              {clusterHover?.label}
+            </div>
           ) : null}
 
           {/* Tooltip overlay */}
@@ -1791,6 +1880,48 @@ export default function QuadrantScatterMap(props: {
         .clusterToggle input {
           margin: 0;
         }
+        .zoomControls {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          border: 1px solid rgba(53, 82, 127, 0.24);
+          border-radius: 10px;
+          background: rgba(245, 250, 255, 0.95);
+          padding: 5px 8px;
+          box-shadow: 0 6px 14px rgba(31, 50, 83, 0.08);
+        }
+        .zoomBtn {
+          min-width: 24px;
+          height: 24px;
+          border: 1px solid rgba(53, 82, 127, 0.3);
+          border-radius: 7px;
+          background: rgba(255, 255, 255, 0.95);
+          color: #1f3253;
+          font-weight: 800;
+          line-height: 1;
+          cursor: pointer;
+        }
+        .zoomReset {
+          border: 1px solid rgba(53, 82, 127, 0.3);
+          border-radius: 7px;
+          background: rgba(255, 255, 255, 0.95);
+          color: #1f3253;
+          font-weight: 700;
+          font-size: 12px;
+          padding: 3px 8px;
+          cursor: pointer;
+        }
+        .zoomValue {
+          min-width: 48px;
+          text-align: center;
+          font-size: 12px;
+          font-weight: 800;
+          color: rgba(31, 50, 83, 0.84);
+        }
+        .zoomHint {
+          font-size: 11px;
+          color: rgba(31, 50, 83, 0.66);
+        }
         .hint {
           font-size: 12px;
           color: rgba(31, 50, 83, 0.72);
@@ -1801,6 +1932,7 @@ export default function QuadrantScatterMap(props: {
           position: relative;
           padding-top: 34px;
           padding-bottom: 40px;
+          touch-action: pan-y;
         }
 
         .axisTitleOutside {
@@ -1861,15 +1993,6 @@ export default function QuadrantScatterMap(props: {
           color: #1f3253;
           white-space: nowrap;
           box-shadow: 0 8px 20px rgba(31, 50, 83, 0.14);
-        }
-
-        .clusterHoverGuide {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 13;
-          pointer-events: none;
         }
 
         .tooltipHeader {
