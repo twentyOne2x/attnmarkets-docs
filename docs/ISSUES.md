@@ -1,5 +1,43 @@
 # ISSUES
 
+## 2026-02-24 - Quadrant map: increase project name size by 50%
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested a direct typography scale increase for map project names.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Project labels became too small after prior downsizing.
+- Fix intent:
+  1) Increase project label font sizing by ~50% from current baseline.
+  2) Keep placement and interaction logic unchanged.
+- Acceptance criteria:
+  - Project names are visibly larger (~50%).
+  - Map still builds and renders correctly.
+- Complexity: small
+
+EXECUTOR
+- Updated `/Users/user/PycharmProjects/attnmarkets-docs/components/QuadrantScatterMap.tsx`:
+  - Base project label font: `20 -> 30`.
+  - General minimum project label font: `14 -> 21`.
+  - Special constrained labels scaled up:
+    - `creditcoop`: cap `23 -> 35`, min `14 -> 21`, width cap `208 -> 250`.
+    - `stripe_capital`: cap `21 -> 32`, min `14 -> 21`, width cap `190 -> 228`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-quadrant-names-plus50-2026-02-24.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
 ## 2026-02-24 - Quadrant map: restore visible dotted leader for Business Treasury Stack label
 
 - [x] report captured
