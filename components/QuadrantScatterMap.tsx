@@ -654,7 +654,7 @@ type ClusterDef = {
   dash: string;
   projectIds: string[];
   connectivity?: number;
-  labelPlacement?: "top" | "bottom-right" | "mid-right" | "auto";
+  labelPlacement?: "top" | "bottom-right" | "mid-right" | "mid-left" | "auto";
   labelDistanceMultiplier?: number;
 };
 
@@ -674,7 +674,7 @@ type ClusterZone = {
   labelAnchorX?: number;
   labelAnchorY?: number;
   bounds?: { minX: number; maxX: number; minY: number; maxY: number };
-  labelPlacement?: "top" | "bottom-right" | "mid-right" | "auto";
+  labelPlacement?: "top" | "bottom-right" | "mid-right" | "mid-left" | "auto";
   labelDistanceMultiplier?: number;
   boundaryPoints?: Point[];
 };
@@ -752,6 +752,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     fill: "#d6f4e7",
     dash: "2 4",
     connectivity: 0.55,
+    labelPlacement: "mid-left",
     labelDistanceMultiplier: 1.2,
     projectIds: ["slash", "altitude"],
   },
@@ -1192,6 +1193,8 @@ export default function QuadrantScatterMap(props: {
           ? (58 * Math.PI) / 180
           : zone.labelPlacement === "mid-right"
             ? (-18 * Math.PI) / 180
+            : zone.labelPlacement === "mid-left"
+              ? Math.PI
           : zone.labelPlacement === "top"
             ? -Math.PI / 2
             : autoAngle;
@@ -1206,6 +1209,8 @@ export default function QuadrantScatterMap(props: {
           ? [0, -22, 22, -44, 44, -70, 70, 180]
           : zone.labelPlacement === "mid-right"
             ? [0, -14, 14, -28, 28, -44, 44, 180]
+            : zone.labelPlacement === "mid-left"
+              ? [0, -14, 14, -28, 28, -44, 44, 180]
           : [0, -25, 25, -50, 50, -75, 75, 180];
       const distanceMultiplier = zone.labelDistanceMultiplier ?? 1;
       const radialOffsets = [34, 56, 82].map((v) => v * distanceMultiplier);
