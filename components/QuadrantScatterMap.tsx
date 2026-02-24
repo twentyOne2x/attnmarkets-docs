@@ -167,7 +167,7 @@ function projectLabelMetrics(text: string, baseFont: number) {
   return adaptiveLabelMetrics({
     text,
     baseFont,
-    minFont: 18,
+    minFont: 14,
     maxPillWidth: 270,
     basePadX: 6,
     minPadX: 2,
@@ -522,14 +522,14 @@ function computeLabelPlacements(args: {
       continue;
     }
 
-    // Hard lock: Stripe Capital label at BOTTOM-LEFT of its dot.
+    // Hard lock: Stripe Capital label directly LEFT of its dot.
     if (p.id === "stripe_capital") {
       const minX = pad + halfW + 4;
       const maxX = pad + plotW - halfW - 4;
       const minY = pad + halfH + 4;
       const maxY = pad + plotH - halfH - 4;
       const fixedX = clamp(cx - (markerSize / 2 + halfW + 8), minX, maxX);
-      const fixedY = clamp(cy + (markerSize / 2 + halfH + 6), minY, maxY);
+      const fixedY = clamp(cy, minY, maxY);
       placed[p.id] = {
         x: fixedX,
         y: fixedY,
@@ -1138,7 +1138,7 @@ export default function QuadrantScatterMap(props: {
     };
   }, [clusterHover, tooltip]);
 
-  const fontSize = 30;
+  const fontSize = 20;
   const markerSize = 34;
   const axisSideLabelFontSize = 46;
   const axisSideLabelYOffset = -26;
@@ -1278,6 +1278,57 @@ export default function QuadrantScatterMap(props: {
       const b = zone.bounds;
       const centerX = (b.minX + b.maxX) / 2;
       const centerY = (b.minY + b.maxY) / 2;
+
+      if (zone.id.startsWith("business_money-")) {
+        const inBounds = (x: number, y: number) => ({
+          x: clamp(x, plotLeft + halfW + 6, plotRight - halfW - 6),
+          y: clamp(y, plotTop + halfH + 6, plotBottom - halfH - 6),
+        });
+
+        const preferredX = b.minX - halfW - 34;
+        const preferredY = b.minY - halfH - 20;
+        const xCandidates = [preferredX, preferredX - 22, preferredX + 22];
+        const yCandidates = [preferredY, preferredY + 20, preferredY - 20, preferredY + 40, preferredY - 40];
+
+        let placedBusiness: { x: number; y: number; rect: Rect } | null = null;
+        for (const yCandidate of yCandidates) {
+          for (const xCandidate of xCandidates) {
+            const bounded = inBounds(xCandidate, yCandidate);
+            const rect: Rect = {
+              x1: bounded.x - halfW,
+              y1: bounded.y - halfH,
+              x2: bounded.x + halfW,
+              y2: bounded.y + halfH,
+            };
+            const hasOverlap = takenRects.some((t) => rectsOverlap(rect, t));
+            if (!hasOverlap) {
+              placedBusiness = { x: bounded.x, y: bounded.y, rect };
+              break;
+            }
+            if (!placedBusiness) placedBusiness = { x: bounded.x, y: bounded.y, rect };
+          }
+          if (placedBusiness && !takenRects.some((t) => rectsOverlap(placedBusiness!.rect, t))) break;
+        }
+
+        if (placedBusiness) {
+          zone.labelX = placedBusiness.x;
+          zone.labelY = placedBusiness.y;
+          zone.labelFontSize = labelMetrics.fontSize;
+          zone.labelPillWidth = labelMetrics.pillW;
+          zone.labelPillHeight = labelMetrics.pillH;
+          // Anchor into the cluster body so the dotted leader is visible and meaningful.
+          zone.labelAnchorX = clamp(centerX, plotLeft + 8, plotRight - 8);
+          zone.labelAnchorY = clamp(centerY, plotTop + 8, plotBottom - 8);
+          takenRects.push({
+            x1: placedBusiness.rect.x1 - 4,
+            y1: placedBusiness.rect.y1 - 4,
+            x2: placedBusiness.rect.x2 + 4,
+            y2: placedBusiness.rect.y2 + 4,
+          });
+          continue;
+        }
+      }
+
       const autoAngle = Math.atan2(centerY - plotCenterY, centerX - plotCenterX);
       const preferredAngle =
         zone.labelPlacement === "bottom-right"
@@ -1602,25 +1653,29 @@ export default function QuadrantScatterMap(props: {
                         {zone.labelAnchorX && zone.labelAnchorY ? (
                           <line
                             x1={
-                              zone.labelAnchorX > zone.labelX + zoneHalfW + 10
-                                ? zone.labelX + zoneHalfW + 10
-                                : zone.labelAnchorX < zone.labelX - zoneHalfW - 10
-                                  ? zone.labelX - zoneHalfW - 10
-                                  : zone.labelX
+                              zone.id.startsWith("business_money-")
+                                ? zone.labelX + zoneHalfW + 8
+                                : zone.labelAnchorX > zone.labelX + zoneHalfW + 10
+                                  ? zone.labelX + zoneHalfW + 10
+                                  : zone.labelAnchorX < zone.labelX - zoneHalfW - 10
+                                    ? zone.labelX - zoneHalfW - 10
+                                    : zone.labelX
                             }
                             y1={
-                              zone.labelAnchorY > zone.labelY + 2
-                                ? zone.labelY + zoneHalfH + 6
-                                : zone.labelAnchorY < zone.labelY - 2
-                                  ? zone.labelY - zoneHalfH - 6
-                                  : zone.labelY
+                              zone.id.startsWith("business_money-")
+                                ? zone.labelY
+                                : zone.labelAnchorY > zone.labelY + 2
+                                  ? zone.labelY + zoneHalfH + 6
+                                  : zone.labelAnchorY < zone.labelY - 2
+                                    ? zone.labelY - zoneHalfH - 6
+                                    : zone.labelY
                             }
                             x2={zone.labelAnchorX}
                             y2={zone.labelAnchorY}
                             stroke={zone.stroke}
                             strokeOpacity={1}
-                            strokeWidth={3.1}
-                            strokeDasharray="2 6"
+                            strokeWidth={zone.id.startsWith("business_money-") ? 3.8 : 3.1}
+                            strokeDasharray={zone.id.startsWith("business_money-") ? "1 5" : "2 6"}
                             strokeLinecap="round"
                           />
                         ) : null}
