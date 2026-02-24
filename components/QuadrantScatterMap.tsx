@@ -167,8 +167,8 @@ function projectLabelMetrics(text: string, baseFont: number) {
   return adaptiveLabelMetrics({
     text,
     baseFont,
-    minFont: 14,
-    maxPillWidth: 270,
+    minFont: 21,
+    maxPillWidth: 320,
     basePadX: 6,
     minPadX: 2,
     padY: 3,
@@ -179,9 +179,9 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number) {
   if (project.id === "creditcoop") {
     return adaptiveLabelMetrics({
       text: project.label,
-      baseFont: Math.min(baseFont, 23),
-      minFont: 14,
-      maxPillWidth: 208,
+      baseFont: Math.min(baseFont, 35),
+      minFont: 21,
+      maxPillWidth: 250,
       basePadX: 5,
       minPadX: 2,
       padY: 3,
@@ -191,9 +191,9 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number) {
   if (project.id === "stripe_capital") {
     return adaptiveLabelMetrics({
       text: project.label,
-      baseFont: Math.min(baseFont, 21),
-      minFont: 14,
-      maxPillWidth: 190,
+      baseFont: Math.min(baseFont, 32),
+      minFont: 21,
+      maxPillWidth: 228,
       basePadX: 4,
       minPadX: 2,
       padY: 3,
@@ -1138,7 +1138,7 @@ export default function QuadrantScatterMap(props: {
     };
   }, [clusterHover, tooltip]);
 
-  const fontSize = 20;
+  const fontSize = 30;
   const markerSize = 34;
   const axisSideLabelFontSize = 46;
   const axisSideLabelYOffset = -26;
