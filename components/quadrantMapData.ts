@@ -308,6 +308,44 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://www.shopify.com/capital",
   },
 
+  stripe_capital: {
+    id: "stripe_capital",
+    label: "Stripe Capital",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.79,
+    y: 0.86,
+    narrative:
+      "Payments-native business financing via dashboard offers, with repayment withheld from Stripe sales.",
+    creditModel:
+      "Business loans and/or merchant cash advances (MCA), typically repaid as a fixed percentage of Stripe sales.",
+    scale: [
+      "Stripe Capital standalone financing volume/revenue/profit is not separately disclosed in the cited public docs.",
+      "Docs list Stripe Capital availability in AU, DE, FR, GB, US (availability varies by country).",
+      "Capital for platforms is described as public preview and only available in US and UK (docs).",
+    ],
+    why: [
+      "Repayment is collected from card/payment volume on Stripe rails, matching revenue-linked financing mechanics.",
+      "Offer distribution is embedded in Stripe Dashboard (Capital tab), with eligibility based on account/payment history.",
+    ],
+    sources: [
+      {
+        label: "Stripe Capital (product page)",
+        url: "https://stripe.com/capital",
+      },
+      {
+        label: "How Stripe Capital works (docs)",
+        url: "https://docs.stripe.com/capital/how-stripe-capital-works",
+      },
+      {
+        label: "How Capital for platforms works (docs)",
+        url: "https://docs.stripe.com/capital/how-capital-for-platforms-works",
+      },
+    ],
+    href: "https://stripe.com/capital",
+  },
+
   rain: {
     id: "rain",
     label: "rain.xyz",

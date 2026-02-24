@@ -175,6 +175,22 @@ function projectLabelMetrics(text: string, baseFont: number) {
   });
 }
 
+function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number) {
+  if (project.id === "creditcoop") {
+    return adaptiveLabelMetrics({
+      text: project.label,
+      baseFont: Math.min(baseFont, 23),
+      minFont: 14,
+      maxPillWidth: 208,
+      basePadX: 5,
+      minPadX: 2,
+      padY: 3,
+    });
+  }
+
+  return projectLabelMetrics(project.label, baseFont);
+}
+
 function clusterLabelMetrics(text: string, baseFont: number) {
   const len = Math.max(1, text.length);
   const shrink = clamp((len - 18) / 18, 0, 1);
@@ -455,7 +471,7 @@ function computeLabelPlacements(args: {
     const cx = xToSvg(p.x);
     const cy = yToSvg(p.y);
 
-    const metrics = projectLabelMetrics(p.label, fontSize);
+    const metrics = projectLabelMetricsForProject(p, fontSize);
     const halfW = metrics.pillW / 2;
     const halfH = metrics.pillH / 2;
 
@@ -487,7 +503,7 @@ function computeLabelPlacements(args: {
       // Keep paysponge.com label at south-east (bottom-right) of the dot.
       preferredAngle = Math.PI / 4;
     } else if (p.id === "creditcoop") {
-      // Keep creditcoop.xyz label top-right of the dot (attn-style pill placement).
+      // Keep creditcoop.xyz label on the top-right of the dot.
       preferredAngle = -Math.PI / 4;
     }
 
@@ -557,7 +573,7 @@ function computeLabelPlacements(args: {
       const spongeMinLowerCenterY = cy + Math.max(10, halfH * 0.2);
       const spongeMinLeaderDistance = halfW + markerSize * 0.85 + 20;
       const creditcoopMinRightCenterX = cx + halfW * 0.35 + markerSize / 2 + 8;
-      const creditcoopMaxUpperCenterY = cy - Math.max(10, halfH * 0.2);
+      const creditcoopMaxUpperCenterY = cy - Math.max(8, halfH * 0.2);
       const creditcoopTargetDistance = halfW + markerSize * 0.58 + 10;
       const forcedSidePenalty =
         p.id === "sponge"
@@ -580,13 +596,13 @@ function computeLabelPlacements(args: {
       const forcedCreditcoopRightPenalty =
         p.id === "creditcoop"
           ? x < creditcoopMinRightCenterX
-            ? 2600000
+            ? 8200000
             : 0
           : 0;
       const forcedCreditcoopAbovePenalty =
         p.id === "creditcoop"
           ? y > creditcoopMaxUpperCenterY
-            ? 2600000
+            ? 8200000
             : 0
           : 0;
       const forcedCreditcoopDistancePenalty =
@@ -638,7 +654,7 @@ type ClusterDef = {
   dash: string;
   projectIds: string[];
   connectivity?: number;
-  labelPlacement?: "top" | "bottom-right" | "auto";
+  labelPlacement?: "top" | "bottom-right" | "mid-right" | "auto";
   labelDistanceMultiplier?: number;
 };
 
@@ -658,7 +674,7 @@ type ClusterZone = {
   labelAnchorX?: number;
   labelAnchorY?: number;
   bounds?: { minX: number; maxX: number; minY: number; maxY: number };
-  labelPlacement?: "top" | "bottom-right" | "auto";
+  labelPlacement?: "top" | "bottom-right" | "mid-right" | "auto";
   labelDistanceMultiplier?: number;
   boundaryPoints?: Point[];
 };
@@ -680,6 +696,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
       "clearco",
       "paypal_working_capital",
       "shopify_capital",
+      "stripe_capital",
     ],
   },
   {
@@ -696,7 +713,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     stroke: "#6d57c4",
     fill: "#e5dcff",
     dash: "8 5",
-    projectIds: ["yumi"],
+    projectIds: [],
   },
   {
     id: "agent_credit_spend",
@@ -706,16 +723,16 @@ const CLUSTER_DEFS: ClusterDef[] = [
     dash: "10 6",
     connectivity: 0.46,
     labelDistanceMultiplier: 1.9,
-    projectIds: ["claw", "frames", "sponge"],
+    projectIds: ["frames", "sponge"],
   },
   {
     id: "market_credit_debt",
-    label: "Credit Markets + Debt Issuance",
+    label: "Reputation-based credit",
     stroke: "#5f66a8",
     fill: "#dde2ff",
     dash: "4 5",
     connectivity: 0.68,
-    projectIds: ["wildcat", "threejane", "xitadel"],
+    projectIds: ["wildcat", "threejane", "claw", "yumi"],
   },
   {
     id: "consumer_spend",
@@ -724,7 +741,8 @@ const CLUSTER_DEFS: ClusterDef[] = [
     fill: "#ffe6cf",
     dash: "12 6",
     connectivity: 0.42,
-    labelDistanceMultiplier: 1.45,
+    labelPlacement: "mid-right",
+    labelDistanceMultiplier: 1.08,
     projectIds: ["krak", "avici", "pyra", "kast", "offgrid"],
   },
   {
@@ -734,7 +752,7 @@ const CLUSTER_DEFS: ClusterDef[] = [
     fill: "#d6f4e7",
     dash: "2 4",
     connectivity: 0.55,
-    labelDistanceMultiplier: 1.85,
+    labelDistanceMultiplier: 1.2,
     projectIds: ["slash", "altitude"],
   },
   {
@@ -762,7 +780,10 @@ export default function QuadrantScatterMap(props: {
   const asOf = props.asOf ?? "2026-02-21";
   const maxWidth = props.maxWidth ?? 2200;
 
-  const projects = useMemo(() => Object.values(PROJECTS), []);
+  const projects = useMemo(
+    () => Object.values(PROJECTS).filter((p) => p.id !== "xitadel"),
+    [],
+  );
   const totalProjects = projects.length;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartWrapRef = useRef<HTMLDivElement | null>(null);
@@ -1169,6 +1190,8 @@ export default function QuadrantScatterMap(props: {
       const preferredAngle =
         zone.labelPlacement === "bottom-right"
           ? (58 * Math.PI) / 180
+          : zone.labelPlacement === "mid-right"
+            ? (-18 * Math.PI) / 180
           : zone.labelPlacement === "top"
             ? -Math.PI / 2
             : autoAngle;
@@ -1181,6 +1204,8 @@ export default function QuadrantScatterMap(props: {
       const angleOffsetsDeg =
         zone.labelPlacement === "bottom-right"
           ? [0, -22, 22, -44, 44, -70, 70, 180]
+          : zone.labelPlacement === "mid-right"
+            ? [0, -14, 14, -28, 28, -44, 44, 180]
           : [0, -25, 25, -50, 50, -75, 75, 180];
       const distanceMultiplier = zone.labelDistanceMultiplier ?? 1;
       const radialOffsets = [34, 56, 82].map((v) => v * distanceMultiplier);
@@ -1628,7 +1653,7 @@ export default function QuadrantScatterMap(props: {
               const labelY = lp?.y ?? cy - 26;
 
               const labelText = p.label;
-              const labelMetrics = projectLabelMetrics(labelText, fontSize);
+              const labelMetrics = projectLabelMetricsForProject(p, fontSize);
               const labelW = labelMetrics.pillW;
               const labelH = labelMetrics.pillH;
               const labelHalfW = labelW / 2;
