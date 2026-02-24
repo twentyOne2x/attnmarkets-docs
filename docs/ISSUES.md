@@ -1,5 +1,117 @@
 # ISSUES
 
+## 2026-02-24 - Quadrant map: restore visible dotted leader for Business Treasury Stack label
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: solvable. This is a rendering/placement issue for a specific cluster label leader.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - `Business Treasury Stack` label currently appears without a visible dotted leader due to short/hidden connector geometry.
+- Fix intent:
+  1) Force a visible leader start point from the label edge.
+  2) Anchor the leader to a meaningful point inside the business cluster.
+- Acceptance criteria:
+  - `Business Treasury Stack` shows a clearly visible dotted leader to its cluster.
+- Complexity: small
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - `business_money` cluster label placement now uses larger left/top offset candidates so the leader has visible length.
+  - Business cluster leader anchor now targets the cluster body center.
+  - Business cluster leader styling increased for visibility (`strokeWidth` and tighter dotted pattern) while leaving other clusters unchanged.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS.
+  - Screenshots:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-quadrant-business-leader-fixed-v2-2026-02-24.png`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-quadrant-business-leader-fixed-v2-closeup-2026-02-24.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-24 - Quadrant map: stabilize Business Treasury Stack cluster label placement
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: solvable. The issue is a cluster-label placement instability in the map renderer.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - `Business Treasury Stack` currently uses generic auto-placement and can appear awkward/“broken” relative to its own cluster.
+- Fix intent:
+  1) Add deterministic placement for `business_money` label left of its cluster envelope.
+  2) Keep collision-safe vertical fallback so it does not overlap nearby project labels.
+- Acceptance criteria:
+  - `Business Treasury Stack` stays near and left of its own cluster consistently.
+  - No obvious overlap with nearby labels in normal view.
+- Complexity: small
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Added deterministic placement override for `business_money` cluster labels:
+    - preferred position is top-left of the cluster envelope
+    - collision-safe x/y fallback candidates are used when needed
+    - leader anchor now attaches to upper-left cluster boundary region
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS.
+  - Screenshots:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-quadrant-business-fixed-v2-2026-02-24.png`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-quadrant-business-fixed-v2-closeup-2026-02-24.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
+## 2026-02-24 - Quadrant map: Stripe label left-of-dot + smaller project label typography
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification
+
+PLANNER
+- Spec check: solvable. This is a constrained visual/layout adjustment in the existing quadrant map component.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - `Stripe Capital` label placement must be fixed to left-of-dot in crowded top-right region.
+  - Baseline project label typography is oversized for dense names (example: `youlend.com`).
+- Fix intent:
+  1) Force `stripe_capital` label placement to the left of its point.
+  2) Reduce default project label font scale.
+- Acceptance criteria:
+  - `Stripe Capital` appears left of its dot.
+  - Project names render smaller overall.
+- Complexity: small
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Kept hard-lock placement for `stripe_capital` as direct left-of-dot in `computeLabelPlacements(...)`.
+  - Reduced global project label base size from `24` to `20`.
+  - Reduced minimum adaptive project label size from `18` to `14`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS.
+  - Screenshots:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-quadrant-stripe-left-smaller-labels-2026-02-24.png`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-quadrant-top-right-closeup2-2026-02-24.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+
 ## 2026-02-23 - Tighten cluster inclusion visuals + full-diagram capture
 
 - [x] report captured
