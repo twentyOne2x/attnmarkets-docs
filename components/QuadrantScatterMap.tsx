@@ -188,6 +188,18 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number) {
     });
   }
 
+  if (project.id === "stripe_capital") {
+    return adaptiveLabelMetrics({
+      text: project.label,
+      baseFont: Math.min(baseFont, 21),
+      minFont: 14,
+      maxPillWidth: 190,
+      basePadX: 4,
+      minPadX: 2,
+      padY: 3,
+    });
+  }
+
   return projectLabelMetrics(project.label, baseFont);
 }
 
@@ -464,8 +476,20 @@ function computeLabelPlacements(args: {
     projects.map((p) => [p.id, { x: xToSvg(p.x), y: yToSvg(p.y), project: p }]),
   );
 
-  // Deterministic order helps: place top-heavy first.
-  const ordered = [...projects].sort((a, b) => b.y - a.y);
+  // Deterministic order helps: place top-heavy first, but lock key labels first.
+  const priority = (id: string) => {
+    if (id === "creditcoop") return 3;
+    if (id === "stripe_capital") return 2.8;
+    if (id === "paypal_working_capital") return 2.5;
+    if (id === "sponge") return 2;
+    return 0;
+  };
+  const ordered = [...projects].sort((a, b) => {
+    const pa = priority(a.id);
+    const pb = priority(b.id);
+    if (pb !== pa) return pb - pa;
+    return b.y - a.y;
+  });
 
   for (const p of ordered) {
     const cx = xToSvg(p.x);
@@ -474,6 +498,73 @@ function computeLabelPlacements(args: {
     const metrics = projectLabelMetricsForProject(p, fontSize);
     const halfW = metrics.pillW / 2;
     const halfH = metrics.pillH / 2;
+
+    // Hard lock: creditcoop.xyz label must stay at TOP-RIGHT of its dot.
+    // This bypasses candidate scoring so it cannot flip left in crowded layouts.
+    if (p.id === "creditcoop") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx + markerSize / 2 + halfW + 8, minX, maxX);
+      const fixedY = clamp(cy - (markerSize / 2 + halfH + 6), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Hard lock: Stripe Capital label at BOTTOM-LEFT of its dot.
+    if (p.id === "stripe_capital") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx - (markerSize / 2 + halfW + 8), minX, maxX);
+      const fixedY = clamp(cy + (markerSize / 2 + halfH + 6), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Hard lock: PayPal Working Capital label directly below the dot.
+    if (p.id === "paypal_working_capital") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy + (markerSize / 2 + halfH + 6), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
 
     const inBounds = (x: number, y: number) => {
       const minX = pad + halfW + 4;
@@ -503,8 +594,8 @@ function computeLabelPlacements(args: {
       // Keep paysponge.com label at south-east (bottom-right) of the dot.
       preferredAngle = Math.PI / 4;
     } else if (p.id === "creditcoop") {
-      // Keep creditcoop.xyz label on the top-right of the dot.
-      preferredAngle = -Math.PI / 4;
+      // Keep creditcoop.xyz label on the right, near the dot.
+      preferredAngle = 0;
     }
 
     const crowdBoost = clamp((neighborCandidates.length - 2) * 4, 0, 26);
@@ -572,9 +663,9 @@ function computeLabelPlacements(args: {
       const spongeMinRightCenterX = cx + halfW * 0.45 + markerSize / 2 + 10;
       const spongeMinLowerCenterY = cy + Math.max(10, halfH * 0.2);
       const spongeMinLeaderDistance = halfW + markerSize * 0.85 + 20;
-      const creditcoopMinRightCenterX = cx + halfW * 0.35 + markerSize / 2 + 8;
-      const creditcoopMaxUpperCenterY = cy - Math.max(8, halfH * 0.2);
-      const creditcoopTargetDistance = halfW + markerSize * 0.58 + 10;
+      const creditcoopMinRightCenterX = cx + halfW * 0.3 + markerSize / 2 + 6;
+      const creditcoopMaxVerticalOffset = Math.max(8, halfH * 0.2);
+      const creditcoopTargetDistance = halfW + markerSize * 0.44 + 6;
       const forcedSidePenalty =
         p.id === "sponge"
           ? x < spongeMinRightCenterX
@@ -599,9 +690,9 @@ function computeLabelPlacements(args: {
             ? 8200000
             : 0
           : 0;
-      const forcedCreditcoopAbovePenalty =
+      const forcedCreditcoopVerticalPenalty =
         p.id === "creditcoop"
-          ? y > creditcoopMaxUpperCenterY
+          ? Math.abs(y - cy) > creditcoopMaxVerticalOffset
             ? 8200000
             : 0
           : 0;
@@ -613,8 +704,8 @@ function computeLabelPlacements(args: {
           : 0;
       const forcedCreditcoopFarPenalty =
         p.id === "creditcoop"
-          ? dist > creditcoopTargetDistance * 1.22
-            ? 360000
+          ? dist > creditcoopTargetDistance * 1.12
+            ? 520000
             : 0
           : 0;
       const score =
@@ -627,7 +718,7 @@ function computeLabelPlacements(args: {
         forcedDistancePenalty +
         forcedBelowPenalty +
         forcedCreditcoopRightPenalty +
-        forcedCreditcoopAbovePenalty +
+        forcedCreditcoopVerticalPenalty +
         forcedCreditcoopDistancePenalty +
         forcedCreditcoopFarPenalty;
 
@@ -1667,7 +1758,11 @@ export default function QuadrantScatterMap(props: {
               const dx = labelX - cx;
               const dy = labelY - cy;
               const dist = Math.hypot(dx, dy);
-              const leaderNeeded = p.id !== "creditcoop" && (p.id === "sponge" || dist > size * 1.05);
+              const leaderNeeded =
+                p.id !== "creditcoop" &&
+                p.id !== "stripe_capital" &&
+                p.id !== "paypal_working_capital" &&
+                (p.id === "sponge" || dist > size * 1.05);
               const ux = dist > 0 ? dx / dist : 0;
               const uy = dist > 0 ? dy / dist : 0;
               const rayScaleX = ux !== 0 ? labelHalfW / Math.abs(ux) : Number.POSITIVE_INFINITY;
