@@ -1,5 +1,59 @@
 # ISSUES
 
+## 2026-02-25 - SEO: publish docs.attn.markets `/llms.txt`
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [ ] visual/screenshot verification (not needed)
+
+PLANNER
+- Spec check: solvable. This docs repo serves `docs.attn.markets`, and a static `public/llms.txt` will publish at the required `/llms.txt` path.
+- Type: docs/seo
+- Status: completed
+- Context + suspected cause:
+  - Docs host currently has no publicly discoverable `llms.txt`.
+  - LLM-friendly discovery requires a curated docs map rather than full sitemap dumping.
+- Fix intent:
+  1) Add curated `public/llms.txt` with key canonical docs links.
+  2) Keep content short and structured with `#`, `>`, `##`, and bullets (including `## Optional`).
+- Acceptance criteria:
+  - `public/llms.txt` exists and is deployable at `https://docs.attn.markets/llms.txt`.
+  - File contains canonical docs TOC links and optional lower-priority links.
+  - Build + knowledge checks pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `public/llms.txt` (new)
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep llms file curated and concise.
+    - Link only real, public docs routes.
+  - Tests:
+    - `rg -n "^#|^>|^##|docs\\.attn\\.markets|attn\\.markets|app\\.attn\\.markets" public/llms.txt`
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Added `/Users/user/PycharmProjects/attnmarkets-docs/public/llms.txt` with curated sections:
+    - `## Start here`
+    - `## Core mechanics`
+    - `## User guides`
+    - `## Optional`
+  - Included canonical docs entry points and links to main/app hosts as optional context.
+- Proofs:
+  - `rg -n "^#|^>|^##|docs\\.attn\\.markets|attn\\.markets|app\\.attn\\.markets" public/llms.txt` (pass)
+  - `npm run build` (pass)
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `public/llms.txt` exists and is deployable at `/llms.txt`.
+  - PASS: file is concise, curated, and includes `## Optional`.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-02-24 - Quadrant map: increase project name size by 50%
 
 - [x] report captured

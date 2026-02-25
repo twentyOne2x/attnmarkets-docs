@@ -1,0 +1,25 @@
+# attn Docs
+
+> Canonical documentation for attnCredit: onchain revenue-backed credit lines with non-custodial controls, routing lock, and automated repayment flows.
+
+## Start here
+- [Overview](https://docs.attn.markets/): Documentation home.
+- [attn 1-pager](https://docs.attn.markets/1-pager): Short product summary.
+- [How it works (non-technical)](https://docs.attn.markets/mechanics/how-it-works-nontechnical): End-to-end user flow.
+- [Architecture overview](https://docs.attn.markets/mechanics/architecture-overview): System architecture and components.
+
+## Core mechanics
+- [Revenue accounts and signing model](https://docs.attn.markets/mechanics/revenue-accounts-and-signing-model): Control model and signing boundaries.
+- [Risk and limits](https://docs.attn.markets/mechanics/risk-and-limits): Underwriting controls and limit logic.
+- [Pricing and parameters](https://docs.attn.markets/mechanics/pricing-and-parameters): Pricing and configurable terms.
+
+## User guides
+- [For creators, devs, and CTOs](https://docs.attn.markets/users/for-creators-devs-and-ctos)
+- [For apps, DAOs, and builders](https://docs.attn.markets/users/for-apps-daos-and-builders)
+- [For launchpads and incubators](https://docs.attn.markets/users/for-launchpads-and-incubators)
+
+## Optional
+- [Roadmap](https://docs.attn.markets/roadmap)
+- [Tokenomics overview](https://docs.attn.markets/tokenomics/tokenomics-overview)
+- [Main site](https://www.attn.markets/)
+- [App demo](https://app.attn.markets/credit-line)
