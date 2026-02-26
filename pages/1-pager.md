@@ -11,10 +11,11 @@ attnCredit is a revolving credit and control system designed to do two things at
 
 ## Product system
 
-- **Control plane:** revenue account setup, signer policy, timelocks, and spending constraints.
-- **Credit engine:** dynamic borrowing base, policy-based limit adjustments, and pricing bands.
-- **Servicing engine:** repayment-first sweeps, mandatory paydown checks, and freeze/default handling.
-- **Monitoring and tape:** loan-level reporting, reconciliations, event logs, and incident history.
+- **Foundation rail (Squads v4):** built on Squads v4 multisig rails for custody, timelocks, and spending controls.
+- **Money-routing and permissions rules (control plane):** defines where revenue goes, who can approve key changes, and which timelock/spending guardrails apply.
+- **Limit and pricing logic (credit engine):** adjusts borrowing capacity as cashflow changes and applies policy-based pricing bands.
+- **Repayment operations (servicing engine):** runs repayment-first sweeps, mandatory paydown checks, and freeze/default handling.
+- **Audit and operating evidence (monitoring and tape):** keeps loan-level reporting, reconciliations, event logs, and incident history.
 
 ## Operating lanes (separated by design)
 

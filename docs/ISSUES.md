@@ -1131,6 +1131,100 @@ VERIFIER
   - PASS: detailed, scannable sections remain and are more explicit.
   - PASS: knowledge check and build both succeeded.
 
+## 2026-02-26 - 1-pager wording pass: plain language first, jargon in parentheses
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested reducing jargon density in the `Product system` block by stating the plain-language meaning first, then the technical term in parentheses.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - The existing bullets lead with internal terms ("control plane", "credit engine", etc.), which can slow first-time comprehension.
+- Fix intent:
+  1) Rewrite each `Product system` bullet to lead with plain-language function.
+  2) Move technical labels into parentheses.
+  3) Keep scope limited to wording (no structural feature claims).
+- Acceptance criteria:
+  - Each of the four bullets in `Product system` starts with plain language.
+  - Each bullet includes the corresponding technical label in parentheses.
+  - `python3 scripts/knowledge_check.py` passes.
+  - `npm run build` passes.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/1-pager.md` only.
+  - Keep sections/order unchanged.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Updated `pages/1-pager.md` `Product system` bullets:
+  - switched to plain-language-first labels
+  - kept technical terms in parentheses
+  - retained section/order and scope
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/1-pager` generated successfully).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: all four bullets lead with plain-language wording.
+  - PASS: each bullet retains the technical label in parentheses.
+  - PASS: knowledge check and build both succeeded.
+
+## 2026-02-26 - 1-pager add explicit Squads v4 foundation line
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested explicitly stating that attnCredit builds on Squads v4 because it is an important trust and architecture signal.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - The current 1-pager explains control primitives but does not name Squads v4 directly.
+- Fix intent:
+  1) Add one concise line in `Product system` that explicitly states Squads v4 as the base rail.
+  2) Keep phrasing business-readable and avoid over-technical detail.
+  3) Preserve page structure and tone.
+- Acceptance criteria:
+  - `/1-pager` explicitly mentions Squads v4 in a clear one-liner.
+  - Existing section order remains unchanged.
+  - `python3 scripts/knowledge_check.py` passes.
+  - `npm run build` passes.
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update `pages/1-pager.md` only.
+  - Keep new line in `Product system` context.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Updated `pages/1-pager.md`:
+  - Added one explicit Squads line in `Product system`:
+    - `Foundation rail (Squads v4): built on Squads v4 multisig rails for custody, timelocks, and spending controls.`
+  - Kept section ordering and surrounding wording unchanged.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/1-pager` generated successfully).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `/1-pager` explicitly names Squads v4.
+  - PASS: section order unchanged.
+  - PASS: knowledge check and build both succeeded.
+
 ## 2026-02-22 - Quadrant scale ordering: show hard metrics first
 
 - [x] report captured
