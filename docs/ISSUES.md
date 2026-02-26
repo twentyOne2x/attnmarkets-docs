@@ -1071,6 +1071,66 @@ EXECUTOR
 VERIFIER
 - Acceptance criteria check: PASS.
 
+## 2026-02-26 - 1-pager refresh: clearer intro framing + detailed sections
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested an updated `/1-pager` with a high-level intro first, followed by detailed sections, and asked whether a one-line "Think YouLend-style ..." frame should be used.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current `/1-pager` is clear but starts directly in product terms; user wants a more immediate plain-language framing line.
+- Fix intent:
+  1) Rewrite the top section to lead with plain-language framing.
+  2) Add a concise "YouLend-style" comparison line tailored to onchain businesses.
+  3) Preserve and tighten detailed sections below the intro.
+- Acceptance criteria:
+  - Intro explains what attnCredit is in plain language in the first two paragraphs.
+  - Includes a single one-line framing comparison using YouLend-style language.
+  - Detailed sections remain present and scannable.
+  - `python3 scripts/knowledge_check.py` passes.
+  - `npm run build` passes.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/1-pager.md`
+  - Keep tone factual; avoid over-claiming implementation state.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Updated `pages/1-pager.md`:
+  - Replaced the opener with a high-level plain-language framing.
+  - Added the requested one-line comparison:
+    - "Think YouLend-style revenue financing, rebuilt for onchain businesses ..."
+  - Reorganized the body into explicit detail sections:
+    - what this is
+    - product system
+    - separated operating lanes
+    - lifecycle
+    - governance/risk
+    - roadmap
+    - next actions
+- Proofs:
+  - `rg -n "Think YouLend-style|What this is|Lifecycle|Operating lanes|Next actions" pages/1-pager.md`
+    - matched expected headings/line.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/1-pager` generated successfully).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: intro is high-level and clear in first two paragraphs.
+  - PASS: one-line YouLend-style framing is present.
+  - PASS: detailed, scannable sections remain and are more explicit.
+  - PASS: knowledge check and build both succeeded.
+
 ## 2026-02-22 - Quadrant scale ordering: show hard metrics first
 
 - [x] report captured
