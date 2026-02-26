@@ -849,11 +849,11 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "payments_rails",
-    label: "Payments Rails / L1 Narratives",
+    label: "B2B2C BNPL + Payments Rails",
     stroke: "#a150ac",
     fill: "#f1ddf4",
     dash: "14 7",
-    projectIds: ["klarna_tempo", "colossus"],
+    projectIds: ["klarna_tempo", "affirm", "colossus"],
   },
   {
     id: "adjacent",

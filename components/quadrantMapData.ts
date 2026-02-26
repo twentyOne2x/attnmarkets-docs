@@ -554,6 +554,30 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://www.klarna.com/international/press/klarna-launches-klarnausd-as-stablecoin-transactions-hit-usd27-trillion/",
   },
 
+  affirm: {
+    id: "affirm",
+    label: "Affirm",
+    stack: "User-facing distribution",
+    controlPrimitive: "Reputation / legal",
+    plane: "web2",
+    x: 0.24,
+    y: 0.16,
+    narrative:
+      "B2B2C BNPL network: merchant-integrated checkout plus consumer pay-over-time surfaces (including card/app flows).",
+    creditModel:
+      "Consumer BNPL underwriting/collections delivered through merchant integrations and app/card surfaces.",
+    why: [
+      "Distribution depends on merchant/checkout integrations even when UX is shopper-facing.",
+      "Control is policy, underwriting, and collections rather than escrow/sweep enforcement.",
+    ],
+    sources: [
+      { label: "Affirm for business", url: "https://www.affirm.com/business" },
+      { label: "Affirm Card", url: "https://www.affirm.com/card" },
+      { label: "Affirm payment options", url: "https://www.affirm.com/how-it-works" },
+    ],
+    href: "https://www.affirm.com/business",
+  },
+
   avici: {
     id: "avici",
     label: "avici.money",

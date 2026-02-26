@@ -1,5 +1,208 @@
 # ISSUES
 
+## 2026-02-26 - Frontend evidence loop: add Playwright baseline, journeys map, CI artifacts, and local evidence bundles
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run (attempted; network/sandbox blockers recorded below)
+- [ ] visual/screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. This frontend docs repo lacked Playwright coverage, journey mapping, and automated evidence artifact capture.
+- Type: qa/tooling
+- Status: completed
+- Context + suspected cause:
+  - No Playwright dependency/config/specs were present.
+  - No `docs/e2e/journeys.md` map existed.
+  - CI only ran knowledge checks, so no report/trace/video artifact pipeline existed.
+  - Local evidence bundle command under `tmp/e2e/YYYY-MM-DD/` was missing.
+- Fix intent:
+  1) Add minimal Playwright baseline with one smoke journey and failure trace/video capture.
+  2) Add `docs/e2e/journeys.md` with 3-5 critical journeys mapped to test files.
+  3) Add GitHub Action to run Playwright and upload report/test-results artifacts.
+  4) Add local `test:e2e:evidence` command that writes per-run evidence bundles.
+  5) Keep `tmp/` (and Playwright output dirs) out of git.
+- Acceptance criteria:
+  - Playwright setup exists with one smoke journey and trace/video retention on failures.
+  - `docs/e2e/journeys.md` exists with 3-5 mapped journeys.
+  - GitHub Action runs Playwright and uploads report + trace/video artifacts.
+  - Local evidence command writes bundles to `tmp/e2e/YYYY-MM-DD/run-*`.
+  - `tmp/` remains gitignored.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-02-26-frontend-evidence-loop-playwright-baseline.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `.gitignore`
+    - `package.json`
+    - `playwright.config.mjs`
+    - `tests/e2e/smoke.spec.js`
+    - `docs/e2e/journeys.md`
+    - `scripts/e2e_evidence.mjs`
+    - `.github/workflows/playwright-e2e.yml`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep setup minimal (one implemented smoke journey).
+    - Ensure failure artifacts are retained and uploaded.
+  - Tests:
+    - `rg -n "test:e2e|@playwright/test|retain-on-failure|tmp/|playwright-report|test-results|smoke.spec.js" package.json .gitignore playwright.config.mjs docs/e2e/journeys.md .github/workflows/playwright-e2e.yml scripts/e2e_evidence.mjs`
+    - `npm run test:e2e -- --list`
+    - `npm run test:e2e:evidence`
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Added Playwright baseline:
+    - `playwright.config.mjs` with `trace: "retain-on-failure"` and `video: "retain-on-failure"`.
+    - `tests/e2e/smoke.spec.js` smoke coverage for `/` and `/introduction`.
+  - Added journey mapping:
+    - `docs/e2e/journeys.md` with 4 critical journeys mapped to Playwright files (1 implemented, 3 planned).
+  - Added evidence command:
+    - `scripts/e2e_evidence.mjs` creates `tmp/e2e/YYYY-MM-DD/run-*/` with stdout/stderr logs, summary JSON, and copied `playwright-report`/`test-results` artifacts when present.
+    - `package.json` scripts: `test:e2e`, `test:e2e:evidence`; dev dep `@playwright/test`.
+  - Added CI workflow:
+    - `.github/workflows/playwright-e2e.yml` installs dependencies + browser, runs Playwright, uploads `playwright-report` and `test-results`.
+  - Updated ignore rules:
+    - `.gitignore` now ignores `tmp/`, `playwright-report/`, and `test-results/`.
+- Proofs:
+  - `rg -n "test:e2e|@playwright/test|retain-on-failure|tmp/|playwright-report|test-results|smoke.spec.js" ...` -> PASS; expected lines present across updated files.
+  - `npm run test:e2e -- --list` -> FAIL in this environment (`Playwright Test did not expect test() to be called here`, due missing local Playwright package install and fallback to external binary path).
+  - `npm run test:e2e:evidence` -> FAIL in this environment (`ENOTFOUND registry.npmjs.org`) when `npx` attempts package fetch.
+  - `npm run build` -> PARTIAL: compile succeeds, then sandbox blocks Next IPC binding (`listen EPERM 0.0.0.0`) during page-data collection.
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS with environment caveats.
+  - PASS: Playwright baseline + smoke journey + failure trace/video config added.
+  - PASS: `docs/e2e/journeys.md` exists with 4 mapped critical journeys.
+  - PASS: CI workflow uploads report and trace/video artifact directories.
+  - PASS: local evidence bundle command implemented at `tmp/e2e/YYYY-MM-DD/run-*`.
+  - PASS: `tmp/` and Playwright output directories are gitignored.
+  - Caveat: Runtime execution is blocked in this sandbox by DNS/network and port-binding restrictions; run full e2e/CI verification in a network-enabled environment.
+
+## 2026-02-26 - SEO: refresh docs.attn.markets `llms.txt` with full canonical docs map
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [ ] visual/screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User requested updating `docs.attn.markets/llms.txt` to a tighter curated index that covers canonical docs sections/pages without dumping full content.
+- Type: docs/seo
+- Status: completed
+- Context + suspected cause:
+  - Current `public/llms.txt` exists but does not include all canonical public docs pages currently available in nav/content.
+  - A richer curated map should improve LLM discoverability while staying concise.
+- Fix intent:
+  1) Replace `public/llms.txt` with the updated grouped link set aligned to current public docs routes.
+  2) Keep the file concise and in `llms.txt`-style markdown index format.
+- Acceptance criteria:
+  - `public/llms.txt` contains grouped canonical links for intro, mechanics, users, token/roadmap, and optional references.
+  - All linked docs routes resolve to existing public pages in this repo.
+  - Build + knowledge checks pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `public/llms.txt`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep `llms.txt` curated (index only), no long-form content dumps.
+    - Link only existing public routes.
+  - Tests:
+    - `rg -n "^#|^>|^##|docs\\.attn\\.markets|github\\.com/twentyOne2x/attnmarkets-docs" public/llms.txt`
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Updated:
+  - `public/llms.txt`
+    - Replaced prior minimal index with the expanded curated map:
+      - `## Start here`
+      - `## Mechanics and controls`
+      - `## Who this is for`
+      - `## Token and roadmap`
+      - `## Optional`
+    - Included only canonical public docs routes plus optional docs-source link.
+- Proofs:
+  - `rg -n "^#|^>|^##|docs\\.attn\\.markets|github\\.com/twentyOne2x/attnmarkets-docs" public/llms.txt` -> expected sections/links present.
+  - Route existence check (local file-level mapping from llms URLs to `pages/**`) -> `ALL_DOCS_ROUTES_RESOLVE`.
+  - `npm run build` -> PASS.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - Runtime smoke:
+    - `curl -I http://127.0.0.1:4013/llms.txt` -> `HTTP/1.1 200 OK`, `Content-Type: text/plain; charset=UTF-8`
+    - `curl http://127.0.0.1:4013/llms.txt` returns the updated curated content.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `public/llms.txt` now contains grouped canonical links for intro, mechanics, users, token/roadmap, and optional references.
+  - PASS: linked docs routes resolve to existing public pages in this repo.
+  - PASS: build, knowledge check, and runtime `/llms.txt` smoke all pass.
+
+## 2026-02-26 - attn-in-context: add Affirm and merge BNPL framing to B2B2C + rails
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [ ] visual/screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User asked to reflect BNPL as B2B2C (merchant-integrated + shopper-facing), add Affirm, and merge framing in the `attn-in-context` map/page.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current map includes `klarna + tempo` but no `Affirm`.
+  - Segment naming emphasizes "payments rails" and underrepresents merchant-first BNPL integration dynamics.
+- Fix intent:
+  1) Add `Affirm` project classification to map data.
+  2) Merge segment/cluster wording to `B2B2C BNPL + Payments Rails`.
+  3) Update `attn-in-context` narrative copy to explicitly call out BNPL as merchant-integrated B2B2C distribution.
+- Acceptance criteria:
+  - `Affirm` appears in map data with rationale/sources and renders in the merged BNPL+rails cluster.
+  - `attn-in-context` segment list includes Klarna + Tempo, Affirm, and Colossus under merged naming.
+  - `attn fit by segment` prose reflects the new B2B2C BNPL framing.
+  - Build + knowledge checks pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep existing axis semantics unchanged (x=control primitive, y=stack position).
+    - Preserve existing project classifications unless required by this request.
+  - Tests:
+    - `rg -n "Affirm|B2B2C BNPL|Klarna \\+ Tempo|Colossus" components pages/introduction/attn-in-context.mdx docs/ISSUES.md`
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Updated:
+  - `components/quadrantMapData.ts`
+    - Added new `affirm` project in lower-left B2B2C BNPL/distribution posture (`User-facing distribution`, `Reputation / legal`, `web2`) with merchant-integration + consumer-surface rationale and sources.
+  - `components/QuadrantScatterMap.tsx`
+    - Renamed cluster label from `Payments Rails / L1 Narratives` to `B2B2C BNPL + Payments Rails`.
+    - Added `affirm` to the merged cluster membership list (`klarna_tempo`, `affirm`, `colossus`).
+  - `pages/introduction/attn-in-context.mdx`
+    - Renamed segment heading to `B2B2C BNPL + payments rails`.
+    - Added `Affirm` to the segment list.
+    - Updated fit text to clarify BNPL as merchant-integrated B2B2C distribution.
+- Proofs:
+  - `rg -n "Affirm|B2B2C BNPL|Klarna \\+ Tempo|Colossus|payments rails" pages/introduction/attn-in-context.mdx components/quadrantMapData.ts components/QuadrantScatterMap.tsx docs/ISSUES.md` -> expected matches present.
+  - `npm run build` -> PASS (`/introduction/attn-in-context` generated).
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `Affirm` exists in map data and is assigned to the merged BNPL+rails cluster.
+  - PASS: segment list now includes Klarna + Tempo, Affirm, and Colossus under merged naming.
+  - PASS: fit prose now calls out merchant-integrated B2B2C BNPL framing.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-02-25 - SEO: publish docs.attn.markets `/llms.txt`
 
 - [x] report captured
