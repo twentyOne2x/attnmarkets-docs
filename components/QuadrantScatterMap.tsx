@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { PROJECTS, type ExecutionPlane, type ProjectInfo } from "./quadrantMapData";
 
+type QuadrantPreset = "broad" | "revenue_receivables_zoom";
+
 function planeLabel(p: ExecutionPlane) {
   if (p === "web3") return "Web3-native";
   if (p === "hybrid") return "Hybrid";
@@ -467,8 +469,19 @@ function computeLabelPlacements(args: {
   plotH: number;
   fontSize: number;
   markerSize: number;
+  applyHardLabelLocks?: boolean;
 }) {
-  const { projects, xToSvg, yToSvg, pad, plotW, plotH, fontSize, markerSize } = args;
+  const {
+    projects,
+    xToSvg,
+    yToSvg,
+    pad,
+    plotW,
+    plotH,
+    fontSize,
+    markerSize,
+    applyHardLabelLocks = true,
+  } = args;
 
   const placed: Record<string, { x: number; y: number; rect: Rect }> = {};
   const taken: Rect[] = [];
@@ -501,7 +514,7 @@ function computeLabelPlacements(args: {
 
     // Hard lock: creditcoop.xyz label must stay at TOP-RIGHT of its dot.
     // This bypasses candidate scoring so it cannot flip left in crowded layouts.
-    if (p.id === "creditcoop") {
+    if (applyHardLabelLocks && p.id === "creditcoop") {
       const minX = pad + halfW + 4;
       const maxX = pad + plotW - halfW - 4;
       const minY = pad + halfH + 4;
@@ -523,7 +536,7 @@ function computeLabelPlacements(args: {
     }
 
     // Hard lock: Stripe Capital label directly LEFT of its dot.
-    if (p.id === "stripe_capital") {
+    if (applyHardLabelLocks && p.id === "stripe_capital") {
       const minX = pad + halfW + 4;
       const maxX = pad + plotW - halfW - 4;
       const minY = pad + halfH + 4;
@@ -545,7 +558,7 @@ function computeLabelPlacements(args: {
     }
 
     // Hard lock: PayPal Working Capital label directly below the dot.
-    if (p.id === "paypal_working_capital") {
+    if (applyHardLabelLocks && p.id === "paypal_working_capital") {
       const minX = pad + halfW + 4;
       const maxX = pad + plotW - halfW - 4;
       const minY = pad + halfH + 4;
@@ -593,7 +606,7 @@ function computeLabelPlacements(args: {
     if (p.id === "sponge") {
       // Keep paysponge.com label at south-east (bottom-right) of the dot.
       preferredAngle = Math.PI / 4;
-    } else if (p.id === "creditcoop") {
+    } else if (applyHardLabelLocks && p.id === "creditcoop") {
       // Keep creditcoop.xyz label on the right, near the dot.
       preferredAngle = 0;
     }
@@ -685,25 +698,25 @@ function computeLabelPlacements(args: {
             : 0
           : 0;
       const forcedCreditcoopRightPenalty =
-        p.id === "creditcoop"
+        applyHardLabelLocks && p.id === "creditcoop"
           ? x < creditcoopMinRightCenterX
             ? 8200000
             : 0
           : 0;
       const forcedCreditcoopVerticalPenalty =
-        p.id === "creditcoop"
+        applyHardLabelLocks && p.id === "creditcoop"
           ? Math.abs(y - cy) > creditcoopMaxVerticalOffset
             ? 8200000
             : 0
           : 0;
       const forcedCreditcoopDistancePenalty =
-        p.id === "creditcoop"
+        applyHardLabelLocks && p.id === "creditcoop"
           ? dist < creditcoopTargetDistance * 0.72
             ? 200000
             : 0
           : 0;
       const forcedCreditcoopFarPenalty =
-        p.id === "creditcoop"
+        applyHardLabelLocks && p.id === "creditcoop"
           ? dist > creditcoopTargetDistance * 1.12
             ? 520000
             : 0
@@ -770,7 +783,7 @@ type ClusterZone = {
   boundaryPoints?: Point[];
 };
 
-const CLUSTER_DEFS: ClusterDef[] = [
+const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "entity_credit",
     label: "Revenue & Receivables Credit",
@@ -783,11 +796,16 @@ const CLUSTER_DEFS: ClusterDef[] = [
       "attn",
       "creditcoop",
       "youlend",
+      "parafin",
+      "liberis",
       "pipe",
       "clearco",
+      "wayflyer",
+      "uncapped",
       "paypal_working_capital",
       "shopify_capital",
       "stripe_capital",
+      "square_loans",
     ],
   },
   {
@@ -865,18 +883,188 @@ const CLUSTER_DEFS: ClusterDef[] = [
   },
 ];
 
+const REVENUE_RECEIVABLES_PROJECT_IDS = [
+  "attn",
+  "creditcoop",
+  "youlend",
+  "parafin",
+  "liberis",
+  "pipe",
+  "clearco",
+  "wayflyer",
+  "uncapped",
+  "paypal_working_capital",
+  "shopify_capital",
+  "stripe_capital",
+  "square_loans",
+] as const;
+
+const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
+  (typeof REVENUE_RECEIVABLES_PROJECT_IDS)[number],
+  { x: number; y: number }
+> = {
+  attn: { x: 0.94, y: 0.9 },
+  creditcoop: { x: 0.86, y: 0.8 },
+  youlend: { x: 0.49, y: 0.73 },
+  parafin: { x: 0.66, y: 0.79 },
+  liberis: { x: 0.62, y: 0.69 },
+  stripe_capital: { x: 0.71, y: 0.58 },
+  square_loans: { x: 0.75, y: 0.62 },
+  shopify_capital: { x: 0.63, y: 0.53 },
+  paypal_working_capital: { x: 0.55, y: 0.48 },
+  wayflyer: { x: 0.39, y: 0.44 },
+  pipe: { x: 0.28, y: 0.32 },
+  clearco: { x: 0.2, y: 0.24 },
+  uncapped: { x: 0.14, y: 0.16 },
+};
+
+const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
+  {
+    id: "onchain_control_first",
+    label: "Onchain Control Rails",
+    stroke: "#2f6fdf",
+    fill: "#d6e5ff",
+    dash: "8 6",
+    connectivity: 0.56,
+    projectIds: ["attn", "creditcoop"],
+  },
+  {
+    id: "youlend_partner_network",
+    label: "YouLend Partner B2B2SMB",
+    stroke: "#c55d93",
+    fill: "#ffe0ef",
+    dash: "8 6",
+    labelPlacement: "mid-right",
+    connectivity: 0.62,
+    projectIds: ["youlend"],
+  },
+  {
+    id: "partner_embedded_b2b2smb",
+    label: "Partner-Embedded B2B2SMB",
+    stroke: "#4f71c8",
+    fill: "#dae5ff",
+    dash: "8 6",
+    connectivity: 0.6,
+    projectIds: ["parafin", "liberis"],
+  },
+  {
+    id: "direct_b2smb_originators",
+    label: "Direct B2SMB Originators",
+    stroke: "#9f67d5",
+    fill: "#f0e4ff",
+    dash: "8 6",
+    connectivity: 0.58,
+    projectIds: ["pipe", "clearco", "wayflyer", "uncapped"],
+  },
+  {
+    id: "platform_captive_capital",
+    label: "Platform-Native B2SMB",
+    stroke: "#2f9471",
+    fill: "#d6f4e7",
+    dash: "8 5",
+    connectivity: 0.58,
+    projectIds: ["paypal_working_capital", "shopify_capital", "stripe_capital", "square_loans"],
+  },
+];
+
+type PresetConfig = {
+  title: string;
+  hint: string;
+  taxonomyHint?: string;
+  ariaLabel: string;
+  axisTopTitle: string;
+  axisBottomTitle: string;
+  leftAxisText: string;
+  rightAxisText: string;
+  axisSideLabelFontSize: number;
+  axisSideLabelYOffset: number;
+  labelFontSize: number;
+  markerSize: number;
+  applyHardLabelLocks: boolean;
+  allowSingletonClusterZones: boolean;
+  clusterFillOpacity: number;
+  clusterStrokeOpacity: number;
+  clusterStrokeWidth: number;
+  projects: ProjectInfo[];
+  clusterDefs: ClusterDef[];
+  defaultShowClusters: boolean;
+};
+
+function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
+  if (preset === "revenue_receivables_zoom") {
+    const projects = REVENUE_RECEIVABLES_PROJECT_IDS.map((id) => {
+      const base = PROJECTS[id];
+      const remap = REVENUE_RECEIVABLES_ZOOM_COORDS[id];
+      return {
+        ...base,
+        x: remap.x,
+        y: remap.y,
+      };
+    });
+
+    return {
+      title: `Revenue & Receivables Credit Map — as of ${asOf}`,
+      hint: `Focused lane view: repayment enforceability vs servicing intelligence. Showing ${projects.length} projects.`,
+      taxonomyHint:
+        "Lens: Borrower type (business vs consumer) + distribution model (platform-native vs partner-embedded).",
+      ariaLabel: `Revenue and receivables credit map (as of ${asOf})`,
+      axisTopTitle: "Continuous servicing intelligence",
+      axisBottomTitle: "Static/periodic servicing",
+      leftAxisText: "← Contractual/manual enforcement",
+      rightAxisText: "Flow-captured + programmable enforcement →",
+      axisSideLabelFontSize: 30,
+      axisSideLabelYOffset: -18,
+      labelFontSize: 24,
+      markerSize: 28,
+      applyHardLabelLocks: false,
+      allowSingletonClusterZones: true,
+      clusterFillOpacity: 0.28,
+      clusterStrokeOpacity: 0.98,
+      clusterStrokeWidth: 3.4,
+      projects,
+      clusterDefs: REVENUE_RECEIVABLES_CLUSTER_DEFS,
+      defaultShowClusters: true,
+    };
+  }
+
+  return {
+    title: `Strategic Credit, Spend & Settlement Map — as of ${asOf}`,
+    hint: `Hover for details. Click a dot to pin. Esc clears. Showing ${
+      Object.values(PROJECTS).filter((p) => p.id !== "xitadel").length
+    } projects.`,
+    ariaLabel: `Embedded credit control landscape (as of ${asOf})`,
+    axisTopTitle: "Back-end infrastructure",
+    axisBottomTitle: "User-facing distribution",
+    leftAxisText: "← Reputation / legal",
+    rightAxisText: "Programmatic controls →",
+    axisSideLabelFontSize: 46,
+    axisSideLabelYOffset: -26,
+    labelFontSize: 30,
+    markerSize: 34,
+    applyHardLabelLocks: true,
+    allowSingletonClusterZones: false,
+    clusterFillOpacity: 0.18,
+    clusterStrokeOpacity: 0.92,
+    clusterStrokeWidth: 2.6,
+    projects: Object.values(PROJECTS).filter((p) => p.id !== "xitadel"),
+    clusterDefs: BROAD_CLUSTER_DEFS,
+    defaultShowClusters: true,
+  };
+}
+
 export default function QuadrantScatterMap(props: {
   asOf?: string;
   maxWidth?: number; // embedded sizing control
+  preset?: QuadrantPreset;
 }) {
   const asOf = props.asOf ?? "2026-02-21";
   const maxWidth = props.maxWidth ?? 2200;
+  const preset = props.preset ?? "broad";
+  const config = useMemo(() => getPresetConfig(preset, asOf), [preset, asOf]);
 
-  const projects = useMemo(
-    () => Object.values(PROJECTS).filter((p) => p.id !== "xitadel"),
-    [],
-  );
-  const totalProjects = projects.length;
+  const projects = useMemo(() => config.projects, [config.projects]);
+  const clusterDefs = useMemo(() => config.clusterDefs, [config.clusterDefs]);
+  const projectsById = useMemo(() => new Map(projects.map((p) => [p.id, p])), [projects]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartWrapRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -887,8 +1075,12 @@ export default function QuadrantScatterMap(props: {
 
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [clusterHover, setClusterHover] = useState<ClusterHoverState | null>(null);
-  const [showClusters, setShowClusters] = useState(true);
+  const [showClusters, setShowClusters] = useState(config.defaultShowClusters);
   const [view, setView] = useState({ zoom: 1, panX: 0, panY: 0 });
+
+  useEffect(() => {
+    setShowClusters(config.defaultShowClusters);
+  }, [config.defaultShowClusters]);
 
   const clearHideTimer = () => {
     if (hideTimerRef.current !== null) {
@@ -1073,7 +1265,7 @@ export default function QuadrantScatterMap(props: {
     });
   };
 
-  const active = tooltip ? PROJECTS[tooltip.id] : null;
+  const active = tooltip ? (projectsById.get(tooltip.id) ?? null) : null;
 
   // Tooltip positioning inside container
   const tooltipStyle: React.CSSProperties = useMemo(() => {
@@ -1138,10 +1330,10 @@ export default function QuadrantScatterMap(props: {
     };
   }, [clusterHover, tooltip]);
 
-  const fontSize = 30;
-  const markerSize = 34;
-  const axisSideLabelFontSize = 46;
-  const axisSideLabelYOffset = -26;
+  const fontSize = config.labelFontSize;
+  const markerSize = config.markerSize;
+  const axisSideLabelFontSize = config.axisSideLabelFontSize;
+  const axisSideLabelYOffset = config.axisSideLabelYOffset;
 
   const labelPlacements = useMemo(() => {
     return computeLabelPlacements({
@@ -1153,8 +1345,9 @@ export default function QuadrantScatterMap(props: {
       plotH,
       fontSize,
       markerSize,
+      applyHardLabelLocks: config.applyHardLabelLocks,
     });
-  }, [projects, pad, plotW, plotH, fontSize, markerSize]);
+  }, [projects, pad, plotW, plotH, fontSize, markerSize, config.applyHardLabelLocks]);
 
   const clusterZones = useMemo(() => {
     // Keep cluster envelopes allowed up to the plot border so edge dots remain enclosed.
@@ -1169,18 +1362,20 @@ export default function QuadrantScatterMap(props: {
     );
 
     const zones: ClusterZone[] = [];
+    const minMembersForZone = config.allowSingletonClusterZones ? 1 : 2;
+    const singletonIncludeRadius = markerSize * 2.1;
 
-    for (const def of CLUSTER_DEFS) {
+    for (const def of clusterDefs) {
       const members = def.projectIds
-        .map((id) => PROJECTS[id])
+        .map((id) => projectsById.get(id))
         .filter((p): p is ProjectInfo => Boolean(p));
 
-      if (members.length < 2) continue;
+      if (members.length < minMembersForZone) continue;
 
       const centers = members
         .map((p) => allCenters.get(p.id))
         .filter((pt): pt is Point => Boolean(pt));
-      if (centers.length < 2) continue;
+      if (centers.length < minMembersForZone) continue;
 
       const foreignCenters = projects
         .filter((p) => !def.projectIds.includes(p.id))
@@ -1192,7 +1387,7 @@ export default function QuadrantScatterMap(props: {
       const proximityThreshold = clamp(spreadDiag * (def.connectivity ?? 0.34), 90, 210);
 
       const connectedGroups = connectedPointComponents(centers, proximityThreshold);
-      const drawableGroups = connectedGroups.filter((g) => g.length >= 2);
+      const drawableGroups = connectedGroups.filter((g) => g.length >= minMembersForZone);
       if (!drawableGroups.length) continue;
 
       const groupsSorted = [...drawableGroups].sort((a, b) => {
@@ -1215,6 +1410,7 @@ export default function QuadrantScatterMap(props: {
             top: plotTop,
             bottom: plotBottom,
           },
+          includeRadius: group.length === 1 ? singletonIncludeRadius : undefined,
         });
         if (boundary.length < 3) continue;
         const path = smoothClosedPath(boundary);
@@ -1250,8 +1446,7 @@ export default function QuadrantScatterMap(props: {
     const yMidLocal = yToSvg(0.5);
 
     // Keep cluster labels away from large axis titles.
-    const leftAxisText = "← Reputation / legal";
-    const leftAxisW = estimateTextWidth(leftAxisText, axisSideLabelFontSize);
+    const leftAxisW = estimateTextWidth(config.leftAxisText, axisSideLabelFontSize);
     const leftAxisY = yMidLocal + axisSideLabelYOffset;
     takenRects.push({
       x1: xToSvg(0) + 28 - 10,
@@ -1260,8 +1455,7 @@ export default function QuadrantScatterMap(props: {
       y2: leftAxisY + axisSideLabelFontSize * 0.44,
     });
 
-    const rightAxisText = "Programmatic controls →";
-    const rightAxisW = estimateTextWidth(rightAxisText, axisSideLabelFontSize);
+    const rightAxisW = estimateTextWidth(config.rightAxisText, axisSideLabelFontSize);
     const rightAxisY = yMidLocal + axisSideLabelYOffset;
     takenRects.push({
       x1: xToSvg(1) - 28 - rightAxisW - 10,
@@ -1476,6 +1670,12 @@ export default function QuadrantScatterMap(props: {
     labelPlacements,
     axisSideLabelFontSize,
     axisSideLabelYOffset,
+    markerSize,
+    clusterDefs,
+    projectsById,
+    config.allowSingletonClusterZones,
+    config.leftAxisText,
+    config.rightAxisText,
   ]);
 
   const visibleClusterIds = useMemo(() => {
@@ -1483,29 +1683,29 @@ export default function QuadrantScatterMap(props: {
   }, [clusterZones]);
 
   const clusterLegend = useMemo(() => {
-    return CLUSTER_DEFS.filter((def) => visibleClusterIds.has(def.id)).map((def) => ({
+    return clusterDefs.filter((def) => visibleClusterIds.has(def.id)).map((def) => ({
       id: def.id,
       label: def.label,
       stroke: def.stroke,
       fill: def.fill,
     }));
-  }, [visibleClusterIds]);
+  }, [visibleClusterIds, clusterDefs]);
 
   const clusterByProject = useMemo(() => {
     const m = new Map<string, ClusterDef>();
-    for (const def of CLUSTER_DEFS) {
+    for (const def of clusterDefs) {
       for (const id of def.projectIds) {
-        if (PROJECTS[id]) m.set(id, def);
+        if (projectsById.has(id)) m.set(id, def);
       }
     }
     return m;
-  }, []);
+  }, [clusterDefs, projectsById]);
   const zoomTransform = `matrix(${view.zoom} 0 0 ${view.zoom} ${view.panX} ${view.panY})`;
 
   return (
     <div
       className="wrap"
-      aria-label={`Embedded credit control landscape (as of ${asOf})`}
+      aria-label={config.ariaLabel}
       style={{
         width: "100%",
         maxWidth,
@@ -1515,10 +1715,8 @@ export default function QuadrantScatterMap(props: {
       <div className="card" ref={containerRef}>
         <div className="topBar">
           <div className="topLeft">
-            <div className="title">Strategic Credit, Spend & Settlement Map — as of {asOf}</div>
-            <div className="hint">
-              Hover for details. Click a dot to pin. Esc clears. Showing {totalProjects} projects.
-            </div>
+            <div className="title">{config.title}</div>
+            <div className="hint">{config.hint}</div>
           </div>
           <div className="topRight">
             <label className="clusterToggle">
@@ -1542,6 +1740,7 @@ export default function QuadrantScatterMap(props: {
               </button>
             </div>
             <div className="zoomHint">Pinch or Ctrl/Cmd+wheel on map to zoom</div>
+            {config.taxonomyHint ? <div className="taxonomyHint">{config.taxonomyHint}</div> : null}
             <div className="legendInline" aria-label="Execution plane legend">
               <span className="legendItem">
                 <MiniMarker plane="web3" /> Web3-native (circle)
@@ -1560,7 +1759,7 @@ export default function QuadrantScatterMap(props: {
         </div>
 
         <div className="chartWrap" ref={chartWrapRef} onWheel={onChartWheel}>
-          <div className="axisTitleOutside axisTitleTop">Back-end infrastructure</div>
+          <div className="axisTitleOutside axisTitleTop">{config.axisTopTitle}</div>
           <svg
             ref={svgRef}
             viewBox={`0 0 ${width} ${height}`}
@@ -1589,7 +1788,7 @@ export default function QuadrantScatterMap(props: {
             {showClusters
               ? clusterZones.map((zone) => {
                 const baseClusterId = zone.id.replace(/-\d+$/, "");
-                const clusterDef = CLUSTER_DEFS.find((def) => def.id === baseClusterId);
+                const clusterDef = clusterDefs.find((def) => def.id === baseClusterId);
                 const hoverLabel = clusterDef?.label ?? zone.label ?? "Cluster";
 
                 return (
@@ -1597,10 +1796,10 @@ export default function QuadrantScatterMap(props: {
                     <path
                       d={zone.path}
                       fill={zone.fill}
-                      fillOpacity={0.18}
+                      fillOpacity={config.clusterFillOpacity}
                       stroke={zone.stroke}
-                      strokeOpacity={0.92}
-                      strokeWidth={2.6}
+                      strokeOpacity={config.clusterStrokeOpacity}
+                      strokeWidth={config.clusterStrokeWidth}
                       strokeDasharray={zone.dash}
                       strokeLinejoin="round"
                       strokeLinecap="round"
@@ -1778,7 +1977,7 @@ export default function QuadrantScatterMap(props: {
               fill="#1f3253"
               opacity={0.92}
             >
-              ← Reputation / legal
+              {config.leftAxisText}
             </text>
             <text
               x={xToSvg(1) - 28}
@@ -1789,7 +1988,7 @@ export default function QuadrantScatterMap(props: {
               fill="#1f3253"
               opacity={0.92}
             >
-              Programmatic controls →
+              {config.rightAxisText}
             </text>
             {/* Points + labels */}
             {projects.map((p) => {
@@ -1937,7 +2136,7 @@ export default function QuadrantScatterMap(props: {
             </g>
 
           </svg>
-          <div className="axisTitleOutside axisTitleBottom">User-facing distribution</div>
+          <div className="axisTitleOutside axisTitleBottom">{config.axisBottomTitle}</div>
 
           {clusterHoverRender ? (
             <div
@@ -1993,6 +2192,10 @@ export default function QuadrantScatterMap(props: {
                   </span>
                   <span className="chip">{active.stack}</span>
                   <span className="chip">{active.controlPrimitive}</span>
+                  {active.borrowerType ? <span className="chip">Borrower: {active.borrowerType}</span> : null}
+                  {active.distributionModel ? (
+                    <span className="chip">Distribution: {active.distributionModel}</span>
+                  ) : null}
                   {active.infra?.privy === "Yes" ? <span className="chip">Uses Privy</span> : null}
                   {active.infra?.squads === "Yes" && active.id !== "altitude" ? (
                     <span className="chip">Uses Squads</span>
@@ -2072,7 +2275,9 @@ export default function QuadrantScatterMap(props: {
                 ))}
               </div>
               <div className="clusterKeyHint">
-                Zones are drawn only when 2+ projects are close enough on the map. Dot/label outlines use cluster colors for exact inclusion.
+                {config.allowSingletonClusterZones
+                  ? "Zones can represent single firms or grouped firms in this zoom view. Dot/label outlines use cluster colors for exact inclusion."
+                  : "Zones are drawn only when 2+ projects are close enough on the map. Dot/label outlines use cluster colors for exact inclusion."}
               </div>
             </div>
           ) : null}
@@ -2180,6 +2385,16 @@ export default function QuadrantScatterMap(props: {
         .zoomHint {
           font-size: 11px;
           color: rgba(31, 50, 83, 0.66);
+        }
+        .taxonomyHint {
+          max-width: 420px;
+          font-size: 11px;
+          line-height: 1.3;
+          color: rgba(31, 50, 83, 0.76);
+          border: 1px solid rgba(53, 82, 127, 0.2);
+          border-radius: 10px;
+          background: rgba(245, 250, 255, 0.95);
+          padding: 6px 9px;
         }
         .hint {
           font-size: 12px;

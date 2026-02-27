@@ -41,6 +41,8 @@ export type ProjectInfo = {
 
   narrative: string;
   creditModel?: string;
+  borrowerType?: string;
+  distributionModel?: string;
   potentialClient?: boolean;
   infra?: InfraDependency;
 
@@ -68,6 +70,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Revolving credit for onchain businesses, repaid automatically from routed onchain revenue accounts.",
     creditModel:
       "Entity credit enforced via routed revenue + automated servicing/sweeps (onchain).",
+    borrowerType: "Business entities",
+    distributionModel: "Infrastructure-first (behind partner surfaces)",
     why: [
       "Framed around enforceability via routed revenue + automated control modes.",
       "Designed to sit behind distribution surfaces (cards/commerce/treasury stacks).",
@@ -101,6 +105,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Receivables + settlement liquidity financing with programmable cashflow routing (Spigot).",
     creditModel:
       "Secured revolving line of credit collateralized by cashflows/receivables (routing-based).",
+    borrowerType: "Business entities",
+    distributionModel: "Infrastructure-first (integrator-facing)",
     why: [
       "Core mechanic is cashflow routing / programmable repayment waterfall.",
       "Sits as an infra primitive behind settlement/commerce flows.",
@@ -130,6 +136,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Embedded financing provider (merchant cash advance / revenue-based funding) distributed via partners.",
     creditModel:
       "Revenue-based financing with settlement/payment account routing a specified % of incoming sales revenue (offchain).",
+    borrowerType: "Business borrowers (SMB merchants)",
+    distributionModel: "Partner-embedded network (B2B2SMB)",
     scale: [
       "Castlelake/YouLend release reported over $1.3bn of SMB financings across the UK and Europe (2024-10-21).",
       "$230m revenue (FY ended 2025-03-31).",
@@ -173,6 +181,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Embedded working capital / merchant cash advance with revenue-aligned payments (offchain).",
     creditModel:
       "Merchant cash advance (MCA): customer sells a portion of future revenue; paid as a % of revenue.",
+    borrowerType: "Business borrowers (SMB merchants)",
+    distributionModel: "Direct + partner channels",
     scale: [
       ">$250m advanced in the last 18 months (Pipe 2025 recap).",
       "~15,000 advances originated in the last 18 months (Pipe 2025 recap).",
@@ -204,6 +214,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Ecommerce/SaaS growth funding with fixed or rolling capacity, structured around future receivables.",
     creditModel:
       "Non-dilutive funding (including cash advance variants) with predictable capped weekly payments and receivables-based security interest.",
+    borrowerType: "Business borrowers (SMB brands)",
+    distributionModel: "Direct originator",
     scale: [
       "$3B+ funding deployed (as shown on clear.co pages, fetched 2026-02-22).",
       "10,000+ brands/businesses funded (as shown on clear.co pages, fetched 2026-02-22).",
@@ -242,7 +254,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant working-capital financing tied to PayPal payment flows and repayment from processed sales.",
     creditModel:
       "Merchant financing where repayment is linked to future sales volume flowing through PayPal rails.",
+    borrowerType: "Business borrowers (PayPal merchants)",
+    distributionModel: "Platform-native (PayPal ecosystem)",
     scale: [
+      "PayPal announced surpassing $30bn in global small-business lending originations (as of 2025-03-26).",
       "$2.2bn merchant receivables purchased (FY2025).",
       "$1.806bn merchant loans/advances/interest/fees receivable outstanding (2025-12-31).",
       "PayPal FY2025: $33.172bn revenue, $5.233bn net income (15.8% net margin; 18.3% operating margin).",
@@ -253,6 +268,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Maps to the same revenue/receivables-credit lane as other receipt-captured working-capital models.",
     ],
     sources: [
+      {
+        label: "PayPal newsroom: surpasses $30B in global small-business lending (2025-03-26)",
+        url: "https://newsroom.paypal-corp.com/2025-03-26-PayPal-Surpasses-30B-in-Global-Small-Business-Lending",
+      },
       {
         label: "PayPal FY2025 10-K (merchant receivables + consolidated statements)",
         url: "https://www.sec.gov/Archives/edgar/data/1633917/000163391726000024/pypl-20251231.htm",
@@ -281,7 +300,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant loans and MCAs embedded in Shopify's commerce stack with repayment tied to merchant sales.",
     creditModel:
       "Merchant loans/MCAs inside Shopify Capital; repayments are linked to platform payment activity.",
+    borrowerType: "Business borrowers (Shopify merchants)",
+    distributionModel: "Platform-native (Shopify ecosystem)",
     scale: [
+      "Shopify reports >$5.1bn distributed through Shopify Capital since 2016 (company post, 2024-04-23).",
       "$4.014bn purchases and originations of loans (FY2025 cash-flow line).",
       "$1.784bn loans and merchant cash advances, net (2025-12-31).",
       "Shopify FY2025: $11.556bn revenue, $1.231bn net income (10.7% net margin; 12.7% operating margin).",
@@ -299,6 +321,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       {
         label: "Shopify Capital product page",
         url: "https://www.shopify.com/capital",
+      },
+      {
+        label: "Shopify news: >$5.1bn distributed through Capital since 2016 (2024-04-23)",
+        url: "https://www.shopify.com/news/capital",
       },
       {
         label: "Shopify Q4/FY2025 release (cash-flow loan-originations line)",
@@ -320,7 +346,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Payments-native business financing via dashboard offers, with repayment withheld from Stripe sales.",
     creditModel:
       "Business loans and/or merchant cash advances (MCA), typically repaid as a fixed percentage of Stripe sales.",
+    borrowerType: "Business borrowers (Stripe merchants)",
+    distributionModel: "Platform-native (Stripe ecosystem)",
     scale: [
+      "Stripe 2025 annual letter reports $1.9tn total payment volume across Stripe; Capital-specific cumulative underwriting totals are not disclosed.",
       "Stripe Capital standalone financing volume/revenue/profit is not separately disclosed in the cited public docs.",
       "Docs list Stripe Capital availability in AU, DE, FR, GB, US (availability varies by country).",
       "Capital for platforms is described as public preview and only available in US and UK (docs).",
@@ -335,6 +364,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         url: "https://stripe.com/capital",
       },
       {
+        label: "Stripe 2025 annual letter landing page",
+        url: "https://stripe.com/annual-updates/2025",
+      },
+      {
         label: "How Stripe Capital works (docs)",
         url: "https://docs.stripe.com/capital/how-stripe-capital-works",
       },
@@ -344,6 +377,182 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       },
     ],
     href: "https://stripe.com/capital",
+  },
+
+  parafin: {
+    id: "parafin",
+    label: "Parafin",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.72,
+    y: 0.88,
+    narrative:
+      "Embedded financing infrastructure distributed through partner platforms serving SMB merchants.",
+    creditModel:
+      "Partner-embedded business financing (working-capital and related products) with platform-driven distribution.",
+    borrowerType: "Business borrowers (SMB merchants)",
+    distributionModel: "Partner-embedded network (B2B2SMB)",
+    scale: [
+      "$25bn+ cumulative financing offers extended (company-reported).",
+      "39,000+ businesses funded (company-reported).",
+      ">$100m annualized revenue run rate (company blog, 2025-12-18).",
+      "Public accepted/funded cumulative dollar total is not explicitly disclosed; published cumulative figure is offers extended.",
+    ],
+    why: [
+      "Purpose-built for platform-embedded financing rather than direct consumer distribution.",
+      "Closest comparison lane is partner-distributed SMB financing with programmatic servicing.",
+    ],
+    sources: [
+      {
+        label: "Parafin home (scale counters: offers extended + businesses funded)",
+        url: "https://www.parafin.com/",
+      },
+      {
+        label: "Parafin 2025 update (> $100m run rate; 39k businesses; $25bn offers)",
+        url: "https://www.parafin.com/blog/2025-a-defining-year-for-embedded-financing-and-small-business-growth",
+      },
+    ],
+    href: "https://www.parafin.com/",
+  },
+
+  liberis: {
+    id: "liberis",
+    label: "Liberis",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.64,
+    y: 0.86,
+    narrative:
+      "Embedded SME financing platform distributed through global payment and software partners.",
+    creditModel:
+      "Partner-distributed SME financing (including revenue-based/merchant-cash-advance style products by market).",
+    borrowerType: "Business borrowers (SMEs)",
+    distributionModel: "Partner-embedded network (B2B2SMB)",
+    scale: [
+      "£3bn+ funding delivered (company-reported).",
+      "1.5m SMEs reached through partner channels (company-reported).",
+      "Standalone revenue/profit is not publicly disclosed on the cited pages.",
+    ],
+    why: [
+      "Distribution is partner-embedded and merchant-focused, not consumer-credit-led.",
+      "Sits in the same embedded SMB financing lane as other receivables/working-capital operators.",
+    ],
+    sources: [
+      {
+        label: "Liberis about page (company metrics and positioning)",
+        url: "https://www.liberis.com/about-us",
+      },
+    ],
+    href: "https://www.liberis.com/",
+  },
+
+  wayflyer: {
+    id: "wayflyer",
+    label: "Wayflyer",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.5,
+    y: 0.72,
+    narrative:
+      "Growth-capital provider for ecommerce and digital SMBs, with underwriting tied to business performance.",
+    creditModel:
+      "Working-capital advances/loans for SMB operators with non-dilutive repayment structures.",
+    borrowerType: "Business borrowers (SMB merchants)",
+    distributionModel: "Direct originator",
+    scale: [
+      "Over $6bn deployed to businesses globally (company release, 2026-02-18).",
+      "Surpassed $100m annual revenues (company release, 2026-02-18).",
+      "5,000+ businesses supported (company release, 2026-02-18).",
+    ],
+    why: [
+      "SMB growth-capital operator with scale disclosures that are useful for comparator context.",
+      "Mechanically closer to revenue/receivables financing than to consumer-credit distribution.",
+    ],
+    sources: [
+      {
+        label: "Wayflyer press release ($250m facility; >$6bn deployed; >$100m revenue)",
+        url: "https://wayflyer.com/en/press-releases/wayflyer-secures-usd250m-credit-facility-with-atlas-sp-partners-to-expand-sme-funding-capacity",
+      },
+      {
+        label: "Wayflyer site",
+        url: "https://wayflyer.com/",
+      },
+    ],
+    href: "https://wayflyer.com/",
+  },
+
+  uncapped: {
+    id: "uncapped",
+    label: "Uncapped",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.29,
+    y: 0.36,
+    narrative:
+      "Working-capital and ecommerce funding for SMBs with fixed-fee structures and no equity dilution.",
+    creditModel:
+      "Revenue-linked or fixed-fee growth financing products for SMB operators.",
+    borrowerType: "Business borrowers (SMB merchants)",
+    distributionModel: "Direct originator",
+    scale: [
+      "Current public pages emphasize product sizing (for example, offers from $100k to $2m).",
+      "Public cumulative underwriting/deployed total is not clearly disclosed on the cited pages.",
+      "Standalone revenue/profit is not publicly disclosed on the cited pages.",
+    ],
+    why: [
+      "Business-borrower working-capital lane with structures that map to receivables financing patterns.",
+      "Useful comparator even though public cumulative scale disclosures are limited.",
+    ],
+    sources: [
+      {
+        label: "Uncapped site",
+        url: "https://www.weareuncapped.com/",
+      },
+      {
+        label: "Uncapped FAQ hub",
+        url: "https://www.weareuncapped.com/faq-categories/all",
+      },
+    ],
+    href: "https://www.weareuncapped.com/",
+  },
+
+  square_loans: {
+    id: "square_loans",
+    label: "Square Loans",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web2",
+    x: 0.82,
+    y: 0.89,
+    narrative:
+      "Platform-native merchant financing inside Square, repaid from seller payment flows.",
+    creditModel:
+      "Merchant financing integrated into Square seller workflows and linked to sales performance.",
+    borrowerType: "Business borrowers (Square sellers)",
+    distributionModel: "Platform-native (Square ecosystem)",
+    scale: [
+      "Block reported over $22bn in loans underwritten through Square Loans since launch (2024-12-13).",
+      "Square Loans standalone revenue/profit is not separately disclosed in the cited source.",
+    ],
+    why: [
+      "Platform-native SMB financing model with repayment tied to merchant processing flows.",
+      "Strong benchmark for ecosystem-captive SMB lending at scale.",
+    ],
+    sources: [
+      {
+        label: "Block Inside ($22bn loans underwritten through Square Loans since launch)",
+        url: "https://block.xyz/inside/owen-jennings-at-2024-ubs-technology-and-ai-conference",
+      },
+      {
+        label: "Square Loans product page",
+        url: "https://squareup.com/us/en/banking/loans",
+      },
+    ],
+    href: "https://squareup.com/us/en/banking/loans",
   },
 
   rain: {

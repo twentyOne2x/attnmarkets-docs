@@ -1,5 +1,237 @@
 # ISSUES
 
+## 2026-02-27 - attn-in-context: add missing revenue-financing comparables + enrich scale metrics
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User asked to add additional firms in the revenue/receivables map and enrich each comparator with available scale information (especially total underwriting/originations where public).
+- Missing info/questions: none; proceed with best-available public primary sources and explicit caveats when totals are undisclosed.
+- Type: feature/data enrichment
+- Status: completed
+- Context + suspected cause:
+  - Current comparator lane omits several high-signal embedded SMB financing operators (for example Parafin, Liberis, Wayflyer, Uncapped, Square Loans).
+  - Existing scale snippets are uneven across firms; some have totals, others only partial/point-in-time metrics.
+- Fix intent:
+  1) Add new projects to map dataset and include them in revenue/receivables clusters.
+  2) Expand scale notes for existing and new firms with underwriting/origination totals when publicly available; otherwise mark as undisclosed.
+  3) Update zoom map membership/coordinates so new firms remain readable.
+  4) Update page copy and segment bullets to reflect expanded comparator set.
+- Acceptance criteria:
+  - New firms appear in map + segment copy.
+  - Tooltips for key firms include concrete scale figures (underwriting/origination/funding totals where available) and clear caveats when not available.
+  - Build and knowledge checks pass.
+- Complexity: medium
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Use primary sources (official company pages, investor releases, SEC filings).
+    - Keep distinctions explicit: platform-native B2SMB vs partner-embedded B2B2SMB vs direct originators.
+  - Tests/proofs:
+    - `rg -n "parafin|liberis|wayflyer|uncapped|square_loans|B2SMB|B2B2SMB|scale" components/quadrantMapData.ts components/QuadrantScatterMap.tsx pages/introduction/attn-in-context.mdx docs/ISSUES.md`
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - Screenshot verification note: only if requested.
+
+EXECUTOR
+- Implemented:
+  - Updated `components/quadrantMapData.ts`:
+    - Added new revenue/receivables comparables: `parafin`, `liberis`, `wayflyer`, `uncapped`, `square_loans`.
+    - Added/standardized `borrowerType` + `distributionModel` classifications for new comparables.
+    - Enriched scale metrics with underwriting/origination signals and caveats:
+      - `PayPal Working Capital`: added `>$30bn` global small-business lending reference.
+      - `Shopify Capital`: added `>$5.1bn` distributed since 2016 reference.
+      - `Stripe Capital`: added annual-letter context plus explicit "capital total not publicly disclosed" caveat.
+      - Added scale bullets/sources for all newly added comparables.
+  - Updated `components/QuadrantScatterMap.tsx`:
+    - Added new comparables to broad `Revenue & Receivables Credit` cluster.
+    - Expanded zoom project set from 8 to 13 names and remapped coordinates for readability.
+    - Added zoom cluster lane for partner-embedded infra (`Parafin`, `Liberis`).
+    - Expanded direct-originator lane (`Pipe`, `Clearco`, `Wayflyer`, `Uncapped`).
+    - Expanded platform-native lane (`PayPal`, `Shopify`, `Stripe`, `Square Loans`).
+  - Updated `pages/introduction/attn-in-context.mdx`:
+    - Expanded quick-read bullets for platform-native, partner-embedded, and direct-originator groups.
+    - Expanded segment lists and lane description to include new comparables.
+- Proofs:
+  - `rg -n "parafin|liberis|wayflyer|uncapped|square_loans|B2SMB|B2B2SMB|scale" components/quadrantMapData.ts components/QuadrantScatterMap.tsx pages/introduction/attn-in-context.mdx docs/ISSUES.md` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; `/introduction/attn-in-context` generated successfully.
+  - Screenshot verification note: not requested in this turn.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: new firms appear in map data, zoom map config, and `attn-in-context` segment copy.
+  - PASS: comparator tooltips now include stronger scale data and explicit caveats where totals are undisclosed.
+  - PASS: build and knowledge checks pass.
+
+## 2026-02-27 - attn-in-context: reduce zoom-map size and add clearer B2SMB/B2B2SMB guidance
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User asked to reduce the size of the `Revenue & receivables` zoom map and add clearer information to explain the lane, specifically around B2SMB vs B2B2SMB grouping.
+- Missing info/questions: none; proceed with pragmatic defaults.
+- Type: UX/content clarification
+- Status: completed
+- Context + suspected cause:
+  - Zoom map currently uses the same large canvas framing style as broader maps, which can feel oversized for an 8-project comparator view.
+  - Current explanatory copy is improved but still benefits from a concise “commercial model” summary near the map.
+  - Cluster labels can more directly encode B2SMB vs B2B2SMB for faster scanning.
+- Fix intent:
+  1) Reduce rendered width of the zoom map in `attn-in-context`.
+  2) Rename zoom clusters to explicitly include B2SMB/B2B2SMB where appropriate.
+  3) Default zoom clusters to on for immediate readability of commercial groupings.
+  4) Add a short “quick read” section summarizing the grouping logic in plain language.
+- Acceptance criteria:
+  - Zoom map appears visibly smaller than before on `/introduction/attn-in-context`.
+  - Cluster naming/overlay in zoom map makes B2SMB vs B2B2SMB distinction explicit.
+  - A concise adjacent explanation helps a first-time reader understand the map without opening tooltips.
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep broad-map behavior unchanged.
+    - Keep language concise and non-jargony.
+  - Tests/proofs:
+    - `rg -n "maxWidth|B2SMB|B2B2SMB|defaultShowClusters|Quick read|Partner-Embedded|Platform-Native" components/QuadrantScatterMap.tsx pages/introduction/attn-in-context.mdx docs/ISSUES.md`
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - Screenshot verification note: only if requested.
+
+EXECUTOR
+- Implemented:
+  - Updated zoom map sizing on page:
+    - `pages/introduction/attn-in-context.mdx`
+    - changed zoom map embed to `maxWidth={900}` so the first map renders smaller and feels proportionate for the 8-name lane.
+  - Added concise interpretation block directly under zoom map:
+    - new `Quick read (commercial model)` bullets for:
+      - platform-native B2SMB
+      - YouLend partner B2B2SMB
+      - direct B2SMB originators
+      - onchain control rails
+  - Updated zoom-cluster framing in `components/QuadrantScatterMap.tsx`:
+    - `Onchain Control Rails`
+    - `YouLend Partner B2B2SMB`
+    - `Direct B2SMB Originators`
+    - `Platform-Native B2SMB`
+  - Set zoom clusters to default on:
+    - `defaultShowClusters: true` for `revenue_receivables_zoom` so grouping is visible immediately.
+  - Added zoom-only singleton zone support so one-firm clusters (YouLend) still draw a visible envelope:
+    - `allowSingletonClusterZones: true` for zoom preset.
+  - Increased zoom cluster visual contrast for readability:
+    - stronger fill/stroke (`clusterFillOpacity`, `clusterStrokeOpacity`, `clusterStrokeWidth`).
+  - Repositioned YouLend dot in zoom coordinates to separate it from nearby groupings.
+- Proofs:
+  - `rg -n "maxWidth=\\{900\\}|Quick read \\(commercial model\\)|B2SMB|B2B2SMB|defaultShowClusters|allowSingletonClusterZones|YouLend Partner B2B2SMB|Direct B2SMB Originators|Platform-Native B2SMB|clusterFillOpacity|clusterStrokeOpacity|clusterStrokeWidth" components/QuadrantScatterMap.tsx pages/introduction/attn-in-context.mdx docs/ISSUES.md` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; `/introduction/attn-in-context` generated successfully.
+  - Screenshot verification note: not requested in this turn.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: zoom map is visibly constrained by `maxWidth={900}`.
+  - PASS: zoom-cluster naming now encodes B2SMB vs B2B2SMB directly, with a dedicated YouLend cluster.
+  - PASS: singleton-cluster envelopes render in zoom mode, so YouLend’s zone is visible.
+  - PASS: page includes a concise nearby explainer so the model is understandable without opening tooltips.
+
+## 2026-02-27 - attn-in-context: clarify B2SMB vs B2B2SMB in zoom map and reposition YouLend
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User asked to apply the map/taxonomy guidance directly, especially clarifying that Stripe Capital and PayPal Working Capital are SMB financing (not B2C), and distinguishing YouLend as partner-embedded (`B2B2SMB`).
+- Missing info/questions: none; apply the distinction in map UX and narrative copy.
+- Type: feature/content clarification
+- Status: completed
+- Context + suspected cause:
+  - Zoom map currently explains axis posture but does not explicitly separate `borrower type` vs `distribution model`.
+  - This made B2B/B2C framing ambiguous and made `B2B2SMB` feel ad-hoc rather than an explicit lens.
+  - YouLend coordinates currently read closer to Pipe/Clearco than to Stripe/PayPal on servicing depth.
+- Fix intent:
+  1) Add explicit commercial taxonomy in the map tooltip chips using two lenses: `Borrower` and `Distribution`.
+  2) Tag revenue/receivables projects with those values (`YouLend` as partner-embedded SMB financing; Stripe/PayPal/Shopify as platform-native SMB financing).
+  3) Move YouLend zoom coordinates closer to Stripe/PayPal relative to Pipe/Clearco.
+  4) Update page copy to explain the lens clearly and note that `B2B2SMB` is shorthand, not a strict industry standard category.
+- Acceptance criteria:
+  - Zoom map tooltips expose borrower/distribution labels for the revenue/receivables comparators.
+  - Stripe Capital + PayPal Working Capital are clearly framed as business-borrower products (not B2C).
+  - YouLend is framed as partner-embedded SMB financing and placed closer to Stripe/PayPal in zoom mode.
+  - `attn-in-context` narrative includes the two-lens taxonomy explanation.
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Preserve broad-map behavior.
+    - Keep zoom clusters optional/off by default.
+    - Keep terminology concise and readable (minimal jargon).
+  - Tests/proofs:
+    - `rg -n "borrowerType|distributionModel|B2SMB|B2B2SMB|platform-native|partner-embedded|youlend" components/quadrantMapData.ts components/QuadrantScatterMap.tsx pages/introduction/attn-in-context.mdx docs/ISSUES.md`
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - Screenshot verification note: no screenshot provided by user.
+
+EXECUTOR
+- Implemented:
+  - Updated `components/quadrantMapData.ts`:
+    - Added optional `borrowerType` and `distributionModel` metadata fields to `ProjectInfo`.
+    - Tagged the revenue/receivables comparator set (`attn`, `creditcoop`, `youlend`, `pipe`, `clearco`, `paypal_working_capital`, `shopify_capital`, `stripe_capital`) with borrower/distribution labels.
+    - Explicitly framed YouLend as `Partner-embedded network (B2B2SMB)` and Stripe/PayPal/Shopify as `Platform-native` merchant financing.
+  - Updated `components/QuadrantScatterMap.tsx`:
+    - Repositioned `youlend` in `revenue_receivables_zoom` from `{ x: 0.45, y: 0.43 }` to `{ x: 0.62, y: 0.57 }`, placing it closer to Stripe/PayPal than to Pipe/Clearco in the zoom lane.
+    - Refined zoom cluster labels to match the distribution framing:
+      - `Partner-Embedded Financing`
+      - `Platform-Native Capital`
+      - `Direct Receivables Funding` (single-point classification for Clearco)
+    - Added zoom-only taxonomy hint text: borrower type + distribution model lens.
+    - Added tooltip chips for `Borrower: ...` and `Distribution: ...` when metadata exists.
+  - Updated `pages/introduction/attn-in-context.mdx`:
+    - Added plain-language lens callout in the zoom section:
+      - borrower type (business vs consumer)
+      - distribution model (platform-native vs partner-embedded)
+    - Added explicit note that `B2B2SMB` is shorthand, not consumer lending.
+    - Updated revenue/receivables fit text to clearly classify Stripe/PayPal/Shopify vs YouLend.
+- Proofs:
+  - `rg -n "borrowerType|distributionModel|B2SMB|B2B2SMB|platform-native|partner-embedded|youlend" components/quadrantMapData.ts components/QuadrantScatterMap.tsx pages/introduction/attn-in-context.mdx docs/ISSUES.md` -> expected matches present.
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; `/introduction/attn-in-context` generated successfully.
+  - Screenshot verification note: no screenshot requested/provided in this turn.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: zoom-map tooltips now expose borrower/distribution labels.
+  - PASS: Stripe Capital + PayPal Working Capital are explicitly framed as business-borrower products (not B2C).
+  - PASS: YouLend is framed as partner-embedded SMB financing and moved closer to Stripe/PayPal in zoom coordinates.
+  - PASS: `attn-in-context` narrative now includes the two-lens taxonomy explanation.
+
 ## 2026-02-26 - Frontend evidence loop: add Playwright baseline, journeys map, CI artifacts, and local evidence bundles
 
 - [x] report captured
@@ -1223,6 +1455,129 @@ VERIFIER
 - Compare proofs to acceptance criteria: PASS.
   - PASS: `/1-pager` explicitly names Squads v4.
   - PASS: section order unchanged.
+  - PASS: knowledge check and build both succeeded.
+
+## 2026-02-26 - attn-in-context: add revenue/receivables zoom map as primary anchor
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: Solvable. User requested a new first quadrant focused only on "Revenue & Receivables Credit" (with remapped axes if needed), while keeping the existing broader context quadrant below.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Current page starts with the broad landscape map, which makes the core attn comparator lane less immediately obvious.
+  - A focused first map should anchor the reader on the most relevant competitive set before expanding to wider context.
+- Fix intent:
+  1) Add a zoom preset for `QuadrantScatterMap` scoped to revenue/receivables projects.
+  2) Remap zoom-map axes to lane-relevant dimensions (enforceability and servicing intelligence).
+  3) Update `attn-in-context.mdx` to render zoom map first, then the existing broad map.
+- Acceptance criteria:
+  - `attn-in-context` shows a focused revenue/receivables map first.
+  - Existing broad strategic map is still present below.
+  - Zoom map uses remapped axis labels matching the focused narrative.
+  - `python3 scripts/knowledge_check.py` passes.
+  - `npm run build` passes.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+  - Keep existing broad map behavior unchanged for default usage.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx`:
+  - Added `preset` support with:
+    - `broad` (existing default behavior unchanged),
+    - `revenue_receivables_zoom` (focused comparator lane).
+  - Added zoom preset configuration:
+    - scoped project set (`attn`, `creditcoop`, `YouLend`, `Pipe`, `Clearco`, `PayPal Working Capital`, `Shopify Capital`, `Stripe Capital`),
+    - remapped x/y coordinates for the zoom narrative,
+    - remapped axis labels:
+      - `← Contractual/manual enforcement`
+      - `Flow-captured + programmable enforcement →`
+      - top: `Continuous servicing intelligence`
+      - bottom: `Static/periodic servicing`
+    - lane-specific cluster zones.
+  - Refactored map internals to use preset-configured projects/clusters/titles/axis text while preserving broad-map defaults.
+- Updated `pages/introduction/attn-in-context.mdx`:
+  - Added new first section `Revenue & receivables credit (zoom-in)` with the zoom preset map.
+  - Moved existing broad map to second section `Wider strategic credit, spend, and settlement map`.
+  - Updated “How to read” heading to cover both maps.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/introduction/attn-in-context` generated).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: focused revenue/receivables map renders first on `attn-in-context`.
+  - PASS: existing broad strategic map remains below.
+  - PASS: zoom map uses remapped axes for enforceability/servicing narrative.
+  - PASS: knowledge check and build both succeeded.
+
+## 2026-02-26 - revenue/receivables zoom map spacing pass (reduce crowding)
+
+- [x] report captured
+- [x] context added
+- [x] fix applied
+- [x] tests run
+- [x] visual/screenshot verification (screenshot provided by user feedback)
+
+PLANNER
+- Spec check: Solvable. User reported the new zoom map feels "empty yet cramped" and asked for better project spread.
+- Missing info/questions: None.
+- Type: docs
+- Status: completed
+- Context + suspected cause:
+  - Zoom map currently packs several points/labels in the right-center with large broad-map label defaults, while leaving substantial unused canvas.
+  - Broad-map label hard-lock heuristics are still active in zoom mode, which can amplify local crowding.
+- Fix intent:
+  1) Rebalance zoom coordinates to spread projects across the diagonal of the plot.
+  2) Use lighter label/marker sizing in zoom mode.
+  3) Disable broad-map hard-lock label rules for zoom mode.
+  4) Re-capture screenshot to verify readability.
+- Acceptance criteria:
+  - Zoom map points/labels are visibly more distributed with fewer local collisions.
+  - Broad map behavior remains unchanged.
+  - `python3 scripts/knowledge_check.py` passes.
+  - `npm run build` passes.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+  - Keep default/broad preset visuals stable.
+  - Verify:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - fresh screenshot for visual confirmation.
+
+EXECUTOR
+- Updated `components/QuadrantScatterMap.tsx` (zoom preset tuning only):
+  - Rebalanced `revenue_receivables_zoom` coordinates to spread projects along a broader diagonal.
+  - Added preset-level typography/layout controls:
+    - smaller label and marker sizes for zoom mode,
+    - smaller side-axis label sizing for zoom mode.
+  - Added preset-level `applyHardLabelLocks` flag and disabled broad-map hard-lock logic for zoom mode.
+  - Set zoom preset to start with cluster overlays off by default to reduce immediate visual crowding.
+- Screenshot proof:
+  - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-in-context-zoom-first-viewport-spread-pass-2026-02-26.png`
+  - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-in-context-zoom-full-page-spread-pass-2026-02-26.png`
+- Command proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS (`/introduction/attn-in-context` generated).
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: zoom map points/labels are distributed with reduced local collision.
+  - PASS: broad/default map behavior remains intact.
   - PASS: knowledge check and build both succeeded.
 
 ## 2026-02-22 - Quadrant scale ordering: show hard metrics first
