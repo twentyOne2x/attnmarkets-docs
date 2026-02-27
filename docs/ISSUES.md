@@ -153,6 +153,81 @@ VERIFIER
   - PASS: singleton-cluster envelopes render in zoom mode, so YouLend’s zone is visible.
   - PASS: page includes a concise nearby explainer so the model is understandable without opening tooltips.
 
+## 2026-02-27 - Frontend evidence loop baseline (Playwright + CI artifacts + local bundle)
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. This repo is a Next.js frontend and is missing journey documentation and a Playwright CI workflow.
+- Missing info/questions: none; proceed with minimal smoke-first setup.
+- Type: feature/tooling
+- Status: in_progress
+- Context + suspected cause:
+  - No `docs/e2e/journeys.md` exists.
+  - No repo-level Playwright workflow exists in `.github/workflows/`.
+  - Existing `tmp/e2e` artifacts exist, but setup is not codified/documented in-repo.
+- Fix intent:
+  1) Ensure Playwright baseline with failure trace/video and one smoke journey test.
+  2) Add journey map doc with 3-5 critical journeys mapped to test files.
+  3) Add GitHub Actions Playwright workflow with artifact uploads.
+  4) Add local evidence command outputting bundle under `tmp/e2e/YYYY-MM-DD/`.
+  5) Keep `tmp/` ignored by git.
+- Acceptance criteria:
+  - `docs/e2e/journeys.md` exists with 3-5 critical journeys and test mappings.
+  - Playwright setup exists and smoke test is present.
+  - CI workflow runs Playwright and uploads report/trace/video artifacts.
+  - Local evidence runner writes run bundle under `tmp/e2e/YYYY-MM-DD/`.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-02-27-frontend-evidence-loop-attnmarkets-docs.md`
+- Executor prompt (files, constraints, tests):
+  - Update/add:
+    - `package.json`
+    - `playwright.config.ts`
+    - `tests/e2e/smoke.spec.ts`
+    - `docs/e2e/journeys.md`
+    - `scripts/e2e_evidence.mjs`
+    - `.github/workflows/playwright.yml`
+    - `.gitignore` (if needed)
+    - `docs/ISSUES.md`
+- Tests/proofs:
+  - `npm run test:e2e -- --list` (or best-effort smoke)
+  - `npm run test:e2e:evidence` (best effort)
+  - `git status --short` to confirm scoped changes.
+
+EXECUTOR
+- Implemented:
+  - Added Playwright baseline:
+    - `playwright.config.ts` with `trace/video/screenshot` retained on failures.
+    - `tests/e2e/smoke.spec.ts`, `tests/e2e/introduction.spec.ts`, `tests/e2e/tokenomics.spec.ts`, `tests/e2e/navigation.spec.ts`.
+  - Added journey documentation:
+    - `docs/e2e/journeys.md` with 4 critical journeys mapped to test files.
+  - Added local evidence runner:
+    - `scripts/e2e_evidence.mjs` writes bundles to `tmp/e2e/YYYY-MM-DD/run-<timestamp>/` with logs, summary, and copied artifacts.
+  - Added CI workflow:
+    - `.github/workflows/playwright.yml` runs Playwright and uploads `playwright-report` + `test-results`.
+  - Updated repo setup:
+    - `package.json` scripts: `test:e2e`, `test:e2e:evidence`
+    - `package.json` devDependency: `@playwright/test`
+    - `.gitignore`: `tmp/`, `test-results/`, `playwright-report/`
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+  - `npm run test:e2e -- --list` -> FAIL in offline environment due missing local installed dependency (`@playwright/test` install blocked by network).
+  - `npm run test:e2e:evidence` -> FAIL as expected in same environment, but bundle written:
+    - `tmp/e2e/2026-02-27/run-2026-02-27T17-05-16-049Z/summary.json`
+  - `git status --short` shows scoped docs/e2e/playwright/workflow/script changes in this repo.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PARTIAL PASS.
+  - PASS: journey doc exists and maps 4 critical journeys to concrete Playwright files.
+  - PASS: Playwright config/tests, CI workflow, and local evidence bundling are wired.
+  - PASS: failure artifact retention is configured (`trace/video/screenshot` on failure).
+  - PARTIAL: local execution is blocked until dependencies can be installed in a networked environment.
+
 ## 2026-02-27 - attn-in-context: clarify B2SMB vs B2B2SMB in zoom map and reposition YouLend
 
 Checklist
