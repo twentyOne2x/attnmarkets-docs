@@ -177,10 +177,22 @@ function projectLabelMetrics(text: string, baseFont: number) {
   });
 }
 
-function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number) {
+function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, labelText?: string) {
+  const text = labelText ?? project.label;
+  if (project.id === "attn") {
+    return {
+      fontSize: 20,
+      padX: 8,
+      padY: 4,
+      textWidth: 78,
+      pillW: 112,
+      pillH: 38,
+    };
+  }
+
   if (project.id === "creditcoop") {
     return adaptiveLabelMetrics({
-      text: project.label,
+      text,
       baseFont: Math.min(baseFont, 35),
       minFont: 21,
       maxPillWidth: 250,
@@ -192,7 +204,7 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number) {
 
   if (project.id === "stripe_capital") {
     return adaptiveLabelMetrics({
-      text: project.label,
+      text,
       baseFont: Math.min(baseFont, 32),
       minFont: 21,
       maxPillWidth: 228,
@@ -202,7 +214,7 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number) {
     });
   }
 
-  return projectLabelMetrics(project.label, baseFont);
+  return projectLabelMetrics(text, baseFont);
 }
 
 function clusterLabelMetrics(text: string, baseFont: number) {
@@ -313,6 +325,7 @@ function buildOrganicBoundary(args: {
   foreign: Point[];
   bounds: { left: number; right: number; top: number; bottom: number };
   includeRadius?: number;
+  minForeignClearance?: number;
 }) {
   const c = centroid(args.members);
   const b = boundsForPoints(args.members);
@@ -326,7 +339,7 @@ function buildOrganicBoundary(args: {
   const minR = clamp(sigmaMember * 0.28, 12, 30);
   const maxR = clamp(diag * 0.56 + sigmaMember * 0.42, 46, 150);
   const baseThreshold = clamp(0.67 - args.members.length * 0.018, 0.5, 0.64);
-  const foreignClearance = sigmaMember * 0.4;
+  const foreignClearance = Math.max(sigmaMember * 0.4, args.minForeignClearance ?? 0);
 
   const samples = 96;
   const radialStep = 2.5;
@@ -430,6 +443,33 @@ function buildOrganicBoundary(args: {
   return smooth;
 }
 
+function hasBoundaryGapConflict(boundary: Point[], obstacles: Point[], minGap: number) {
+  if (!boundary.length || !obstacles.length || minGap <= 0) return false;
+  const minGapSq = minGap * minGap;
+
+  for (const p of boundary) {
+    for (const o of obstacles) {
+      const dx = p.x - o.x;
+      const dy = p.y - o.y;
+      if (dx * dx + dy * dy < minGapSq) return true;
+    }
+  }
+
+  return false;
+}
+
+function contractBoundaryTowardCenter(
+  boundary: Point[],
+  center: Point,
+  factor: number,
+  bounds: { left: number; right: number; top: number; bottom: number },
+) {
+  return boundary.map((p) => ({
+    x: clamp(center.x + (p.x - center.x) * factor, bounds.left, bounds.right),
+    y: clamp(center.y + (p.y - center.y) * factor, bounds.top, bounds.bottom),
+  }));
+}
+
 function connectedPointComponents(points: Point[], threshold: number) {
   const components: Point[][] = [];
   const visited = new Array(points.length).fill(false);
@@ -469,6 +509,8 @@ function computeLabelPlacements(args: {
   plotH: number;
   fontSize: number;
   markerSize: number;
+  markerSizeForProject?: (projectId: string) => number;
+  labelTextForProject?: (project: ProjectInfo) => string;
   applyHardLabelLocks?: boolean;
 }) {
   const {
@@ -480,6 +522,8 @@ function computeLabelPlacements(args: {
     plotH,
     fontSize,
     markerSize,
+    markerSizeForProject,
+    labelTextForProject,
     applyHardLabelLocks = true,
   } = args;
 
@@ -507,10 +551,34 @@ function computeLabelPlacements(args: {
   for (const p of ordered) {
     const cx = xToSvg(p.x);
     const cy = yToSvg(p.y);
+    const markerForProject = markerSizeForProject?.(p.id) ?? markerSize;
+    const labelText = labelTextForProject?.(p) ?? p.label;
 
-    const metrics = projectLabelMetricsForProject(p, fontSize);
+    const metrics = projectLabelMetricsForProject(p, fontSize, labelText);
     const halfW = metrics.pillW / 2;
     const halfH = metrics.pillH / 2;
+
+    // Keep attn logo pill centered directly above its dot in all presets.
+    if (p.id === "attn") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy - (markerForProject / 2 + halfH + 2), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
 
     // Hard lock: creditcoop.xyz label must stay at TOP-RIGHT of its dot.
     // This bypasses candidate scoring so it cannot flip left in crowded layouts.
@@ -519,8 +587,8 @@ function computeLabelPlacements(args: {
       const maxX = pad + plotW - halfW - 4;
       const minY = pad + halfH + 4;
       const maxY = pad + plotH - halfH - 4;
-      const fixedX = clamp(cx + markerSize / 2 + halfW + 8, minX, maxX);
-      const fixedY = clamp(cy - (markerSize / 2 + halfH + 6), minY, maxY);
+      const fixedX = clamp(cx + markerForProject / 2 + halfW + 8, minX, maxX);
+      const fixedY = clamp(cy - (markerForProject / 2 + halfH + 6), minY, maxY);
       placed[p.id] = {
         x: fixedX,
         y: fixedY,
@@ -541,7 +609,7 @@ function computeLabelPlacements(args: {
       const maxX = pad + plotW - halfW - 4;
       const minY = pad + halfH + 4;
       const maxY = pad + plotH - halfH - 4;
-      const fixedX = clamp(cx - (markerSize / 2 + halfW + 8), minX, maxX);
+      const fixedX = clamp(cx - (markerForProject / 2 + halfW + 8), minX, maxX);
       const fixedY = clamp(cy, minY, maxY);
       placed[p.id] = {
         x: fixedX,
@@ -557,14 +625,36 @@ function computeLabelPlacements(args: {
       continue;
     }
 
-    // Hard lock: PayPal Working Capital label directly below the dot.
-    if (applyHardLabelLocks && p.id === "paypal_working_capital") {
+    // Keep YouLend label directly above the dot in both map presets.
+    if (p.id === "youlend") {
       const minX = pad + halfW + 4;
       const maxX = pad + plotW - halfW - 4;
       const minY = pad + halfH + 4;
       const maxY = pad + plotH - halfH - 4;
       const fixedX = clamp(cx, minX, maxX);
-      const fixedY = clamp(cy + (markerSize / 2 + halfH + 6), minY, maxY);
+      const fixedY = clamp(cy - (markerForProject / 2 + halfH + 2), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Keep PayPal Working Capital label directly below the dot, tighter gap.
+    if (p.id === "paypal_working_capital") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy + (markerForProject / 2 + halfH + 2), minY, maxY);
       placed[p.id] = {
         x: fixedX,
         y: fixedY,
@@ -612,10 +702,10 @@ function computeLabelPlacements(args: {
     }
 
     const crowdBoost = clamp((neighborCandidates.length - 2) * 4, 0, 26);
-    const baseGap = markerSize / 2 + 10 + halfH + crowdBoost;
+    const baseGap = markerForProject / 2 + 10 + halfH + crowdBoost;
     const verticalOffsets = preferBelowFirst ? [baseGap, -baseGap] : [-baseGap, baseGap];
     const horizontalJitter = [0, -18, 18, -36, 36, -54, 54, -78, 78];
-    const sideGap = halfW + markerSize / 2 + 18 + crowdBoost * 0.6;
+    const sideGap = halfW + markerForProject / 2 + 18 + crowdBoost * 0.6;
     const sideJitterY = [0, -16, 16, -30, 30, -44, 44];
 
     const candidatesRaw: Array<{ x: number; y: number }> = [];
@@ -673,12 +763,12 @@ function computeLabelPlacements(args: {
       const clampPenalty = Math.abs(c.x - x) + Math.abs(c.y - y);
       const candidateAngle = Math.atan2(y - cy, x - cx);
       const anglePenalty = angleDistance(candidateAngle, preferredAngle) * 70;
-      const spongeMinRightCenterX = cx + halfW * 0.45 + markerSize / 2 + 10;
+      const spongeMinRightCenterX = cx + halfW * 0.45 + markerForProject / 2 + 10;
       const spongeMinLowerCenterY = cy + Math.max(10, halfH * 0.2);
-      const spongeMinLeaderDistance = halfW + markerSize * 0.85 + 20;
-      const creditcoopMinRightCenterX = cx + halfW * 0.3 + markerSize / 2 + 6;
+      const spongeMinLeaderDistance = halfW + markerForProject * 0.85 + 20;
+      const creditcoopMinRightCenterX = cx + halfW * 0.3 + markerForProject / 2 + 6;
       const creditcoopMaxVerticalOffset = Math.max(8, halfH * 0.2);
-      const creditcoopTargetDistance = halfW + markerSize * 0.44 + 6;
+      const creditcoopTargetDistance = halfW + markerForProject * 0.44 + 6;
       const forcedSidePenalty =
         p.id === "sponge"
           ? x < spongeMinRightCenterX
@@ -758,7 +848,7 @@ type ClusterDef = {
   dash: string;
   projectIds: string[];
   connectivity?: number;
-  labelPlacement?: "top" | "bottom-right" | "mid-right" | "mid-left" | "auto";
+  labelPlacement?: "top" | "top-left" | "bottom-right" | "mid-right" | "mid-left" | "auto";
   labelDistanceMultiplier?: number;
 };
 
@@ -778,7 +868,7 @@ type ClusterZone = {
   labelAnchorX?: number;
   labelAnchorY?: number;
   bounds?: { minX: number; maxX: number; minY: number; maxY: number };
-  labelPlacement?: "top" | "bottom-right" | "mid-right" | "mid-left" | "auto";
+  labelPlacement?: "top" | "top-left" | "bottom-right" | "mid-right" | "mid-left" | "auto";
   labelDistanceMultiplier?: number;
   boundaryPoints?: Point[];
 };
@@ -905,14 +995,14 @@ const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
 > = {
   attn: { x: 0.94, y: 0.9 },
   creditcoop: { x: 0.86, y: 0.8 },
-  youlend: { x: 0.49, y: 0.73 },
-  parafin: { x: 0.66, y: 0.79 },
-  liberis: { x: 0.62, y: 0.69 },
-  stripe_capital: { x: 0.71, y: 0.58 },
-  square_loans: { x: 0.75, y: 0.62 },
-  shopify_capital: { x: 0.63, y: 0.53 },
-  paypal_working_capital: { x: 0.55, y: 0.48 },
-  wayflyer: { x: 0.39, y: 0.44 },
+  youlend: { x: 0.57, y: 0.78 },
+  parafin: { x: 0.66, y: 0.84 },
+  liberis: { x: 0.62, y: 0.75 },
+  stripe_capital: { x: 0.71, y: 0.52 },
+  square_loans: { x: 0.76, y: 0.57 },
+  shopify_capital: { x: 0.42, y: 0.64 },
+  paypal_working_capital: { x: 0.55, y: 0.44 },
+  wayflyer: { x: 0.31, y: 0.37 },
   pipe: { x: 0.28, y: 0.32 },
   clearco: { x: 0.2, y: 0.24 },
   uncapped: { x: 0.14, y: 0.16 },
@@ -920,32 +1010,23 @@ const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
 
 const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
   {
-    id: "onchain_control_first",
-    label: "Onchain Control Rails",
-    stroke: "#2f6fdf",
-    fill: "#d6e5ff",
-    dash: "8 6",
-    connectivity: 0.56,
-    projectIds: ["attn", "creditcoop"],
-  },
-  {
-    id: "youlend_partner_network",
-    label: "YouLend Partner B2B2SMB",
-    stroke: "#c55d93",
-    fill: "#ffe0ef",
-    dash: "8 6",
-    labelPlacement: "mid-right",
-    connectivity: 0.62,
-    projectIds: ["youlend"],
+    id: "platform_captive_capital",
+    label: "Platform-Native B2SMB",
+    stroke: "#2f9471",
+    fill: "#d6f4e7",
+    dash: "8 5",
+    connectivity: 0.58,
+    labelPlacement: "top-left",
+    projectIds: ["paypal_working_capital", "shopify_capital", "stripe_capital", "square_loans"],
   },
   {
     id: "partner_embedded_b2b2smb",
     label: "Partner-Embedded B2B2SMB",
-    stroke: "#4f71c8",
-    fill: "#dae5ff",
+    stroke: "#c55d93",
+    fill: "#ffe0ef",
     dash: "8 6",
-    connectivity: 0.6,
-    projectIds: ["parafin", "liberis"],
+    connectivity: 0.82,
+    projectIds: ["youlend", "parafin", "liberis"],
   },
   {
     id: "direct_b2smb_originators",
@@ -953,17 +1034,8 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
     stroke: "#9f67d5",
     fill: "#f0e4ff",
     dash: "8 6",
-    connectivity: 0.58,
+    connectivity: 0.72,
     projectIds: ["pipe", "clearco", "wayflyer", "uncapped"],
-  },
-  {
-    id: "platform_captive_capital",
-    label: "Platform-Native B2SMB",
-    stroke: "#2f9471",
-    fill: "#d6f4e7",
-    dash: "8 5",
-    connectivity: 0.58,
-    projectIds: ["paypal_working_capital", "shopify_capital", "stripe_capital", "square_loans"],
   },
 ];
 
@@ -982,6 +1054,8 @@ type PresetConfig = {
   markerSize: number;
   applyHardLabelLocks: boolean;
   allowSingletonClusterZones: boolean;
+  splitDisconnectedClusterZones: boolean;
+  clusterZonePadding: number;
   clusterFillOpacity: number;
   clusterStrokeOpacity: number;
   clusterStrokeWidth: number;
@@ -1006,7 +1080,7 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
       title: `Revenue & Receivables Credit Map — as of ${asOf}`,
       hint: `Focused lane view: repayment enforceability vs servicing intelligence. Showing ${projects.length} projects.`,
       taxonomyHint:
-        "Lens: Borrower type (business vs consumer) + distribution model (platform-native vs partner-embedded).",
+        "Lens: Borrower type (business vs consumer) + distribution model (platform-native vs partner-embedded). Dot size is normalized to best-public credit-volume signals; n/a means undisclosed.",
       ariaLabel: `Revenue and receivables credit map (as of ${asOf})`,
       axisTopTitle: "Continuous servicing intelligence",
       axisBottomTitle: "Static/periodic servicing",
@@ -1018,6 +1092,8 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
       markerSize: 28,
       applyHardLabelLocks: false,
       allowSingletonClusterZones: true,
+      splitDisconnectedClusterZones: false,
+      clusterZonePadding: 22,
       clusterFillOpacity: 0.28,
       clusterStrokeOpacity: 0.98,
       clusterStrokeWidth: 3.4,
@@ -1043,6 +1119,8 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
     markerSize: 34,
     applyHardLabelLocks: true,
     allowSingletonClusterZones: false,
+    splitDisconnectedClusterZones: true,
+    clusterZonePadding: 10,
     clusterFillOpacity: 0.18,
     clusterStrokeOpacity: 0.92,
     clusterStrokeWidth: 2.6,
@@ -1334,6 +1412,82 @@ export default function QuadrantScatterMap(props: {
   const markerSize = config.markerSize;
   const axisSideLabelFontSize = config.axisSideLabelFontSize;
   const axisSideLabelYOffset = config.axisSideLabelYOffset;
+  const isRevenueReceivablesZoom = preset === "revenue_receivables_zoom";
+
+  const volumeSizing = useMemo(() => {
+    if (!isRevenueReceivablesZoom) return null;
+
+    const values = projects
+      .map((p) => p.creditVolume?.normalizedUsdBn)
+      .filter((v): v is number => typeof v === "number" && Number.isFinite(v) && v > 0);
+
+    if (!values.length) return null;
+
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    return {
+      min,
+      max,
+      sqrtMin: Math.sqrt(min),
+      sqrtMax: Math.sqrt(max),
+    };
+  }, [isRevenueReceivablesZoom, projects]);
+
+  const markerSizeByProject = useMemo(() => {
+    const map = new Map<string, number>();
+    const minDot = markerSize * 1.1;
+    const maxDot = markerSize * 2.45;
+    const unknownDot = markerSize * 1.0;
+
+    for (const p of projects) {
+      if (!isRevenueReceivablesZoom) {
+        map.set(p.id, markerSize);
+        continue;
+      }
+
+      const raw = p.creditVolume?.normalizedUsdBn;
+      if (typeof raw !== "number" || !Number.isFinite(raw) || raw <= 0 || !volumeSizing) {
+        map.set(p.id, unknownDot);
+        continue;
+      }
+
+      const denom = Math.max(0.0001, volumeSizing.sqrtMax - volumeSizing.sqrtMin);
+      const normalized = clamp((Math.sqrt(raw) - volumeSizing.sqrtMin) / denom, 0, 1);
+      map.set(p.id, minDot + (maxDot - minDot) * normalized);
+    }
+
+    return map;
+  }, [projects, markerSize, isRevenueReceivablesZoom, volumeSizing]);
+
+  const labelTextByProject = useMemo(() => {
+    const map = new Map<string, string>();
+    const omitVolumeLabelIds = new Set(["attn", "creditcoop"]);
+
+    for (const p of projects) {
+      if (!isRevenueReceivablesZoom) {
+        map.set(p.id, p.label);
+        continue;
+      }
+
+      if (omitVolumeLabelIds.has(p.id)) {
+        map.set(p.id, p.label);
+        continue;
+      }
+
+      const volume = p.creditVolume?.display ?? "n/a";
+      map.set(p.id, p.label + " · " + volume);
+    }
+
+    return map;
+  }, [projects, isRevenueReceivablesZoom]);
+
+  const maxProjectMarkerSize = useMemo(() => {
+    let max = markerSize;
+    for (const p of projects) {
+      max = Math.max(max, markerSizeByProject.get(p.id) ?? markerSize);
+    }
+    return max;
+  }, [projects, markerSize, markerSizeByProject]);
 
   const labelPlacements = useMemo(() => {
     return computeLabelPlacements({
@@ -1345,9 +1499,21 @@ export default function QuadrantScatterMap(props: {
       plotH,
       fontSize,
       markerSize,
+      markerSizeForProject: (projectId) => markerSizeByProject.get(projectId) ?? markerSize,
+      labelTextForProject: (project) => labelTextByProject.get(project.id) ?? project.label,
       applyHardLabelLocks: config.applyHardLabelLocks,
     });
-  }, [projects, pad, plotW, plotH, fontSize, markerSize, config.applyHardLabelLocks]);
+  }, [
+    projects,
+    pad,
+    plotW,
+    plotH,
+    fontSize,
+    markerSize,
+    markerSizeByProject,
+    labelTextByProject,
+    config.applyHardLabelLocks,
+  ]);
 
   const clusterZones = useMemo(() => {
     // Keep cluster envelopes allowed up to the plot border so edge dots remain enclosed.
@@ -1363,7 +1529,8 @@ export default function QuadrantScatterMap(props: {
 
     const zones: ClusterZone[] = [];
     const minMembersForZone = config.allowSingletonClusterZones ? 1 : 2;
-    const singletonIncludeRadius = markerSize * 2.1;
+    const singletonIncludeRadius = maxProjectMarkerSize * 2.1;
+    const occupiedBoundaryPoints: Point[] = [];
 
     for (const def of clusterDefs) {
       const members = def.projectIds
@@ -1386,7 +1553,9 @@ export default function QuadrantScatterMap(props: {
       const spreadDiag = Math.hypot(spread.maxX - spread.minX, spread.maxY - spread.minY);
       const proximityThreshold = clamp(spreadDiag * (def.connectivity ?? 0.34), 90, 210);
 
-      const connectedGroups = connectedPointComponents(centers, proximityThreshold);
+      const connectedGroups = config.splitDisconnectedClusterZones
+        ? connectedPointComponents(centers, proximityThreshold)
+        : [centers];
       const drawableGroups = connectedGroups.filter((g) => g.length >= minMembersForZone);
       if (!drawableGroups.length) continue;
 
@@ -1401,18 +1570,58 @@ export default function QuadrantScatterMap(props: {
 
       for (let groupIdx = 0; groupIdx < groupsSorted.length; groupIdx += 1) {
         const group = groupsSorted[groupIdx];
-        const boundary = buildOrganicBoundary({
-          members: group,
-          foreign: foreignCenters,
-          bounds: {
-            left: plotLeft,
-            right: plotRight,
-            top: plotTop,
-            bottom: plotBottom,
-          },
-          includeRadius: group.length === 1 ? singletonIncludeRadius : undefined,
-        });
-        if (boundary.length < 3) continue;
+        const zoneObstacles = occupiedBoundaryPoints.length
+          ? foreignCenters.concat(occupiedBoundaryPoints)
+          : foreignCenters;
+        const baseGap = config.clusterZonePadding;
+        const clearanceAttempts = [baseGap, baseGap + 6, baseGap + 12];
+        let boundary: Point[] = [];
+
+        for (const clearance of clearanceAttempts) {
+          boundary = buildOrganicBoundary({
+            members: group,
+            foreign: zoneObstacles,
+            bounds: {
+              left: plotLeft,
+              right: plotRight,
+              top: plotTop,
+              bottom: plotBottom,
+            },
+            includeRadius: group.length === 1 ? singletonIncludeRadius : undefined,
+            minForeignClearance: clearance,
+          });
+          if (!hasBoundaryGapConflict(boundary, occupiedBoundaryPoints, baseGap)) break;
+        }
+
+        if (hasBoundaryGapConflict(boundary, occupiedBoundaryPoints, baseGap)) {
+          const c = centroid(group);
+          const contractionFactors = [0.96, 0.92, 0.88, 0.84];
+          for (const factor of contractionFactors) {
+            const contracted = contractBoundaryTowardCenter(
+              boundary,
+              c,
+              factor,
+              {
+                left: plotLeft,
+                right: plotRight,
+                top: plotTop,
+                bottom: plotBottom,
+              },
+            );
+            if (!hasBoundaryGapConflict(contracted, occupiedBoundaryPoints, baseGap)) {
+              boundary = contracted;
+              break;
+            }
+            boundary = contracted;
+          }
+        }
+
+        if (boundary.length >= 3) {
+          for (let i = 0; i < boundary.length; i += 1) {
+            occupiedBoundaryPoints.push(boundary[i]);
+          }
+        }
+
         const path = smoothClosedPath(boundary);
         if (!path) continue;
         const boundaryBounds = boundsForPoints(boundary);
@@ -1473,6 +1682,55 @@ export default function QuadrantScatterMap(props: {
       const centerX = (b.minX + b.maxX) / 2;
       const centerY = (b.minY + b.maxY) / 2;
 
+      if (zone.id.startsWith("platform_captive_capital-")) {
+        const inBounds = (x: number, y: number) => ({
+          x: clamp(x, plotLeft + halfW + 6, plotRight - halfW - 6),
+          y: clamp(y, plotTop + halfH + 6, plotBottom - halfH - 6),
+        });
+
+        const preferredX = b.minX - halfW - 14;
+        const preferredY = b.minY - halfH - 18;
+        const xCandidates = [preferredX, preferredX + 24, preferredX - 26];
+        const yCandidates = [preferredY, preferredY + 20, preferredY - 20, preferredY + 36];
+
+        let placedPlatform: { x: number; y: number; rect: Rect } | null = null;
+        for (const yCandidate of yCandidates) {
+          for (const xCandidate of xCandidates) {
+            const bounded = inBounds(xCandidate, yCandidate);
+            const rect: Rect = {
+              x1: bounded.x - halfW,
+              y1: bounded.y - halfH,
+              x2: bounded.x + halfW,
+              y2: bounded.y + halfH,
+            };
+            const hasOverlap = takenRects.some((t) => rectsOverlap(rect, t));
+            if (!hasOverlap) {
+              placedPlatform = { x: bounded.x, y: bounded.y, rect };
+              break;
+            }
+            if (!placedPlatform) placedPlatform = { x: bounded.x, y: bounded.y, rect };
+          }
+          if (placedPlatform && !takenRects.some((t) => rectsOverlap(placedPlatform!.rect, t))) break;
+        }
+
+        if (placedPlatform) {
+          zone.labelX = placedPlatform.x;
+          zone.labelY = placedPlatform.y;
+          zone.labelFontSize = labelMetrics.fontSize;
+          zone.labelPillWidth = labelMetrics.pillW;
+          zone.labelPillHeight = labelMetrics.pillH;
+          zone.labelAnchorX = clamp(b.minX + 18, plotLeft + 8, plotRight - 8);
+          zone.labelAnchorY = clamp(b.minY + 14, plotTop + 8, plotBottom - 8);
+          takenRects.push({
+            x1: placedPlatform.rect.x1 - 4,
+            y1: placedPlatform.rect.y1 - 4,
+            x2: placedPlatform.rect.x2 + 4,
+            y2: placedPlatform.rect.y2 + 4,
+          });
+          continue;
+        }
+      }
+
       if (zone.id.startsWith("business_money-")) {
         const inBounds = (x: number, y: number) => ({
           x: clamp(x, plotLeft + halfW + 6, plotRight - halfW - 6),
@@ -1531,6 +1789,8 @@ export default function QuadrantScatterMap(props: {
             ? (-18 * Math.PI) / 180
             : zone.labelPlacement === "mid-left"
               ? Math.PI
+          : zone.labelPlacement === "top-left"
+            ? (-135 * Math.PI) / 180
           : zone.labelPlacement === "top"
             ? -Math.PI / 2
             : autoAngle;
@@ -1546,6 +1806,8 @@ export default function QuadrantScatterMap(props: {
           : zone.labelPlacement === "mid-right"
             ? [0, -14, 14, -28, 28, -44, 44, 180]
             : zone.labelPlacement === "mid-left"
+              ? [0, -14, 14, -28, 28, -44, 44, 180]
+            : zone.labelPlacement === "top-left"
               ? [0, -14, 14, -28, 28, -44, 44, 180]
           : [0, -25, 25, -50, 50, -75, 75, 180];
       const distanceMultiplier = zone.labelDistanceMultiplier ?? 1;
@@ -1670,10 +1932,12 @@ export default function QuadrantScatterMap(props: {
     labelPlacements,
     axisSideLabelFontSize,
     axisSideLabelYOffset,
-    markerSize,
+    maxProjectMarkerSize,
     clusterDefs,
     projectsById,
     config.allowSingletonClusterZones,
+    config.splitDisconnectedClusterZones,
+    config.clusterZonePadding,
     config.leftAxisText,
     config.rightAxisText,
   ]);
@@ -1995,19 +2259,28 @@ export default function QuadrantScatterMap(props: {
               const cx = xToSvg(p.x);
               const cy = yToSvg(p.y);
               const isActive = tooltip?.id === p.id;
-              const size = isActive ? 36 : markerSize;
+              const baseSize = markerSizeByProject.get(p.id) ?? markerSize;
+              const size = isActive ? Math.max(36, baseSize + 8) : baseSize;
+              const comparableVolume = p.creditVolume?.normalizedUsdBn;
+              const hasComparableVolume =
+                typeof comparableVolume === "number" &&
+                Number.isFinite(comparableVolume) &&
+                comparableVolume > 0;
+              const hideUnknownVolumeCue =
+                isRevenueReceivablesZoom && (p.id === "attn" || p.id === "creditcoop");
               const cluster = showClusters ? clusterByProject.get(p.id) : undefined;
 
               const lp = labelPlacements[p.id];
               const labelX = lp?.x ?? cx;
               const labelY = lp?.y ?? cy - 26;
 
-              const labelText = p.label;
-              const labelMetrics = projectLabelMetricsForProject(p, fontSize);
+              const labelText = labelTextByProject.get(p.id) ?? p.label;
+              const labelMetrics = projectLabelMetricsForProject(p, fontSize, labelText);
               const labelW = labelMetrics.pillW;
               const labelH = labelMetrics.pillH;
               const labelHalfW = labelW / 2;
               const labelHalfH = labelH / 2;
+              const isAttnLogoLabel = p.id === "attn";
 
               const dx = labelX - cx;
               const dy = labelY - cy;
@@ -2026,6 +2299,7 @@ export default function QuadrantScatterMap(props: {
               const leaderStartY = cy + uy * (size / 2 + 3);
               const leaderEndX = labelX - ux * rayScale;
               const leaderEndY = labelY - uy * rayScale;
+              const hitTargetRadius = Math.max(34, size / 2 + 14);
 
               return (
                 <g
@@ -2044,7 +2318,7 @@ export default function QuadrantScatterMap(props: {
                   onClick={(e) => togglePin(p.id, e.clientX, e.clientY)}
                 >
                   {/* Big invisible hit target */}
-                  <circle cx={cx} cy={cy} r={36} fill="transparent" />
+                  <circle cx={cx} cy={cy} r={hitTargetRadius} fill="transparent" />
 
                   {/* Highlight ring */}
                   {isActive ? (
@@ -2068,6 +2342,19 @@ export default function QuadrantScatterMap(props: {
                       stroke={cluster.stroke}
                       strokeWidth={2.2}
                       strokeOpacity={0.9}
+                    />
+                  ) : null}
+
+                  {isRevenueReceivablesZoom && !hasComparableVolume && !hideUnknownVolumeCue ? (
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={size / 2 + 7}
+                      fill="none"
+                      stroke="#6f7f99"
+                      strokeWidth={1.8}
+                      strokeOpacity={0.78}
+                      strokeDasharray="3 4"
                     />
                   ) : null}
 
@@ -2105,31 +2392,42 @@ export default function QuadrantScatterMap(props: {
                     width={labelW}
                     height={labelH}
                     rx={Math.max(8, labelHalfH)}
-                    fill="#f7fbff"
-                    opacity={0.98}
+                    fill={isAttnLogoLabel ? "#05070c" : "#f7fbff"}
+                    opacity={isAttnLogoLabel ? 1 : 0.98}
                     stroke={cluster?.stroke ?? "#35527f"}
                     strokeWidth={cluster ? 1.8 : 1}
                     strokeOpacity={cluster ? 0.62 : 0.34}
                   />
 
-                  {/* Label text */}
-                  <text
-                    x={labelX}
-                    y={labelY}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fontSize={labelMetrics.fontSize}
-                    fill="#102d55"
-                    opacity={1}
-                    style={{ fontWeight: 740, letterSpacing: "0.005em" }}
-                    stroke="#ffffff"
-                    strokeWidth={2.6}
-                    paintOrder="stroke fill"
-                    textLength={labelMetrics.textLength}
-                    lengthAdjust={labelMetrics.textLength ? "spacingAndGlyphs" : undefined}
-                  >
-                    {labelText}
-                  </text>
+                  {/* Label text / logo */}
+                  {isAttnLogoLabel ? (
+                    <image
+                      href="/brand/kit/attn-logo-primary-dark.png"
+                      x={labelX - labelHalfW + 6}
+                      y={labelY - labelHalfH + 4}
+                      width={labelW - 12}
+                      height={labelH - 8}
+                      preserveAspectRatio="xMidYMid slice"
+                    />
+                  ) : (
+                    <text
+                      x={labelX}
+                      y={labelY}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fontSize={labelMetrics.fontSize}
+                      fill="#102d55"
+                      opacity={1}
+                      style={{ fontWeight: 740, letterSpacing: "0.005em" }}
+                      stroke="#ffffff"
+                      strokeWidth={2.6}
+                      paintOrder="stroke fill"
+                      textLength={labelMetrics.textLength}
+                      lengthAdjust={labelMetrics.textLength ? "spacingAndGlyphs" : undefined}
+                    >
+                      {labelText}
+                    </text>
+                  )}
                 </g>
               );
             })}
@@ -2202,6 +2500,18 @@ export default function QuadrantScatterMap(props: {
                   ) : null}
                   {active.potentialClient ? <span className="chip">Potential client</span> : null}
                 </div>
+
+                {active.creditVolume ? (
+                  <div className="block">
+                    <div className="label">Credit volume (dot size)</div>
+                    <ul className="list">
+                      <li>
+                        {active.creditVolume.display} — {active.creditVolume.basis ?? "Best-public signal"}
+                      </li>
+                      {active.creditVolume.note ? <li>{active.creditVolume.note}</li> : null}
+                    </ul>
+                  </div>
+                ) : null}
 
                 {active.scale?.length ? (
                   <div className="block">

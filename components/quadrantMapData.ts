@@ -24,6 +24,16 @@ export type InfraDependency = {
   note?: string;
 };
 
+export type CreditVolumeSignal = {
+  // Short value shown on zoom-map labels.
+  display: string;
+  // Comparable sizing value for dot normalization (USD billions, best-effort proxy).
+  normalizedUsdBn?: number;
+  // What the volume number represents (for caveat context).
+  basis?: string;
+  note?: string;
+};
+
 export type ProjectInfo = {
   id: string;
   label: string;
@@ -48,6 +58,7 @@ export type ProjectInfo = {
 
   // Optional scale signals (for quick "how big" callouts)
   scale?: string[];
+  creditVolume?: CreditVolumeSignal;
 
   // Tooltip/details support
   why: string[];
@@ -72,6 +83,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Entity credit enforced via routed revenue + automated servicing/sweeps (onchain).",
     borrowerType: "Business entities",
     distributionModel: "Infrastructure-first (behind partner surfaces)",
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative underwriting volume not disclosed.",
+    },
     why: [
       "Framed around enforceability via routed revenue + automated control modes.",
       "Designed to sit behind distribution surfaces (cards/commerce/treasury stacks).",
@@ -107,6 +122,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Secured revolving line of credit collateralized by cashflows/receivables (routing-based).",
     borrowerType: "Business entities",
     distributionModel: "Infrastructure-first (integrator-facing)",
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative funding volume not disclosed in cited docs.",
+    },
     why: [
       "Core mechanic is cashflow routing / programmable repayment waterfall.",
       "Sits as an infra primitive behind settlement/commerce flows.",
@@ -138,6 +157,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Revenue-based financing with settlement/payment account routing a specified % of incoming sales revenue (offchain).",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Partner-embedded network (B2B2SMB)",
+    creditVolume: {
+      display: "$1.3b",
+      normalizedUsdBn: 1.3,
+      basis: "SMB financings reported in UK+EU release (2024-10-21).",
+      note: "Used as best-public proxy; global cumulative total is undisclosed.",
+    },
     scale: [
       "Castlelake/YouLend release reported over $1.3bn of SMB financings across the UK and Europe (2024-10-21).",
       "$230m revenue (FY ended 2025-03-31).",
@@ -183,6 +208,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant cash advance (MCA): customer sells a portion of future revenue; paid as a % of revenue.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct + partner channels",
+    creditVolume: {
+      display: "$0.25b",
+      normalizedUsdBn: 0.25,
+      basis: "Advanced in the last 18 months (Pipe 2025 recap).",
+      note: "Not lifetime cumulative.",
+    },
     scale: [
       ">$250m advanced in the last 18 months (Pipe 2025 recap).",
       "~15,000 advances originated in the last 18 months (Pipe 2025 recap).",
@@ -216,6 +247,11 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Non-dilutive funding (including cash advance variants) with predictable capped weekly payments and receivables-based security interest.",
     borrowerType: "Business borrowers (SMB brands)",
     distributionModel: "Direct originator",
+    creditVolume: {
+      display: "$3.0b",
+      normalizedUsdBn: 3.0,
+      basis: "Funding deployed (company-reported).",
+    },
     scale: [
       "$3B+ funding deployed (as shown on clear.co pages, fetched 2026-02-22).",
       "10,000+ brands/businesses funded (as shown on clear.co pages, fetched 2026-02-22).",
@@ -256,6 +292,11 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant financing where repayment is linked to future sales volume flowing through PayPal rails.",
     borrowerType: "Business borrowers (PayPal merchants)",
     distributionModel: "Platform-native (PayPal ecosystem)",
+    creditVolume: {
+      display: "$30.0b",
+      normalizedUsdBn: 30,
+      basis: "Global small-business lending originations reported by PayPal (2025-03-26).",
+    },
     scale: [
       "PayPal announced surpassing $30bn in global small-business lending originations (as of 2025-03-26).",
       "$2.2bn merchant receivables purchased (FY2025).",
@@ -302,6 +343,11 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant loans/MCAs inside Shopify Capital; repayments are linked to platform payment activity.",
     borrowerType: "Business borrowers (Shopify merchants)",
     distributionModel: "Platform-native (Shopify ecosystem)",
+    creditVolume: {
+      display: "$5.1b",
+      normalizedUsdBn: 5.1,
+      basis: "Distributed through Shopify Capital since 2016.",
+    },
     scale: [
       "Shopify reports >$5.1bn distributed through Shopify Capital since 2016 (company post, 2024-04-23).",
       "$4.014bn purchases and originations of loans (FY2025 cash-flow line).",
@@ -348,6 +394,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Business loans and/or merchant cash advances (MCA), typically repaid as a fixed percentage of Stripe sales.",
     borrowerType: "Business borrowers (Stripe merchants)",
     distributionModel: "Platform-native (Stripe ecosystem)",
+    creditVolume: {
+      display: "n/a",
+      basis: "Stripe Capital cumulative underwriting volume is not publicly disclosed.",
+    },
     scale: [
       "Stripe 2025 annual letter reports $1.9tn total payment volume across Stripe; Capital-specific cumulative underwriting totals are not disclosed.",
       "Stripe Capital standalone financing volume/revenue/profit is not separately disclosed in the cited public docs.",
@@ -393,6 +443,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Partner-embedded business financing (working-capital and related products) with platform-driven distribution.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Partner-embedded network (B2B2SMB)",
+    creditVolume: {
+      display: "$25.0b*",
+      normalizedUsdBn: 25,
+      basis: "Cumulative financing offers extended (company-reported).",
+      note: "* Offers extended, not accepted/funded cumulative total.",
+    },
     scale: [
       "$25bn+ cumulative financing offers extended (company-reported).",
       "39,000+ businesses funded (company-reported).",
@@ -430,6 +486,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Partner-distributed SME financing (including revenue-based/merchant-cash-advance style products by market).",
     borrowerType: "Business borrowers (SMEs)",
     distributionModel: "Partner-embedded network (B2B2SMB)",
+    creditVolume: {
+      display: "£3.0b",
+      normalizedUsdBn: 3.8,
+      basis: "Funding delivered (company-reported).",
+      note: "Normalized using a GBP->USD proxy (~1.27) for relative dot sizing.",
+    },
     scale: [
       "£3bn+ funding delivered (company-reported).",
       "1.5m SMEs reached through partner channels (company-reported).",
@@ -462,6 +524,11 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Working-capital advances/loans for SMB operators with non-dilutive repayment structures.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct originator",
+    creditVolume: {
+      display: "$6.0b",
+      normalizedUsdBn: 6,
+      basis: "Deployed to businesses globally (company release, 2026-02-18).",
+    },
     scale: [
       "Over $6bn deployed to businesses globally (company release, 2026-02-18).",
       "Surpassed $100m annual revenues (company release, 2026-02-18).",
@@ -498,6 +565,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Revenue-linked or fixed-fee growth financing products for SMB operators.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct originator",
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative underwriting/deployed total not clearly disclosed.",
+    },
     scale: [
       "Current public pages emphasize product sizing (for example, offers from $100k to $2m).",
       "Public cumulative underwriting/deployed total is not clearly disclosed on the cited pages.",
@@ -534,6 +605,11 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant financing integrated into Square seller workflows and linked to sales performance.",
     borrowerType: "Business borrowers (Square sellers)",
     distributionModel: "Platform-native (Square ecosystem)",
+    creditVolume: {
+      display: "$22.0b",
+      normalizedUsdBn: 22,
+      basis: "Loans underwritten through Square Loans since launch.",
+    },
     scale: [
       "Block reported over $22bn in loans underwritten through Square Loans since launch (2024-12-13).",
       "Square Loans standalone revenue/profit is not separately disclosed in the cited source.",
