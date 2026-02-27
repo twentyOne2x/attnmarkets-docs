@@ -80,6 +80,12 @@ function MiniMarker(props: { plane: ExecutionPlane }) {
   );
 }
 
+function markerOuterRadius(plane: ExecutionPlane, size: number) {
+  if (plane === "web3") return size / 2;
+  // Square and triangle markers extend to corners beyond size/2.
+  return (size * Math.SQRT2) / 2;
+}
+
 type TooltipState = {
   id: string;
   x: number;
@@ -470,8 +476,8 @@ function contractBoundaryTowardCenter(
   }));
 }
 
-function connectedPointComponents(points: Point[], threshold: number) {
-  const components: Point[][] = [];
+function connectedPointComponents<T extends Point>(points: T[], threshold: number) {
+  const components: T[][] = [];
   const visited = new Array(points.length).fill(false);
 
   for (let i = 0; i < points.length; i += 1) {
@@ -1524,7 +1530,18 @@ export default function QuadrantScatterMap(props: {
     const plotBottom = pad + plotH - edgeInset;
 
     const allCenters = new Map(
-      projects.map((p) => [p.id, { x: xToSvg(p.x), y: yToSvg(p.y) }]),
+      projects.map((p) => {
+        const size = markerSizeByProject.get(p.id) ?? markerSize;
+        return [
+          p.id,
+          {
+            id: p.id,
+            x: xToSvg(p.x),
+            y: yToSvg(p.y),
+            markerOuterRadius: markerOuterRadius(p.plane, size),
+          },
+        ];
+      }),
     );
 
     const zones: ClusterZone[] = [];
@@ -1541,13 +1558,15 @@ export default function QuadrantScatterMap(props: {
 
       const centers = members
         .map((p) => allCenters.get(p.id))
-        .filter((pt): pt is Point => Boolean(pt));
+        .filter(
+          (pt): pt is { id: string; x: number; y: number; markerOuterRadius: number } => Boolean(pt),
+        );
       if (centers.length < minMembersForZone) continue;
 
       const foreignCenters = projects
         .filter((p) => !def.projectIds.includes(p.id))
         .map((p) => allCenters.get(p.id))
-        .filter((pt): pt is Point => Boolean(pt));
+        .filter((pt): pt is { id: string; x: number; y: number; markerOuterRadius: number } => Boolean(pt));
 
       const spread = boundsForPoints(centers);
       const spreadDiag = Math.hypot(spread.maxX - spread.minX, spread.maxY - spread.minY);
@@ -1570,8 +1589,8 @@ export default function QuadrantScatterMap(props: {
 
       for (let groupIdx = 0; groupIdx < groupsSorted.length; groupIdx += 1) {
         const group = groupsSorted[groupIdx];
-        const zoneObstacles = occupiedBoundaryPoints.length
-          ? foreignCenters.concat(occupiedBoundaryPoints)
+        const zoneObstacles: Point[] = occupiedBoundaryPoints.length
+          ? [...foreignCenters, ...occupiedBoundaryPoints]
           : foreignCenters;
         const baseGap = config.clusterZonePadding;
         const clearanceAttempts = [baseGap, baseGap + 6, baseGap + 12];
@@ -1587,7 +1606,14 @@ export default function QuadrantScatterMap(props: {
               top: plotTop,
               bottom: plotBottom,
             },
-            includeRadius: group.length === 1 ? singletonIncludeRadius : undefined,
+            // Keep zone boundaries outside scaled dots and their outline rings.
+            includeRadius:
+              group.length === 1
+                ? Math.max(
+                    singletonIncludeRadius,
+                    Math.max(...group.map((pt) => pt.markerOuterRadius + 10), 0) + 2,
+                  )
+                : Math.max(...group.map((pt) => pt.markerOuterRadius + 10), 30) + 2,
             minForeignClearance: clearance,
           });
           if (!hasBoundaryGapConflict(boundary, occupiedBoundaryPoints, baseGap)) break;
@@ -2261,6 +2287,7 @@ export default function QuadrantScatterMap(props: {
               const isActive = tooltip?.id === p.id;
               const baseSize = markerSizeByProject.get(p.id) ?? markerSize;
               const size = isActive ? Math.max(36, baseSize + 8) : baseSize;
+              const markerEdgeR = markerOuterRadius(p.plane, size);
               const comparableVolume = p.creditVolume?.normalizedUsdBn;
               const hasComparableVolume =
                 typeof comparableVolume === "number" &&
@@ -2295,11 +2322,11 @@ export default function QuadrantScatterMap(props: {
               const rayScaleX = ux !== 0 ? labelHalfW / Math.abs(ux) : Number.POSITIVE_INFINITY;
               const rayScaleY = uy !== 0 ? labelHalfH / Math.abs(uy) : Number.POSITIVE_INFINITY;
               const rayScale = Math.min(rayScaleX, rayScaleY);
-              const leaderStartX = cx + ux * (size / 2 + 3);
-              const leaderStartY = cy + uy * (size / 2 + 3);
+              const leaderStartX = cx + ux * (markerEdgeR + 3);
+              const leaderStartY = cy + uy * (markerEdgeR + 3);
               const leaderEndX = labelX - ux * rayScale;
               const leaderEndY = labelY - uy * rayScale;
-              const hitTargetRadius = Math.max(34, size / 2 + 14);
+              const hitTargetRadius = Math.max(34, markerEdgeR + 14);
 
               return (
                 <g
@@ -2325,7 +2352,7 @@ export default function QuadrantScatterMap(props: {
                     <circle
                       cx={cx}
                       cy={cy}
-                      r={size / 2 + 10}
+                      r={markerEdgeR + 10}
                       fill="none"
                       stroke="#35527f"
                       strokeOpacity={0.85}
@@ -2337,7 +2364,7 @@ export default function QuadrantScatterMap(props: {
                     <circle
                       cx={cx}
                       cy={cy}
-                      r={size / 2 + 5}
+                      r={markerEdgeR + 5}
                       fill="none"
                       stroke={cluster.stroke}
                       strokeWidth={2.2}
@@ -2349,7 +2376,7 @@ export default function QuadrantScatterMap(props: {
                     <circle
                       cx={cx}
                       cy={cy}
-                      r={size / 2 + 7}
+                      r={markerEdgeR + 7}
                       fill="none"
                       stroke="#6f7f99"
                       strokeWidth={1.8}
@@ -2362,7 +2389,7 @@ export default function QuadrantScatterMap(props: {
                     <circle
                       cx={cx}
                       cy={cy}
-                      r={size / 2 + 9}
+                      r={markerEdgeR + 9}
                       fill="none"
                       stroke="#dc2626"
                       strokeWidth={2}
@@ -2509,6 +2536,28 @@ export default function QuadrantScatterMap(props: {
                         {active.creditVolume.display} — {active.creditVolume.basis ?? "Best-public signal"}
                       </li>
                       {active.creditVolume.note ? <li>{active.creditVolume.note}</li> : null}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {active.exampleClients?.length ? (
+                  <div className="block">
+                    <div className="label">Example clients / partners</div>
+                    <ul className="list">
+                      {active.exampleClients.slice(0, 6).map((x, i) => (
+                        <li key={i}>{x}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {active.b2b2smbReliance?.length ? (
+                  <div className="block">
+                    <div className="label">B2B2SMB reliance</div>
+                    <ul className="list">
+                      {active.b2b2smbReliance.slice(0, 4).map((x, i) => (
+                        <li key={i}>{x}</li>
+                      ))}
                     </ul>
                   </div>
                 ) : null}

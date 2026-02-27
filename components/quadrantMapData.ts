@@ -53,6 +53,8 @@ export type ProjectInfo = {
   creditModel?: string;
   borrowerType?: string;
   distributionModel?: string;
+  exampleClients?: string[];
+  b2b2smbReliance?: string[];
   potentialClient?: boolean;
   infra?: InfraDependency;
 
@@ -83,6 +85,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Entity credit enforced via routed revenue + automated servicing/sweeps (onchain).",
     borrowerType: "Business entities",
     distributionModel: "Infrastructure-first (behind partner surfaces)",
+    exampleClients: ["Public named design partners are not disclosed yet."],
+    b2b2smbReliance: [
+      "Can be consumed through partner-embedded channels, but public named channels are not yet disclosed.",
+    ],
     creditVolume: {
       display: "n/a",
       basis: "Public cumulative underwriting volume not disclosed.",
@@ -122,6 +128,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Secured revolving line of credit collateralized by cashflows/receivables (routing-based).",
     borrowerType: "Business entities",
     distributionModel: "Infrastructure-first (integrator-facing)",
+    exampleClients: ["Public named customers are not listed in the cited docs."],
+    b2b2smbReliance: [
+      "Integrator-facing infra can sit behind partner channels, but public named B2B2SMB channels are not listed.",
+    ],
     creditVolume: {
       display: "n/a",
       basis: "Public cumulative funding volume not disclosed in cited docs.",
@@ -157,6 +167,14 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Revenue-based financing with settlement/payment account routing a specified % of incoming sales revenue (offchain).",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Partner-embedded network (B2B2SMB)",
+    exampleClients: [
+      "eBay UK sellers (via eBay Seller Capital powered by YouLend).",
+      "Amazon UK sellers (Amazon partner quote on YouLend site).",
+      "Glovo merchants.",
+      "orderbird merchants.",
+      "Paysafe merchant network.",
+    ],
+    b2b2smbReliance: ["Core model is B2B2SMB partner distribution."],
     creditVolume: {
       display: "$1.3b",
       normalizedUsdBn: 1.3,
@@ -177,6 +195,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       {
         label: "YouLend results post (370k funded; $230m rev; $12m profit) — 2026-01-08",
         url: "https://youlend.com/us/blog/youlend-reaches-370-000-businesses-funded-delivering-profitable-growth-built-to-last",
+      },
+      {
+        label: "YouLend home (partner testimonials and examples)",
+        url: "https://youlend.com/",
       },
       {
         label: "Cash Advance docs",
@@ -208,6 +230,15 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant cash advance (MCA): customer sells a portion of future revenue; paid as a % of revenue.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct + partner channels",
+    exampleClients: [
+      "GoCardless merchants (embedded capital partnership example).",
+      "Uber Eats merchants (via integrated access to Pipe capital).",
+      "Boulevard merchants.",
+      "Housecall Pro merchants.",
+    ],
+    b2b2smbReliance: [
+      "Mixed: includes partner channels, but not primarily described as a pure B2B2SMB model in cited sources.",
+    ],
     creditVolume: {
       display: "$0.25b",
       normalizedUsdBn: 0.25,
@@ -228,6 +259,11 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         label: "Pipe recap (15k advances; >$250m) — 2025",
         url: "https://pipe.com/resources/articles/2025-at-pipe-growing-scale-growing-impact",
       },
+      { label: "Pipe partners page", url: "https://pipe.com/partners" },
+      {
+        label: "Pipe x Uber integration press release",
+        url: "https://pipe.com/resources/press-releases/pipe-announces-new-integration-with-uber-empowering-restaurants-with-access-to-working-capital",
+      },
       { label: "Pipe Capital product page (MCA)", url: "https://pipe.com/products/capital" },
     ],
     href: "https://pipe.com/products/capital",
@@ -247,6 +283,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Non-dilutive funding (including cash advance variants) with predictable capped weekly payments and receivables-based security interest.",
     borrowerType: "Business borrowers (SMB brands)",
     distributionModel: "Direct originator",
+    exampleClients: ["Andie Swim.", "Monos.", "Aroma360.", "JOI."],
+    b2b2smbReliance: [
+      "Primarily direct B2SMB; no material B2B2SMB dependency is shown in cited sources.",
+    ],
     creditVolume: {
       display: "$3.0b",
       normalizedUsdBn: 3.0,
@@ -274,6 +314,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         label: "FAQ copy (security interest in purchased future receivables)",
         url: "https://www.clear.co/ecommerce-funding",
       },
+      {
+        label: "Clearco customer stories",
+        url: "https://www.clear.co/customer-stories",
+      },
     ],
     href: "https://www.clear.co/",
   },
@@ -292,6 +336,13 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant financing where repayment is linked to future sales volume flowing through PayPal rails.",
     borrowerType: "Business borrowers (PayPal merchants)",
     distributionModel: "Platform-native (PayPal ecosystem)",
+    exampleClients: [
+      "PayPal merchants in eligible markets (platform-native distribution).",
+      "No public named partner-network client list for this product in cited disclosures.",
+    ],
+    b2b2smbReliance: [
+      "No external B2B2SMB dependency for core product distribution; lending is native to PayPal’s own merchant ecosystem.",
+    ],
     creditVolume: {
       display: "$30.0b",
       normalizedUsdBn: 30,
@@ -343,6 +394,13 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant loans/MCAs inside Shopify Capital; repayments are linked to platform payment activity.",
     borrowerType: "Business borrowers (Shopify merchants)",
     distributionModel: "Platform-native (Shopify ecosystem)",
+    exampleClients: [
+      "Shopify merchants in eligible markets (platform-native distribution).",
+      "No public named partner-network client list for this product in cited disclosures.",
+    ],
+    b2b2smbReliance: [
+      "No external B2B2SMB dependency for core product distribution; lending is native to Shopify’s own merchant ecosystem.",
+    ],
     creditVolume: {
       display: "$5.1b",
       normalizedUsdBn: 5.1,
@@ -394,6 +452,13 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Business loans and/or merchant cash advances (MCA), typically repaid as a fixed percentage of Stripe sales.",
     borrowerType: "Business borrowers (Stripe merchants)",
     distributionModel: "Platform-native (Stripe ecosystem)",
+    exampleClients: [
+      "Stripe merchants in eligible markets (platform-native distribution).",
+      "Capital for platforms users in US/UK public preview (platform names not publicly listed in cited docs).",
+    ],
+    b2b2smbReliance: [
+      "Core Stripe Capital is platform-native; optional partner-embedded channel exists via Capital for platforms.",
+    ],
     creditVolume: {
       display: "n/a",
       basis: "Stripe Capital cumulative underwriting volume is not publicly disclosed.",
@@ -443,6 +508,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Partner-embedded business financing (working-capital and related products) with platform-driven distribution.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Partner-embedded network (B2B2SMB)",
+    exampleClients: [
+      "Amazon merchants.",
+      "Walmart sellers.",
+      "DoorDash merchants.",
+    ],
+    b2b2smbReliance: ["Core model is B2B2SMB partner distribution."],
     creditVolume: {
       display: "$25.0b*",
       normalizedUsdBn: 25,
@@ -486,6 +557,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Partner-distributed SME financing (including revenue-based/merchant-cash-advance style products by market).",
     borrowerType: "Business borrowers (SMEs)",
     distributionModel: "Partner-embedded network (B2B2SMB)",
+    exampleClients: [
+      "Vagaro merchants (Vagaro Capital).",
+      "Clover UK merchants.",
+      "Teya merchants.",
+    ],
+    b2b2smbReliance: ["Core model is B2B2SMB partner distribution."],
     creditVolume: {
       display: "£3.0b",
       normalizedUsdBn: 3.8,
@@ -506,6 +583,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         label: "Liberis about page (company metrics and positioning)",
         url: "https://www.liberis.com/about-us",
       },
+      {
+        label: "Liberis case studies (Vagaro, Clover UK, Teya)",
+        url: "https://www.liberis.com/partner/case-studies",
+      },
     ],
     href: "https://www.liberis.com/",
   },
@@ -524,6 +605,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Working-capital advances/loans for SMB operators with non-dilutive repayment structures.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct originator",
+    exampleClients: ["True Classic.", "Powerlete.", "Spongelle.", "Kekoa Foods."],
+    b2b2smbReliance: [
+      "Primarily direct B2SMB; no material B2B2SMB dependency is shown in cited sources.",
+    ],
     creditVolume: {
       display: "$6.0b",
       normalizedUsdBn: 6,
@@ -547,6 +632,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         label: "Wayflyer site",
         url: "https://wayflyer.com/",
       },
+      {
+        label: "Wayflyer customer stories",
+        url: "https://wayflyer.com/customers",
+      },
     ],
     href: "https://wayflyer.com/",
   },
@@ -565,6 +654,14 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Revenue-linked or fixed-fee growth financing products for SMB operators.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct originator",
+    exampleClients: [
+      "MORI.",
+      "Hedoine.",
+      "Additional DTC/ecommerce brands via the Uncapped success-stories hub.",
+    ],
+    b2b2smbReliance: [
+      "Primarily direct B2SMB; no material B2B2SMB dependency is shown in cited sources.",
+    ],
     creditVolume: {
       display: "n/a",
       basis: "Public cumulative underwriting/deployed total not clearly disclosed.",
@@ -587,6 +684,14 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         label: "Uncapped FAQ hub",
         url: "https://www.weareuncapped.com/faq-categories/all",
       },
+      {
+        label: "Uncapped success stories",
+        url: "https://www.weareuncapped.com/success-stories/",
+      },
+      {
+        label: "Tech.eu: Uncapped customer examples (MORI, Hedoine)",
+        url: "https://tech.eu/2023/10/19/uncapped-secures-200m-to-expand-its-services-to-us-and-european-entrepreneurs/",
+      },
     ],
     href: "https://www.weareuncapped.com/",
   },
@@ -605,6 +710,13 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchant financing integrated into Square seller workflows and linked to sales performance.",
     borrowerType: "Business borrowers (Square sellers)",
     distributionModel: "Platform-native (Square ecosystem)",
+    exampleClients: [
+      "Square sellers in eligible markets (platform-native distribution).",
+      "No public named partner-network client list for this product in cited disclosures.",
+    ],
+    b2b2smbReliance: [
+      "No external B2B2SMB dependency for core product distribution; lending is native to Square’s seller ecosystem.",
+    ],
     creditVolume: {
       display: "$22.0b",
       normalizedUsdBn: 22,

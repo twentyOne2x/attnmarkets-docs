@@ -1,5 +1,169 @@
 # ISSUES
 
+## 2026-02-27 - revenue map: cluster envelopes honor scaled dot radii
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User asked whether dot circling still tracks dots after scale-up.
+- Missing info/questions: none; verify both per-dot rings and cluster envelope math.
+- Type: bugfix/visual correctness
+- Status: completed
+- Context + suspected cause:
+  - Per-dot rings used scaled marker radius already.
+  - Cluster envelope boundary include radius for multi-member groups used a fixed default, which could underfit enlarged markers.
+- Fix intent:
+  1) Compute cluster boundary include radius from member marker outer radii (+ ring padding).
+  2) Keep singleton special padding behavior.
+- Acceptance criteria:
+  - Cluster boundaries are derived from scaled dot sizes.
+  - Typecheck/build passes.
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep existing visual language and cluster behavior.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Made `connectedPointComponents` generic so group members can carry metadata.
+  - Enriched cluster-center points with `markerOuterRadius`.
+  - Updated `buildOrganicBoundary` calls to pass dynamic `includeRadius` derived from group members (`markerOuterRadius + 10`, with singleton preserving prior larger zone behavior).
+  - Added a type-safe obstacle merge (`Point[]`) for boundary generation.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: cluster envelopes now account for scaled marker/ring footprint.
+  - PASS: build/typecheck succeeded.
+
+## 2026-02-27 - attn-in-context: bold firm names in "attn fit by segment"
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User asked to make firm names bold in the `attn fit by segment` section so scanability improves.
+- Missing info/questions: none; use simple Markdown emphasis only, no structural rewrite.
+- Type: UX/content formatting
+- Status: completed
+- Context + suspected cause:
+  - `attn fit by segment` currently uses plain-text firm names inside long paragraphs.
+  - This slows down quick scanning of firm lists before reading the fit interpretation.
+- Fix intent:
+  1) Bold all firm names in each subsection under `attn fit by segment`.
+  2) Preserve existing wording and ordering.
+- Acceptance criteria:
+  - Firm names in `attn fit by segment` are bold.
+  - `python3 scripts/knowledge_check.py` passes.
+- Complexity: tiny
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - No copy rewrite beyond adding emphasis.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `rg -n "## attn fit by segment|\\*\\*YouLend\\*\\*|\\*\\*Stripe Capital\\*\\*" pages/introduction/attn-in-context.mdx`
+
+EXECUTOR
+- Implemented:
+  - Updated `pages/introduction/attn-in-context.mdx` to bold firm names across all four `attn fit by segment` subsections.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `rg -n "## attn fit by segment|\\*\\*YouLend\\*\\*|\\*\\*Stripe Capital\\*\\*|\\*\\*Frames\\*\\*|\\*\\*Klarna \\+ Tempo\\*\\*" pages/introduction/attn-in-context.mdx` -> expected matches.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: firm names are bolded for quick scanning.
+  - PASS: knowledge check passes.
+
+## 2026-02-27 - attn-in-context: hover data for Market Segments firm names
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for hoverable data on firm names in the **Market segments** list so segment scanning has the same detail affordance as the map.
+- Missing info/questions: none; proceed with a compact hover card using existing `PROJECTS` data.
+- Type: feature/UX
+- Status: completed
+- Context + suspected cause:
+  - Market segment firm names are plain text bullets today.
+  - Rich firm metadata exists in `components/quadrantMapData.ts`, but only map dots expose it via hover.
+- Fix intent:
+  1) Add reusable hover-name component backed by `PROJECTS`.
+  2) Replace market-segment firm bullet labels in `attn-in-context.mdx` with hoverable firm-name tokens.
+  3) Keep tooltip compact and focused on practical data (distribution, borrower type, volume signal, examples).
+- Acceptance criteria:
+  - Hovering any firm name in **Market segments** opens a detail card.
+  - Cards show key firm data from map dataset.
+  - `knowledge_check.py` passes and visual behavior is verified with screenshot(s).
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/ProjectHoverName.tsx` (new)
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Reuse existing `PROJECTS` data; avoid duplicating data blobs in MDX.
+    - Keep tooltips keyboard-focusable and mobile-safe.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run dev` + Playwright screenshot of `/introduction/attn-in-context`
+    - `rg -n "ProjectHoverName|Market segments|id=" components pages`
+
+EXECUTOR
+- Implemented:
+  - Added `components/ProjectHoverName.tsx`:
+    - Reusable hover token backed by `PROJECTS` data.
+    - Tooltip fields: borrower, distribution, volume signal, B2B2SMB reliance, and example clients.
+    - Keyboard focus support via `tabIndex` + `:focus-within` tooltip reveal.
+  - Updated `pages/introduction/attn-in-context.mdx`:
+    - Imported `ProjectHoverName`.
+    - Replaced all firm bullets under **Market segments** with hoverable tokens (all 9 segment groups).
+    - Added short instruction line: “Hover firm names to see quick data...”.
+  - Updated `docs/ISSUES.md` with execution and verification record.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+  - `npm run build` -> PASS; `/introduction/attn-in-context` generated successfully.
+  - `rg -n "ProjectHoverName|Hover firm names|id=" components pages` -> expected matches in new component and market-segment bullets.
+  - One-off Playwright hover proof (`tests/e2e/tmp-hover-market.spec.ts`, removed after run) -> PASS (`1 passed`) and screenshot output captured.
+  - Visual verification:
+    - Full-page render screenshot: `tmp/attn-in-context-market-segments-hover-names-v1-2026-02-27.png`
+    - Hover behavior screenshot (YouLend token): `tmp/attn-in-context-market-hover-youlend-2026-02-27.png`
+    - Cropped proof: `tmp/attn-in-context-market-hover-youlend-crop-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: hovering market-segment firm names now opens a detail card.
+  - PASS: cards show practical data from the existing map dataset.
+  - PASS: checks and screenshots collected.
+
 ## 2026-02-27 - attn-in-context: add missing revenue-financing comparables + enrich scale metrics
 
 Checklist

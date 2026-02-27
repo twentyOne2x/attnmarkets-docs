@@ -1,4 +1,5 @@
 import QuadrantScatterMap from "../../components/QuadrantScatterMap";
+import ProjectHoverName from "../../components/ProjectHoverName";
 
 # attn in context: adjacent protocols and fintech layers
 
@@ -9,8 +10,8 @@ attn's focus is **attnCredit**: revolving credit for onchain businesses, repaid 
 ## Revenue & receivables credit (zoom-in)
 
 This first map is the anchor view for attn's closest comparator lane: revenue and receivables credit.
-Axes are remapped to emphasize **repayment enforceability** and **servicing intelligence**.
-Use two simple commercial lenses here:
+It is intentionally narrow, so you can quickly compare the firms most similar to attn on repayment behavior and servicing quality.
+Use two simple commercial lenses to read it:
 
 - **Borrower type:** business vs consumer
 - **Distribution model:** platform-native vs partner-embedded network
@@ -28,7 +29,9 @@ Use two simple commercial lenses here:
 
 ## Wider strategic credit, spend, and settlement map
 
-This second map keeps the full context across adjacent credit, spend, treasury, and payments narratives.
+This second map zooms out and places that first lane inside the broader market context.
+It includes adjacent credit, spend, treasury, issuance, and payments-rail narratives so it is easier to separate direct substitutes from complements.
+Use this view for partner mapping and BD prioritization, not just direct competitor ranking.
 
 <QuadrantScatterMap asOf="2026-02-21" />
 
@@ -41,65 +44,66 @@ This second map keeps the full context across adjacent credit, spend, treasury, 
 ## Market segments (grouped by narrative)
 
 As of **2026-02-21**, this is a practical BD map, not perfect taxonomy.
+Hover firm names to see quick data (borrower type, distribution, volume signal, and examples).
 
 ### 1) Enforcement-first entity credit (revenue / receivables)
 
-- **attn (attnCredit)**
-- **creditcoop.xyz**
-- **YouLend**
-- **Parafin**
-- **Liberis**
-- **Pipe**
-- **Clearco**
-- **Wayflyer**
-- **Uncapped**
-- **PayPal Working Capital**
-- **Shopify Capital**
-- **Stripe Capital**
-- **Square Loans**
+- <ProjectHoverName id="attn" label="attn (attnCredit)" />
+- <ProjectHoverName id="creditcoop" label="creditcoop.xyz" />
+- <ProjectHoverName id="youlend" label="YouLend" />
+- <ProjectHoverName id="parafin" label="Parafin" />
+- <ProjectHoverName id="liberis" label="Liberis" />
+- <ProjectHoverName id="pipe" label="Pipe" />
+- <ProjectHoverName id="clearco" label="Clearco" />
+- <ProjectHoverName id="wayflyer" label="Wayflyer" />
+- <ProjectHoverName id="uncapped" label="Uncapped" />
+- <ProjectHoverName id="paypal_working_capital" label="PayPal Working Capital" />
+- <ProjectHoverName id="shopify_capital" label="Shopify Capital" />
+- <ProjectHoverName id="stripe_capital" label="Stripe Capital" />
+- <ProjectHoverName id="square_loans" label="Square Loans" />
 
 ### 2) Provider-of-providers issuing + settlement infrastructure
 
-- **Rain**
+- <ProjectHoverName id="rain" label="Rain" />
 
 ### 3) Embedded credit rails (credit-as-a-feature)
 
-- **Yumi.finance**
+- <ProjectHoverName id="yumi" label="Yumi.finance" />
 
 ### 4) Agent-native credit + spend surfaces
 
-- **claw.credit**
-- **Frames (frames.ag/tools)**
-- **Sponge (paysponge.com)**
+- <ProjectHoverName id="claw" label="claw.credit" />
+- <ProjectHoverName id="frames" label="Frames (frames.ag/tools)" />
+- <ProjectHoverName id="sponge" label="Sponge (paysponge.com)" />
 
 ### 5) Market-based credit + debt issuance
 
-- **Wildcat.finance**
-- **3Jane.xyz**
-- **Xitadel.fi**
+- <ProjectHoverName id="wildcat" label="Wildcat.finance" />
+- <ProjectHoverName id="threejane" label="3Jane.xyz" />
+- <ProjectHoverName id="xitadel" label="Xitadel.fi" />
 
 ### 6) Consumer spend surfaces
 
-- **Krak (Kraken)**
-- **Avici.money**
-- **Pyra.fi**
-- **KAST (kast.xyz)**
-- **OffGrid (offgrid.cash)**
+- <ProjectHoverName id="krak" label="Krak (Kraken)" />
+- <ProjectHoverName id="avici" label="Avici.money" />
+- <ProjectHoverName id="pyra" label="Pyra.fi" />
+- <ProjectHoverName id="kast" label="KAST (kast.xyz)" />
+- <ProjectHoverName id="offgrid" label="OffGrid (offgrid.cash)" />
 
 ### 7) Business money surfaces (distribution endpoints)
 
-- **Slash**
-- **Squads Altitude**
+- <ProjectHoverName id="slash" label="Slash" />
+- <ProjectHoverName id="altitude" label="Squads Altitude" />
 
 ### 8) B2B2C BNPL + payments rails
 
-- **Klarna + Tempo**
-- **Affirm**
-- **Colossus.credit**
+- <ProjectHoverName id="klarna_tempo" label="Klarna + Tempo" />
+- <ProjectHoverName id="affirm" label="Affirm" />
+- <ProjectHoverName id="colossus" label="Colossus.credit" />
 
 ### 9) Adjacent (not primarily credit)
 
-- **Pye.fi** (tokenized principal/yield claims on staked validator revenue streams)
+- <ProjectHoverName id="pye" label="Pye.fi" /> (tokenized principal/yield claims on staked validator revenue streams)
 
 ## 3 BD takeaways
 
@@ -111,21 +115,21 @@ As of **2026-02-21**, this is a practical BD map, not perfect taxonomy.
 
 ### Revenue/receivables credit
 
-Credit Coop, YouLend, Parafin, Liberis, Pipe, Clearco, Wayflyer, Uncapped, PayPal Working Capital, Shopify Capital, Stripe Capital, and Square Loans are closest on core mechanic (revenue-aligned repayment), but differ by rails and distribution posture.
+ **Credit Coop**, **YouLend**, **Parafin**, **Liberis**, **Pipe**, **Clearco**, **Wayflyer**, **Uncapped**, **PayPal Working Capital**, **Shopify Capital**, **Stripe Capital**, and **Square Loans** are closest on core mechanic (revenue-aligned repayment), but differ by rails and distribution posture.
 
-Stripe Capital, PayPal Working Capital, and Shopify Capital are **platform-native merchant financing** (business borrower inside their own platform ecosystems). YouLend is **partner-embedded business financing** (`B2B2SMB` shorthand), not consumer lending.
+ **Stripe Capital**, **PayPal Working Capital**, and **Shopify Capital** are **platform-native merchant financing** (business borrower inside their own platform ecosystems). **YouLend** is **partner-embedded business financing** (`B2B2SMB` shorthand), not consumer lending.
 
 ### Agent economy surfaces
 
-Frames and Sponge are spend/control surfaces. claw.credit is credit execution. These can consume a back-end credit+servicing layer when routed revenue exists.
+ **Frames** and **Sponge** are spend/control surfaces. **claw.credit** is credit execution. These can consume a back-end credit+servicing layer when routed revenue exists.
 
 ### Distribution surfaces
 
-Krak, Avici, Pyra, Slash, and Altitude are where end-users or operators interact. They are generally complements, not direct substitutes, for attn's control-plane position.
+ **Krak**, **Avici**, **Pyra**, **Slash**, and **Altitude** are where end-users or operators interact. They are generally complements, not direct substitutes, for attn's control-plane position.
 
 ### Market and rails narratives
 
-Wildcat/3Jane/Xitadel emphasize market or issuance models; Klarna+Tempo and Affirm are B2B2C BNPL distribution (merchant-integrated, shopper-facing), while Colossus emphasizes a payments-rails narrative. attn's differentiator remains enforceable servicing around routed revenue accounts.
+ **Wildcat**/**3Jane**/**Xitadel** emphasize market or issuance models; **Klarna + Tempo** and **Affirm** are B2B2C BNPL distribution (merchant-integrated, shopper-facing), while **Colossus.credit** emphasizes a payments-rails narrative. attn's differentiator remains enforceable servicing around routed revenue accounts.
 
 ## Related pages
 
