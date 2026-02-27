@@ -1,5 +1,103 @@
 # ISSUES
 
+## 2026-02-27 - firm hover: bold firm names in service/reliance sections
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested easier scanability by bolding firm names in hover detail text.
+- Missing info/questions: none.
+- Type: UX/readability
+- Status: completed
+- Context + suspected cause:
+  - Firm hover details render plain text for `Who they use / rely on` and `Who they service`, making firm-name scanning slow.
+- Fix intent:
+  1) Add firm-name highlighting helper for tooltip text.
+  2) Apply it to reliance and service sections only.
+- Acceptance criteria:
+  - Recognized firm names render bold in both target sections.
+  - Non-firm text remains normal.
+  - Build/checks pass with visual proof.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of a firm hover showing bold firm names
+
+EXECUTOR
+- Implemented:
+  - Added a reusable firm-name highlighter in `QuadrantScatterMap.tsx` with curated firm tokens and safe regex matching.
+  - Applied highlighting to:
+    - `Who they use / rely on`
+    - `Who they service (examples)`
+  - Kept non-firm text untouched.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/firm-hover-bold-names-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: firm names in service/reliance hover sections are bold and easier to scan.
+
+## 2026-02-27 - stripe capital: explicitly name financing providers
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for clearer provider attribution in Stripe Capital text.
+- Missing info/questions: none.
+- Type: content clarity
+- Status: completed
+- Context + suspected cause:
+  - Stripe Capital tooltip currently uses a high-level sentence about optional partner-embedded channels but doesn’t explicitly identify financing providers.
+- Fix intent:
+  1) Update Stripe Capital provider text to explicitly name providers from cited Stripe docs.
+  2) Keep wording concise and plain.
+- Acceptance criteria:
+  - Stripe Capital content clearly states who provides/underwrites financing.
+  - Build/checks pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Replaced Stripe Capital provider sentence with explicit provider naming in `b2b2smbReliance`:
+    - loans issued by Celtic Bank
+    - MCAs provided by YouLend or Stripe
+    - Capital for platforms is Stripe-distributed (US/UK preview)
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Visual verification: provider sentence now appears clearly in Stripe hover details.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: provider attribution for Stripe Capital is now explicit and not ambiguous.
+
 ## 2026-02-27 - zoom map: normalize dot sizing across marker shapes
 
 Checklist

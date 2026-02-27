@@ -459,7 +459,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Capital for platforms users in US/UK public preview (platform names not publicly listed in cited docs).",
     ],
     b2b2smbReliance: [
-      "Core Stripe Capital is platform-native; optional partner-embedded channel exists via Capital for platforms.",
+      "Provider clarity: per Stripe docs, loans are issued by Celtic Bank and MCAs are provided by YouLend or Stripe. Capital for platforms is a Stripe-distributed channel (US/UK preview); the platform is the distribution partner, not the lender.",
     ],
     creditVolume: {
       display: "n/a",
