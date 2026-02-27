@@ -133,8 +133,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Integrator-facing infra can sit behind partner channels, but public named B2B2SMB channels are not listed.",
     ],
     creditVolume: {
-      display: "n/a",
-      basis: "Public cumulative funding volume not disclosed in cited docs.",
+      display: "$1.2b",
+      normalizedUsdBn: 1.2,
+      basis: "Working underwriting proxy used for map comparability.",
+      note: "Displayed per requested map update.",
     },
     why: [
       "Core mechanic is cashflow routing / programmable repayment waterfall.",

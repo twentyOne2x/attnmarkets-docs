@@ -1,5 +1,437 @@
 # ISSUES
 
+## 2026-02-27 - firm hover: remove redundant quadrant-region pills
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested removal of repeated region indicators in per-firm hover details.
+- Missing info/questions: none.
+- Type: UX/content cleanup
+- Status: completed
+- Context + suspected cause:
+  - Firm tooltip currently shows chips for `active.stack` and `active.controlPrimitive`, which duplicate map-axis context.
+- Fix intent:
+  1) Remove only the redundant region chips from the firm tooltip.
+  2) Keep other chips (plane, borrower/distribution, infra flags, potential client) unchanged.
+- Acceptance criteria:
+  - On individual firm hover, region chips are removed.
+  - Other hover details remain intact.
+  - Build/checks pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Removed firm-tooltip chips for `active.stack` and `active.controlPrimitive`.
+  - Kept all other firm-hover chips/details unchanged.
+  - Verified cluster hover data cards still show on both cluster label hover and cluster zone hover.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshots:
+    - `tmp/cluster-hover-on-name-2026-02-27.png`
+    - `tmp/cluster-hover-on-zone-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: redundant region pills removed from individual firm hover.
+  - PASS: cluster data hover still appears when hovering cluster names and cluster zones.
+
+## 2026-02-27 - zoom map: center clear.co/Uncapped labels below dots + add creditcoop $1.2b
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested specific label-placement refinements and an explicit creditcoop volume label.
+- Missing info/questions: none.
+- Type: UX/layout + content
+- Status: completed
+- Context + suspected cause:
+  - `clear.co` and `Uncapped` labels are currently candidate-placed and not consistently centered beneath their dots.
+  - `creditcoop` is intentionally excluded from zoom label volume suffix, so it renders without a volume value.
+- Fix intent:
+  1) Add zoom-specific hard locks so `clear.co` and `Uncapped` labels are centered below scaled dots.
+  2) Include `creditcoop` volume in zoom label text as `$1.2b`.
+- Acceptance criteria:
+  - `clear.co` label centered below its scaled dot.
+  - `Uncapped` label centered below its scaled dot.
+  - `creditcoop` zoom label includes `$1.2b`.
+  - Build/checks pass and screenshot confirms.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `components/quadrantMapData.ts`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Added zoom-only fixed label anchors in `computeLabelPlacements`:
+    - `clearco`: centered below scaled dot.
+    - `uncapped`: centered below scaled dot.
+  - Updated zoom label rendering to include credit volume for `creditcoop` by removing it from the omit-volume set.
+  - Updated `creditcoop` credit volume metadata to show `$1.2b` with `normalizedUsdBn: 1.2`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/clearco-uncapped-centered-creditcoop-1p2b-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `clear.co` and `Uncapped` labels are centered below their dots.
+  - PASS: `creditcoop` label now shows `$1.2b` in zoom map.
+
+## 2026-02-27 - Stripe Capital: move dot left and center label above dot
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested Stripe Capital point adjustment and explicit label anchoring.
+- Missing info/questions: none.
+- Type: UX/layout placement
+- Status: completed
+- Context + suspected cause:
+  - Stripe label was previously using a specialized anti-collision branch tied to axis text.
+  - User wants deterministic project-relative placement instead: label centered above Stripe dot.
+- Fix intent:
+  1) Shift Stripe dot left by ~15px equivalent in zoom coordinates.
+  2) Lock Stripe label to top-center of its scaled dot in zoom mode.
+- Acceptance criteria:
+  - Stripe dot appears left of previous position.
+  - Stripe label is centered above the dot (using scaled marker radius).
+  - Build/checks pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - In zoom coordinates, moved `stripe_capital` from `x: 0.665` to `x: 0.65` (left shift).
+  - Replaced zoom-specific Stripe placement logic with direct top-center lock:
+    - `fixedX = cx`
+    - `fixedY = cy - (markerForProject / 2 + halfH + 3)`
+  - This applies after scaling via `markerForProject`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/stripe-dot-left-label-top-center-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Stripe dot shifted left and label is centered above the scaled dot.
+
+## 2026-02-27 - zoom map: lock Liberis/Square/Pipe label anchors to scaled dots
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested exact relative label anchors for Liberis, Square Loans, and pipe.com, and explicitly asked anchors to be applied after dot scaling.
+- Missing info/questions: none.
+- Type: UX/layout placement
+- Status: completed
+- Context + suspected cause:
+  - These labels were still governed by generic placement heuristics, so their relative anchor around scaled dots drifted.
+- Fix intent:
+  1) Add zoom-only hard locks for the three labels.
+  2) Compute offsets from `markerForProject` so placement references scaled marker size.
+- Acceptance criteria:
+  - `Liberis` label is below its scaled dot.
+  - `Square Loans` label is above its scaled dot.
+  - `pipe.com` label is top-left of its scaled dot.
+  - Build/checks pass with screenshot proof.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update `components/QuadrantScatterMap.tsx` and this issue entry.
+  - Run `python3 scripts/knowledge_check.py`, `npm run build`, and capture screenshot.
+
+EXECUTOR
+- Implemented:
+  - Added zoom-only (`!applyHardLabelLocks`) hard locks in `computeLabelPlacements`:
+    - `liberis`: directly below (`+ markerForProject/2 + halfH + gap`)
+    - `square_loans`: directly above (`- markerForProject/2 - halfH - gap`)
+    - `pipe`: top-left (`x` and `y` offsets based on `markerForProject/2 + halfW/halfH + gap`)
+  - All three use `markerForProject`, so anchors follow scaled dot sizes.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/zoom-locks-liberis-square-pipe-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: requested label anchors now apply relative to scaled marker sizes.
+
+## 2026-02-27 - cluster cards: bigger title + firm-name pills
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification (not requested)
+
+PLANNER
+- Spec check: solvable. User requested larger cluster titles and firm-name pills under each title in bottom "Visible cluster zones".
+- Missing info/questions: none; implement in zoom cluster insight cards where the bottom cluster summaries are rendered.
+- Type: UX/readability
+- Status: completed
+- Context + suspected cause:
+  - Cluster insight cards currently show title + text but no at-a-glance firm membership.
+  - Title styling is relatively small for quick scan.
+- Fix intent:
+  1) Increase cluster title prominence.
+  2) Add firm-name pills directly under each cluster title.
+  3) Reuse existing cluster membership from project data.
+- Acceptance criteria:
+  - Each bottom cluster card has larger title text.
+  - Firm-name pills appear below each title.
+  - Build/checks pass.
+- Complexity: tiny
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Added `memberNames` aggregation to cluster insights (from cluster member projects).
+  - Rendered `clusterFirmPills` section under each `clusterInsightTitle` in bottom cluster cards.
+  - Increased title font size and adjusted spacing.
+  - Added pill styles for compact readable firm tags.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: larger title and firm-name pills appear in bottom cluster cards.
+  - PASS: checks/build passed.
+
+## 2026-02-27 - Stripe label nudge and underwriting-sum wording
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested Stripe label move 10px up/left and clearer underwriting summation wording.
+- Missing info/questions: none; implement exact offset plus collision-safe placement and wording update.
+- Type: UX/layout + copy clarity
+- Status: completed
+- Context + suspected cause:
+  - Stripe label remained too close to right-axis text.
+  - “Cumulative underwriting” wording was not explicit enough about summing known values only.
+- Fix intent:
+  1) Apply a strict `-10px x / -10px y` nudge for zoom Stripe label target.
+  2) Keep collision and axis-overlap protection.
+  3) Clarify cluster underwriting text as “sum of known public figures” with undisclosed caveat.
+- Acceptance criteria:
+  - Stripe label visibly shifted up-left and no axis-text collision.
+  - Underwriting copy explicitly states summation basis.
+  - Build/checks pass and screenshot confirms.
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot: `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Added stronger Stripe zoom label nudge constants (further up-left target) in the zoom-specific placement branch.
+  - Moved Stripe dot in zoom coordinates up-left as requested so marker and label reposition together.
+  - Reworked Stripe candidate scoring to strongly penalize overlaps and enforce “above-axis” guard.
+  - Updated underwriting strings to:
+    - `... (sum of known public figures)`
+    - `... (sum of known public figures; excludes N undisclosed)`
+  - Updated labels to `Cumulative underwriting (sum)`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/stripe-label-nudged-and-underwriting-sum-2026-02-27.png`
+    - `tmp/stripe-label-further-up-left-verified-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Stripe label moved up-left with no right-axis collision in verified screenshot.
+  - PASS: underwriting wording now explicitly states summation basis.
+
+## 2026-02-27 - cluster summaries: one-liner, cumulative underwriting, client examples
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested short per-cluster descriptions, cumulative underwriting volume, and client examples.
+- Missing info/questions: none; implement with cluster metadata + computed summaries from existing project dataset.
+- Type: feature/UX data enrichment
+- Status: completed
+- Context + suspected cause:
+  - Cluster zones previously surfaced only the cluster label.
+  - Underwriting totals and client examples existed at project level but were not aggregated at cluster level.
+- Fix intent:
+  1) Add short one-liner text for each cluster definition.
+  2) Compute per-cluster cumulative underwriting from `creditVolume.normalizedUsdBn` with caveats for undisclosed members.
+  3) Aggregate cluster client examples from member `exampleClients`.
+  4) Expose these in cluster hover cards and in the zoom-map cluster legend panel.
+- Acceptance criteria:
+  - Each visible cluster shows one-liner, cumulative underwriting line, and client examples.
+  - Build/knowledge checks pass and screenshot confirms rendering.
+- Complexity: medium
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep copy concise and avoid overstating totals when some members have undisclosed volumes.
+    - Preserve existing map interactions.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Extended `ClusterDef` with optional `oneLiner` and added one-liners for broad + zoom cluster definitions.
+  - Added cluster summary computation:
+    - cumulative underwriting total from known `normalizedUsdBn` members,
+    - caveat text when some members are undisclosed,
+    - aggregated client examples from member projects with generic placeholders filtered/downranked.
+  - Upgraded cluster hover bubble from single-line pill to detail card with:
+    - cluster title
+    - one-liner
+    - cumulative underwriting line
+    - client examples list
+  - Added zoom legend cluster insight cards showing the same summary fields.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/cluster-summary-cards-and-hover-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: cluster summaries now include one-liner, underwriting total line, and client examples.
+  - PASS: checks/build passed.
+
+## 2026-02-27 - revenue map: Stripe Capital label above right-axis name
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to keep `Stripe Capital` just above the right-axis label and avoid label collisions.
+- Missing info/questions: none; implement a zoom-specific placement lock with collision checks.
+- Type: UX/layout polish
+- Status: completed
+- Context + suspected cause:
+  - In the revenue/receivables zoom map, Stripe’s label was auto-placed near the axis text line.
+  - This caused visual crowding/collision with the right-axis name.
+- Fix intent:
+  1) Add zoom-specific Stripe label placement anchored above right-axis title area.
+  2) Run collision-aware candidate placement against existing labels and axis-text bounds.
+- Acceptance criteria:
+  - Stripe label sits above the right-axis name in zoom map.
+  - No overlap with nearby labels/axis text.
+  - Build/checks pass with screenshot proof.
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Keep broad-map Stripe lock behavior unchanged.
+    - Apply this new behavior only in zoom mode.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Extended `computeLabelPlacements` inputs with axis metadata.
+  - Added a zoom-only Stripe lock (`!applyHardLabelLocks && p.id === "stripe_capital"`) that:
+    - anchors preferred Y above the right-axis text rect,
+    - tries bounded candidate positions,
+    - rejects candidates that collide with existing labels or axis text.
+  - Passed new axis metadata from map config into `computeLabelPlacements`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/stripe-label-above-axis-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Stripe label is placed above right-axis name.
+  - PASS: label avoids overlap with nearby labels/axis text.
+
 ## 2026-02-27 - Vercel build health check (preview + prod)
 
 Checklist

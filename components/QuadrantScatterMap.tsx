@@ -107,6 +107,9 @@ type ClusterHoverState = {
   x: number;
   y: number;
   stroke: string;
+  oneLiner?: string;
+  underwritingLine?: string;
+  clientExamples?: string[];
 };
 
 type Rect = { x1: number; y1: number; x2: number; y2: number };
@@ -134,6 +137,23 @@ function angleDistance(a: number, b: number) {
 function estimateTextWidth(text: string, fontSize: number) {
   // Simple monospace-ish estimate; good enough for collision avoidance.
   return Math.max(42, text.length * fontSize * 0.62);
+}
+
+function formatUsdBn(bn: number) {
+  if (bn >= 100) return `$${bn.toFixed(0)}b`;
+  if (bn >= 10) return `$${bn.toFixed(1)}b`;
+  return `$${bn.toFixed(2)}b`;
+}
+
+function isGenericClientPlaceholder(text: string) {
+  const v = text.toLowerCase();
+  return (
+    v.includes("no public named") ||
+    v.includes("not disclosed") ||
+    v.includes("not listed") ||
+    v.includes("eligible markets") ||
+    v.includes("additional dtc/ecommerce brands")
+  );
 }
 
 type LabelMetrics = {
@@ -640,6 +660,28 @@ function computeLabelPlacements(args: {
       continue;
     }
 
+    // Zoom-map lock: Stripe Capital label centered directly ABOVE its scaled dot.
+    if (!applyHardLabelLocks && p.id === "stripe_capital") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy - (markerForProject / 2 + halfH + 3), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
     // Keep YouLend label directly above the dot in both map presets.
     if (p.id === "youlend") {
       const minX = pad + halfW + 4;
@@ -648,6 +690,116 @@ function computeLabelPlacements(args: {
       const maxY = pad + plotH - halfH - 4;
       const fixedX = clamp(cx, minX, maxX);
       const fixedY = clamp(cy - (markerForProject / 2 + halfH + 2), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Zoom-map lock: Liberis label directly BELOW its scaled dot.
+    if (!applyHardLabelLocks && p.id === "liberis") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy + (markerForProject / 2 + halfH + 3), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Zoom-map lock: Square Loans label directly ABOVE its scaled dot.
+    if (!applyHardLabelLocks && p.id === "square_loans") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy - (markerForProject / 2 + halfH + 3), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Zoom-map lock: pipe.com label at TOP-LEFT of its scaled dot.
+    if (!applyHardLabelLocks && p.id === "pipe") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx - (markerForProject / 2 + halfW + 9), minX, maxX);
+      const fixedY = clamp(cy - (markerForProject / 2 + halfH + 7), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Zoom-map lock: clear.co label centered directly BELOW its scaled dot.
+    if (!applyHardLabelLocks && p.id === "clearco") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy + (markerForProject / 2 + halfH + 3), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
+    // Zoom-map lock: Uncapped label centered directly BELOW its scaled dot.
+    if (!applyHardLabelLocks && p.id === "uncapped") {
+      const minX = pad + halfW + 4;
+      const maxX = pad + plotW - halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy + (markerForProject / 2 + halfH + 2), minY, maxY);
       placed[p.id] = {
         x: fixedX,
         y: fixedY,
@@ -858,6 +1010,7 @@ function computeLabelPlacements(args: {
 type ClusterDef = {
   id: string;
   label: string;
+  oneLiner?: string;
   stroke: string;
   fill: string;
   dash: string;
@@ -892,6 +1045,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "entity_credit",
     label: "Revenue & Receivables Credit",
+    oneLiner: "Revenue-linked business financing repaid from routed sales or receivables.",
     stroke: "#2f6fdf",
     fill: "#d6e5ff",
     dash: "10 8",
@@ -916,6 +1070,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "provider_of_providers",
     label: "Provider-of-Providers Infra",
+    oneLiner: "Issuer/settlement infrastructure powering downstream credit and spend products.",
     stroke: "#4668b8",
     fill: "#dde4ff",
     dash: "6 6",
@@ -924,6 +1079,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "embedded_credit_rails",
     label: "Embedded Credit Rails",
+    oneLiner: "Credit-enablement rails embedded into third-party operating flows.",
     stroke: "#6d57c4",
     fill: "#e5dcff",
     dash: "8 5",
@@ -932,6 +1088,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "agent_credit_spend",
     label: "Agent Credit + Spend",
+    oneLiner: "Agent-focused spend/control surfaces that can consume a credit back end.",
     stroke: "#c55d93",
     fill: "#ffe0ef",
     dash: "10 6",
@@ -942,6 +1099,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "market_credit_debt",
     label: "Reputation-based credit",
+    oneLiner: "Credit models leaning on market/reputation signals over hard cashflow capture.",
     stroke: "#5f66a8",
     fill: "#dde2ff",
     dash: "4 5",
@@ -951,6 +1109,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "consumer_spend",
     label: "Consumer Spend Apps",
+    oneLiner: "Consumer-facing spend/distribution apps with card-like UX and rails.",
     stroke: "#cd7d2f",
     fill: "#ffe6cf",
     dash: "12 6",
@@ -962,6 +1121,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "business_money",
     label: "Business Treasury Stack",
+    oneLiner: "Business treasury/spend stacks for operator cash management and payouts.",
     stroke: "#2f9471",
     fill: "#d6f4e7",
     dash: "2 4",
@@ -973,6 +1133,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "payments_rails",
     label: "B2B2C BNPL + Payments Rails",
+    oneLiner: "Merchant-integrated consumer financing and payments-rails narratives.",
     stroke: "#a150ac",
     fill: "#f1ddf4",
     dash: "14 7",
@@ -981,6 +1142,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "adjacent",
     label: "Adjacent",
+    oneLiner: "Related infrastructure not primarily operating as credit originators.",
     stroke: "#6f7f99",
     fill: "#e4e9f1",
     dash: "5 7",
@@ -1013,7 +1175,7 @@ const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
   youlend: { x: 0.57, y: 0.78 },
   parafin: { x: 0.66, y: 0.84 },
   liberis: { x: 0.62, y: 0.75 },
-  stripe_capital: { x: 0.71, y: 0.52 },
+  stripe_capital: { x: 0.65, y: 0.555 },
   square_loans: { x: 0.76, y: 0.57 },
   shopify_capital: { x: 0.42, y: 0.64 },
   paypal_working_capital: { x: 0.55, y: 0.44 },
@@ -1027,6 +1189,7 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "platform_captive_capital",
     label: "Platform-Native B2SMB",
+    oneLiner: "Merchant financing distributed natively inside one platform ecosystem.",
     stroke: "#2f9471",
     fill: "#d6f4e7",
     dash: "8 5",
@@ -1037,6 +1200,7 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "partner_embedded_b2b2smb",
     label: "Partner-Embedded B2B2SMB",
+    oneLiner: "Financing infrastructure distributed through partner platforms to SMBs.",
     stroke: "#c55d93",
     fill: "#ffe0ef",
     dash: "8 6",
@@ -1046,6 +1210,7 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "direct_b2smb_originators",
     label: "Direct B2SMB Originators",
+    oneLiner: "Direct SMB originators underwriting without a captive distribution platform.",
     stroke: "#9f67d5",
     fill: "#f0e4ff",
     dash: "8 6",
@@ -1332,14 +1497,27 @@ export default function QuadrantScatterMap(props: {
     });
   };
 
-  const showClusterHover = (label: string, stroke: string, clientX: number, clientY: number) => {
+  const showClusterHover = (
+    meta: {
+      label: string;
+      stroke: string;
+      oneLiner?: string;
+      underwritingLine?: string;
+      clientExamples?: string[];
+    },
+    clientX: number,
+    clientY: number,
+  ) => {
     if (tooltip?.pinned) return;
     const { x, y } = getLocalFromClientPoint(clientX, clientY);
     setClusterHover({
-      label,
+      label: meta.label,
       x,
       y,
-      stroke,
+      stroke: meta.stroke,
+      oneLiner: meta.oneLiner,
+      underwritingLine: meta.underwritingLine,
+      clientExamples: meta.clientExamples,
     });
   };
 
@@ -1399,9 +1577,23 @@ export default function QuadrantScatterMap(props: {
     const w = el?.clientWidth ?? 900;
     const h = el?.clientHeight ?? 600;
 
-    const boxW = clamp(estimateTextWidth(clusterHover.label, 16) + 28, 140, 360);
-    const boxH = 36;
-    const gap = 44;
+    const clientExamples = clusterHover.clientExamples?.slice(0, 4) ?? [];
+    const widthSignals = [
+      estimateTextWidth(clusterHover.label, 16),
+      clusterHover.oneLiner ? estimateTextWidth(clusterHover.oneLiner, 13) : 0,
+      clusterHover.underwritingLine
+        ? estimateTextWidth(`Cumulative underwriting: ${clusterHover.underwritingLine}`, 12)
+        : 0,
+      ...clientExamples.map((c) => estimateTextWidth(c, 12)),
+    ];
+    const boxW = clamp(Math.max(...widthSignals) + 36, 280, 640);
+    const rowCount =
+      1 +
+      (clusterHover.oneLiner ? 1 : 0) +
+      (clusterHover.underwritingLine ? 1 : 0) +
+      (clientExamples.length ? 1 + clientExamples.length : 0);
+    const boxH = clamp(20 + rowCount * 22, 56, 290);
+    const gap = 30;
     const edge = 10;
 
     let x = clusterHover.x + gap;
@@ -1420,6 +1612,7 @@ export default function QuadrantScatterMap(props: {
         width: boxW,
       } satisfies React.CSSProperties,
       stroke: clusterHover.stroke,
+      clientExamples,
     };
   }, [clusterHover, tooltip]);
 
@@ -1476,7 +1669,7 @@ export default function QuadrantScatterMap(props: {
 
   const labelTextByProject = useMemo(() => {
     const map = new Map<string, string>();
-    const omitVolumeLabelIds = new Set(["attn", "creditcoop"]);
+    const omitVolumeLabelIds = new Set(["attn"]);
 
     for (const p of projects) {
       if (!isRevenueReceivablesZoom) {
@@ -1981,14 +2174,84 @@ export default function QuadrantScatterMap(props: {
     return new Set(clusterZones.map((z) => z.id.replace(/-\d+$/, "")));
   }, [clusterZones]);
 
+  const clusterInsightsById = useMemo(() => {
+    const out = new Map<
+      string,
+      {
+        oneLiner: string;
+        underwritingLine: string;
+        clientExamples: string[];
+        memberNames: string[];
+      }
+    >();
+
+    for (const def of clusterDefs) {
+      const members = def.projectIds
+        .map((id) => projectsById.get(id))
+        .filter((p): p is ProjectInfo => Boolean(p));
+
+      const knownVolumes = members
+        .map((p) => p.creditVolume?.normalizedUsdBn)
+        .filter((v): v is number => typeof v === "number" && Number.isFinite(v) && v > 0);
+      const knownTotal = knownVolumes.reduce((sum, v) => sum + v, 0);
+      const unknownCount = members.length - knownVolumes.length;
+
+      const underwritingLine =
+        knownVolumes.length === 0
+          ? "n/a (no summable public totals disclosed)"
+          : unknownCount > 0
+            ? `${formatUsdBn(knownTotal)} (sum of known public figures; excludes ${unknownCount} undisclosed)`
+            : `${formatUsdBn(knownTotal)} (sum of known public figures)`;
+
+      const seen = new Set<string>();
+      const preferredClients: string[] = [];
+      const fallbackClients: string[] = [];
+      for (const m of members) {
+        for (const raw of m.exampleClients ?? []) {
+          const candidate = raw.trim();
+          if (!candidate) continue;
+          const key = candidate.toLowerCase();
+          if (seen.has(key)) continue;
+          seen.add(key);
+          if (isGenericClientPlaceholder(candidate)) {
+            fallbackClients.push(candidate);
+          } else {
+            preferredClients.push(candidate);
+          }
+        }
+      }
+      const clientExamples =
+        preferredClients.length > 0
+          ? preferredClients.slice(0, 4)
+          : fallbackClients.length > 0
+            ? fallbackClients.slice(0, 3)
+            : ["Public named clients not disclosed in cited sources."];
+
+      out.set(def.id, {
+        oneLiner: def.oneLiner ?? "Cluster of related operating models in this map.",
+        underwritingLine,
+        clientExamples,
+        memberNames: members.map((m) => m.label),
+      });
+    }
+
+    return out;
+  }, [clusterDefs, projectsById]);
+
   const clusterLegend = useMemo(() => {
     return clusterDefs.filter((def) => visibleClusterIds.has(def.id)).map((def) => ({
       id: def.id,
       label: def.label,
       stroke: def.stroke,
       fill: def.fill,
+      oneLiner: clusterInsightsById.get(def.id)?.oneLiner ?? def.oneLiner ?? "",
+      underwritingLine:
+        clusterInsightsById.get(def.id)?.underwritingLine ??
+        "n/a (public cumulative totals not disclosed)",
+      clientExamples: clusterInsightsById.get(def.id)?.clientExamples ?? [],
+      memberNames: clusterInsightsById.get(def.id)?.memberNames ?? [],
     }));
-  }, [visibleClusterIds, clusterDefs]);
+  }, [visibleClusterIds, clusterDefs, clusterInsightsById]);
 
   const clusterByProject = useMemo(() => {
     const m = new Map<string, ClusterDef>();
@@ -2089,6 +2352,14 @@ export default function QuadrantScatterMap(props: {
                 const baseClusterId = zone.id.replace(/-\d+$/, "");
                 const clusterDef = clusterDefs.find((def) => def.id === baseClusterId);
                 const hoverLabel = clusterDef?.label ?? zone.label ?? "Cluster";
+                const clusterInsight = clusterInsightsById.get(baseClusterId);
+                const hoverMeta = {
+                  label: hoverLabel,
+                  stroke: zone.stroke,
+                  oneLiner: clusterInsight?.oneLiner ?? clusterDef?.oneLiner,
+                  underwritingLine: clusterInsight?.underwritingLine,
+                  clientExamples: clusterInsight?.clientExamples,
+                };
 
                 return (
                   <g key={zone.id}>
@@ -2103,22 +2374,12 @@ export default function QuadrantScatterMap(props: {
                       strokeLinejoin="round"
                       strokeLinecap="round"
                       onMouseEnter={(e) =>
-                        showClusterHover(
-                          hoverLabel,
-                          zone.stroke,
-                          e.clientX,
-                          e.clientY,
-                        )}
+                        showClusterHover(hoverMeta, e.clientX, e.clientY)}
                       onMouseMove={(e) => moveClusterHover(e.clientX, e.clientY)}
                       onMouseLeave={hideClusterHover}
                       onFocus={(e) => {
                         const r = (e.currentTarget as SVGPathElement).getBoundingClientRect();
-                        showClusterHover(
-                          hoverLabel,
-                          zone.stroke,
-                          r.left + r.width / 2,
-                          r.top + r.height / 2,
-                        );
+                        showClusterHover(hoverMeta, r.left + r.width / 2, r.top + r.height / 2);
                       }}
                       onBlur={hideClusterHover}
                       tabIndex={0}
@@ -2127,12 +2388,7 @@ export default function QuadrantScatterMap(props: {
                     {zone.label && zone.labelX && zone.labelY ? (
                       <g
                         onMouseEnter={(e) =>
-                          showClusterHover(
-                            hoverLabel,
-                            zone.stroke,
-                            e.clientX,
-                            e.clientY,
-                          )}
+                          showClusterHover(hoverMeta, e.clientX, e.clientY)}
                         onMouseMove={(e) => moveClusterHover(e.clientX, e.clientY)}
                         onMouseLeave={hideClusterHover}
                       >
@@ -2480,7 +2736,25 @@ export default function QuadrantScatterMap(props: {
                 borderColor: clusterHoverRender.stroke,
               }}
             >
-              {clusterHover?.label}
+              <div className="clusterHoverTitle">{clusterHover?.label}</div>
+              {clusterHover?.oneLiner ? (
+                <div className="clusterHoverRow">{clusterHover.oneLiner}</div>
+              ) : null}
+              {clusterHover?.underwritingLine ? (
+                <div className="clusterHoverRow">
+                  <strong>Cumulative underwriting (sum):</strong> {clusterHover.underwritingLine}
+                </div>
+              ) : null}
+              {clusterHoverRender.clientExamples.length ? (
+                <div className="clusterHoverRow">
+                  <strong>Client examples:</strong>
+                  <ul className="clusterHoverList">
+                    {clusterHoverRender.clientExamples.map((example, i) => (
+                      <li key={i}>{example}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
           ) : null}
 
@@ -2524,8 +2798,6 @@ export default function QuadrantScatterMap(props: {
                   <span className="chip">
                     <MiniMarker plane={active.plane} /> {planeLabel(active.plane)}
                   </span>
-                  <span className="chip">{active.stack}</span>
-                  <span className="chip">{active.controlPrimitive}</span>
                   {active.borrowerType ? <span className="chip">Borrower: {active.borrowerType}</span> : null}
                   {active.distributionModel ? (
                     <span className="chip">Distribution: {active.distributionModel}</span>
@@ -2638,6 +2910,31 @@ export default function QuadrantScatterMap(props: {
                   </span>
                 ))}
               </div>
+              {isRevenueReceivablesZoom ? (
+                <div className="clusterInsightGrid">
+                  {clusterLegend.map((item) => (
+                    <div key={item.id} className="clusterInsightCard" style={{ borderColor: item.stroke }}>
+                      <div className="clusterInsightTitle">{item.label}</div>
+                      {item.memberNames.length ? (
+                        <div className="clusterFirmPills">
+                          {item.memberNames.map((name) => (
+                            <span key={name} className="clusterFirmPill">
+                              {name}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
+                      {item.oneLiner ? <div className="clusterInsightText">{item.oneLiner}</div> : null}
+                      <div className="clusterInsightText">
+                        <strong>Cumulative underwriting (sum):</strong> {item.underwritingLine}
+                      </div>
+                      <div className="clusterInsightText">
+                        <strong>Client examples:</strong> {item.clientExamples.slice(0, 4).join(" | ")}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
               <div className="clusterKeyHint">
                 {config.allowSingletonClusterZones
                   ? "Zones can represent single firms or grouped firms in this zoom view. Dot/label outlines use cluster colors for exact inclusion."
@@ -2824,13 +3121,33 @@ export default function QuadrantScatterMap(props: {
           pointer-events: none;
           border: 1px solid rgba(53, 82, 127, 0.34);
           background: rgba(255, 255, 255, 0.98);
-          border-radius: 999px;
-          padding: 7px 11px;
-          font-size: 14px;
-          font-weight: 800;
+          border-radius: 12px;
+          padding: 9px 11px;
+          font-size: 13px;
           color: #1f3253;
-          white-space: nowrap;
+          line-height: 1.35;
+          white-space: normal;
           box-shadow: 0 8px 20px rgba(31, 50, 83, 0.14);
+        }
+        .clusterHoverTitle {
+          font-size: 14px;
+          font-weight: 900;
+          margin-bottom: 3px;
+        }
+        .clusterHoverRow {
+          margin-top: 3px;
+          color: rgba(31, 50, 83, 0.92);
+        }
+        .clusterHoverRow strong {
+          font-weight: 800;
+          margin-right: 4px;
+        }
+        .clusterHoverList {
+          margin: 4px 0 0 16px;
+          padding: 0;
+        }
+        .clusterHoverList li {
+          margin: 2px 0;
         }
 
         .tooltipHeader {
@@ -2938,6 +3255,53 @@ export default function QuadrantScatterMap(props: {
           display: flex;
           flex-wrap: wrap;
           gap: 6px;
+        }
+        .clusterInsightGrid {
+          margin-top: 8px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 8px;
+        }
+        .clusterInsightCard {
+          border: 1px solid rgba(53, 82, 127, 0.28);
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.74);
+          padding: 8px 9px;
+        }
+        .clusterInsightTitle {
+          font-size: 14px;
+          font-weight: 900;
+          color: #173b67;
+          margin-bottom: 6px;
+          line-height: 1.2;
+        }
+        .clusterFirmPills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px;
+          margin-bottom: 6px;
+        }
+        .clusterFirmPill {
+          display: inline-flex;
+          align-items: center;
+          padding: 2px 8px;
+          border-radius: 999px;
+          border: 1px solid rgba(53, 82, 127, 0.22);
+          background: rgba(226, 238, 255, 0.8);
+          color: rgba(19, 59, 103, 0.95);
+          font-size: 11px;
+          font-weight: 760;
+          line-height: 1.2;
+        }
+        .clusterInsightText {
+          margin-top: 3px;
+          font-size: 12px;
+          line-height: 1.34;
+          color: rgba(31, 50, 83, 0.92);
+        }
+        .clusterInsightText strong {
+          font-weight: 800;
+          margin-right: 4px;
         }
         .clusterKeyHint {
           margin-top: 6px;
