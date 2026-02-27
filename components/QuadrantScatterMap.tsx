@@ -1646,6 +1646,9 @@ export default function QuadrantScatterMap(props: {
     const minDot = markerSize * 1.1;
     const maxDot = markerSize * 2.45;
     const unknownDot = markerSize * 1.0;
+    // Triangles/squares visually extend further than circles at equal `size`.
+    // In zoom view, normalize web3 circles so visual footprint is comparable across shapes.
+    const zoomCircleShapeScale = Math.SQRT2;
 
     for (const p of projects) {
       if (!isRevenueReceivablesZoom) {
@@ -1653,15 +1656,16 @@ export default function QuadrantScatterMap(props: {
         continue;
       }
 
+      const shapeScale = p.plane === "web3" ? zoomCircleShapeScale : 1;
       const raw = p.creditVolume?.normalizedUsdBn;
       if (typeof raw !== "number" || !Number.isFinite(raw) || raw <= 0 || !volumeSizing) {
-        map.set(p.id, unknownDot);
+        map.set(p.id, unknownDot * shapeScale);
         continue;
       }
 
       const denom = Math.max(0.0001, volumeSizing.sqrtMax - volumeSizing.sqrtMin);
       const normalized = clamp((Math.sqrt(raw) - volumeSizing.sqrtMin) / denom, 0, 1);
-      map.set(p.id, minDot + (maxDot - minDot) * normalized);
+      map.set(p.id, (minDot + (maxDot - minDot) * normalized) * shapeScale);
     }
 
     return map;

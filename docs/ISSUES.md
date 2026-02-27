@@ -1,5 +1,55 @@
 # ISSUES
 
+## 2026-02-27 - zoom map: normalize dot sizing across marker shapes
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User observed `creditcoop` ($1.2b) still looks close to `n/a` dots and asked to normalize marker scale across shapes.
+- Missing info/questions: none.
+- Type: UX/visual scaling
+- Status: completed
+- Context + suspected cause:
+  - In zoom map, circles use `r = size/2` while triangles/squares visually extend further for the same base `size`, making circles look smaller.
+- Fix intent:
+  1) Apply a zoom-only marker-size normalization factor for web3 circles so equal volume has comparable visual footprint across shapes.
+  2) Keep existing volume ranking behavior unchanged.
+- Acceptance criteria:
+  - `creditcoop` dot appears clearly larger than `n/a` dots.
+  - Relative ordering by volume remains intact.
+  - Build/checks pass with screenshot evidence.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Added zoom-only shape normalization in marker sizing:
+    - `p.plane === "web3"` markers are scaled by `Math.SQRT2` so circles are visually comparable to triangle/square footprint.
+  - Kept underlying credit-volume ordering logic unchanged.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/shape-normalized-creditcoop-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `creditcoop` ($1.2b) now appears clearly larger than `n/a` markers.
+  - PASS: relative volume-driven ranking still holds.
+
 ## 2026-02-27 - firm hover: remove redundant quadrant-region pills
 
 Checklist
