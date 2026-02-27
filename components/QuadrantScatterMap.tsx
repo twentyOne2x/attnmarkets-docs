@@ -31,12 +31,14 @@ function Marker(props: { plane: ExecutionPlane; cx: number; cy: number; size: nu
   const s = props.size;
 
   if (props.plane === "web2") {
-    const h = s;
-    const w = s;
+    // Equilateral triangle inscribed in the same outer-radius model used by markerOuterRadius.
+    // This keeps ring overlays aligned with triangle tips even at large scaled sizes.
+    const r = (s * Math.SQRT2) / 2;
+    const halfBase = (Math.sqrt(3) / 2) * r;
     const points = [
-      `${props.cx},${props.cy - h / 2}`,
-      `${props.cx - w / 2},${props.cy + h / 2}`,
-      `${props.cx + w / 2},${props.cy + h / 2}`,
+      `${props.cx},${props.cy - r}`,
+      `${props.cx - halfBase},${props.cy + r / 2}`,
+      `${props.cx + halfBase},${props.cy + r / 2}`,
     ].join(" ");
     return <polygon points={points} fill={c} />;
   }
@@ -60,9 +62,16 @@ function Marker(props: { plane: ExecutionPlane; cx: number; cy: number; size: nu
 function MiniMarker(props: { plane: ExecutionPlane }) {
   const c = planeColor(props.plane);
   if (props.plane === "web2") {
+    const cx = 6;
+    const cy = 6;
+    const r = 5;
+    const halfBase = (Math.sqrt(3) / 2) * r;
     return (
       <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-        <polygon points="6,1 1,11 11,11" fill={c} />
+        <polygon
+          points={`${cx},${cy - r} ${cx - halfBase},${cy + r / 2} ${cx + halfBase},${cy + r / 2}`}
+          fill={c}
+        />
       </svg>
     );
   }
@@ -2528,6 +2537,24 @@ export default function QuadrantScatterMap(props: {
                   {active.potentialClient ? <span className="chip">Potential client</span> : null}
                 </div>
 
+                {active.b2b2smbReliance?.length ? (
+                  <div className="block">
+                    <div className="label">Who they use / rely on</div>
+                    <div className="text">{active.b2b2smbReliance[0]}</div>
+                  </div>
+                ) : null}
+
+                {active.exampleClients?.length ? (
+                  <div className="block">
+                    <div className="label">Who they service (examples)</div>
+                    <ul className="list">
+                      {active.exampleClients.slice(0, 3).map((x, i) => (
+                        <li key={i}>{x}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
                 {active.creditVolume ? (
                   <div className="block">
                     <div className="label">Credit volume (dot size)</div>
@@ -2536,28 +2563,6 @@ export default function QuadrantScatterMap(props: {
                         {active.creditVolume.display} — {active.creditVolume.basis ?? "Best-public signal"}
                       </li>
                       {active.creditVolume.note ? <li>{active.creditVolume.note}</li> : null}
-                    </ul>
-                  </div>
-                ) : null}
-
-                {active.exampleClients?.length ? (
-                  <div className="block">
-                    <div className="label">Example clients / partners</div>
-                    <ul className="list">
-                      {active.exampleClients.slice(0, 6).map((x, i) => (
-                        <li key={i}>{x}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-
-                {active.b2b2smbReliance?.length ? (
-                  <div className="block">
-                    <div className="label">B2B2SMB reliance</div>
-                    <ul className="list">
-                      {active.b2b2smbReliance.slice(0, 4).map((x, i) => (
-                        <li key={i}>{x}</li>
-                      ))}
                     </ul>
                   </div>
                 ) : null}

@@ -31,7 +31,7 @@ export default function ProjectHoverName({ id, label }: ProjectHoverNameProps) {
         <span className="tooltipTitle">{info.label}</span>
         {info.borrowerType ? (
           <span className="tooltipRow">
-            <strong>Borrower:</strong> {info.borrowerType}
+            <strong>Who they service:</strong> {info.borrowerType}
           </span>
         ) : null}
         {info.distributionModel ? (
@@ -46,12 +46,12 @@ export default function ProjectHoverName({ id, label }: ProjectHoverNameProps) {
         ) : null}
         {b2b2smbText ? (
           <span className="tooltipRow">
-            <strong>B2B2SMB:</strong> {b2b2smbText}
+            <strong>Who they use/rely on:</strong> {b2b2smbText}
           </span>
         ) : null}
         {examplesText ? (
           <span className="tooltipRow">
-            <strong>Examples:</strong> {examplesText}
+            <strong>Who they service (examples):</strong> {examplesText}
           </span>
         ) : null}
       </span>
@@ -119,4 +119,3 @@ export default function ProjectHoverName({ id, label }: ProjectHoverNameProps) {
     </span>
   );
 }
-

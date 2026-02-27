@@ -1,5 +1,175 @@
 # ISSUES
 
+## 2026-02-27 - Vercel build health check (preview + prod)
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied (no code fix required)
+- [x] Tests run
+- [ ] Visual or screenshot verification (not applicable)
+
+PLANNER
+- Spec check: solvable. User requested validation that Vercel builds are working.
+- Missing info/questions: none; validate with local parity checks plus Vercel CLI build in both preview and production modes.
+- Type: verification/build health
+- Status: completed
+- Context + suspected cause:
+  - Concern was that Vercel builds may be failing after recent docs/map changes.
+  - Potential sources checked: Next build regressions, Vercel build pipeline parity, env profile differences (`preview` vs `production`).
+- Fix intent:
+  1) Run repo guard checks.
+  2) Run `next build`.
+  3) Run `vercel build` (preview) and `vercel build --prod`.
+  4) Report any blockers/warnings.
+- Acceptance criteria:
+  - All builds pass without compile/type errors.
+  - Any warnings are called out explicitly.
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md` (verification record only)
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - `npx vercel build --yes`
+    - `npx vercel build --prod --yes`
+
+EXECUTOR
+- Implemented:
+  - Ran the four checks listed above.
+  - Verified both preview and production Vercel CLI builds complete and generate `.vercel/output`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - `npx vercel build --yes` -> PASS.
+  - `npx vercel build --prod --yes` -> PASS.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: no compile/type failures in local and Vercel CLI build paths.
+  - Notes:
+    - Vercel CLI warns that project has `builds` in config so dashboard build settings won’t apply.
+    - Vercel CLI warns local system env vars are unavailable when not running on Vercel.
+
+## 2026-02-27 - attn-in-context: explicit hover labels for service vs dependency
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User could not clearly see hover data for who firms service vs who they rely on.
+- Missing info/questions: none; fix with explicit label text in both hover UIs.
+- Type: UX/copy clarity
+- Status: completed
+- Context + suspected cause:
+  - Hover cards already contained relevant data, but labels were generic (`Examples`, `B2B2SMB reliance`).
+  - This made the “who they service / who they use” intent unclear at a glance.
+- Fix intent:
+  1) Rename hover fields to explicit business language.
+  2) Update page helper line so users know exactly what hover reveals.
+- Acceptance criteria:
+  - Hover cards explicitly show service/dependency fields.
+  - Build and knowledge checks pass.
+  - Visual proof captured.
+- Complexity: tiny
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/ProjectHoverName.tsx`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Label/content clarity change only; no data-model rewrite.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - Hover screenshot on `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - `ProjectHoverName` labels now read:
+    - `Who they service`
+    - `Who they service (examples)`
+    - `Who they use/rely on`
+  - Dot tooltip labels in `QuadrantScatterMap` now read:
+    - `Who they service (examples)`
+    - `Who they use / rely on`
+  - Reordered dot-tooltip sections so dependency/service blocks render before volume.
+  - Tightened dot tooltip density: dependency shows first as a single-line summary and examples are capped to top 3, so both fit above the fold.
+  - Updated helper sentence in market segments to call out service/dependency fields.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/hover-youlend-market-segment-crop-current-2026-02-27.png`
+    - `tmp/hover-youlend-market-segment-service-dependency-2026-02-27.png`
+    - `tmp/hover-youlend-dot-tooltip-service-dependency-visible-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: hover copy now explicitly maps to “service” and “dependency”.
+  - PASS: checks/build successful and screenshot captured.
+
+## 2026-02-27 - revenue map: triangle marker/ring alignment at scaled sizes
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User reported circle overlays not matching triangle marker edges after dot scale-up.
+- Missing info/questions: none; use the provided screenshot as repro evidence.
+- Type: bugfix/visual correctness
+- Status: completed
+- Context + suspected cause:
+  - `web2` markers (triangles) were rendered with right-triangle-like box-centered geometry.
+  - Ring overlays use center+radius logic; mismatch becomes obvious at larger marker sizes.
+- Fix intent:
+  1) Redefine triangle marker geometry so tips align with the ring radius model used by overlays.
+  2) Keep scaling behavior unchanged so volume sizing still drives marker size.
+  3) Align mini legend marker with the same geometry.
+- Acceptance criteria:
+  - Triangle markers remain enclosed/aligned with overlay circles when scaled up.
+  - Build + knowledge checks pass.
+- Complexity: small
+- Plan: inline in this issue entry.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - Do not change data or axes; visual geometry fix only.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - Playwright screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Updated `Marker` web2 triangle to equilateral/circumscribed geometry that shares the same center/radius model as rings.
+  - Updated `MiniMarker` web2 triangle geometry to stay visually consistent with chart markers.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot verification:
+    - `tmp/attn-in-context-triangle-ring-fix-map1-2026-02-27.png`
+    - `tmp/attn-in-context-triangle-ring-fix-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: triangle/ring alignment is corrected at scaled sizes.
+  - PASS: checks/build succeeded.
+
 ## 2026-02-27 - revenue map: cluster envelopes honor scaled dot radii
 
 Checklist
