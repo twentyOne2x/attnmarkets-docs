@@ -6,6 +6,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "copy:attn-in-context": "bash scripts/copy_attn_in_context_to_clipboard.sh",
     "test:e2e": "playwright test",
     "test:e2e:evidence": "node scripts/e2e_evidence.mjs"
   },

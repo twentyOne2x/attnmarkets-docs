@@ -1,5 +1,113 @@
 # ISSUES
 
+## 2026-02-27 - tooling: provide bash script for attn-in-context clipboard export
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to make the export utility a bash script and ensure it copies to clipboard.
+- Missing info/questions: none.
+- Type: tooling
+- Status: completed
+- Context + suspected cause:
+  - Current utility is Node-only (`copy_attn_in_context_to_clipboard.mjs`), while user requested bash execution.
+- Fix intent:
+  1) Add a bash script entrypoint in `scripts/` that runs the export and copies to clipboard.
+  2) Point npm command to the bash entrypoint for simple execution.
+- Acceptance criteria:
+  - Running the bash script copies the attn-in-context export to clipboard.
+  - `npm run copy:attn-in-context` uses the bash script and succeeds.
+  - Repo checks still pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `scripts/copy_attn_in_context_to_clipboard.sh`
+    - `package.json`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `bash scripts/copy_attn_in_context_to_clipboard.sh`
+    - `npm run copy:attn-in-context`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Added bash entrypoint: `scripts/copy_attn_in_context_to_clipboard.sh`.
+  - Bash script resolves repo root, validates Node/script presence, then runs the existing export generator (which writes file + copies clipboard).
+  - Updated npm alias so `copy:attn-in-context` now executes the bash script directly.
+- Proofs:
+  - `bash scripts/copy_attn_in_context_to_clipboard.sh` -> PASS (`Copied attn-in-context export to clipboard via pbcopy.`)
+  - `npm run copy:attn-in-context` -> PASS (invokes bash script and copies successfully).
+  - `python3 scripts/knowledge_check.py` -> PASS.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: bash script execution copies export to clipboard.
+  - PASS: npm command now uses bash entrypoint successfully.
+
+## 2026-02-27 - tooling: copy attn-in-context content + hover data to clipboard
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested a script that copies all `attn-in-context` content plus hover data to clipboard.
+- Missing info/questions: none.
+- Type: tooling
+- Status: completed
+- Context + suspected cause:
+  - Page content is in MDX and hover details are spread across `PROJECTS` data plus cluster definitions/computed hover summaries.
+  - There is no one-step export utility that combines visible content and hover-only metadata into clipboard-ready text.
+- Fix intent:
+  1) Add a Node script that reads the page + data sources and composes one structured text export.
+  2) Include full firm hover fields and computed cluster hover summaries.
+  3) Copy to clipboard with macOS-first support and Linux/Windows fallbacks.
+- Acceptance criteria:
+  - Running the script copies a non-empty export to clipboard.
+  - Export includes page markdown body and hover data sections (firms + clusters).
+  - Script exits successfully in local environment.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `scripts/copy_attn_in_context_to_clipboard.mjs`
+    - `package.json`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `node scripts/copy_attn_in_context_to_clipboard.mjs`
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Added `scripts/copy_attn_in_context_to_clipboard.mjs` to generate a combined export from:
+    - `pages/introduction/attn-in-context.mdx` body content
+    - `PROJECTS` hover data from `components/quadrantMapData.ts`
+    - zoom + broad cluster hover summaries from `components/QuadrantScatterMap.tsx`
+  - Added npm alias: `copy:attn-in-context`.
+  - Export is written to `tmp/attn-in-context-export.txt` and copied to clipboard (macOS `pbcopy`, with cross-platform fallbacks).
+- Proofs:
+  - `node scripts/copy_attn_in_context_to_clipboard.mjs` -> PASS (`Copied attn-in-context export to clipboard via pbcopy.`; `Export length: 48949 chars`).
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Spot check on export:
+    - `wc -l tmp/attn-in-context-export.txt` -> `1062`
+    - `rg -n "Liberis|Who they use|Who they service|Revenue & Receivables clusters|Broad strategic clusters" tmp/attn-in-context-export.txt` -> expected matches present.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: script produces non-empty clipboard-ready export.
+  - PASS: export includes page content + firm/cluster hover data sections.
+
 ## 2026-02-27 - hover formatting: bold merchant/client names in firm + cluster cards
 
 Checklist
