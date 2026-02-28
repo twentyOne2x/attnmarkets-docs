@@ -1,5 +1,149 @@
 # ISSUES
 
+## 2026-02-27 - zoom map: move Partner-Embedded title further right and up
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested the `Partner-Embedded B2B2SMB` label move more right and up.
+- Missing info/questions: none.
+- Type: UX/layout placement
+- Status: completed
+- Context + suspected cause:
+  - Current custom placement still reads too left/low relative to desired cluster-edge alignment.
+- Fix intent:
+  1) Increase preferred X (rightward) and decrease preferred Y (upward) in partner-cluster title override.
+  2) Keep existing leader-line behavior.
+- Acceptance criteria:
+  - Label is visibly more right and higher than current position.
+  - Placement remains readable and non-overlapping.
+  - Build/checks pass with screenshot proof.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Nudged the `partner_embedded_b2b2smb` label override right and up by updating preferred X/Y offsets.
+  - Kept the custom leader behavior that starts from cluster anchor and terminates at the name pill.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/partner-embedded-right-up-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: label position is visibly more right and higher while remaining readable.
+
+## 2026-02-27 - zoom map: move Partner-Embedded cluster title left and lower
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested the `Partner-Embedded B2B2SMB` cluster title to move left and slightly lower.
+- Missing info/questions: none.
+- Type: UX/layout placement
+- Status: completed
+- Context + suspected cause:
+  - Current placement is near top-center and does not read as aligned with the cluster’s left border.
+- Fix intent:
+  1) Add a specific placement override for the partner-embedded cluster title in zoom mode.
+  2) Anchor it along left-side border with a slightly lower Y baseline.
+- Acceptance criteria:
+  - Title is visibly more left and slightly lower than current placement.
+  - It remains readable and non-overlapping.
+  - Build/checks pass with screenshot proof.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Added a dedicated zoom placement override for `partner_embedded_b2b2smb` cluster title.
+  - Moved it left alongside the cluster border and slightly lower than prior top-center placement.
+  - Updated dotted leader wiring so the partner title sits at the top of the leader and the leader anchor is in-cluster.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+- Screenshot:
+    - `tmp/partner-embedded-line-from-cluster-2026-02-27-v2.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: partner-embedded title is left/lower and aligned with a leader that originates from cluster body.
+
+## 2026-02-27 - zoom map: center creditcoop label below scaled dot
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested `creditcoop` label to be centered below its scaled marker.
+- Missing info/questions: none.
+- Type: UX/layout placement
+- Status: completed
+- Context + suspected cause:
+  - In zoom mode, `creditcoop` label is not fixed to a deterministic below-dot anchor, so it can appear offset.
+- Fix intent:
+  1) Add a zoom-only hard lock for `creditcoop` in `computeLabelPlacements`.
+  2) Anchor from `markerForProject` so placement follows scaled marker size.
+- Acceptance criteria:
+  - `creditcoop` label is centered directly below its scaled dot in zoom map.
+  - Build/checks pass with visual confirmation.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Added a zoom-only lock for `creditcoop` to keep its label centered directly below its scaled dot.
+  - Relaxed right-edge clamp for this lock so near-boundary positioning does not force left offset.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - Screenshot:
+    - `tmp/creditcoop-centered-below-2026-02-27-v2.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `creditcoop` label is centered below its scaled dot in zoom map.
+
 ## 2026-02-27 - firm hover: bold firm names in service/reliance sections
 
 Checklist

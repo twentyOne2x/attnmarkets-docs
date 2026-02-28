@@ -767,6 +767,29 @@ function computeLabelPlacements(args: {
       continue;
     }
 
+    // Zoom-map lock: creditcoop.xyz label centered directly BELOW its scaled dot.
+    if (!applyHardLabelLocks && p.id === "creditcoop") {
+      const minX = pad + halfW + 4;
+      // Allow right-edge overhang for near-boundary dots so the label stays truly centered.
+      const maxX = pad + plotW + halfW - 4;
+      const minY = pad + halfH + 4;
+      const maxY = pad + plotH - halfH - 4;
+      const fixedX = clamp(cx, minX, maxX);
+      const fixedY = clamp(cy + (markerForProject / 2 + halfH + 3), minY, maxY);
+      placed[p.id] = {
+        x: fixedX,
+        y: fixedY,
+        rect: {
+          x1: fixedX - halfW,
+          y1: fixedY - halfH,
+          x2: fixedX + halfW,
+          y2: fixedY + halfH,
+        },
+      };
+      taken.push(placed[p.id].rect);
+      continue;
+    }
+
     // Keep YouLend label directly above the dot in both map presets.
     if (p.id === "youlend") {
       const minX = pad + halfW + 4;
@@ -1999,6 +2022,57 @@ export default function QuadrantScatterMap(props: {
       const centerX = (b.minX + b.maxX) / 2;
       const centerY = (b.minY + b.maxY) / 2;
 
+      if (zone.id.startsWith("partner_embedded_b2b2smb-")) {
+        const inBounds = (x: number, y: number) => ({
+          x: clamp(x, plotLeft + halfW + 6, plotRight - halfW - 6),
+          y: clamp(y, plotTop + halfH + 6, plotBottom - halfH - 6),
+        });
+
+        // Keep this title near the upper-left edge of the cluster, but slightly inside/right.
+        const preferredX = b.minX - halfW + 26;
+        const preferredY = b.minY + halfH - 10;
+        const xCandidates = [preferredX, preferredX - 20, preferredX + 20];
+        const yCandidates = [preferredY, preferredY + 16, preferredY - 12, preferredY + 30];
+
+        let placedPartner: { x: number; y: number; rect: Rect } | null = null;
+        for (const yCandidate of yCandidates) {
+          for (const xCandidate of xCandidates) {
+            const bounded = inBounds(xCandidate, yCandidate);
+            const rect: Rect = {
+              x1: bounded.x - halfW,
+              y1: bounded.y - halfH,
+              x2: bounded.x + halfW,
+              y2: bounded.y + halfH,
+            };
+            const hasOverlap = takenRects.some((t) => rectsOverlap(rect, t));
+            if (!hasOverlap) {
+              placedPartner = { x: bounded.x, y: bounded.y, rect };
+              break;
+            }
+            if (!placedPartner) placedPartner = { x: bounded.x, y: bounded.y, rect };
+          }
+          if (placedPartner && !takenRects.some((t) => rectsOverlap(placedPartner!.rect, t))) break;
+        }
+
+        if (placedPartner) {
+          zone.labelX = placedPartner.x;
+          zone.labelY = placedPartner.y;
+          zone.labelFontSize = labelMetrics.fontSize;
+          zone.labelPillWidth = labelMetrics.pillW;
+          zone.labelPillHeight = labelMetrics.pillH;
+          const partnerAnchorY = b.minY + Math.max(48, (b.maxY - b.minY) * 0.36);
+          zone.labelAnchorX = clamp(b.minX + 16, plotLeft + 8, plotRight - 8);
+          zone.labelAnchorY = clamp(partnerAnchorY, plotTop + 8, plotBottom - 8);
+          takenRects.push({
+            x1: placedPartner.rect.x1 - 4,
+            y1: placedPartner.rect.y1 - 4,
+            x2: placedPartner.rect.x2 + 4,
+            y2: placedPartner.rect.y2 + 4,
+          });
+          continue;
+        }
+      }
+
       if (zone.id.startsWith("platform_captive_capital-")) {
         const inBounds = (x: number, y: number) => ({
           x: clamp(x, plotLeft + halfW + 6, plotRight - halfW - 6),
@@ -2496,7 +2570,9 @@ export default function QuadrantScatterMap(props: {
                         {zone.labelAnchorX && zone.labelAnchorY ? (
                           <line
                             x1={
-                              zone.id.startsWith("business_money-")
+                              zone.id.startsWith("partner_embedded_b2b2smb-")
+                                ? zone.labelAnchorX
+                                : zone.id.startsWith("business_money-")
                                 ? zone.labelX + zoneHalfW + 8
                                 : zone.labelAnchorX > zone.labelX + zoneHalfW + 10
                                   ? zone.labelX + zoneHalfW + 10
@@ -2505,7 +2581,9 @@ export default function QuadrantScatterMap(props: {
                                     : zone.labelX
                             }
                             y1={
-                              zone.id.startsWith("business_money-")
+                              zone.id.startsWith("partner_embedded_b2b2smb-")
+                                ? zone.labelAnchorY
+                                : zone.id.startsWith("business_money-")
                                 ? zone.labelY
                                 : zone.labelAnchorY > zone.labelY + 2
                                   ? zone.labelY + zoneHalfH + 6
@@ -2513,8 +2591,16 @@ export default function QuadrantScatterMap(props: {
                                     ? zone.labelY - zoneHalfH - 6
                                     : zone.labelY
                             }
-                            x2={zone.labelAnchorX}
-                            y2={zone.labelAnchorY}
+                            x2={
+                              zone.id.startsWith("partner_embedded_b2b2smb-")
+                                ? zone.labelX
+                                : zone.labelAnchorX
+                            }
+                            y2={
+                              zone.id.startsWith("partner_embedded_b2b2smb-")
+                                ? zone.labelY + zoneHalfH + 2
+                                : zone.labelAnchorY
+                            }
                             stroke={zone.stroke}
                             strokeOpacity={1}
                             strokeWidth={zone.id.startsWith("business_money-") ? 3.8 : 3.1}
