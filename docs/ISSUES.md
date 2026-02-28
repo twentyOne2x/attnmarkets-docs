@@ -1,5 +1,65 @@
 # ISSUES
 
+## 2026-02-27 - hover formatting: bold merchant/client names in firm + cluster cards
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested all merchant/client names to be bold in hover content and noted a gap for Liberis plus cluster-level hover data.
+- Missing info/questions: none.
+- Type: UX/readability
+- Status: completed
+- Context + suspected cause:
+  - Firm hover currently bolds only recognized names in selected rows, but token coverage misses some Liberis clients.
+  - Cluster hover + cluster summary cards render client example strings without name-highlighting.
+- Fix intent:
+  1) Expand/derive firm/client tokens so Liberis client names are recognized.
+  2) Apply same highlight function to cluster hover client examples.
+  3) Apply same highlight function to cluster summary card client examples.
+- Acceptance criteria:
+  - Liberis hover client examples show bold firm/client names.
+  - Cluster hover and cluster summary client example text shows bold firm/client names.
+  - Existing non-client wording remains readable and unchanged.
+  - `python3 scripts/knowledge_check.py` and `npm run build` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/ProjectHoverName.tsx`
+    - `components/QuadrantScatterMap.tsx`
+    - `components/highlightFirmNames.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot of Liberis hover + cluster hover/client examples
+
+EXECUTOR
+- Implemented:
+  - Added shared firm/client name highlighter in `components/highlightFirmNames.tsx` and expanded token coverage (including Liberis client names like `Vagaro`, `Clover UK`, `Teya`).
+  - Applied highlight rendering to:
+    - map dot tooltip: service/reliance rows
+    - cluster hover bubble: client example rows
+    - zoom cluster summary cards: client examples line
+    - market-segment firm-name hover cards (`ProjectHoverName`) for reliance/examples rows
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - `npx playwright test tests/e2e/tmp-bold-client-hover.spec.ts --project=chromium` -> PASS (`1 passed`).
+  - Screenshots:
+    - `tmp/hover-liberis-bold-client-names-2026-02-27.png`
+    - `tmp/hover-cluster-bold-client-names-2026-02-27.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Liberis hover examples now bold merchant/client names.
+  - PASS: cluster hover + cluster summary examples now bold merchant/client names.
+
 ## 2026-02-27 - zoom map: move Partner-Embedded title further right and up
 
 Checklist

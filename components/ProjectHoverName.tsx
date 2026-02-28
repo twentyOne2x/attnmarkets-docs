@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { highlightFirmNames } from "./highlightFirmNames";
 import { PROJECTS } from "./quadrantMapData";
 
 type ProjectId = keyof typeof PROJECTS;
@@ -18,7 +19,7 @@ export default function ProjectHoverName({ id, label }: ProjectHoverNameProps) {
   const volumeText = info.creditVolume
     ? `${info.creditVolume.display} — ${info.creditVolume.basis ?? "Best-public signal"}`
     : null;
-  const examplesText = info.exampleClients?.length ? info.exampleClients.slice(0, 3).join(" | ") : null;
+  const examples = info.exampleClients?.slice(0, 3) ?? [];
   const b2b2smbText = info.b2b2smbReliance?.length ? info.b2b2smbReliance[0] : null;
 
   return (
@@ -46,12 +47,18 @@ export default function ProjectHoverName({ id, label }: ProjectHoverNameProps) {
         ) : null}
         {b2b2smbText ? (
           <span className="tooltipRow">
-            <strong>Who they use/rely on:</strong> {b2b2smbText}
+            <strong>Who they use/rely on:</strong> {highlightFirmNames(b2b2smbText)}
           </span>
         ) : null}
-        {examplesText ? (
+        {examples.length ? (
           <span className="tooltipRow">
-            <strong>Who they service (examples):</strong> {examplesText}
+            <strong>Who they service (examples):</strong>{" "}
+            {examples.map((example, i) => (
+              <React.Fragment key={`example-${i}`}>
+                {i > 0 ? " | " : null}
+                {highlightFirmNames(example)}
+              </React.Fragment>
+            ))}
           </span>
         ) : null}
       </span>
