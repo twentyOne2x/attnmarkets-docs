@@ -1,5 +1,472 @@
 # ISSUES
 
+## 2026-02-28 - attn-in-context: keep cluster titles topmost + add breathing in broad top-right
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for (1) cluster names to always sit above other names, and (2) more spacing in the crowded top-right of the bottom/broad diagram.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Cluster title pills are currently rendered in the same early layer as zone paths, so firm labels can visually overtake them.
+  - Broad preset top-right remains crowded because the firm-label relax pass still keeps labels relatively tight.
+- Fix intent:
+  1) Render cluster title layer after firm label layer so cluster names are always visually on top.
+  2) Increase broad-map label spacing/repulsion parameters to create more whitespace in top-right.
+- Acceptance criteria:
+  - Cluster title labels render above all firm labels in both map instances.
+  - Broad-map top-right is visibly less cramped.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep existing style and interactions.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot(s) of updated diagrams
+
+EXECUTOR
+- Implemented:
+  - Rendered cluster labels in a separate final SVG layer (after project dots/labels), so cluster names always draw above firm names.
+  - Kept cluster-zone paths in the earlier layer to preserve background zone behavior and hover interactions.
+  - Increased broad-preset firm-label spacing by:
+    - larger initial candidate offsets,
+    - stronger pair/obstacle gaps in relaxation,
+    - lower anchor pull for broader separation in dense regions.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-cluster-toplayer-breathing-2026-02-28/wrap-2.png`
+    - `tmp/attn-in-context-cluster-toplayer-breathing-2026-02-28/broad-top-right-close.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: cluster title labels are rendered above all firm labels.
+  - PASS: broad-map top-right has additional spacing relative to prior layout.
+  - PASS: build and knowledge checks pass.
+
+## 2026-02-28 - attn-in-context: remove hardcoded label positions via repulsion layout
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested that cluster and firm names are no longer hardcoded by position and instead "push one another" to avoid overlap.
+- Missing info/questions: none.
+- Type: UX/layout system refactor
+- Status: completed
+- Context + suspected cause:
+  - `components/QuadrantScatterMap.tsx` currently has many per-ID label locks (`creditcoop`, `stripe_capital`, `pipe`, etc.) and per-cluster title branches (`partner_embedded_b2b2smb`, `platform_captive_capital`, `business_money`).
+  - These fixed offsets drift as data/marker scaling changes, causing repeated manual adjustments.
+- Fix intent:
+  1) Introduce a shared deterministic label-relaxation pass (repulsion + anchor pull + bounds clamp).
+  2) Refactor firm labels to use anchor-driven placement without per-firm coordinate hardcoding.
+  3) Refactor cluster title placement similarly and use generic leader-line geometry.
+- Acceptance criteria:
+  - Firm labels do not overlap each other in normal render.
+  - Cluster titles do not overlap firm labels or each other in normal render.
+  - Placement does not rely on cluster-id/per-firm coordinate lock branches.
+  - `npm run build` passes.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-02-28-dynamic-label-repulsion-for-map.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+    - `docs/plans/completed/2026-02-28-dynamic-label-repulsion-for-map.md`
+  - Constraints:
+    - deterministic layout, preserve existing map style and attn logo pill.
+  - Tests/proofs:
+    - `npm run build`
+    - screenshots of both diagrams
+
+EXECUTOR
+- Implemented:
+  - Added a deterministic shared label-relaxation engine in `components/QuadrantScatterMap.tsx`:
+    - pairwise label repulsion
+    - obstacle repulsion (marker and axis-label regions)
+    - anchor pull + bounds clamping
+  - Refactored firm-label placement to remove per-firm coordinate lock branches and use generic candidate generation + relaxation.
+  - Refactored cluster-title placement to remove per-cluster hardcoded placement branches and use the same relaxation flow.
+  - Replaced cluster leader-line geometry branching with generic label-edge-to-anchor geometry.
+  - Removed project-ID leader-line exceptions for firm labels (now distance-based).
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Updated screenshots:
+    - `tmp/attn-in-context-label-repulsion-2026-02-28/wrap-1.png`
+    - `tmp/attn-in-context-label-repulsion-2026-02-28/wrap-2.png`
+    - `tmp/attn-in-context-label-repulsion-2026-02-28/diagram-1-svg.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: firm labels are now positioned by generic placement + repulsion rather than per-firm fixed coordinate locks.
+  - PASS: cluster titles are now positioned by generic placement + repulsion rather than cluster-id branches.
+  - PASS: no obvious label overlaps in the verified screenshots for both map instances.
+  - PASS: build and knowledge-check pass.
+
+## 2026-02-28 - attn-in-context: reduce firm-name label size in second diagram
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested smaller firm names in the second diagram (broad map).
+- Missing info/questions: none.
+- Type: UX/typography
+- Status: completed
+- Context + suspected cause:
+  - The second diagram uses a large `labelFontSize` and appears crowded.
+- Fix intent:
+  1) Reduce firm label font size only for the broad (second) preset.
+  2) Leave first map sizing unchanged.
+  3) Verify via build + updated screenshot.
+- Acceptance criteria:
+  - Firm names are visibly smaller in second diagram.
+  - First diagram remains unchanged.
+  - `npm run build` passes.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `npm run build`
+    - updated screenshot of second diagram
+
+EXECUTOR
+- Implemented:
+  - Reduced second-diagram (broad preset) firm label size by lowering `labelFontSize` from `30` to `24`.
+  - Left first-map (`revenue_receivables_zoom`) label size unchanged.
+- Proofs:
+  - `npm run build` -> PASS.
+  - Updated second-diagram screenshot:
+    - `tmp/attn-in-context-second-diagram-smaller-labels-2026-02-28/diagram-2.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: second diagram firm names are visibly smaller.
+  - PASS: first diagram settings were not changed by this patch.
+  - PASS: build succeeds.
+
+## 2026-02-28 - attn-in-context: raise creditcoop position and remove `· n/a` label noise
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested (1) placing `creditcoop` much higher on the map and (2) removing all `· n/a` suffixes from labels.
+- Missing info/questions: none.
+- Type: UX/layout + label formatting
+- Status: completed
+- Context + suspected cause:
+  - In zoom map, `creditcoop` is currently set at `y: 0.80`, which may read too low relative to desired top-right positioning.
+  - Label generation appends volume suffix uniformly in zoom mode, including unknown values (`n/a`), creating visual noise.
+- Fix intent:
+  1) Raise `creditcoop` in first-map zoom coordinates.
+  2) Keep volume suffix only when a project has a non-`n/a` value.
+  3) Rebuild and verify with screenshot.
+- Acceptance criteria:
+  - `creditcoop` appears materially higher in the zoom map.
+  - No project label shows `· n/a`.
+  - `npm run build` passes.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `npm run build`
+    - updated screenshot of `attn-in-context` first diagram
+
+EXECUTOR
+- Implemented:
+  - Raised `creditcoop` in first-map zoom coordinates:
+    - `creditcoop` from `{ x: 0.86, y: 0.80 }` to `{ x: 0.86, y: 0.90 }`.
+  - Updated zoom label formatter to suppress unknown-volume suffixes:
+    - if `creditVolume.display` is empty or `n/a` (case-insensitive), use label-only (no ` · ...` suffix).
+    - keep the ` · volume` suffix only for known values.
+- Proofs:
+  - `npm run build` -> PASS.
+  - Updated first-diagram screenshot:
+    - `tmp/attn-in-context-creditcoop-higher-no-na-2026-02-28/diagram-1.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `creditcoop` appears materially higher in the zoom map.
+  - PASS: no labels display `· n/a`.
+  - PASS: build succeeds.
+
+## 2026-02-28 - attn-in-context: increase separation between Platform-Native B2SMB and Solana merchant processing clusters
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to move Platform-Native B2SMB farther from Solana merchant processing in the first map because labels are currently too dense and hard to read.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Current zoom-map coordinates place `square_loans` and `depay` in near-overlapping horizontal bands, creating high label density between the two clusters.
+- Fix intent:
+  1) Remap first-map zoom coordinates to increase horizontal gap between Platform-Native B2SMB and Solana merchant-processing groups.
+  2) Keep relative cluster semantics (platform-native stays right of center; Solana cluster remains to the right of platform-native).
+  3) Verify build + screenshot readability.
+- Acceptance criteria:
+  - Visible whitespace gap exists between the two cluster groups in the zoom map.
+  - Label collisions between those groups are materially reduced.
+  - `npm run build` passes.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `npm run build`
+    - screenshot of updated `attn-in-context` diagrams
+
+EXECUTOR
+- Implemented:
+  - Remapped first-map zoom coordinates in `components/QuadrantScatterMap.tsx` to open more whitespace between groups:
+    - Platform-Native B2SMB shifted left/down:
+      - `shopify_capital` -> `{ x: 0.50, y: 0.64 }`
+      - `stripe_capital` -> `{ x: 0.57, y: 0.59 }`
+      - `square_loans` -> `{ x: 0.63, y: 0.58 }`
+      - `paypal_working_capital` -> `{ x: 0.54, y: 0.50 }`
+    - Solana merchant processing shifted right/up:
+      - `depay` -> `{ x: 0.80, y: 0.62 }`
+      - `moonpay_commerce` -> `{ x: 0.84, y: 0.70 }`
+      - `decal` -> `{ x: 0.90, y: 0.69 }`
+      - `loop_crypto` -> `{ x: 0.86, y: 0.77 }`
+      - `spherepay` -> `{ x: 0.93, y: 0.77 }`
+  - Left label lock logic unchanged; separation achieved via data placement in zoom coordinates.
+- Proofs:
+  - `npm run build` -> PASS.
+  - Updated screenshots:
+    - `tmp/attn-in-context-diagrams-platform-vs-solana-2026-02-28/diagram-1.png`
+    - `tmp/attn-in-context-diagrams-platform-vs-solana-2026-02-28/diagram-2.png`
+    - `tmp/attn-in-context-diagrams-platform-vs-solana-2026-02-28/attn-in-context-fullpage.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: a visible gap now separates Platform-Native B2SMB from Solana merchant processing in the zoom map.
+  - PASS: inter-cluster label crowding is reduced versus prior layout.
+  - PASS: `npm run build` succeeds.
+
+## 2026-02-28 - attn-in-context: clarify Decal third-party WaaS signal (Para vs Privy/Squads)
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked who Decal's third-party wallet-as-a-service provider is and requested the context page be updated to reflect it.
+- Missing info/questions: none.
+- Type: content/data clarification
+- Status: completed
+- Context + suspected cause:
+  - Current Decal context in `attn-in-context` does not explicitly answer "who is the WaaS provider".
+  - Existing tooltip fields include Privy/Squads chips but do not clearly expose Para-centered WaaS signal.
+- Fix intent:
+  1) Update Decal hover/context metadata with explicit "likely Para WaaS" language and caveats.
+  2) Add brief narrative clarification in `attn-in-context.mdx` under Solana merchant stablecoin processors.
+  3) Include source links that support the statement (terms/privacy/dashboard signals).
+- Acceptance criteria:
+  - Decal context text explicitly states likely third-party WaaS provider and caveat.
+  - No claim overreach (clear distinction between observed code/public signals vs confirmed production routing).
+  - `npm run build` passes.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Updated Decal context in `components/quadrantMapData.ts`:
+    - added `infra` note with explicit Para-centered WaaS signal and caveat for Privy code-path references.
+    - updated `b2b2smbReliance` bullets to explicitly answer "who they rely on" with Para/Privy/Squads context.
+    - added supporting sources: Decal terms, privacy, dashboard login.
+  - Updated narrative context in `pages/introduction/attn-in-context.mdx`:
+    - added one-line clarification in "Solana merchant stablecoin processors" naming Para as likely WaaS signal with caveat wording and date.
+  - Updated name-highlighting support in `components/highlightFirmNames.tsx`:
+    - added `Para`, `Privy`, `Squads` so new hover/context text is scan-friendly.
+- Proofs:
+  - `npm run build` -> PASS.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Decal context now explicitly states likely third-party WaaS signal (Para) and caveats (Privy references, no public Squads signal).
+  - PASS: Wording avoids overclaim by framing as public-signal based, not confirmed full production routing.
+  - PASS: build succeeds.
+  - Screenshot handling: no screenshot requested/provided for this text/data clarification; verified via source diff + build.
+
+## 2026-02-28 - zoom map: tighten Platform-Native B2SMB point spacing
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested the first (zoom) diagram to feel less messy by bringing Platform-Native B2SMB firms closer together.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Platform-native points are currently spread too far apart in zoom coordinates, making the cluster read fragmented.
+- Fix intent:
+  1) Adjust zoom coordinates for `Shopify Capital`, `Stripe Capital`, `Square Loans`, and `PayPal Working Capital` to a tighter grouping.
+  2) Preserve current label locks and avoid new collisions as much as possible.
+- Acceptance criteria:
+  - Platform-native firms visibly sit closer together in the first map.
+  - Map remains readable with labels and cluster envelope.
+  - `npm run build` passes.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `npm run build`
+    - screenshot of zoom map
+
+EXECUTOR
+- Implemented:
+  - Tightened first-map (`revenue_receivables_zoom`) spacing for platform-native firms by remapping coordinates:
+    - `shopify_capital` -> `{ x: 0.56, y: 0.64 }`
+    - `stripe_capital` -> `{ x: 0.63, y: 0.61 }`
+    - `square_loans` -> `{ x: 0.70, y: 0.60 }`
+    - `paypal_working_capital` -> `{ x: 0.60, y: 0.53 }`
+  - Left label locks and other cluster geometry logic unchanged.
+- Proofs:
+  - `npm run build` -> PASS.
+  - `npx playwright test tests/e2e/tmp-platform-native-tighten.spec.ts --project=chromium` -> PASS (`1 passed`; temporary spec removed after run).
+  - Screenshot:
+    - `tmp/zoom-map-platform-native-tightened-2026-02-28.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: platform-native firms render noticeably closer together in the first map.
+  - PASS: map remains readable with labels and cluster envelope.
+
+## 2026-02-28 - attn-in-context: add Solana onchain merchant-payment firms (Decal + peers) to both maps
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested research and map inclusion for Solana onchain firms like Decal, including both first (zoom) and second (broad) diagrams.
+- Missing info/questions: none; proceed with a best-effort set of high-signal, source-backed firms (not claiming literal global exhaustiveness).
+- Type: data/model + UX/content update
+- Status: completed
+- Context + suspected cause:
+  - Current diagrams focus on revenue-credit comparators and broader credit/spend rails, but miss several Solana merchant stablecoin processors.
+  - Page narrative/segments do not currently expose those firms in hoverable map/list format.
+- Fix intent:
+  1) Research source-backed Solana merchant payment firms (starting from Decal) from primary sources.
+  2) Add new firm entries with hover data + sources in `quadrantMapData.ts`.
+  3) Include those firms in both map presets via zoom IDs/coords and broad cluster membership.
+  4) Update `attn-in-context.mdx` segment list/copy so they are visible in narrative scan path.
+- Acceptance criteria:
+  - New Solana merchant-payment firms appear in both diagrams.
+  - Hover cards show narrative + source-backed metadata for each new firm.
+  - Page market-segment section includes the new firms with hover names.
+  - `python3 scripts/knowledge_check.py` and `npm run build` pass.
+- Complexity: medium
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `components/highlightFirmNames.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `npm run build`
+    - screenshot(s) of `/introduction/attn-in-context` showing new firms in both maps
+
+EXECUTOR
+- Implemented:
+  - Added five Solana merchant-payment comparators with source-backed hover data in `components/quadrantMapData.ts`:
+    - `decal` (`usedecal.com`)
+    - `moonpay_commerce` (`MoonPay Commerce (Helio)`)
+    - `depay` (`depay.com`)
+    - `loop_crypto` (`loopcrypto.xyz`)
+    - `spherepay` (`spherepay.co`)
+  - Added these firms to both maps in `components/QuadrantScatterMap.tsx`:
+    - new broad-map cluster: `Solana Merchant Payments`
+    - new zoom-map cluster: `Solana Merchant Processing`
+    - expanded zoom project IDs + remapped coordinates
+    - updated zoom hint copy to reflect Solana merchant-processing comparators
+  - Updated page narrative + scan list in `pages/introduction/attn-in-context.mdx`:
+    - quick-read bullet includes Solana merchant processing stacks
+    - new market segment section with hover tokens for all five firms
+    - added `attn fit` subsection for Solana merchant stablecoin processors
+  - Extended hover bold-name coverage in `components/highlightFirmNames.tsx` for new firm/client tokens.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS.
+  - `npm run build` -> PASS.
+  - `npx playwright test tests/e2e/tmp-solana-firms-map.spec.ts --project=chromium` -> PASS (`1 passed`; temporary spec removed after run).
+  - Screenshots:
+    - `tmp/solana-firms-zoom-map-2026-02-28.png`
+    - `tmp/solana-firms-zoom-map-hover-decal-2026-02-28.png`
+    - `tmp/solana-firms-broad-map-2026-02-28.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: all five new Solana firms appear in both maps.
+  - PASS: hover metadata and source links are available for each new firm.
+  - PASS: page segment list includes the new firms with hover tokens.
+
 ## 2026-02-27 - tooling: provide bash script for attn-in-context clipboard export
 
 Checklist

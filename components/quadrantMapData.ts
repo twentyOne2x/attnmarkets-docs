@@ -782,6 +782,241 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://www.rain.xyz/",
   },
 
+  decal: {
+    id: "decal",
+    label: "usedecal.com",
+    stack: "User-facing distribution",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.8,
+    y: 0.56,
+    narrative:
+      "Merchant stablecoin processing stack (checkout, payouts, loyalty) designed to bring web2 operators onto onchain payment rails.",
+    creditModel:
+      "Payments/settlement infrastructure rather than standalone underwriting; focuses on stablecoin checkout and processing flows.",
+    infra: {
+      privy: "Unknown",
+      squads: "No public evidence",
+      asOf: "2026-02-28",
+      note:
+        "Public dashboard payload exposes WalletProvider/ParaProvider/AuthProvider plus PRIVY/PARA enums; strongest WaaS signal is Para, while Privy appears as a referenced wallet/auth code path. No public Squads signal found in fetched assets.",
+    },
+    borrowerType: "Merchants / business operators",
+    distributionModel: "Merchant-embedded checkout + platform integrations",
+    exampleClients: [
+      "Solana Pay-enabled merchants listed via Decal's Seeker Season directory.",
+      "Web2 merchants adopting stablecoin processing and payouts (company positioning).",
+    ],
+    b2b2smbReliance: [
+      "Likely relies on Para as third-party wallet-as-a-service (WaaS) in its public dashboard stack.",
+      "Privy appears in public bundle enums as a referenced wallet/auth path; production usage split is not publicly documented.",
+      "No public Squads dependency signal found in fetched Decal public assets (as of 2026-02-28).",
+    ],
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative processed volume/revenue not disclosed on cited pages.",
+    },
+    scale: [
+      "Decal positions one merchant stack for stablecoin processing, payouts, and loyalty.",
+      "Public cumulative processing volume and standalone revenue are not disclosed in cited sources.",
+    ],
+    why: [
+      "Closest Solana-native comparator for web2-merchant stablecoin processing posture.",
+      "Emphasizes onchain settlement rails with merchant-facing UX/compliance abstractions.",
+    ],
+    sources: [
+      { label: "Decal site", url: "https://usedecal.com/" },
+      { label: "Decal terms", url: "https://usedecal.com/legal/terms" },
+      { label: "Decal privacy", url: "https://usedecal.com/legal/privacy" },
+      { label: "Decal dashboard login", url: "https://dashboard.usedecal.com/login" },
+      {
+        label: "Decal blog: Smart Payments, Payouts & Loyalty",
+        url: "https://decal.link/blogs/Smart-Payments%2C-Payouts-%26-Loyalty-with-DeCal%3A-All-Made-Easy",
+      },
+      {
+        label: "Decal blog: Seeker Season (Solana Pay-enabled merchants)",
+        url: "https://decal.link/blogs/Seeker-Season%3A-Find-Solana-Pay-Enabled-Merchants",
+      },
+    ],
+    href: "https://usedecal.com/",
+  },
+
+  moonpay_commerce: {
+    id: "moonpay_commerce",
+    label: "MoonPay Commerce (Helio)",
+    stack: "User-facing distribution",
+    controlPrimitive: "Programmatic controls",
+    plane: "hybrid",
+    x: 0.73,
+    y: 0.62,
+    narrative:
+      "Merchant checkout stack for accepting crypto/stablecoins, including Solana Pay plugin distribution through Helio.",
+    creditModel:
+      "Payments infrastructure (checkout + settlement) rather than standalone credit underwriting.",
+    borrowerType: "Merchants / business operators",
+    distributionModel: "Merchant-embedded checkout + platform plugins",
+    exampleClients: [
+      "Shopify merchants using the Solana Pay app powered by Helio.",
+      "Online stores integrating Helio checkout APIs for crypto/stablecoin acceptance.",
+    ],
+    b2b2smbReliance: [
+      "Primarily partner/platform distributed (for example Shopify plugin and ecommerce integrations).",
+    ],
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative underwriting is not applicable; merchant-processing volume is reported at product level.",
+      note: "MoonPay acquisition release cites Helio transaction throughput metrics.",
+    },
+    scale: [
+      "MoonPay said Helio had supported over 6,000 merchants and facilitated over $1.5bn in transactions at acquisition announcement (2024-01-17).",
+      "Solana case study reports 200+ Shopify stores and over $1m in savings from lower fees.",
+    ],
+    why: [
+      "Directly maps to web2-merchant stablecoin checkout distribution on Solana rails.",
+      "Useful comparator for partner-embedded merchant payments versus credit-enforcement engines.",
+    ],
+    sources: [
+      {
+        label: "MoonPay newsroom: introduces MoonPay Commerce / acquires Helio (2024-01-17)",
+        url: "https://www.moonpay.com/newsroom/moonpay-introduces-moonpay-commerce-acquires-helio-to-expand-its-enterprise-solution",
+      },
+      {
+        label: "Helio docs: Shopify (Solana Pay app powered by Helio)",
+        url: "https://docs.hel.io/for-merchants-and-partners/resources/integrations/shopify",
+      },
+      {
+        label: "Solana customer story: Helio",
+        url: "https://solana.com/customers/helio",
+      },
+    ],
+    href: "https://www.moonpay.com/commerce",
+  },
+
+  depay: {
+    id: "depay",
+    label: "depay.com",
+    stack: "User-facing distribution",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.75,
+    y: 0.54,
+    narrative:
+      "Web3 checkout/payment API for merchant apps, with Solana Pay protocol support and multi-chain stablecoin acceptance.",
+    creditModel:
+      "Payments acceptance and settlement rails (not a standalone underwriting product).",
+    borrowerType: "Merchants / app businesses",
+    distributionModel: "API + plugin distribution (merchant-embedded)",
+    exampleClients: [
+      "Shopify and WooCommerce merchants using DePay payment plugins.",
+      "World App Mini Apps integrating DePay checkout.",
+    ],
+    b2b2smbReliance: [
+      "Relies on merchant platform/app integrations (Shopify, WooCommerce, World App) for distribution.",
+    ],
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative processing volume/revenue not disclosed in cited sources.",
+    },
+    scale: [
+      "DePay positions support for 14+ blockchains, 60+ wallets, and 13+ languages on its product page.",
+      "Public cumulative processed volume and standalone revenue are not disclosed in cited sources.",
+    ],
+    why: [
+      "Explicit Solana Pay protocol support and stablecoin-acceptance framing for merchant checkout.",
+      "Useful comparator for programmable onchain payment acceptance versus credit underwriters.",
+    ],
+    sources: [
+      { label: "DePay site", url: "https://depay.com/" },
+      { label: "DePay Solana MWA docs", url: "https://depay.com/solana-mwa" },
+      { label: "World App x DePay integration", url: "https://depay.com/world-app" },
+    ],
+    href: "https://depay.com/",
+  },
+
+  loop_crypto: {
+    id: "loop_crypto",
+    label: "loopcrypto.xyz",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.77,
+    y: 0.68,
+    narrative:
+      "Merchant billing stack for crypto/stablecoin invoicing and subscriptions, with native Solana support.",
+    creditModel:
+      "Payments collections/settlement infrastructure; not a standalone credit underwriting system.",
+    borrowerType: "Merchants / business operators",
+    distributionModel: "Merchant APIs + invoicing/subscription workflows",
+    exampleClients: [
+      "Merchants accepting recurring USDC/USDT payments on Solana.",
+      "Businesses using Loop to settle accepted payments in fiat or crypto.",
+    ],
+    b2b2smbReliance: [
+      "Relies on merchant workflow integrations rather than captive consumer distribution.",
+    ],
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative processing volume/revenue not disclosed in cited sources.",
+    },
+    scale: [
+      "Loop states support for Solana network payments and settlement in either fiat or crypto.",
+      "Public cumulative processed volume and standalone revenue are not disclosed in cited sources.",
+    ],
+    why: [
+      "Solana-native merchant payment support makes it a close comparator to Decal-style processing rails.",
+      "Useful to separate payments-processing stacks from underwriting/servicing credit engines.",
+    ],
+    sources: [
+      { label: "Loop merchants", url: "https://www.loopcrypto.xyz/merchants" },
+      { label: "Loop build for web3", url: "https://www.loopcrypto.xyz/build-for-web3" },
+      { label: "Loop docs", url: "https://docs.loopcrypto.xyz/" },
+    ],
+    href: "https://www.loopcrypto.xyz/",
+  },
+
+  spherepay: {
+    id: "spherepay",
+    label: "spherepay.co",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "hybrid",
+    x: 0.69,
+    y: 0.84,
+    narrative:
+      "Enterprise stablecoin payments and treasury infrastructure, with Solana-based settlement environment in core architecture.",
+    creditModel:
+      "Payments/settlement infrastructure (no standalone underwriting product).",
+    borrowerType: "Businesses / enterprises",
+    distributionModel: "B2B API/infra integrations",
+    exampleClients: [
+      "Enterprise payment operations using stablecoin rails (company positioning).",
+      "Public named merchant client list is not disclosed in cited sources.",
+    ],
+    b2b2smbReliance: [
+      "Primarily B2B infrastructure integrations; merchant-facing experiences are downstream of partners.",
+    ],
+    creditVolume: {
+      display: "n/a",
+      basis: "Public cumulative processing volume/revenue not disclosed in cited sources.",
+    },
+    scale: [
+      "Sphere positions global stablecoin payment and treasury tooling for enterprises.",
+      "Public cumulative processed volume and standalone revenue are not disclosed in cited sources.",
+    ],
+    why: [
+      "Adds Solana-oriented enterprise stablecoin-settlement infrastructure context around merchant payment rails.",
+      "Useful adjacent comparator to distinguish payment infra from credit servicing layers.",
+    ],
+    sources: [
+      { label: "SpherePay site", url: "https://spherepay.co/" },
+      {
+        label: "Sphere Labs architecture note (built on Solana Permissioned Environment)",
+        url: "https://www.spherelabs.co/",
+      },
+    ],
+    href: "https://spherepay.co/",
+  },
+
   wildcat: {
     id: "wildcat",
     label: "wildcat.finance",
