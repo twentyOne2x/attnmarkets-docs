@@ -1,5 +1,63 @@
 # ISSUES
 
+## 2026-02-28 - attn-in-context: expand key names + keep labels off fixed axis titles
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested expanding key firm names (for example PayPal Working Capital, Square Loans) and keeping axis titles fixed while labels repel around them.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Long labels are compressed by generic pill-width limits for some firms.
+  - Firm label placement does not currently treat axis title regions as fixed obstacles.
+- Fix intent:
+  1) Increase label metric budgets for key long names.
+  2) Add fixed axis-title obstacle rectangles to firm-label placement and relax passes.
+  3) Keep axis names fixed in place while labels avoid them.
+- Acceptance criteria:
+  - PayPal Working Capital / Square Loans names render more expanded.
+  - Axis titles remain fixed and labels avoid overlapping them.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - axis titles must remain fixed; only movable labels should adjust.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot proof
+
+EXECUTOR
+- Implemented:
+  - Added fixed axis-title obstacle rectangles via `axisSideLabelRects(...)` and passed them into firm-label placement (`computeLabelPlacements`) as `fixedObstacles`.
+  - Updated firm-label seeding and relax passes so movable labels avoid those fixed axis-title zones while axis titles remain at static coordinates.
+  - Increased long-label budgets for key names:
+    - `PayPal Working Capital` (`maxPillWidth: 520`)
+    - `Square Loans` (`maxPillWidth: 420`)
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-first-map-2026-02-28.png`
+    - `tmp/attn-in-context-second-map-2026-02-28.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: key long names (including PayPal Working Capital and Square Loans) render expanded.
+  - PASS: axis titles remain fixed; labels route around axis title regions without moving axis text.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-02-28 - attn-in-context: increase Shopify Capital label size
 
 Checklist

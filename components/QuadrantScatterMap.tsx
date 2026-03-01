@@ -329,6 +329,35 @@ function estimateTextWidth(text: string, fontSize: number) {
   return Math.max(42, text.length * fontSize * 0.62);
 }
 
+function axisSideLabelRects(args: {
+  xToSvg: (x: number) => number;
+  yToSvg: (y: number) => number;
+  leftAxisText: string;
+  rightAxisText: string;
+  axisSideLabelFontSize: number;
+  axisSideLabelYOffset: number;
+}): Rect[] {
+  const yMid = args.yToSvg(0.5);
+  const leftAxisW = estimateTextWidth(args.leftAxisText, args.axisSideLabelFontSize);
+  const rightAxisW = estimateTextWidth(args.rightAxisText, args.axisSideLabelFontSize);
+  const axisY = yMid + args.axisSideLabelYOffset;
+
+  return [
+    {
+      x1: args.xToSvg(0) + 28 - 10,
+      y1: axisY - args.axisSideLabelFontSize * 0.95,
+      x2: args.xToSvg(0) + 28 + leftAxisW + 10,
+      y2: axisY + args.axisSideLabelFontSize * 0.44,
+    },
+    {
+      x1: args.xToSvg(1) - 28 - rightAxisW - 10,
+      y1: axisY - args.axisSideLabelFontSize * 0.95,
+      x2: args.xToSvg(1) - 28 + 10,
+      y2: axisY + args.axisSideLabelFontSize * 0.44,
+    },
+  ];
+}
+
 function formatUsdBn(bn: number) {
   if (bn >= 100) return `$${bn.toFixed(0)}b`;
   if (bn >= 10) return `$${bn.toFixed(1)}b`;
@@ -433,6 +462,30 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
       baseFont: Math.min(baseFont + 2, 28),
       minFont: 22,
       maxPillWidth: 360,
+      basePadX: 6,
+      minPadX: 3,
+      padY: 3,
+    });
+  }
+
+  if (project.id === "paypal_working_capital") {
+    return adaptiveLabelMetrics({
+      text,
+      baseFont: Math.min(baseFont, 32),
+      minFont: 22,
+      maxPillWidth: 520,
+      basePadX: 7,
+      minPadX: 4,
+      padY: 3,
+    });
+  }
+
+  if (project.id === "square_loans") {
+    return adaptiveLabelMetrics({
+      text,
+      baseFont: Math.min(baseFont, 32),
+      minFont: 22,
+      maxPillWidth: 420,
       basePadX: 6,
       minPadX: 3,
       padY: 3,
@@ -749,6 +802,7 @@ function computeLabelPlacements(args: {
   markerSizeForProject?: (projectId: string) => number;
   labelTextForProject?: (project: ProjectInfo) => string;
   applyHardLabelLocks?: boolean;
+  fixedObstacles?: Rect[];
 }) {
   const {
     projects,
@@ -762,6 +816,7 @@ function computeLabelPlacements(args: {
     markerSizeForProject,
     labelTextForProject,
     applyHardLabelLocks = true,
+    fixedObstacles = [],
   } = args;
 
   const placed: Record<string, { x: number; y: number; rect: Rect }> = {};
@@ -784,7 +839,7 @@ function computeLabelPlacements(args: {
   );
   const markerObstacleEntries = Array.from(markerObstacles.entries());
   const allMarkerObstacles = Array.from(markerObstacles.values());
-  const takenRects: Rect[] = [];
+  const takenRects: Rect[] = fixedObstacles.map((r) => expandRect(r, 8));
   const initialLabelBoxes: LabelBox[] = [];
 
   const ordered = [...projects].sort((a, b) => {
@@ -882,6 +937,13 @@ function computeLabelPlacements(args: {
         overlapPx += overlapArea(rect, expanded) * 0.85;
       }
 
+      for (const obstacle of fixedObstacles) {
+        const expanded = expandRect(obstacle, 4);
+        if (!rectsOverlap(rect, expanded)) continue;
+        overlapCount += 1;
+        overlapPx += overlapArea(rect, expanded);
+      }
+
       const dist = Math.hypot(bounded.x - cx, bounded.y - cy);
       const clampPenalty = Math.abs(c.x - bounded.x) + Math.abs(c.y - bounded.y);
       const anglePenalty = angleDistance(Math.atan2(bounded.y - cy, bounded.x - cx), preferredAngle) * 58;
@@ -925,7 +987,7 @@ function computeLabelPlacements(args: {
 
   const relaxed = relaxLabelBoxes({
     labels: initialLabelBoxes,
-    obstacles: allMarkerObstacles,
+    obstacles: [...allMarkerObstacles, ...fixedObstacles],
     iterations: applyHardLabelLocks ? 180 : 120,
     pairGap: applyHardLabelLocks ? 15 : 7,
     obstacleGap: applyHardLabelLocks ? 12 : 7,
@@ -1683,6 +1745,26 @@ export default function QuadrantScatterMap(props: {
     return max;
   }, [projects, markerSize, markerSizeByProject]);
 
+  const axisLabelObstacles = useMemo(
+    () =>
+      axisSideLabelRects({
+        xToSvg,
+        yToSvg,
+        leftAxisText: config.leftAxisText,
+        rightAxisText: config.rightAxisText,
+        axisSideLabelFontSize,
+        axisSideLabelYOffset,
+      }),
+    [
+      xToSvg,
+      yToSvg,
+      config.leftAxisText,
+      config.rightAxisText,
+      axisSideLabelFontSize,
+      axisSideLabelYOffset,
+    ],
+  );
+
   const labelPlacements = useMemo(() => {
     return computeLabelPlacements({
       projects,
@@ -1696,6 +1778,7 @@ export default function QuadrantScatterMap(props: {
       markerSizeForProject: (projectId) => markerSizeByProject.get(projectId) ?? markerSize,
       labelTextForProject: (project) => labelTextByProject.get(project.id) ?? project.label,
       applyHardLabelLocks: config.applyHardLabelLocks,
+      fixedObstacles: axisLabelObstacles,
     });
   }, [
     projects,
@@ -1707,6 +1790,7 @@ export default function QuadrantScatterMap(props: {
     markerSizeByProject,
     labelTextByProject,
     config.applyHardLabelLocks,
+    axisLabelObstacles,
   ]);
 
   const clusterZones = useMemo(() => {
@@ -1858,32 +1942,13 @@ export default function QuadrantScatterMap(props: {
     // Place cluster titles with collision avoidance against project labels + axis labels,
     // then run a shared repulsion pass so cluster titles also push each other.
     const staticObstacles: Rect[] = Object.values(labelPlacements).map((lp) => expandRect(lp.rect, 7));
+    staticObstacles.push(...axisLabelObstacles);
     const provisionalRects: Rect[] = [];
     const clusterLabelBoxes: LabelBox[] = [];
     const anchorByZoneId = new Map<string, Point>();
 
     const plotCenterX = (plotLeft + plotRight) / 2;
     const plotCenterY = (plotTop + plotBottom) / 2;
-    const yMidLocal = yToSvg(0.5);
-
-    // Keep cluster labels away from large horizontal axis labels.
-    const leftAxisW = estimateTextWidth(config.leftAxisText, axisSideLabelFontSize);
-    const leftAxisY = yMidLocal + axisSideLabelYOffset;
-    staticObstacles.push({
-      x1: xToSvg(0) + 28 - 10,
-      y1: leftAxisY - axisSideLabelFontSize * 0.95,
-      x2: xToSvg(0) + 28 + leftAxisW + 10,
-      y2: leftAxisY + axisSideLabelFontSize * 0.44,
-    });
-
-    const rightAxisW = estimateTextWidth(config.rightAxisText, axisSideLabelFontSize);
-    const rightAxisY = yMidLocal + axisSideLabelYOffset;
-    staticObstacles.push({
-      x1: xToSvg(1) - 28 - rightAxisW - 10,
-      y1: rightAxisY - axisSideLabelFontSize * 0.95,
-      x2: xToSvg(1) - 28 + 10,
-      y2: rightAxisY + axisSideLabelFontSize * 0.44,
-    });
 
     for (const zone of zones) {
       if (!zone.label || !zone.bounds) continue;
@@ -2065,16 +2130,13 @@ export default function QuadrantScatterMap(props: {
     xToSvg,
     yToSvg,
     labelPlacements,
-    axisSideLabelFontSize,
-    axisSideLabelYOffset,
+    axisLabelObstacles,
     maxProjectMarkerSize,
     clusterDefs,
     projectsById,
     config.allowSingletonClusterZones,
     config.splitDisconnectedClusterZones,
     config.clusterZonePadding,
-    config.leftAxisText,
-    config.rightAxisText,
   ]);
 
   const visibleClusterIds = useMemo(() => {
