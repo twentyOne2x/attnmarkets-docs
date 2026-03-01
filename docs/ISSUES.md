@@ -1,5 +1,247 @@
 # ISSUES
 
+## 2026-02-28 - attn-in-context: increase Shopify Capital label size
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested larger `Shopify Capital` name in the first diagram.
+- Missing info/questions: none.
+- Type: UX/typography
+- Status: completed
+- Context + suspected cause:
+  - Shopify’s label is constrained by generic project label metrics and looks comparatively small after recent total/annual suffix formatting.
+- Fix intent:
+  1) Add a Shopify-specific label metric override with larger font floor/budget.
+  2) Keep collision handling unchanged so layout still avoids overlap.
+- Acceptance criteria:
+  - Shopify label text is visibly larger in the map.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of first diagram
+
+EXECUTOR
+- Implemented:
+  - Added a Shopify-specific label metrics override in `projectLabelMetricsForProject`:
+    - higher font budget (`baseFont` cap raised)
+    - higher floor (`minFont: 22`)
+    - wider pill allowance (`maxPillWidth: 360`)
+  - Left layout/repulsion logic unchanged so collision avoidance still governs final placement.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-shopify-label-size-2026-02-28/shopify-close.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Shopify label is visibly larger.
+  - PASS: build and knowledge checks pass.
+
+## 2026-02-28 - attn-in-context: raise attn/creditcoop in zoom + show total and annual where available
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested moving `attn` and `creditcoop` higher in the first diagram and clarifying credit numbers by showing total and annual extension where annual is known.
+- Missing info/questions: none.
+- Type: UX/layout + label semantics
+- Status: completed
+- Context + suspected cause:
+  - `attn` and `creditcoop` are still not high enough in the first (zoom) map for desired visual emphasis.
+  - Recent label update switched to annual-only suffixes for known annual figures, which hides previously visible total values.
+- Fix intent:
+  1) Raise `attn` and `creditcoop` y-coordinates in zoom coordinates.
+  2) Update zoom label formatter to render:
+     - total + annual when both known,
+     - total-only when only total is known,
+     - name-only when unknown.
+- Acceptance criteria:
+  - `attn` and `creditcoop` dots appear higher in the first diagram.
+  - Firms such as YouLend/Parafin/Liberis show total labels again.
+  - Firms with known annual extension show both total and annual.
+  - Unknowns remain name-only.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - preserve existing map semantics and avoid fabricated annual values.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first diagram
+
+EXECUTOR
+- Implemented:
+  - Raised zoom-map coordinates for top-right references:
+    - `attn`: `y 0.90 -> 0.965`
+    - `creditcoop`: `y 0.90 -> 0.955`
+  - Updated zoom label semantics to restore totals and include annual where available:
+    - total + annual: `name · <total> total (<annual>/yr)`
+    - total-only: `name · <total> total`
+    - unknown total/annual: `name`
+  - This restores total context for firms like YouLend/Parafin/Liberis while preserving annual context where known.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-toplift-total-and-annual-2026-02-28/wrap-1.png`
+    - `tmp/attn-in-context-toplift-total-and-annual-2026-02-28/top-right-close.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` and `creditcoop` are higher in the first diagram.
+  - PASS: total values are visible again for known totals (for example YouLend/Parafin/Liberis).
+  - PASS: annual values are included only where known.
+  - PASS: unknowns remain name-only.
+  - PASS: build and knowledge checks pass.
+
+## 2026-02-28 - attn-in-context: show annual credit extension on diagram labels when known
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested that credit names in the diagram show amount extended per year; if unknown, leave label as name only.
+- Missing info/questions: none.
+- Type: UX/data labeling
+- Status: completed
+- Context + suspected cause:
+  - Zoom-map labels currently append cumulative volume (`label · $Xb`) for many firms.
+  - User wants annual extension visible instead, and unknown annual values should not add noisy suffixes.
+- Fix intent:
+  1) Add optional annual-extension display field in project credit metadata.
+  2) Update zoom-map label formatter to append annual value only when known for credit firms.
+  3) Keep unknowns as plain names, per user request.
+- Acceptance criteria:
+  - Credit labels with known annual extension show `· <value>/yr` style.
+  - Unknown annual values render as plain name only.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no fabricated annual values; unknown stays name-only.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated zoom map labels
+
+EXECUTOR
+- Implemented:
+  - Added optional annual credit-extension fields in `CreditVolumeSignal`:
+    - `extendedPerYearDisplay`
+    - `extendedPerYearBasis`
+  - Populated known annual extension signals (no fabrication):
+    - `Pipe`: `$0.17b/yr` (annualized from `>$250m` over 18 months)
+    - `PayPal Working Capital`: `$2.2b/yr` (FY2025 merchant receivables purchased)
+    - `Shopify Capital`: `$4.0b/yr` (FY2025 purchases/originations)
+  - Updated zoom-map label formatter:
+    - For credit firms with known annual value: `name · <annual>/yr`
+    - If annual value is unknown: keep plain `name` only (per user request)
+  - Updated tooltip credit-volume block to show annual signal + basis when available.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-annual-credit-labels-2026-02-28/wrap-1.png`
+    - `tmp/attn-in-context-annual-credit-labels-2026-02-28/zoom-center-close.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: known annual values appear on credit labels in zoom map.
+  - PASS: unknown annual values remain plain names (no noisy suffix).
+  - PASS: build and knowledge checks pass.
+
+## 2026-02-28 - attn-in-context: move Solana top-right subgroup lower in broad map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested moving the crowded top-right subgroup lower while remaining in the top-right quadrant to create more label headroom.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Broad-map top-right contains a dense overlap zone where Solana merchant-processing names compete with partner-embedded and revenue-cluster labels.
+  - The subgroup can be moved lower while preserving right-side position and above-midline semantics.
+- Fix intent:
+  1) Shift Solana merchant-processing project coordinates downward in broad map data.
+  2) Keep all shifted points in top-right quadrant (`x > 0.5`, `y > 0.5`).
+  3) Verify with build + screenshot.
+- Acceptance criteria:
+  - Solana subgroup appears materially lower in broad diagram.
+  - Top-right has more name breathing/headroom.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - preserve map semantics; keep shifted points in top-right quadrant.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot(s)
+
+EXECUTOR
+- Implemented:
+  - Shifted broad-map Solana merchant-processing points downward while keeping all points in top-right quadrant:
+    - `decal` `y: 0.56 -> 0.52`
+    - `moonpay_commerce` `y: 0.62 -> 0.55`
+    - `depay` `y: 0.54 -> 0.51`
+    - `loop_crypto` `y: 0.68 -> 0.60`
+    - `spherepay` `y: 0.84 -> 0.72`
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-solana-lower-broad-2026-02-28/wrap-2.png`
+    - `tmp/attn-in-context-solana-lower-broad-2026-02-28/broad-top-right-close.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: subgroup is lower and remains in top-right quadrant.
+  - PASS: top-right has visibly more headroom for labels.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-02-28 - attn-in-context: keep cluster titles topmost + add breathing in broad top-right
 
 Checklist

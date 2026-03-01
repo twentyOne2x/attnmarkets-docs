@@ -27,10 +27,13 @@ export type InfraDependency = {
 export type CreditVolumeSignal = {
   // Short value shown on zoom-map labels.
   display: string;
+  // Optional annualized extension/origination signal (label suffix in zoom map when known).
+  extendedPerYearDisplay?: string;
   // Comparable sizing value for dot normalization (USD billions, best-effort proxy).
   normalizedUsdBn?: number;
   // What the volume number represents (for caveat context).
   basis?: string;
+  extendedPerYearBasis?: string;
   note?: string;
 };
 
@@ -243,8 +246,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     ],
     creditVolume: {
       display: "$0.25b",
+      extendedPerYearDisplay: "$0.17b",
       normalizedUsdBn: 0.25,
       basis: "Advanced in the last 18 months (Pipe 2025 recap).",
+      extendedPerYearBasis: "Annualized from >$250m advanced over the last 18 months.",
       note: "Not lifetime cumulative.",
     },
     scale: [
@@ -347,8 +352,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     ],
     creditVolume: {
       display: "$30.0b",
+      extendedPerYearDisplay: "$2.2b",
       normalizedUsdBn: 30,
       basis: "Global small-business lending originations reported by PayPal (2025-03-26).",
+      extendedPerYearBasis: "Merchant receivables purchased in FY2025.",
     },
     scale: [
       "PayPal announced surpassing $30bn in global small-business lending originations (as of 2025-03-26).",
@@ -405,8 +412,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     ],
     creditVolume: {
       display: "$5.1b",
+      extendedPerYearDisplay: "$4.0b",
       normalizedUsdBn: 5.1,
       basis: "Distributed through Shopify Capital since 2016.",
+      extendedPerYearBasis: "FY2025 purchases and originations of loans.",
     },
     scale: [
       "Shopify reports >$5.1bn distributed through Shopify Capital since 2016 (company post, 2024-04-23).",
@@ -789,7 +798,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     controlPrimitive: "Programmatic controls",
     plane: "web3",
     x: 0.8,
-    y: 0.56,
+    y: 0.52,
     narrative:
       "Merchant stablecoin processing stack (checkout, payouts, loyalty) designed to bring web2 operators onto onchain payment rails.",
     creditModel:
@@ -848,7 +857,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     controlPrimitive: "Programmatic controls",
     plane: "hybrid",
     x: 0.73,
-    y: 0.62,
+    y: 0.55,
     narrative:
       "Merchant checkout stack for accepting crypto/stablecoins, including Solana Pay plugin distribution through Helio.",
     creditModel:
@@ -899,7 +908,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     controlPrimitive: "Programmatic controls",
     plane: "web3",
     x: 0.75,
-    y: 0.54,
+    y: 0.51,
     narrative:
       "Web3 checkout/payment API for merchant apps, with Solana Pay protocol support and multi-chain stablecoin acceptance.",
     creditModel:
@@ -940,7 +949,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     controlPrimitive: "Programmatic controls",
     plane: "web3",
     x: 0.77,
-    y: 0.68,
+    y: 0.6,
     narrative:
       "Merchant billing stack for crypto/stablecoin invoicing and subscriptions, with native Solana support.",
     creditModel:
@@ -981,7 +990,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     controlPrimitive: "Programmatic controls",
     plane: "hybrid",
     x: 0.69,
-    y: 0.84,
+    y: 0.72,
     narrative:
       "Enterprise stablecoin payments and treasury infrastructure, with Solana-based settlement environment in core architecture.",
     creditModel:

@@ -427,6 +427,18 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
     });
   }
 
+  if (project.id === "shopify_capital") {
+    return adaptiveLabelMetrics({
+      text,
+      baseFont: Math.min(baseFont + 2, 28),
+      minFont: 22,
+      maxPillWidth: 360,
+      basePadX: 6,
+      minPadX: 3,
+      padY: 3,
+    });
+  }
+
   if (project.id === "stripe_capital") {
     return adaptiveLabelMetrics({
       text,
@@ -1107,8 +1119,8 @@ const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
   (typeof REVENUE_RECEIVABLES_PROJECT_IDS)[number],
   { x: number; y: number }
 > = {
-  attn: { x: 0.94, y: 0.9 },
-  creditcoop: { x: 0.86, y: 0.9 },
+  attn: { x: 0.94, y: 0.965 },
+  creditcoop: { x: 0.86, y: 0.955 },
   youlend: { x: 0.57, y: 0.78 },
   parafin: { x: 0.66, y: 0.84 },
   liberis: { x: 0.62, y: 0.75 },
@@ -1638,12 +1650,26 @@ export default function QuadrantScatterMap(props: {
         continue;
       }
 
-      const volume = (p.creditVolume?.display ?? "").trim();
-      if (!volume || volume.toLowerCase() === "n/a") {
+      const total = (p.creditVolume?.display ?? "").trim();
+      const annual = (p.creditVolume?.extendedPerYearDisplay ?? "").trim();
+      const hasTotal = Boolean(total) && total.toLowerCase() !== "n/a";
+      const hasAnnual = Boolean(annual) && annual.toLowerCase() !== "n/a";
+
+      if (!hasTotal && !hasAnnual) {
         map.set(p.id, p.label);
         continue;
       }
-      map.set(p.id, p.label + " · " + volume);
+
+      const annualSuffix = annual.toLowerCase().includes("/yr") ? annual : `${annual}/yr`;
+      if (hasTotal && hasAnnual) {
+        map.set(p.id, `${p.label} · ${total} total (${annualSuffix})`);
+        continue;
+      }
+      if (hasTotal) {
+        map.set(p.id, `${p.label} · ${total} total`);
+        continue;
+      }
+      map.set(p.id, `${p.label} · ${annualSuffix}`);
     }
 
     return map;
@@ -2715,6 +2741,16 @@ export default function QuadrantScatterMap(props: {
                   <div className="block">
                     <div className="label">Credit volume (dot size)</div>
                     <ul className="list">
+                      {active.creditVolume.extendedPerYearDisplay ? (
+                        <li>
+                          {active.creditVolume.extendedPerYearDisplay}
+                          {active.creditVolume.extendedPerYearDisplay.toLowerCase().includes("/yr")
+                            ? ""
+                            : "/yr"}
+                          {" — "}
+                          {active.creditVolume.extendedPerYearBasis ?? "Reported annual extension signal"}
+                        </li>
+                      ) : null}
                       <li>
                         {active.creditVolume.display} — {active.creditVolume.basis ?? "Best-public signal"}
                       </li>
