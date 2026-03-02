@@ -1,5 +1,112 @@
 # ISSUES
 
+## 2026-03-01 - attn-in-context: normalize Shopify label styling
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested normal font/formatting for `Shopify Capital` so it matches the other pills.
+- Missing info/questions: none.
+- Type: UX/typography
+- Status: completed
+- Context + suspected cause:
+  - Shopify label had a dedicated oversized metrics override from a prior request.
+  - After switching Shopify to annual-only display, that override makes the pill visually inconsistent.
+- Fix intent:
+  1) Remove the Shopify-specific label metrics override.
+  2) Use the default project label metrics so typography/pill sizing matches peers.
+- Acceptance criteria:
+  - Shopify label visually matches neighboring pills.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep Shopify annual-only value behavior already set.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Removed the dedicated `shopify_capital` label metrics override from `projectLabelMetricsForProject`.
+  - Shopify now uses the default project label metrics, aligning font and pill treatment with neighboring labels.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-shopify-normalized-2026-03-01.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Shopify label/pill styling is normalized relative to nearby firms.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-01 - attn-in-context: use Shopify annual flow only ($4.0b/yr)
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to keep Shopify Capital at `$4.0b` because it is the latest signal, instead of combining with older cumulative `$5.1b since 2016`.
+- Missing info/questions: none.
+- Type: data labeling
+- Status: completed
+- Context + suspected cause:
+  - Shopify map point mixes an older cumulative snapshot (`$5.1b`, posted 2024-04-23) with newer FY2025 annual flow (`$4.0b`), which can read as inconsistent.
+- Fix intent:
+  1) Remove Shopify cumulative display from labels.
+  2) Keep annual flow signal (`$4.0b/yr`) as the map value.
+  3) Align normalized sizing proxy with that same annual value.
+- Acceptance criteria:
+  - Shopify label shows annual flow only (no cumulative total suffix).
+  - Data block no longer presents `$5.1b` as primary value.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - retain source links while prioritizing latest annual flow for displayed metric.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated zoom map label
+
+EXECUTOR
+- Implemented:
+  - Updated `shopify_capital` credit signal to annual-first display:
+    - `display: \"n/a\"` (removes cumulative `$5.1b` from map labels)
+    - `extendedPerYearDisplay: \"$4.0b\"` (kept as primary visible signal)
+    - `normalizedUsdBn: 4.0` (dot sizing aligned with annual map signal)
+  - Removed the `$5.1bn since 2016` line from Shopify scale bullets to avoid mixed-era headline confusion.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-shopify-4b-only-2026-03-01.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: Shopify label now shows annual-only (`$4.0b/yr`) and no cumulative `$5.1b` suffix.
+  - PASS: map data block no longer presents `$5.1b` as the primary displayed metric.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-02-28 - attn-in-context: expand key names + keep labels off fixed axis titles
 
 Checklist

@@ -456,18 +456,6 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
     });
   }
 
-  if (project.id === "shopify_capital") {
-    return adaptiveLabelMetrics({
-      text,
-      baseFont: Math.min(baseFont + 2, 28),
-      minFont: 22,
-      maxPillWidth: 360,
-      basePadX: 6,
-      minPadX: 3,
-      padY: 3,
-    });
-  }
-
   if (project.id === "paypal_working_capital") {
     return adaptiveLabelMetrics({
       text,

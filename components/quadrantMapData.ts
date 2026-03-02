@@ -411,14 +411,13 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "No external B2B2SMB dependency for core product distribution; lending is native to Shopify’s own merchant ecosystem.",
     ],
     creditVolume: {
-      display: "$5.1b",
+      display: "n/a",
       extendedPerYearDisplay: "$4.0b",
-      normalizedUsdBn: 5.1,
-      basis: "Distributed through Shopify Capital since 2016.",
+      normalizedUsdBn: 4.0,
+      basis: "Cumulative disclosed total omitted on map by request; prefer latest annual flow signal.",
       extendedPerYearBasis: "FY2025 purchases and originations of loans.",
     },
     scale: [
-      "Shopify reports >$5.1bn distributed through Shopify Capital since 2016 (company post, 2024-04-23).",
       "$4.014bn purchases and originations of loans (FY2025 cash-flow line).",
       "$1.784bn loans and merchant cash advances, net (2025-12-31).",
       "Shopify FY2025: $11.556bn revenue, $1.231bn net income (10.7% net margin; 12.7% operating margin).",
