@@ -1,5 +1,589 @@
 # ISSUES
 
+## 2026-03-03 - attn-in-context: set attn x to 0.961
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested reducing the right-shift and suggested `0.961`.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Prior `attn` x position (`0.963`) was slightly too far right.
+- Fix intent:
+  1) Set `attn` zoom x-coordinate to `0.961`.
+  2) Keep all other positions unchanged.
+- Acceptance criteria:
+  - `attn` dot renders at `x=0.961`.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no changes to other points.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - `attn` zoom x-coordinate updated:
+    - `x: 0.963 -> 0.961`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot renders at `x=0.961`.
+  - PASS: build and knowledge checks pass.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-dot-x-0961-2026-03-03.png`
+
+## 2026-03-03 - attn-in-context: nudge attn dot right again (incremental)
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested another incremental rightward movement (`more`) for the `attn` dot.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: in progress
+- Status: completed
+- Context + suspected cause:
+  - Prior position still looked a bit left of desired pill-center alignment.
+- Fix intent:
+  1) Increase `attn` x-coordinate again.
+  2) Keep all other coordinates unchanged.
+- Acceptance criteria:
+  - `attn` dot appears further right than the prior revision.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no changes to other dots.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Adjusted `attn` x coordinate in revenue/receivables zoom:
+    - `x: 0.96 -> 0.963`
+  - No other coordinate changes.
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot moved further right vs previous revision (`x 0.96 -> 0.963`).
+  - PASS: build and knowledge checks pass.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-dot-right-more-v5-2026-03-03.png`
+
+## 2026-03-03 - attn-in-context: nudge attn dot a bit more right
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested one more incremental rightward shift (`bit more`) for the `attn` dot.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Dot still looked slightly left of pill-center after repeated micro nudges.
+- Fix intent:
+  1) Apply another small rightward coordinate adjustment for `attn`.
+  2) Keep all other points unchanged.
+- Acceptance criteria:
+  - `attn` dot appears further right under the logo pill.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no collateral point movement.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Adjusted `attn` zoom coordinate:
+    - `x: 0.9585 -> 0.96`
+  - Left all other coordinates untouched.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-dot-right-more-v4-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot is further right versus the prior revision.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: nudge attn dot further right again
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested an additional rightward nudge (`more`) for the `attn` dot.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Dot was still a little left of perceived logo-pill center after prior nudges.
+- Fix intent:
+  1) Apply another rightward coordinate adjustment for `attn`.
+  2) Keep all other points unchanged.
+- Acceptance criteria:
+  - `attn` dot is further right and visually closer to centered under the logo pill.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no collateral coordinate changes.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Moved `attn` further right in zoom coordinates:
+    - `x: 0.956 -> 0.9585` (about +3.9px on current canvas).
+  - Kept all other points unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-dot-right-more-v3-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot is further right and visually closer to pill-center alignment.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: nudge attn dot further right
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested moving `attn` more to the right than the prior +2px nudge.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Dot remained slightly left of ideal pill-center alignment after the micro-adjustment.
+- Fix intent:
+  1) Apply one more rightward shift for `attn` in zoom coordinates.
+  2) Keep all other project coordinates unchanged.
+- Acceptance criteria:
+  - `attn` dot appears further right and better centered under the logo pill.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no collateral movement of other points.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Moved `attn` further right in zoom coordinates:
+    - `x: 0.9533 -> 0.956`
+  - Left all other coordinates unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-dot-right-more-v2-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot is further right and better aligned under the logo pill than prior position.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: micro-nudge attn dot +2px right
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested a small additional right shift for the `attn` dot to better align under the logo pill.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Previous nudge improved alignment, but dot still looked slightly left of pill center.
+- Fix intent:
+  1) Apply an additional ~2px right shift in zoom coordinates.
+  2) Keep all other points unchanged.
+- Acceptance criteria:
+  - `attn` dot is ~2px further right and visually centered under pill.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no other map coordinate changes in this tweak.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Applied additional right shift for `attn` in zoom coordinates:
+    - `x: 0.952 -> 0.9533` (about +2px on current canvas width).
+  - Left all other coordinates unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-dot-right-plus-2px-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot is slightly further right and better centered under the logo pill.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: nudge attn further right under logo pill
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested moving `attn` further right to align dot with the `attn` logo pill.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Previous right nudge improved positioning but dot still appeared left of pill center.
+- Fix intent:
+  1) Increase `attn` x-coordinate in revenue/receivables zoom map.
+  2) Keep `creditcoop` placement unchanged.
+- Acceptance criteria:
+  - `attn` dot renders more right and better aligned with the `attn` logo pill.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - do not change `creditcoop` placement in this request.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Increased `attn` zoom x-coordinate:
+    - `x: 0.946 -> 0.952`
+  - Left `creditcoop` coordinates unchanged for this request.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-dot-right-more-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot is further right and better aligned under the `attn` logo pill.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: nudge attn right and creditcoop left
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested a horizontal alignment tweak in the zoom chart: move `attn` dot right to align better with its pill, and move `creditcoop` dot+pill left by ~5px.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Top-right labels are readable, but marker-to-pill alignment needs fine horizontal nudging.
+  - `creditcoop` label is anchored above its dot, so shifting x-coordinate moves both together.
+- Fix intent:
+  1) Increase `attn` zoom x-coordinate slightly.
+  2) Decrease `creditcoop` zoom x-coordinate by approximately 5px-equivalent in the map canvas.
+- Acceptance criteria:
+  - `attn` dot appears more aligned under its pill.
+  - `creditcoop` dot and above-dot pill shift left together.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep existing top-of-dot placement for `creditcoop` and retain total-underwritten suffix.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Nudged `attn` right in zoom coordinates:
+    - `x: 0.94 -> 0.946`
+  - Nudged `creditcoop` left in zoom coordinates (about 5px-equivalent in this canvas):
+    - `x: 0.86 -> 0.8568`
+  - Since `creditcoop` pill is anchored above-dot in zoom mode, this moves the dot and pill together left as requested.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-creditcoop-x-nudge-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `attn` dot is more right-aligned under its pill.
+  - PASS: `creditcoop` dot + above-dot pill are shifted left together.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: put creditcoop label above dot with smaller pill
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested making `creditcoop` pill/font smaller so it fits when positioned at the top of the dot.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - `creditcoop` label was enlarged previously, which made top-of-dot placement harder in the top-right region.
+  - Automatic placement favored side positions to avoid crowding.
+- Fix intent:
+  1) Reduce `creditcoop` label metrics (font/pill size) from the oversized values.
+  2) Force `creditcoop` label to anchor above the dot in revenue/receivables zoom mode.
+  3) Preserve existing total-underwritten suffix for `creditcoop`.
+- Acceptance criteria:
+  - `creditcoop` label appears above its dot in the zoom chart.
+  - `creditcoop` pill/font is smaller and cleaner than previous oversized variant.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep current attn/creditcoop point locations and keep creditcoop total label visible.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Reduced `creditcoop` label sizing from the oversized variant:
+    - `baseFont` cap `40 -> 34`
+    - `minFont` `25 -> 22`
+    - `maxPillWidth` `380 -> 280`
+    - reduced padding to keep a tighter pill.
+  - Added a zoom-specific placement override to anchor `creditcoop` label directly above its dot (`top-of-dot`), while preserving collision-aware bounds clamping.
+  - Kept `creditcoop` total-underwritten suffix visible in the zoom label.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-creditcoop-top-smaller-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `creditcoop` label is above the dot in the zoom chart.
+  - PASS: `creditcoop` pill/font is smaller and cleaner than the previous oversized variant.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: restore creditcoop total in zoom label
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested restoring `creditcoop` total-underwritten value in the revenue/receivables zoom label.
+- Missing info/questions: none.
+- Type: UX/data labeling
+- Status: completed
+- Context + suspected cause:
+  - `creditcoop` was temporarily added to the zoom-map name-only list, which removed its total suffix.
+- Fix intent:
+  1) Keep `attn` as name-only in zoom labels.
+  2) Remove `creditcoop` from name-only exclusion so its total appears again.
+- Acceptance criteria:
+  - `creditcoop` label in zoom map includes total-underwritten suffix again.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - preserve existing placement/sizing improvements for `attn` and `creditcoop`.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Restored `creditcoop` zoom label suffix by removing it from the name-only exclusion set.
+  - Kept `attn` as name-only.
+  - Preserved prior spacing/sizing improvements for both points.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-creditcoop-total-restored-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: `creditcoop` label now shows total-underwritten suffix again in zoom map.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-03 - attn-in-context: lower attn/creditcoop and enlarge creditcoop label
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested slightly lower points for `attn` and `creditcoop` in the revenue/receivables zoom, plus larger `creditcoop` label/pill to improve readability.
+- Missing info/questions: none.
+- Type: UX/layout
+- Status: completed
+- Context + suspected cause:
+  - Top-right placement for `attn` and `creditcoop` leaves limited room for full logo/name readability.
+  - `creditcoop` label metrics are comparatively constrained (`maxPillWidth: 250`), causing compressed rendering.
+- Fix intent:
+  1) Lower `attn` and `creditcoop` y-coordinates slightly in zoom coordinates.
+  2) Increase `creditcoop` label font floor and pill width budget.
+- Acceptance criteria:
+  - `attn` and `creditcoop` dots render slightly lower in the zoom chart.
+  - `creditcoop` name/pill renders larger and easier to read.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep existing cluster semantics and avoid unrelated axis/label behavior changes.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated first map
+
+EXECUTOR
+- Implemented:
+  - Lowered top-right zoom points to create more label headroom:
+    - `attn` y: `0.965 -> 0.92`
+    - `creditcoop` y: `0.955 -> 0.89`
+  - Increased `creditcoop` label budget for larger pill/text:
+    - `baseFont` cap `35 -> 40`
+    - `minFont` `21 -> 25`
+    - `maxPillWidth` `250 -> 380`
+    - `basePadX` `5 -> 8`, `minPadX` `2 -> 4`, `padY` `3 -> 4`
+  - Switched `creditcoop` zoom label to name-only (like `attn`) for clearer branding and less compression in the top-right lane.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-attn-creditcoop-lower-2026-03-03.png`
+    - `tmp/attn-in-context-attn-creditcoop-lower-bigger-v3-2026-03-03.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: both `attn` and `creditcoop` render lower in the zoom map.
+  - PASS: `creditcoop` pill/name are visibly larger and fully readable.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-03-01 - attn-in-context: normalize Shopify label styling
 
 Checklist

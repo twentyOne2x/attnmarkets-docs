@@ -447,11 +447,11 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
   if (project.id === "creditcoop") {
     return adaptiveLabelMetrics({
       text,
-      baseFont: Math.min(baseFont, 35),
-      minFont: 21,
-      maxPillWidth: 250,
-      basePadX: 5,
-      minPadX: 2,
+      baseFont: Math.min(baseFont, 34),
+      minFont: 22,
+      maxPillWidth: 280,
+      basePadX: 6,
+      minPadX: 3,
       padY: 3,
     });
   }
@@ -1169,8 +1169,8 @@ const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
   (typeof REVENUE_RECEIVABLES_PROJECT_IDS)[number],
   { x: number; y: number }
 > = {
-  attn: { x: 0.94, y: 0.965 },
-  creditcoop: { x: 0.86, y: 0.955 },
+  attn: { x: 0.961, y: 0.92 },
+  creditcoop: { x: 0.8568, y: 0.89 },
   youlend: { x: 0.57, y: 0.78 },
   parafin: { x: 0.66, y: 0.84 },
   liberis: { x: 0.62, y: 0.75 },
@@ -1754,7 +1754,7 @@ export default function QuadrantScatterMap(props: {
   );
 
   const labelPlacements = useMemo(() => {
-    return computeLabelPlacements({
+    const placements = computeLabelPlacements({
       projects,
       xToSvg,
       yToSvg,
@@ -1768,6 +1768,38 @@ export default function QuadrantScatterMap(props: {
       applyHardLabelLocks: config.applyHardLabelLocks,
       fixedObstacles: axisLabelObstacles,
     });
+
+    // In the revenue/receivables zoom, keep creditcoop label directly above the dot
+    // so the top-right lane remains legible and consistent.
+    if (isRevenueReceivablesZoom) {
+      const creditcoop = projects.find((p) => p.id === "creditcoop");
+      if (creditcoop) {
+        const cx = xToSvg(creditcoop.x);
+        const cy = yToSvg(creditcoop.y);
+        const markerForProject = markerSizeByProject.get(creditcoop.id) ?? markerSize;
+        const labelText = labelTextByProject.get(creditcoop.id) ?? creditcoop.label;
+        const metrics = projectLabelMetricsForProject(creditcoop, fontSize, labelText);
+        const halfW = metrics.pillW / 2;
+        const halfH = metrics.pillH / 2;
+        const minX = pad + halfW + 6;
+        const maxX = pad + plotW - halfW - 6;
+        const minY = pad + halfH + 6;
+        const maxY = pad + plotH - halfH - 6;
+        const x = clamp(cx, minX, maxX);
+        const y = clamp(
+          cy - (markerOuterRadius(creditcoop.plane, markerForProject) + halfH + 8),
+          minY,
+          maxY,
+        );
+        placements[creditcoop.id] = {
+          x,
+          y,
+          rect: rectFromCenter(x, y, halfW, halfH),
+        };
+      }
+    }
+
+    return placements;
   }, [
     projects,
     pad,
@@ -1779,6 +1811,7 @@ export default function QuadrantScatterMap(props: {
     labelTextByProject,
     config.applyHardLabelLocks,
     axisLabelObstacles,
+    isRevenueReceivablesZoom,
   ]);
 
   const clusterZones = useMemo(() => {
