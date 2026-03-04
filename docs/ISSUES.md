@@ -1,5 +1,72 @@
 # ISSUES
 
+## 2026-03-04 - attn-in-context: aggregate Web2 rev/receivables in broad map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User approved aggregating the Web2 revenue/receivables cohort into a single entity to reduce clutter in the second (broad) diagram.
+- Missing info/questions: none.
+- Type: feature/map readability
+- Status: completed
+- Context + suspected cause:
+  - Broad map renders many individual revenue/receivables Web2 firms, creating label density in one region.
+  - Zoom map already provides detailed firm-level comparison, so broad map can trade detail for readability.
+- Fix intent:
+  1) Add one aggregated Web2 revenue/receivables node used in the broad map.
+  2) Exclude individual Web2 revenue/receivables firms from broad-map rendering.
+  3) Keep zoom map unchanged (still detailed).
+  4) Keep cluster hover/tooltip informative via aggregate-node metadata.
+- Acceptance criteria:
+  - Broad map shows one aggregate Web2 revenue/receivables node instead of individual firm dots.
+  - Revenue/receivables zoom remains unchanged.
+  - Broad map remains readable without overlaps introduced by this change.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - broad map only; do not remove detail from the zoom map.
+    - preserve existing tooltip and cluster hover behavior.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of `/introduction/attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Added a broad-only aggregate node `Web2 Rev/Rec Credit (Aggregate)` in `components/QuadrantScatterMap.tsx`.
+  - Kept zoom-map membership unchanged (still shows all individual revenue/receivables firms).
+  - Updated broad-map cluster membership so `Revenue & Receivables Credit` uses:
+    - `attn`
+    - `creditcoop`
+    - `web2_revenue_receivables_aggregate`
+  - Excluded individual Web2 revenue/receivables members from broad-map rendering to reduce label clutter.
+  - Added aggregate-member expansion logic for cluster insights so hover summaries still reflect the underlying member firms.
+  - Updated `attn-in-context` page copy to state that broad map uses one aggregate Web2 node for readability.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-web2-aggregate-zoom-20260304-190700.png`
+    - `tmp/attn-in-context-web2-aggregate-broad-20260304-190700.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: broad map now renders one aggregate Web2 revenue/receivables node instead of individual firm dots.
+  - PASS: zoom map remains detailed and unchanged in membership.
+  - PASS: broad map readability improved in the previously crowded revenue/receivables region.
+  - PASS: build and knowledge checks pass.
+
+
 ## 2026-03-04 - attn-in-context: remove Solana merchant payments from both maps
 
 Checklist

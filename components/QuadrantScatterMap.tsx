@@ -1025,6 +1025,73 @@ type ClusterZone = {
   boundaryPoints?: Point[];
 };
 
+const WEB2_REVENUE_RECEIVABLES_MEMBER_IDS = [
+  "youlend",
+  "parafin",
+  "liberis",
+  "pipe",
+  "clearco",
+  "wayflyer",
+  "uncapped",
+  "paypal_working_capital",
+  "shopify_capital",
+  "stripe_capital",
+  "square_loans",
+] as const;
+
+const WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID = "web2_revenue_receivables_aggregate";
+
+const WEB2_REVENUE_RECEIVABLES_AGGREGATE: ProjectInfo = {
+  id: WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID,
+  label: "Web2 Rev/Rec Credit (Aggregate)",
+  stack: "Back-end infrastructure",
+  controlPrimitive: "Mixed / not primary",
+  plane: "web2",
+  x: 0.74,
+  y: 0.82,
+  narrative:
+    "Broad-map aggregate node for leading Web2 revenue/receivables lenders; detailed firm-by-firm comparison remains in the zoom map.",
+  creditModel:
+    "Revenue-linked SMB financing via mixed channels: platform-native, partner-embedded (B2B2SMB), and direct originators.",
+  borrowerType: "Business borrowers (SMB merchants)",
+  distributionModel: "Mixed (platform-native + partner-embedded + direct)",
+  b2b2smbReliance: [
+    "Cohort firms: YouLend, Parafin, Liberis, Pipe, Clearco, Wayflyer, Uncapped, Stripe Capital, PayPal Working Capital, Shopify Capital, Square Loans.",
+  ],
+  exampleClients: [
+    "Platform-native merchant ecosystems: Stripe, PayPal, Shopify, Square.",
+    "Partner-embedded channels: eBay UK, Amazon UK, Glovo, orderbird, Paysafe (via YouLend).",
+    "SMB platform channels: GoCardless, Uber Eats, Boulevard, Housecall Pro (via Pipe).",
+  ],
+  creditVolume: {
+    display: "~$95b+ known",
+    normalizedUsdBn: 95,
+    basis:
+      "Approximate sum of known public figures across member firms; excludes undisclosed components.",
+    note: "Used only to summarize the aggregated cohort in the broad map.",
+  },
+  scale: [
+    "Aggregate represents major Web2 revenue/receivables operators shown individually in the zoom map.",
+    "Known public disclosures imply >$95b cumulative/annualized comparable volume across disclosed members.",
+    "Several members do not publicly disclose full cumulative underwriting totals.",
+  ],
+  why: [
+    "Improves broad-map readability while preserving detailed competitive comparison in the zoom map.",
+    "Combines platform-native, partner-embedded, and direct SMB financing models in one strategic reference point.",
+  ],
+  sources: [
+    {
+      label: "attn in context (full detailed member view in zoom map)",
+      url: "https://docs.attn.markets/introduction/attn-in-context",
+    },
+  ],
+  href: "https://docs.attn.markets/introduction/attn-in-context#revenue--receivables-credit-zoom-in",
+};
+
+const AGGREGATED_PROJECT_MEMBERS: Record<string, readonly string[]> = {
+  [WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID]: WEB2_REVENUE_RECEIVABLES_MEMBER_IDS,
+};
+
 const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "entity_credit",
@@ -1035,21 +1102,7 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
     dash: "10 8",
     connectivity: 0.45,
     labelPlacement: "bottom-right",
-    projectIds: [
-      "attn",
-      "creditcoop",
-      "youlend",
-      "parafin",
-      "liberis",
-      "pipe",
-      "clearco",
-      "wayflyer",
-      "uncapped",
-      "paypal_working_capital",
-      "shopify_capital",
-      "stripe_capital",
-      "square_loans",
-    ],
+    projectIds: ["attn", "creditcoop", WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID],
   },
   {
     id: "provider_of_providers",
@@ -1221,6 +1274,7 @@ const BROAD_EXCLUDED_PROJECT_IDS = new Set([
   "depay",
   "loop_crypto",
   "spherepay",
+  ...WEB2_REVENUE_RECEIVABLES_MEMBER_IDS,
 ]);
 
 type PresetConfig = {
@@ -1249,9 +1303,10 @@ type PresetConfig = {
 };
 
 function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
-  const broadProjects = Object.values(PROJECTS).filter(
-    (p) => p.id !== "xitadel" && !BROAD_EXCLUDED_PROJECT_IDS.has(p.id),
-  );
+  const broadProjects = [
+    ...Object.values(PROJECTS).filter((p) => p.id !== "xitadel" && !BROAD_EXCLUDED_PROJECT_IDS.has(p.id)),
+    WEB2_REVENUE_RECEIVABLES_AGGREGATE,
+  ];
 
   if (preset === "revenue_receivables_zoom") {
     const projects = REVENUE_RECEIVABLES_PROJECT_IDS.map((id) => {
@@ -2168,8 +2223,16 @@ export default function QuadrantScatterMap(props: {
     >();
 
     for (const def of clusterDefs) {
-      const members = def.projectIds
-        .map((id) => projectsById.get(id))
+      const expandedMemberIds = Array.from(
+        new Set(
+          def.projectIds.flatMap((id) =>
+            AGGREGATED_PROJECT_MEMBERS[id] ? [...AGGREGATED_PROJECT_MEMBERS[id]] : [id],
+          ),
+        ),
+      );
+
+      const members = expandedMemberIds
+        .map((id) => projectsById.get(id) ?? PROJECTS[id])
         .filter((p): p is ProjectInfo => Boolean(p));
 
       const knownVolumes = members
