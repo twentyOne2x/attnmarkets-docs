@@ -1127,16 +1127,6 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
     projectIds: ["squads_protocol", "swig", "para", "privy"],
   },
   {
-    id: "solana_merchant_payments",
-    label: "Solana Merchant Payments",
-    oneLiner: "Merchant stablecoin processing stacks bridging web2 operators to onchain settlement.",
-    stroke: "#249188",
-    fill: "#d7f4f2",
-    dash: "9 6",
-    connectivity: 0.58,
-    projectIds: ["decal", "moonpay_commerce", "depay", "loop_crypto", "spherepay"],
-  },
-  {
     id: "payments_rails",
     label: "B2B2C BNPL + Payments Rails",
     oneLiner: "Merchant-integrated consumer financing and payments-rails narratives.",
@@ -1170,11 +1160,6 @@ const REVENUE_RECEIVABLES_PROJECT_IDS = [
   "shopify_capital",
   "stripe_capital",
   "square_loans",
-  "decal",
-  "moonpay_commerce",
-  "depay",
-  "loop_crypto",
-  "spherepay",
 ] as const;
 
 const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
@@ -1194,11 +1179,6 @@ const REVENUE_RECEIVABLES_ZOOM_COORDS: Record<
   pipe: { x: 0.28, y: 0.32 },
   clearco: { x: 0.2, y: 0.24 },
   uncapped: { x: 0.14, y: 0.16 },
-  decal: { x: 0.9, y: 0.69 },
-  moonpay_commerce: { x: 0.84, y: 0.7 },
-  depay: { x: 0.8, y: 0.62 },
-  loop_crypto: { x: 0.86, y: 0.77 },
-  spherepay: { x: 0.93, y: 0.77 },
 };
 
 const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
@@ -1233,17 +1213,15 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
     connectivity: 0.72,
     projectIds: ["pipe", "clearco", "wayflyer", "uncapped"],
   },
-  {
-    id: "solana_merchant_processing",
-    label: "Solana Merchant Processing",
-    oneLiner: "Onchain merchant payment processors for web2/web3 checkout and settlement.",
-    stroke: "#249188",
-    fill: "#d7f4f2",
-    dash: "8 6",
-    connectivity: 0.7,
-    projectIds: ["decal", "moonpay_commerce", "depay", "loop_crypto", "spherepay"],
-  },
 ];
+
+const BROAD_EXCLUDED_PROJECT_IDS = new Set([
+  "decal",
+  "moonpay_commerce",
+  "depay",
+  "loop_crypto",
+  "spherepay",
+]);
 
 type PresetConfig = {
   title: string;
@@ -1271,6 +1249,10 @@ type PresetConfig = {
 };
 
 function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
+  const broadProjects = Object.values(PROJECTS).filter(
+    (p) => p.id !== "xitadel" && !BROAD_EXCLUDED_PROJECT_IDS.has(p.id),
+  );
+
   if (preset === "revenue_receivables_zoom") {
     const projects = REVENUE_RECEIVABLES_PROJECT_IDS.map((id) => {
       const base = PROJECTS[id];
@@ -1284,7 +1266,7 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
 
     return {
       title: `Revenue & Receivables Credit Map — as of ${asOf}`,
-      hint: `Focused lane view: repayment enforceability vs servicing intelligence, including Solana merchant-processing comparators. Showing ${projects.length} projects.`,
+      hint: `Focused lane view: repayment enforceability vs servicing intelligence. Showing ${projects.length} projects.`,
       taxonomyHint:
         "Lens: Borrower type (business vs consumer) + distribution model (platform-native vs partner-embedded). Dot size is normalized to best-public credit-volume signals; n/a means undisclosed.",
       ariaLabel: `Revenue and receivables credit map (as of ${asOf})`,
@@ -1311,9 +1293,7 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
 
   return {
     title: `Strategic Credit, Spend & Settlement Map — as of ${asOf}`,
-    hint: `Hover for details. Click a dot to pin. Esc clears. Showing ${
-      Object.values(PROJECTS).filter((p) => p.id !== "xitadel").length
-    } projects.`,
+    hint: `Hover for details. Click a dot to pin. Esc clears. Showing ${broadProjects.length} projects.`,
     ariaLabel: `Embedded credit control landscape (as of ${asOf})`,
     axisTopTitle: "Back-end infrastructure",
     axisBottomTitle: "User-facing distribution",
@@ -1330,7 +1310,7 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
     clusterFillOpacity: 0.18,
     clusterStrokeOpacity: 0.92,
     clusterStrokeWidth: 2.6,
-    projects: Object.values(PROJECTS).filter((p) => p.id !== "xitadel"),
+    projects: broadProjects,
     clusterDefs: BROAD_CLUSTER_DEFS,
     defaultShowClusters: true,
   };

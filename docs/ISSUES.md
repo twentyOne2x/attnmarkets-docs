@@ -1,5 +1,63 @@
 # ISSUES
 
+## 2026-03-04 - attn-in-context: remove Solana merchant payments from both maps
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested removing the `Solana Merchant Payments` segment from both charts and then commit/push/merge.
+- Missing info/questions: none.
+- Type: feature/map taxonomy
+- Status: completed
+- Context + suspected cause:
+  - Broad map currently renders Solana merchant processors via a dedicated cluster and because broad preset includes nearly all projects.
+  - Revenue/receivables zoom includes the same processors via explicit project IDs and cluster membership.
+- Fix intent:
+  1) Remove Solana merchant processors from broad map rendering and remove their broad cluster.
+  2) Remove Solana merchant processors from revenue/receivables zoom rendering and remove their zoom cluster.
+  3) Keep underlying project metadata in data files intact for future reuse.
+- Acceptance criteria:
+  - Neither map renders the Solana merchant processors (`decal`, `moonpay_commerce`, `depay`, `loop_crypto`, `spherepay`).
+  - Neither map renders the related Solana merchant cluster title/zone.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - exclude only the Solana merchant payment/processing segment from both maps.
+    - do not regress existing layout/tooltip behavior.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Removed broad-map Solana merchant cluster (`solana_merchant_payments`) from `BROAD_CLUSTER_DEFS`.
+  - Removed zoom-map Solana merchant cluster (`solana_merchant_processing`) from `REVENUE_RECEIVABLES_CLUSTER_DEFS`.
+  - Removed Solana merchant IDs from `REVENUE_RECEIVABLES_PROJECT_IDS` and matching zoom coordinate entries.
+  - Added `BROAD_EXCLUDED_PROJECT_IDS` and applied it to broad preset project filtering so those firms do not render in map 2.
+  - Updated zoom hint copy to remove the Solana-comparator phrase.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-no-solana-20260304-182553.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: both maps no longer render `decal`, `moonpay_commerce`, `depay`, `loop_crypto`, `spherepay`.
+  - PASS: both Solana merchant cluster zones/titles are removed.
+  - PASS: build and knowledge checks pass.
+
+
 ## 2026-03-04 - attn-in-context: add Squads/Privy/Para/Swig as enablers
 
 Checklist
