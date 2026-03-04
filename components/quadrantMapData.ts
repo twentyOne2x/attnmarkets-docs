@@ -1364,6 +1364,140 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://squads.xyz/altitude",
   },
 
+  squads_protocol: {
+    id: "squads_protocol",
+    label: "Squads (Protocol)",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    potentialClient: true,
+    x: 0.79,
+    y: 0.65,
+    narrative:
+      "Multisig + policy execution infrastructure used to enforce treasury controls and signer governance on Solana.",
+    creditModel:
+      "Not a lender/originator; policy and execution rails that can enforce repayment/security workflows.",
+    borrowerType: "Developers / treasury operators",
+    distributionModel: "B2B infra (multisig + policy execution)",
+    infra: {
+      privy: "No public evidence",
+      squads: "Yes",
+      asOf: "2026-03-04",
+      note: "Core product is the Squads stack itself.",
+    },
+    why: [
+      "Enables programmable signer and treasury controls relevant to credit servicing orchestration.",
+      "Best treated as middleware/enabler rather than direct credit originator.",
+    ],
+    sources: [
+      {
+        label: "Squads docs (treasury management overview)",
+        url: "https://docs.squads.so/main/getting-started/treasury-management-overview",
+      },
+      { label: "Squads site", url: "https://squads.xyz/" },
+    ],
+    href: "https://squads.xyz/",
+  },
+
+  swig: {
+    id: "swig",
+    label: "onswig.com",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    potentialClient: true,
+    x: 0.74,
+    y: 0.62,
+    narrative:
+      "Developer middleware for embedded wallet/payment transaction flows in Solana-adjacent app stacks.",
+    creditModel:
+      "Not a lender/originator; transaction and integration middleware that can support credit surfaces.",
+    borrowerType: "Developers / merchant platforms",
+    distributionModel: "B2B API + SDK middleware",
+    infra: {
+      privy: "Unknown",
+      squads: "Unknown",
+      asOf: "2026-03-04",
+      note: "Mapped as wallet/payment middleware based on public product positioning.",
+    },
+    why: [
+      "Operationally adjacent to wallet and checkout flows that can distribute credit products.",
+      "Should be represented as enabler infra, not underwriting core.",
+    ],
+    sources: [
+      { label: "Swig build portal", url: "https://build.onswig.com/" },
+      { label: "Swig site", url: "https://onswig.com/" },
+    ],
+    href: "https://onswig.com/",
+  },
+
+  para: {
+    id: "para",
+    label: "Para",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "hybrid",
+    potentialClient: true,
+    x: 0.69,
+    y: 0.59,
+    narrative:
+      "Embedded wallet infrastructure providing programmable wallet UX for application developers.",
+    creditModel:
+      "Not a lender/originator; wallet-as-a-service rails that can host credit distribution and servicing controls.",
+    borrowerType: "Developers / apps / merchant platforms",
+    distributionModel: "B2B WaaS + SDK",
+    infra: {
+      privy: "Unknown",
+      squads: "No public evidence",
+      asOf: "2026-03-04",
+      note: "Mapped as embedded wallet middleware rather than a credit underwriter.",
+    },
+    why: [
+      "Middleware layer that can sit between user-facing products and credit back ends.",
+      "Relevant for integration strategy but not itself a credit originator.",
+    ],
+    sources: [
+      { label: "Para site", url: "https://www.getpara.com/" },
+      {
+        label: "Para blog: introducing embedded wallets on Solana",
+        url: "https://blog.getpara.com/introducing-para-embedded-wallets-on-solana/",
+      },
+    ],
+    href: "https://www.getpara.com/",
+  },
+
+  privy: {
+    id: "privy",
+    label: "Privy",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "hybrid",
+    potentialClient: true,
+    x: 0.64,
+    y: 0.56,
+    narrative:
+      "Embedded wallet/auth infra for apps, with transaction tooling used to build onchain user experiences.",
+    creditModel:
+      "Not a lender/originator; identity + wallet infrastructure that can distribute credit-enabled surfaces.",
+    borrowerType: "Developers / apps / merchant platforms",
+    distributionModel: "B2B embedded wallet + auth SDK",
+    infra: {
+      privy: "Yes",
+      squads: "No public evidence",
+      asOf: "2026-03-04",
+      note: "Core product is embedded wallet/auth infrastructure.",
+    },
+    why: [
+      "A frequent dependency in user-facing wallet and payment products.",
+      "Important integration enabler but outside underwriting/servicing core.",
+    ],
+    sources: [
+      { label: "Privy docs", url: "https://docs.privy.io/" },
+      { label: "Privy site", url: "https://www.privy.io/" },
+    ],
+    href: "https://www.privy.io/",
+  },
+
   kast: {
     id: "kast",
     label: "KAST",

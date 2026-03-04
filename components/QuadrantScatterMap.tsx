@@ -1115,6 +1115,18 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
     projectIds: ["slash", "altitude"],
   },
   {
+    id: "wallet_policy_middleware",
+    label: "Wallet + Policy Middleware",
+    oneLiner: "Embedded wallet, auth, and policy execution layers that enable credit distribution/control.",
+    stroke: "#4f708d",
+    fill: "#deebf5",
+    dash: "7 5",
+    connectivity: 0.55,
+    labelPlacement: "mid-left",
+    labelDistanceMultiplier: 1.35,
+    projectIds: ["squads_protocol", "swig", "para", "privy"],
+  },
+  {
     id: "solana_merchant_payments",
     label: "Solana Merchant Payments",
     oneLiner: "Merchant stablecoin processing stacks bridging web2 operators to onchain settlement.",

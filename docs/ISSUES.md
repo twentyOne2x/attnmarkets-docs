@@ -1,5 +1,72 @@
 # ISSUES
 
+## 2026-03-04 - attn-in-context: add Squads/Privy/Para/Swig as enablers
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to add `Squads`, `Privy`, `Para`, and `Swig` to the maps, avoid overlaps, and show result.
+- Missing info/questions: none.
+- Type: feature/map taxonomy
+- Status: completed
+- Context + suspected cause:
+  - Current maps represent underwriters/originators and selected payment rails but omit key wallet/policy middleware providers.
+  - These providers are enablers (not direct credit originators), so they fit best in broad context.
+- Fix intent:
+  1) Add new project entries for `Squads (Protocol)`, `Privy`, `Para`, and `Swig` in broad map data.
+  2) Add a dedicated broad-map cluster: `Wallet + Policy Middleware`.
+  3) Keep credit zoom map focused on lenders/merchant processing (do not add these enablers there).
+  4) Place coordinates to minimize collisions and rely on existing non-overlap label placement.
+- Acceptance criteria:
+  - Broad map includes the four new firms with tooltips and sources.
+  - A visible enabler cluster groups them without severe overlap.
+  - Revenue/receivables zoom map membership remains unchanged.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - treat these additions as middleware/enablers (not lenders).
+    - preserve current zoom-map composition.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of broad map in `attn-in-context`
+
+EXECUTOR
+- Implemented:
+  - Added four new broad-map enabler projects in `components/quadrantMapData.ts`:
+    - `Squads (Protocol)` (`squads_protocol`)
+    - `Privy` (`privy`)
+    - `Para` (`para`)
+    - `onswig.com` (`swig`)
+  - Added dedicated broad-map cluster in `components/QuadrantScatterMap.tsx`:
+    - `Wallet + Policy Middleware`
+  - Kept revenue/receivables zoom composition unchanged (new enablers are broad-map only).
+  - Tuned enabler cluster placement and coordinates to reduce label collisions and keep all four labels visible.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/attn-in-context-map-1-with-enablers-v3-2026-03-04.png`
+    - `tmp/attn-in-context-map-2-with-enablers-v3-2026-03-04.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: broad map now includes Squads/Privy/Para/Swig with tooltips and sources.
+  - PASS: enabler cluster is visible and labels are non-overlapping in the final layout pass.
+  - PASS: revenue/receivables zoom membership unchanged.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-03-03 - attn-in-context: set attn x to 0.961
 
 Checklist
