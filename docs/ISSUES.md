@@ -1,5 +1,63 @@
 # ISSUES
 
+## 2026-03-06 - quadrant maps: legend hover should isolate matching dots
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants legend hover to make matching dots easier to see by dimming the others and highlighting the hovered category.
+- Missing info/questions: none. Apply this to the execution-plane legend in `QuadrantScatterMap.tsx` and support both mouse hover and keyboard focus.
+- Type: feature/interaction polish
+- Status: completed
+- Context + suspected cause:
+  - The current legend is static, so the user has to visually parse all points at once.
+  - A hover/focus filter is the simplest way to isolate project subsets without changing layout.
+- Fix intent:
+  1) Add hover/focus state for execution-plane legend items.
+  2) Dim non-matching projects when a legend item is active.
+  3) Add an explicit highlight treatment to matching projects and the active legend item.
+- Acceptance criteria:
+  - Hovering or focusing `Web3-native`, `Hybrid`, `Web2-native`, or `Potential client` in the legend dims non-matching projects.
+  - Matching projects stay emphasized and are easier to distinguish.
+  - Clearing hover/focus restores the normal map state.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep map coordinates/data unchanged.
+    - support hover and keyboard focus on legend items.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshots showing the interaction state
+
+EXECUTOR
+- Implemented:
+  - Added legend hover/focus filter state in `components/QuadrantScatterMap.tsx` for `Web3-native`, `Hybrid`, `Web2-native`, and `Potential client`.
+  - Converted legend entries into interactive controls and dimmed non-matching projects while adding a stronger outline to matching ones.
+  - Added active styling to the hovered/focused legend item itself.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-top-legend-hover-web2-20260306.png`
+    - `tmp/appendix-full-view-bottom-legend-hover-potential-20260306.png`
+
+VERIFIER
+- PASS:
+  - Legend hover/focus now isolates matching project subsets without moving or changing the map data.
+  - Clearing hover/focus restores the normal view.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - appendix full-view maps: increase standalone map size by 15 percent
 
 Checklist

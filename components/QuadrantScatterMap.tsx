@@ -117,6 +117,10 @@ type ClusterHoverState = {
   clientExamples?: string[];
 };
 
+type LegendFilter =
+  | { kind: "plane"; plane: ExecutionPlane }
+  | { kind: "potential" };
+
 type Rect = { x1: number; y1: number; x2: number; y2: number };
 type Point = { x: number; y: number };
 type LabelBox = {
@@ -488,6 +492,18 @@ function formatUsdBn(bn: number) {
   if (bn >= 100) return `$${bn.toFixed(0)}b`;
   if (bn >= 10) return `$${bn.toFixed(1)}b`;
   return `$${bn.toFixed(2)}b`;
+}
+
+function legendFilterKey(filter: LegendFilter | null) {
+  if (!filter) return "none";
+  if (filter.kind === "plane") return `plane:${filter.plane}`;
+  return "potential";
+}
+
+function projectMatchesLegendFilter(project: ProjectInfo, filter: LegendFilter | null) {
+  if (!filter) return true;
+  if (filter.kind === "plane") return project.plane === filter.plane;
+  return Boolean(project.potentialClient);
 }
 
 function isGenericClientPlaceholder(text: string) {
@@ -1683,6 +1699,7 @@ export default function QuadrantScatterMap(props: {
 
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [clusterHover, setClusterHover] = useState<ClusterHoverState | null>(null);
+  const [legendFilter, setLegendFilter] = useState<LegendFilter | null>(null);
   const [showClusters, setShowClusters] = useState(config.defaultShowClusters);
   const [view, setView] = useState({ zoom: 1, panX: 0, panY: 0 });
 
@@ -1715,6 +1732,39 @@ export default function QuadrantScatterMap(props: {
   useEffect(() => {
     if (!showClusters) setClusterHover(null);
   }, [showClusters]);
+
+  const activeLegendKey = legendFilterKey(legendFilter);
+  const legendItems: Array<{
+    key: string;
+    label: string;
+    filter: LegendFilter;
+    icon: React.ReactNode;
+  }> = [
+    {
+      key: "plane:web3",
+      label: "Web3-native (circle)",
+      filter: { kind: "plane", plane: "web3" },
+      icon: <MiniMarker plane="web3" />,
+    },
+    {
+      key: "plane:hybrid",
+      label: "Hybrid (square)",
+      filter: { kind: "plane", plane: "hybrid" },
+      icon: <MiniMarker plane="hybrid" />,
+    },
+    {
+      key: "plane:web2",
+      label: "Web2-native (triangle)",
+      filter: { kind: "plane", plane: "web2" },
+      icon: <MiniMarker plane="web2" />,
+    },
+    {
+      key: "potential",
+      label: "Potential client (red ring)",
+      filter: { kind: "potential" },
+      icon: <span className="potentialRing" aria-hidden="true" />,
+    },
+  ];
 
   useEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
@@ -2715,18 +2765,23 @@ export default function QuadrantScatterMap(props: {
             <div className="zoomHint">Pinch or Ctrl/Cmd+wheel on map to zoom</div>
             {config.taxonomyHint ? <div className="taxonomyHint">{config.taxonomyHint}</div> : null}
             <div className="legendInline" aria-label="Execution plane legend">
-              <span className="legendItem">
-                <MiniMarker plane="web3" /> Web3-native (circle)
-              </span>
-              <span className="legendItem">
-                <MiniMarker plane="hybrid" /> Hybrid (square)
-              </span>
-              <span className="legendItem">
-                <MiniMarker plane="web2" /> Web2-native (triangle)
-              </span>
-              <span className="legendItem">
-                <span className="potentialRing" aria-hidden="true" /> Potential client (red ring)
-              </span>
+              {legendItems.map((item) => {
+                const active = activeLegendKey === item.key;
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    className={`legendItem legendItemButton ${active ? "active" : ""}`}
+                    onMouseEnter={() => setLegendFilter(item.filter)}
+                    onMouseLeave={() => setLegendFilter(null)}
+                    onFocus={() => setLegendFilter(item.filter)}
+                    onBlur={() => setLegendFilter(null)}
+                    aria-pressed={active}
+                  >
+                    {item.icon} {item.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -2901,6 +2956,13 @@ export default function QuadrantScatterMap(props: {
               const hideUnknownVolumeCue =
                 isRevenueReceivablesZoom && (p.id === "attn" || p.id === "creditcoop");
               const cluster = showClusters ? clusterByProject.get(p.id) : undefined;
+              const matchesLegendFilter = projectMatchesLegendFilter(p, legendFilter);
+              const legendFilterActive = legendFilter !== null;
+              const legendDimmed = legendFilterActive && !matchesLegendFilter;
+              const legendHighlighted = legendFilterActive && matchesLegendFilter;
+              const legendOpacity = legendDimmed ? 0.22 : 1;
+              const legendEmphasisStroke =
+                legendFilter?.kind === "potential" ? "#dc2626" : "#1f3253";
 
               const lp = labelPlacements[p.id];
               const labelX = lp?.x ?? cx;
@@ -2940,7 +3002,7 @@ export default function QuadrantScatterMap(props: {
                   tabIndex={0}
                   role="button"
                   aria-label={p.label}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", opacity: legendOpacity }}
                   onMouseEnter={(e) => showHover(p.id, e.clientX, e.clientY)}
                   onMouseLeave={() => hideHover()}
                   onFocus={(e) => {
@@ -2963,6 +3025,18 @@ export default function QuadrantScatterMap(props: {
                       stroke="#35527f"
                       strokeOpacity={0.85}
                       strokeWidth={3}
+                    />
+                  ) : null}
+
+                  {legendHighlighted ? (
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={markerEdgeR + 14}
+                      fill="none"
+                      stroke={legendEmphasisStroke}
+                      strokeOpacity={0.92}
+                      strokeWidth={4}
                     />
                   ) : null}
 
@@ -3026,10 +3100,10 @@ export default function QuadrantScatterMap(props: {
                     height={labelH}
                     rx={Math.max(8, labelHalfH)}
                     fill={isAttnLogoLabel ? "#05070c" : "#f7fbff"}
-                    opacity={isAttnLogoLabel ? 1 : 0.98}
-                    stroke={cluster?.stroke ?? "#35527f"}
-                    strokeWidth={cluster ? 1.8 : 1}
-                    strokeOpacity={cluster ? 0.62 : 0.34}
+                    opacity={isAttnLogoLabel ? 1 : legendHighlighted ? 1 : 0.98}
+                    stroke={legendHighlighted ? legendEmphasisStroke : cluster?.stroke ?? "#35527f"}
+                    strokeWidth={legendHighlighted ? 2.6 : cluster ? 1.8 : 1}
+                    strokeOpacity={legendHighlighted ? 0.8 : cluster ? 0.62 : 0.34}
                   />
 
                   {/* Label text / logo */}
@@ -3828,6 +3902,29 @@ export default function QuadrantScatterMap(props: {
           display: inline-flex;
           align-items: center;
           gap: 6px;
+        }
+        .legendItemButton {
+          appearance: none;
+          border: 1px solid transparent;
+          background: transparent;
+          color: inherit;
+          cursor: pointer;
+          border-radius: 999px;
+          padding: 4px 8px;
+          transition:
+            background-color 0.15s ease,
+            border-color 0.15s ease,
+            box-shadow 0.15s ease,
+            color 0.15s ease;
+        }
+        .legendItemButton:hover,
+        .legendItemButton:focus-visible,
+        .legendItemButton.active {
+          background: rgba(53, 82, 127, 0.1);
+          border-color: rgba(53, 82, 127, 0.3);
+          color: #102d55;
+          box-shadow: inset 0 0 0 1px rgba(53, 82, 127, 0.08);
+          outline: none;
         }
         .potentialRing {
           width: 12px;
