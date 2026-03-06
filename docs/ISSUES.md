@@ -1,5 +1,59 @@
 # ISSUES
 
+## 2026-03-06 - appendix full-view maps: reduce standalone size by 30 percent
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for the standalone appendix maps to be 30% smaller than the current enlarged pass.
+- Missing info/questions: none. Apply the reduction only to the standalone page stage caps in `pages/appendix/full-view-maps.tsx`.
+- Type: feature/layout sizing
+- Status: completed
+- Context + suspected cause:
+  - The latest enlarged standalone pass overshot and made the maps feel too dominant relative to the viewport.
+  - The right lever is the page-level stage cap, not the map rendering logic.
+- Fix intent:
+  1) Reduce each standalone map stage cap by 30% from the current values.
+  2) Keep styling, route structure, and embedded docs maps unchanged.
+- Acceptance criteria:
+  - Revenue map stage cap drops from `1480px` to about `1036px`.
+  - Strategic map stage cap drops from `1600px` to about `1120px`.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - standalone appendix only; do not alter `QuadrantScatterMap.tsx`.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshots of both standalone sections
+
+EXECUTOR
+- Implemented:
+  - Reduced the standalone map stage caps in `pages/appendix/full-view-maps.tsx` by 30%.
+  - Left the route shell, map presets, and shared plotting component unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-top-30pct-smaller-20260306.png`
+    - `tmp/appendix-full-view-bottom-30pct-smaller-20260306.png`
+
+VERIFIER
+- PASS:
+  - The standalone appendix page keeps the same styling and structure while both maps render noticeably smaller.
+  - The exact stage-cap reduction matches the requested 30% cut.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - appendix full-view maps: restore attn.markets shell and enlarge maps
 
 Checklist

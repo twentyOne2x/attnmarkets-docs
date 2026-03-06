@@ -13,7 +13,7 @@ const mapSections = [
       "Closest comparator lane for attn, with larger volume-scaled dots and labels so underwriting size and positioning are readable at a glance.",
     preset: "revenue_receivables_zoom_full" as const,
     maxWidth: 2880,
-    stageMaxWidth: "1480px",
+    stageMaxWidth: "1036px",
   },
   {
     id: "strategic-context",
@@ -23,7 +23,7 @@ const mapSections = [
       "Broader competitive surface with the Web2 revenue and receivables cohort exploded back into individual firms for full-surface scanning.",
     preset: "broad_detailed_full" as const,
     maxWidth: 3080,
-    stageMaxWidth: "1600px",
+    stageMaxWidth: "1120px",
   },
 ];
 
