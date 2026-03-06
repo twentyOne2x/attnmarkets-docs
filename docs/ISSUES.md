@@ -1,5 +1,61 @@
 # ISSUES
 
+## 2026-03-06 - docs links: use absolute appendix full-view maps route
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The appendix page currently links to `/full-view-maps` in production instead of `/appendix/full-view-maps`.
+- Missing info/questions: none. Use absolute route links in both the appendix page and `attn in context`.
+- Type: bug/linking
+- Status: completed
+- Context + suspected cause:
+  - Relative MDX links are resolving incorrectly for this route structure in production.
+  - The safer fix is to point both entry pages directly at `/appendix/full-view-maps`.
+- Fix intent:
+  1) Replace relative full-view-map links with an absolute `/appendix/full-view-maps` link.
+  2) Keep the full-view route discoverable from both appendix and `attn in context`.
+- Acceptance criteria:
+  - The appendix page links directly to `/appendix/full-view-maps`.
+  - `attn in context` links directly to `/appendix/full-view-maps`.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/index.mdx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - use absolute docs routes; do not change page copy beyond what is needed for the link fix.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - grep or DOM proof showing `/appendix/full-view-maps` in both entry pages
+
+EXECUTOR
+- Implemented:
+  - Replaced the relative appendix full-view-map link in `pages/appendix/index.mdx` with `/appendix/full-view-maps`.
+  - Replaced the relative appendix full-view-map link in `pages/introduction/attn-in-context.mdx` with `/appendix/full-view-maps`.
+  - Left all surrounding copy unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - DOM href proof:
+    - appendix page: `/appendix/full-view-maps`
+    - attn in context: `/appendix/full-view-maps`
+
+VERIFIER
+- PASS:
+  - Both entry pages now point directly to the correct appendix route.
+  - The production-only relative-link failure mode is removed.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - quadrant maps: hide absent marker types from each legend
 
 Checklist
