@@ -10,20 +10,20 @@ const mapSections = [
     eyebrow: "Appendix / Full View 01",
     title: "Revenue & Receivables Credit",
     description:
-      "Closest-comparator lane for attn. This full view keeps the map narrow in concept but large in canvas, so volume-scaled dots and pill labels are easier to read.",
+      "Closest comparator lane for attn, with larger volume-scaled dots and labels so underwriting size and positioning are readable at a glance.",
     preset: "revenue_receivables_zoom_full" as const,
     maxWidth: 2880,
-    stageMaxWidth: "min(100%, 840px, 80vh)",
+    stageMaxWidth: "1480px",
   },
   {
     id: "strategic-context",
     eyebrow: "Appendix / Full View 02",
     title: "Strategic Credit, Spend & Settlement",
     description:
-      "Broader landscape with the Web2 revenue/receivables cohort exploded back into individual firms. Use this view for detailed positioning rather than compressed docs-page scanning.",
+      "Broader competitive surface with the Web2 revenue and receivables cohort exploded back into individual firms for full-surface scanning.",
     preset: "broad_detailed_full" as const,
     maxWidth: 3080,
-    stageMaxWidth: "min(100%, 900px, 84vh)",
+    stageMaxWidth: "1600px",
   },
 ];
 
@@ -38,153 +38,190 @@ export default function FullViewMapsPage() {
         />
       </Head>
 
-      <main className="page">
-        <div className="content">
-          <header className="pageHeader">
-            <div className="eyebrow">Appendix</div>
-            <h1>Full-view maps</h1>
-            <p className="lede">
-              Standalone map views for `attn in context`, kept outside the embedded docs frame so the map itself can stay readable.
-            </p>
-            <nav className="pageNav" aria-label="Full view map navigation">
+      <div className="pageShell">
+        <header className="headerShell">
+          <div className="pageWidth topbar">
+            <div className="brandBlock">
+              <Link href="/" className="brandLink">
+                attn
+              </Link>
+              <div className="subbrand">docs appendix // full-view maps</div>
+            </div>
+
+            <nav className="nav" aria-label="Map section navigation">
               <a href="#revenue-credit">Revenue map</a>
               <a href="#strategic-context">Strategic map</a>
-              <Link href="/appendix">Appendix index</Link>
+              <Link href="/appendix">Appendix</Link>
               <Link href="/introduction/attn-in-context">Back to docs view</Link>
             </nav>
-          </header>
+          </div>
+        </header>
 
-          <div className="sections">
-            {mapSections.map((section) => (
-              <section key={section.id} id={section.id} className="sectionCard">
-                <div className="sectionHeader">
-                  <p className="sectionEyebrow">{section.eyebrow}</p>
-                  <h2>{section.title}</h2>
+        <main>
+          {mapSections.map((section) => (
+            <section key={section.id} id={section.id} className="sectionShell">
+              <div className="pageWidth sectionInner">
+                <div className="panelHeader">
+                  <p className="eyebrow">{section.eyebrow}</p>
+                  <h1>{section.title}</h1>
                   <p className="description">{section.description}</p>
                 </div>
 
-                <div className="mapStage" style={{ maxWidth: section.stageMaxWidth }}>
-                  <QuadrantScatterMap
-                    asOf={AS_OF}
-                    preset={section.preset}
-                    maxWidth={section.maxWidth}
-                  />
+                <div className="mapCard">
+                  <div className="mapStage" style={{ maxWidth: section.stageMaxWidth }}>
+                    <QuadrantScatterMap
+                      asOf={AS_OF}
+                      preset={section.preset}
+                      maxWidth={section.maxWidth}
+                    />
+                  </div>
                 </div>
-              </section>
-            ))}
-          </div>
-        </div>
-      </main>
+              </div>
+            </section>
+          ))}
+        </main>
+      </div>
 
       <style jsx>{`
-        .page {
+        .pageShell {
+          --bg: #f7f6f2;
+          --panel: #ffffff;
+          --text: #101010;
+          --muted: #6b6b6b;
+          --border: #dadada;
+          --accent: #1a7f5a;
           min-height: 100vh;
+          background: var(--bg);
+          color: var(--text);
         }
 
-        .content {
-          max-width: 1180px;
+        .pageWidth {
+          width: min(1560px, calc(100vw - 32px));
           margin: 0 auto;
-          padding: 1.1rem 1rem 2.4rem;
         }
 
-        .pageHeader {
+        .headerShell {
+          position: sticky;
+          top: 0;
+          z-index: 30;
+          background: rgba(247, 246, 242, 0.9);
+          backdrop-filter: blur(14px);
+          border-bottom: 1px solid var(--border);
+        }
+
+        .topbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+          padding: 1rem 0;
+        }
+
+        .brandBlock {
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
-          padding-bottom: 1rem;
-          margin-bottom: 1rem;
-          border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+          gap: 0.14rem;
+          min-width: max-content;
         }
 
-        .eyebrow,
-        .sectionEyebrow {
-          margin: 0;
-          font-size: 0.76rem;
-          line-height: 1.2;
+        .brandLink {
+          color: var(--text);
+          text-decoration: none;
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+          line-height: 1;
+        }
+
+        .brandLink:hover {
+          text-decoration: none;
+        }
+
+        .subbrand {
+          font-size: 0.75rem;
+          color: var(--muted);
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          font-weight: 700;
-          color: rgba(94, 234, 212, 0.92);
         }
 
-        h1 {
-          margin: 0;
-          font-size: clamp(1.7rem, 2.2vw, 2.35rem);
-          line-height: 1.05;
-          letter-spacing: -0.03em;
-          font-weight: 800;
-        }
-
-        .lede {
-          margin: 0;
-          max-width: 72ch;
-          font-size: 0.94rem;
-          line-height: 1.5;
-          color: rgba(226, 232, 240, 0.78);
-        }
-
-        .pageNav {
+        .nav {
           display: flex;
+          align-items: center;
+          justify-content: flex-end;
           flex-wrap: wrap;
-          gap: 0.55rem;
-          margin-top: 0.15rem;
+          gap: 0.6rem;
         }
 
-        .pageNav :global(a),
-        .pageNav a {
+        .nav :global(a) {
+          color: var(--text);
           text-decoration: none;
-          color: inherit;
-          border: 1px solid rgba(148, 163, 184, 0.2);
-          background: rgba(15, 23, 42, 0.34);
-          padding: 0.48rem 0.82rem;
-          border-radius: 999px;
-          font-size: 0.78rem;
-          line-height: 1;
+          font-size: 0.82rem;
           font-weight: 600;
-          transition: border-color 0.18s ease, background-color 0.18s ease;
+          letter-spacing: 0.02em;
+          padding: 0.45rem 0.82rem;
+          border-radius: 999px;
+          border: 1px solid var(--border);
+          background: rgba(255, 255, 255, 0.72);
+          transition: border-color 0.16s ease, background-color 0.16s ease;
         }
 
-        .pageNav :global(a:hover),
-        .pageNav a:hover {
-          border-color: rgba(94, 234, 212, 0.42);
-          background: rgba(20, 184, 166, 0.09);
+        .nav :global(a:hover) {
+          text-decoration: none;
+          border-color: #bdbdbd;
+          background: #ffffff;
         }
 
-        .sections {
+        .sectionShell {
+          min-height: 100vh;
+          padding: 1.5rem 0 2rem;
+          border-bottom: 1px solid var(--border);
+          display: flex;
+          align-items: center;
+        }
+
+        .sectionInner {
           display: flex;
           flex-direction: column;
           gap: 1rem;
         }
 
-        .sectionCard {
-          scroll-margin-top: 5rem;
-          border: 1px solid rgba(148, 163, 184, 0.16);
-          border-radius: 20px;
-          background: rgba(15, 23, 42, 0.16);
-          padding: 0.95rem 0.95rem 1.05rem;
-          backdrop-filter: blur(10px);
+        .panelHeader {
+          width: 100%;
         }
 
-        .sectionHeader {
-          display: flex;
-          flex-direction: column;
-          gap: 0.28rem;
-          margin-bottom: 0.7rem;
+        .eyebrow {
+          margin: 0 0 0.45rem;
+          color: var(--accent);
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          font-size: 0.78rem;
+          font-weight: 700;
         }
 
-        h2 {
+        h1 {
           margin: 0;
-          font-size: clamp(1.45rem, 1.95vw, 2rem);
-          line-height: 1.05;
-          letter-spacing: -0.03em;
+          font-size: clamp(2.2rem, 4vw, 4rem);
+          line-height: 0.96;
+          letter-spacing: -0.04em;
           font-weight: 800;
+          white-space: nowrap;
         }
 
         .description {
-          margin: 0;
-          font-size: 0.87rem;
-          line-height: 1.4;
-          color: rgba(226, 232, 240, 0.72);
+          margin: 0.5rem 0 0;
+          font-size: 0.98rem;
+          line-height: 1.35;
+          color: var(--muted);
+          white-space: nowrap;
+        }
+
+        .mapCard {
+          width: 100%;
+          background: var(--panel);
+          border: 1px solid var(--border);
+          border-radius: 22px;
+          padding: 0.95rem 1rem 1.05rem;
+          box-shadow: 0 14px 44px rgba(16, 16, 16, 0.05);
         }
 
         .mapStage {
@@ -192,20 +229,54 @@ export default function FullViewMapsPage() {
           margin: 0 auto;
         }
 
+        @media (min-width: 960px) {
+          .sectionShell {
+            scroll-margin-top: 5rem;
+          }
+        }
+
+        @media (max-width: 1180px) {
+          h1,
+          .description {
+            white-space: normal;
+          }
+        }
+
         @media (max-width: 900px) {
-          .content {
-            padding: 0.9rem 0.7rem 1.6rem;
+          .pageWidth {
+            width: min(100vw - 20px, 1560px);
           }
 
-          .pageHeader {
-            gap: 0.42rem;
-            padding-bottom: 0.85rem;
-            margin-bottom: 0.85rem;
+          .topbar {
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 0.85rem 0;
           }
 
-          .sectionCard {
-            padding: 0.8rem 0.7rem 0.85rem;
-            border-radius: 16px;
+          .nav {
+            justify-content: flex-start;
+          }
+
+          .sectionShell {
+            min-height: auto;
+            padding: 1rem 0 1.3rem;
+          }
+
+          .sectionInner {
+            gap: 0.8rem;
+          }
+
+          h1 {
+            font-size: clamp(1.85rem, 9vw, 2.6rem);
+          }
+
+          .description {
+            font-size: 0.95rem;
+          }
+
+          .mapCard {
+            border-radius: 18px;
+            padding: 0.55rem 0.45rem 0.7rem;
           }
         }
       `}</style>

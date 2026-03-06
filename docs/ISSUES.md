@@ -1,5 +1,61 @@
 # ISSUES
 
+## 2026-03-06 - appendix full-view maps: restore attn.markets shell and enlarge maps
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User explicitly asked for the appendix pages to match the `attn.markets` styling and for the diagrams to be about 70% bigger than the shrunken version.
+- Missing info/questions: none. Use the actual `attn.markets` marketing shell as the styling baseline rather than the docs shell.
+- Type: feature/UI consistency + layout sizing
+- Status: completed
+- Context + suspected cause:
+  - The latest docs-style appendix shell drifted away from the `attn.markets` visual language.
+  - The latest shrink pass made the maps materially too small.
+- Fix intent:
+  1) Reframe the appendix page in the actual `attn.markets` marketing style.
+  2) Increase standalone map stage caps back into a large-format range.
+  3) Preserve standalone routes and map behavior.
+- Acceptance criteria:
+  - The appendix full-view page visually reads like `attn.markets` rather than the docs shell.
+  - The standalone diagrams are materially larger than the tiny regression.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep route structure and map presets unchanged.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshots of the restyled and enlarged appendix page
+
+EXECUTOR
+- Implemented:
+  - Restyled `pages/appendix/full-view-maps.tsx` to mirror the live `attn.markets` marketing shell language: light neutral background, simple sticky header, restrained pill navigation, and white bordered map cards.
+  - Increased standalone map stage caps to `1480px` and `1600px` so the full-view diagrams are materially larger again.
+  - Kept the standalone routes, presets, and map component behavior unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-top-attn-markets-style-20260306.png`
+    - `tmp/appendix-full-view-bottom-attn-markets-style-20260306.png`
+
+VERIFIER
+- PASS:
+  - The standalone appendix page now reads as part of `attn.markets` rather than a docs-only layout or the improvised dark shell.
+  - The diagrams are materially larger than the tiny live regression.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - appendix full-view maps: align page chrome with docs styling
 
 Checklist
