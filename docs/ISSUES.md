@@ -1,5 +1,65 @@
 # ISSUES
 
+## 2026-03-06 - quadrant maps: hide absent marker types from each legend
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the first map legend to omit marker types that do not actually appear there.
+- Missing info/questions: none. Make the execution-plane legend adaptive to the projects present in the current preset rather than hardcoding a full taxonomy every time.
+- Type: feature/UX polish
+- Status: completed
+- Context + suspected cause:
+  - The shared legend currently always shows Web3, Hybrid, Web2, and Potential client entries.
+  - On the first diagram, `Hybrid` and `Potential client` are absent, so those legend items are misleading noise.
+- Fix intent:
+  1) Build legend items from the projects present in the current map.
+  2) Remove absent marker types from the first diagram.
+  3) Keep the second diagram free to show all legend items that actually exist there.
+- Acceptance criteria:
+  - The first diagram no longer shows `Hybrid (square)` or `Potential client (red ring)` if those project types are absent.
+  - Legend hover/focus filtering still works for the remaining legend items.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep map data unchanged.
+    - do not hardcode a first-map-only branch if a project-driven legend can solve it.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshots showing the cleaned first-map legend
+
+EXECUTOR
+- Implemented:
+  - Changed `components/QuadrantScatterMap.tsx` so execution-plane legend items are derived from the projects present in the current preset.
+  - Kept the existing hover/focus legend filtering behavior intact for the remaining legend items.
+  - Avoided a first-map-specific branch by making the legend project-driven.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshot:
+    - `tmp/appendix-full-view-top-adaptive-legend-20260306.png`
+  - DOM legend check:
+    - revenue map: `Web3-native (circle)`, `Web2-native (triangle)`
+    - strategic map: `Web3-native (circle)`, `Hybrid (square)`, `Web2-native (triangle)`, `Potential client (red ring)`
+
+VERIFIER
+- PASS:
+  - The first map no longer shows absent marker types in its legend.
+  - The second map still exposes all marker types that actually exist there.
+  - Legend hover/focus filtering still works.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - quadrant maps: legend hover should isolate matching dots
 
 Checklist

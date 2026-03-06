@@ -1734,37 +1734,59 @@ export default function QuadrantScatterMap(props: {
   }, [showClusters]);
 
   const activeLegendKey = legendFilterKey(legendFilter);
-  const legendItems: Array<{
-    key: string;
-    label: string;
-    filter: LegendFilter;
-    icon: React.ReactNode;
-  }> = [
-    {
-      key: "plane:web3",
-      label: "Web3-native (circle)",
-      filter: { kind: "plane", plane: "web3" },
-      icon: <MiniMarker plane="web3" />,
-    },
-    {
-      key: "plane:hybrid",
-      label: "Hybrid (square)",
-      filter: { kind: "plane", plane: "hybrid" },
-      icon: <MiniMarker plane="hybrid" />,
-    },
-    {
-      key: "plane:web2",
-      label: "Web2-native (triangle)",
-      filter: { kind: "plane", plane: "web2" },
-      icon: <MiniMarker plane="web2" />,
-    },
-    {
-      key: "potential",
-      label: "Potential client (red ring)",
-      filter: { kind: "potential" },
-      icon: <span className="potentialRing" aria-hidden="true" />,
-    },
-  ];
+  const legendItems = useMemo(() => {
+    const items: Array<{
+      key: string;
+      label: string;
+      filter: LegendFilter;
+      icon: React.ReactNode;
+    }> = [];
+
+    if (projects.some((project) => project.plane === "web3")) {
+      items.push({
+        key: "plane:web3",
+        label: "Web3-native (circle)",
+        filter: { kind: "plane", plane: "web3" },
+        icon: <MiniMarker plane="web3" />,
+      });
+    }
+
+    if (projects.some((project) => project.plane === "hybrid")) {
+      items.push({
+        key: "plane:hybrid",
+        label: "Hybrid (square)",
+        filter: { kind: "plane", plane: "hybrid" },
+        icon: <MiniMarker plane="hybrid" />,
+      });
+    }
+
+    if (projects.some((project) => project.plane === "web2")) {
+      items.push({
+        key: "plane:web2",
+        label: "Web2-native (triangle)",
+        filter: { kind: "plane", plane: "web2" },
+        icon: <MiniMarker plane="web2" />,
+      });
+    }
+
+    if (projects.some((project) => project.potentialClient)) {
+      items.push({
+        key: "potential",
+        label: "Potential client (red ring)",
+        filter: { kind: "potential" },
+        icon: <span className="potentialRing" aria-hidden="true" />,
+      });
+    }
+
+    return items;
+  }, [projects]);
+
+  useEffect(() => {
+    if (!legendFilter) return;
+    if (!legendItems.some((item) => item.key === activeLegendKey)) {
+      setLegendFilter(null);
+    }
+  }, [activeLegendKey, legendFilter, legendItems]);
 
   useEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
