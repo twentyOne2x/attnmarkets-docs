@@ -4,7 +4,11 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { highlightFirmNames } from "./highlightFirmNames";
 import { PROJECTS, type ExecutionPlane, type ProjectInfo } from "./quadrantMapData";
 
-type QuadrantPreset = "broad" | "revenue_receivables_zoom";
+type QuadrantPreset =
+  | "broad"
+  | "revenue_receivables_zoom"
+  | "revenue_receivables_zoom_full"
+  | "broad_detailed_full";
 
 function planeLabel(p: ExecutionPlane) {
   if (p === "web3") return "Web3-native";
@@ -313,6 +317,128 @@ function relaxLabelBoxes(args: {
   }));
 }
 
+function relaxProjectCenters(args: {
+  projects: ProjectInfo[];
+  getAnchorPoint: (project: ProjectInfo) => Point;
+  markerSizeForProject?: (projectId: string) => number;
+  bounds: { left: number; right: number; top: number; bottom: number };
+  obstacles?: Rect[];
+  iterations?: number;
+  pairGap?: number;
+  obstacleGap?: number;
+  anchorPull?: number;
+  damping?: number;
+  maxStep?: number;
+}) {
+  const {
+    projects,
+    getAnchorPoint,
+    markerSizeForProject,
+    bounds,
+    obstacles = [],
+    iterations = 180,
+    pairGap = 12,
+    obstacleGap = 8,
+    anchorPull = 0.05,
+    damping = 0.84,
+    maxStep = 16,
+  } = args;
+
+  const states = projects.map((project) => {
+    const anchor = getAnchorPoint(project);
+    const markerSize = markerSizeForProject?.(project.id) ?? 28;
+    const radius = markerOuterRadius(project.plane, markerSize) + 12;
+    return {
+      id: project.id,
+      x: anchor.x,
+      y: anchor.y,
+      anchorX: anchor.x,
+      anchorY: anchor.y,
+      radius,
+      minX: bounds.left + radius + 6,
+      maxX: bounds.right - radius - 6,
+      minY: bounds.top + radius + 6,
+      maxY: bounds.bottom - radius - 6,
+      vx: 0,
+      vy: 0,
+    };
+  });
+
+  for (let iter = 0; iter < iterations; iter += 1) {
+    const fx = new Array(states.length).fill(0);
+    const fy = new Array(states.length).fill(0);
+
+    for (let i = 0; i < states.length; i += 1) {
+      const state = states[i];
+      fx[i] += (state.anchorX - state.x) * anchorPull;
+      fy[i] += (state.anchorY - state.y) * anchorPull;
+    }
+
+    for (let i = 0; i < states.length; i += 1) {
+      for (let j = i + 1; j < states.length; j += 1) {
+        const a = states[i];
+        const b = states[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.hypot(dx, dy);
+        const minDist = a.radius + b.radius + pairGap;
+        if (dist >= minDist) continue;
+
+        const ux = dist < 0.001 ? (a.id > b.id ? 1 : -1) : dx / dist;
+        const uy = dist < 0.001 ? 0 : dy / dist;
+        const push = (minDist - Math.max(dist, 0.001)) * 0.5;
+        fx[i] += ux * push;
+        fy[i] += uy * push;
+        fx[j] -= ux * push;
+        fy[j] -= uy * push;
+      }
+    }
+
+    for (let i = 0; i < states.length; i += 1) {
+      const state = states[i];
+      const pointRect = {
+        x1: state.x - state.radius,
+        y1: state.y - state.radius,
+        x2: state.x + state.radius,
+        y2: state.y + state.radius,
+      } satisfies Rect;
+
+      for (const obstacle of obstacles) {
+        const expanded = expandRect(obstacle, state.radius + obstacleGap);
+        if (!rectsOverlap(pointRect, expanded)) continue;
+
+        const overlapLeft = pointRect.x2 - expanded.x1;
+        const overlapRight = expanded.x2 - pointRect.x1;
+        const overlapTop = pointRect.y2 - expanded.y1;
+        const overlapBottom = expanded.y2 - pointRect.y1;
+
+        const pushX = Math.min(overlapLeft, overlapRight);
+        const pushY = Math.min(overlapTop, overlapBottom);
+
+        if (pushX < pushY) {
+          const sign = state.x < (expanded.x1 + expanded.x2) / 2 ? -1 : 1;
+          fx[i] += sign * pushX * 0.7;
+        } else {
+          const sign = state.y < (expanded.y1 + expanded.y2) / 2 ? -1 : 1;
+          fy[i] += sign * pushY * 0.7;
+        }
+      }
+    }
+
+    for (let i = 0; i < states.length; i += 1) {
+      const state = states[i];
+      state.vx = (state.vx + fx[i]) * damping;
+      state.vy = (state.vy + fy[i]) * damping;
+      state.vx = clamp(state.vx, -maxStep, maxStep);
+      state.vy = clamp(state.vy, -maxStep, maxStep);
+      state.x = clamp(state.x + state.vx, state.minX, state.maxX);
+      state.y = clamp(state.y + state.vy, state.minY, state.maxY);
+    }
+  }
+
+  return new Map(states.map((state) => [state.id, { x: state.x, y: state.y }]));
+}
+
 function normalizeAngle(a: number) {
   let v = a;
   while (v <= -Math.PI) v += Math.PI * 2;
@@ -385,7 +511,7 @@ type LabelMetrics = {
   textLength?: number;
 };
 
-function adaptiveLabelMetrics(args: {
+type AdaptiveLabelArgs = {
   text: string;
   baseFont: number;
   minFont: number;
@@ -393,7 +519,9 @@ function adaptiveLabelMetrics(args: {
   basePadX: number;
   minPadX: number;
   padY: number;
-}): LabelMetrics {
+};
+
+function adaptiveLabelMetrics(args: AdaptiveLabelArgs): LabelMetrics {
   const len = Math.max(1, args.text.length);
   const lengthFactor = clamp((len - 10) / 20, 0, 1);
   const padX = clamp(
@@ -419,8 +547,20 @@ function adaptiveLabelMetrics(args: {
   };
 }
 
-function projectLabelMetrics(text: string, baseFont: number) {
-  return adaptiveLabelMetrics({
+function scaleAdaptiveLabelArgs(args: AdaptiveLabelArgs, scale: number): AdaptiveLabelArgs {
+  return {
+    ...args,
+    baseFont: args.baseFont * scale,
+    minFont: args.minFont * scale,
+    maxPillWidth: args.maxPillWidth * Math.max(0.94, scale),
+    basePadX: args.basePadX * scale,
+    minPadX: args.minPadX * scale,
+    padY: args.padY * scale,
+  };
+}
+
+function projectLabelMetrics(text: string, baseFont: number, scale = 1) {
+  return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
     text,
     baseFont,
     minFont: 21,
@@ -428,10 +568,15 @@ function projectLabelMetrics(text: string, baseFont: number) {
     basePadX: 6,
     minPadX: 2,
     padY: 3,
-  });
+  }, scale));
 }
 
-function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, labelText?: string) {
+function projectLabelMetricsForProject(
+  project: ProjectInfo,
+  baseFont: number,
+  labelText?: string,
+  scale = 1,
+) {
   const text = labelText ?? project.label;
   if (project.id === "attn") {
     return {
@@ -445,7 +590,7 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
   }
 
   if (project.id === "creditcoop") {
-    return adaptiveLabelMetrics({
+    return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
       text,
       baseFont: Math.min(baseFont, 34),
       minFont: 22,
@@ -453,11 +598,23 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
       basePadX: 6,
       minPadX: 3,
       padY: 3,
-    });
+    }, scale));
+  }
+
+  if (project.id === WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID) {
+    return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
+      text,
+      baseFont: Math.max(baseFont, 26),
+      minFont: 22,
+      maxPillWidth: 420,
+      basePadX: 6,
+      minPadX: 3,
+      padY: 3,
+    }, scale));
   }
 
   if (project.id === "paypal_working_capital") {
-    return adaptiveLabelMetrics({
+    return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
       text,
       baseFont: Math.min(baseFont, 32),
       minFont: 22,
@@ -465,11 +622,11 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
       basePadX: 7,
       minPadX: 4,
       padY: 3,
-    });
+    }, scale));
   }
 
   if (project.id === "square_loans") {
-    return adaptiveLabelMetrics({
+    return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
       text,
       baseFont: Math.min(baseFont, 32),
       minFont: 22,
@@ -477,11 +634,11 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
       basePadX: 6,
       minPadX: 3,
       padY: 3,
-    });
+    }, scale));
   }
 
   if (project.id === "stripe_capital") {
-    return adaptiveLabelMetrics({
+    return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
       text,
       baseFont: Math.min(baseFont, 32),
       minFont: 21,
@@ -489,10 +646,34 @@ function projectLabelMetricsForProject(project: ProjectInfo, baseFont: number, l
       basePadX: 4,
       minPadX: 2,
       padY: 3,
-    });
+    }, scale));
   }
 
-  return projectLabelMetrics(text, baseFont);
+  if (project.id === "pipe") {
+    return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
+      text,
+      baseFont: Math.max(baseFont, 28),
+      minFont: 23,
+      maxPillWidth: 360,
+      basePadX: 8,
+      minPadX: 4,
+      padY: 4,
+    }, scale));
+  }
+
+  if (project.id === "clearco") {
+    return adaptiveLabelMetrics(scaleAdaptiveLabelArgs({
+      text,
+      baseFont: Math.max(baseFont, 28),
+      minFont: 23,
+      maxPillWidth: 370,
+      basePadX: 8,
+      minPadX: 4,
+      padY: 4,
+    }, scale));
+  }
+
+  return projectLabelMetrics(text, baseFont, scale);
 }
 
 function clusterLabelMetrics(text: string, baseFont: number) {
@@ -789,6 +970,8 @@ function computeLabelPlacements(args: {
   markerSize: number;
   markerSizeForProject?: (projectId: string) => number;
   labelTextForProject?: (project: ProjectInfo) => string;
+  labelScaleForProject?: (projectId: string) => number;
+  pointForProject?: (project: ProjectInfo) => Point;
   applyHardLabelLocks?: boolean;
   fixedObstacles?: Rect[];
 }) {
@@ -803,6 +986,8 @@ function computeLabelPlacements(args: {
     markerSize,
     markerSizeForProject,
     labelTextForProject,
+    labelScaleForProject,
+    pointForProject,
     applyHardLabelLocks = true,
     fixedObstacles = [],
   } = args;
@@ -810,8 +995,9 @@ function computeLabelPlacements(args: {
   const placed: Record<string, { x: number; y: number; rect: Rect }> = {};
   const markerObstacles = new Map(
     projects.map((p) => {
-      const cx = xToSvg(p.x);
-      const cy = yToSvg(p.y);
+      const point = pointForProject?.(p) ?? { x: xToSvg(p.x), y: yToSvg(p.y) };
+      const cx = point.x;
+      const cy = point.y;
       const size = markerSizeForProject?.(p.id) ?? markerSize;
       const radius = markerOuterRadius(p.plane, size) + 7;
       return [
@@ -840,11 +1026,17 @@ function computeLabelPlacements(args: {
   const plotCenterY = pad + plotH / 2;
 
   for (const p of ordered) {
-    const cx = xToSvg(p.x);
-    const cy = yToSvg(p.y);
+    const point = pointForProject?.(p) ?? { x: xToSvg(p.x), y: yToSvg(p.y) };
+    const cx = point.x;
+    const cy = point.y;
     const markerForProject = markerSizeForProject?.(p.id) ?? markerSize;
     const labelText = labelTextForProject?.(p) ?? p.label;
-    const metrics = projectLabelMetricsForProject(p, fontSize, labelText);
+    const metrics = projectLabelMetricsForProject(
+      p,
+      fontSize,
+      labelText,
+      labelScaleForProject?.(p.id) ?? 1,
+    );
     const halfW = metrics.pillW / 2;
     const halfH = metrics.pillH / 2;
     const minX = pad + halfW + 6;
@@ -858,7 +1050,10 @@ function computeLabelPlacements(args: {
 
     const neighbors = projects
       .filter((q) => q.id !== p.id)
-      .map((q) => ({ q, x: xToSvg(q.x), y: yToSvg(q.y) }))
+      .map((q) => {
+        const neighborPoint = pointForProject?.(q) ?? { x: xToSvg(q.x), y: yToSvg(q.y) };
+        return { q, x: neighborPoint.x, y: neighborPoint.y };
+      })
       .map((q) => ({ ...q, d: Math.hypot(q.x - cx, q.y - cy) }))
       .filter((q) => q.d <= 320);
 
@@ -1040,6 +1235,8 @@ const WEB2_REVENUE_RECEIVABLES_MEMBER_IDS = [
 ] as const;
 
 const WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID = "web2_revenue_receivables_aggregate";
+const BROAD_AGGREGATE_MARKER_SCALE = 1.5;
+const SOLANA_MERCHANT_PROJECT_IDS = ["decal", "moonpay_commerce", "depay", "loop_crypto", "spherepay"];
 
 const WEB2_REVENUE_RECEIVABLES_AGGREGATE: ProjectInfo = {
   id: WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID,
@@ -1199,6 +1396,15 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   },
 ];
 
+const BROAD_DETAILED_CLUSTER_DEFS: ClusterDef[] = BROAD_CLUSTER_DEFS.map((def) =>
+  def.id === "entity_credit"
+    ? {
+        ...def,
+        projectIds: ["attn", "creditcoop", ...WEB2_REVENUE_RECEIVABLES_MEMBER_IDS],
+      }
+    : def,
+);
+
 const REVENUE_RECEIVABLES_PROJECT_IDS = [
   "attn",
   "creditcoop",
@@ -1268,14 +1474,20 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
   },
 ];
 
-const BROAD_EXCLUDED_PROJECT_IDS = new Set([
-  "decal",
-  "moonpay_commerce",
-  "depay",
-  "loop_crypto",
-  "spherepay",
+const EMBEDDED_BROAD_EXCLUDED_PROJECT_IDS = new Set([
+  ...SOLANA_MERCHANT_PROJECT_IDS,
   ...WEB2_REVENUE_RECEIVABLES_MEMBER_IDS,
 ]);
+
+const FULL_BROAD_EXCLUDED_PROJECT_IDS = new Set([...SOLANA_MERCHANT_PROJECT_IDS]);
+const BROAD_DETAILED_FULL_COORD_OVERRIDES: Record<string, { x: number; y: number }> = {
+  rain: { x: 0.53, y: 0.88 },
+  colossus: { x: 0.515, y: 0.81 },
+  privy: { x: 0.64, y: 0.515 },
+  para: { x: 0.69, y: 0.54 },
+  swig: { x: 0.745, y: 0.565 },
+  squads_protocol: { x: 0.8, y: 0.595 },
+};
 
 type PresetConfig = {
   title: string;
@@ -1297,18 +1509,30 @@ type PresetConfig = {
   clusterFillOpacity: number;
   clusterStrokeOpacity: number;
   clusterStrokeWidth: number;
+  canvasWidth: number;
+  canvasHeight: number;
+  enableVolumeScaledMarkers: boolean;
+  enableVolumeScaledLabels: boolean;
+  relaxProjectPositions: boolean;
+  staticMarkerScaleById?: Record<string, number>;
+  staticLabelScaleById?: Record<string, number>;
   projects: ProjectInfo[];
   clusterDefs: ClusterDef[];
   defaultShowClusters: boolean;
 };
 
 function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
-  const broadProjects = [
-    ...Object.values(PROJECTS).filter((p) => p.id !== "xitadel" && !BROAD_EXCLUDED_PROJECT_IDS.has(p.id)),
+  const embeddedBroadProjects = [
+    ...Object.values(PROJECTS).filter(
+      (p) => p.id !== "xitadel" && !EMBEDDED_BROAD_EXCLUDED_PROJECT_IDS.has(p.id),
+    ),
     WEB2_REVENUE_RECEIVABLES_AGGREGATE,
   ];
+  const detailedBroadProjects = Object.values(PROJECTS).filter(
+    (p) => p.id !== "xitadel" && !FULL_BROAD_EXCLUDED_PROJECT_IDS.has(p.id),
+  );
 
-  if (preset === "revenue_receivables_zoom") {
+  if (preset === "revenue_receivables_zoom" || preset === "revenue_receivables_zoom_full") {
     const projects = REVENUE_RECEIVABLES_PROJECT_IDS.map((id) => {
       const base = PROJECTS[id];
       const remap = REVENUE_RECEIVABLES_ZOOM_COORDS[id];
@@ -1320,8 +1544,14 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
     });
 
     return {
-      title: `Revenue & Receivables Credit Map — as of ${asOf}`,
-      hint: `Focused lane view: repayment enforceability vs servicing intelligence. Showing ${projects.length} projects.`,
+      title:
+        preset === "revenue_receivables_zoom_full"
+          ? `Revenue & Receivables Credit Map (Full View) — as of ${asOf}`
+          : `Revenue & Receivables Credit Map — as of ${asOf}`,
+      hint:
+        preset === "revenue_receivables_zoom_full"
+          ? `Standalone lane view with enlarged canvas and volume-scaled dots/pills. Showing ${projects.length} projects.`
+          : `Focused lane view: repayment enforceability vs servicing intelligence. Showing ${projects.length} projects.`,
       taxonomyHint:
         "Lens: Borrower type (business vs consumer) + distribution model (platform-native vs partner-embedded). Dot size is normalized to best-public credit-volume signals; n/a means undisclosed.",
       ariaLabel: `Revenue and receivables credit map (as of ${asOf})`,
@@ -1329,26 +1559,75 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
       axisBottomTitle: "Static/periodic servicing",
       leftAxisText: "← Contractual/manual enforcement",
       rightAxisText: "Flow-captured + programmable enforcement →",
-      axisSideLabelFontSize: 30,
-      axisSideLabelYOffset: -18,
-      labelFontSize: 24,
-      markerSize: 28,
+      axisSideLabelFontSize: preset === "revenue_receivables_zoom_full" ? 38 : 30,
+      axisSideLabelYOffset: preset === "revenue_receivables_zoom_full" ? -22 : -18,
+      labelFontSize: preset === "revenue_receivables_zoom_full" ? 28 : 24,
+      markerSize: preset === "revenue_receivables_zoom_full" ? 32 : 28,
       applyHardLabelLocks: false,
       allowSingletonClusterZones: true,
       splitDisconnectedClusterZones: false,
-      clusterZonePadding: 22,
+      clusterZonePadding: preset === "revenue_receivables_zoom_full" ? 28 : 22,
       clusterFillOpacity: 0.28,
       clusterStrokeOpacity: 0.98,
       clusterStrokeWidth: 3.4,
+      canvasWidth: preset === "revenue_receivables_zoom_full" ? 2180 : 1600,
+      canvasHeight: preset === "revenue_receivables_zoom_full" ? 1560 : 1220,
+      enableVolumeScaledMarkers: true,
+      enableVolumeScaledLabels: preset === "revenue_receivables_zoom_full",
+      relaxProjectPositions: false,
       projects,
       clusterDefs: REVENUE_RECEIVABLES_CLUSTER_DEFS,
       defaultShowClusters: true,
     };
   }
 
+  if (preset === "broad_detailed_full") {
+    const projects = detailedBroadProjects.map((project) => {
+      const override = BROAD_DETAILED_FULL_COORD_OVERRIDES[project.id];
+      return override ? { ...project, x: override.x, y: override.y } : project;
+    });
+
+    return {
+      title: `Strategic Credit, Spend & Settlement Map (Detailed Full View) — as of ${asOf}`,
+      hint: `Standalone detailed broad view with the Web2 revenue/receivables cohort exploded back into individual firms. Dot and pill sizes reflect best-public dollar-volume signals where available. Showing ${projects.length} projects.`,
+      taxonomyHint:
+        "Use this view for full-surface competitive scanning. Full-view sizing uses public volume proxies where available; undisclosed firms keep the base size.",
+      ariaLabel: `Detailed embedded credit control landscape (as of ${asOf})`,
+      axisTopTitle: "Back-end infrastructure",
+      axisBottomTitle: "User-facing distribution",
+      leftAxisText: "← Reputation / legal",
+      rightAxisText: "Programmatic controls →",
+      axisSideLabelFontSize: 60,
+      axisSideLabelYOffset: -28,
+      labelFontSize: 28,
+      markerSize: 38,
+      applyHardLabelLocks: true,
+      allowSingletonClusterZones: false,
+      splitDisconnectedClusterZones: true,
+      clusterZonePadding: 12,
+      clusterFillOpacity: 0.18,
+      clusterStrokeOpacity: 0.92,
+      clusterStrokeWidth: 2.8,
+      canvasWidth: 2280,
+      canvasHeight: 1740,
+      enableVolumeScaledMarkers: true,
+      enableVolumeScaledLabels: true,
+      relaxProjectPositions: true,
+      staticLabelScaleById: {
+        creditcoop: 1.34,
+        shopify_capital: 1.24,
+        pipe: 1.32,
+        clearco: 1.28,
+      },
+      projects,
+      clusterDefs: BROAD_DETAILED_CLUSTER_DEFS,
+      defaultShowClusters: true,
+    };
+  }
+
   return {
     title: `Strategic Credit, Spend & Settlement Map — as of ${asOf}`,
-    hint: `Hover for details. Click a dot to pin. Esc clears. Showing ${broadProjects.length} projects.`,
+    hint: `Hover for details. Click a dot to pin. Esc clears. Showing ${embeddedBroadProjects.length} projects.`,
     ariaLabel: `Embedded credit control landscape (as of ${asOf})`,
     axisTopTitle: "Back-end infrastructure",
     axisBottomTitle: "User-facing distribution",
@@ -1365,7 +1644,15 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
     clusterFillOpacity: 0.18,
     clusterStrokeOpacity: 0.92,
     clusterStrokeWidth: 2.6,
-    projects: broadProjects,
+    canvasWidth: 1600,
+    canvasHeight: 1220,
+    enableVolumeScaledMarkers: false,
+    enableVolumeScaledLabels: false,
+    relaxProjectPositions: false,
+    staticMarkerScaleById: {
+      [WEB2_REVENUE_RECEIVABLES_AGGREGATE_ID]: BROAD_AGGREGATE_MARKER_SCALE,
+    },
+    projects: embeddedBroadProjects,
     clusterDefs: BROAD_CLUSTER_DEFS,
     defaultShowClusters: true,
   };
@@ -1379,6 +1666,8 @@ export default function QuadrantScatterMap(props: {
   const asOf = props.asOf ?? "2026-02-21";
   const maxWidth = props.maxWidth ?? 2200;
   const preset = props.preset ?? "broad";
+  const isStandaloneFullView =
+    preset === "revenue_receivables_zoom_full" || preset === "broad_detailed_full";
   const config = useMemo(() => getPresetConfig(preset, asOf), [preset, asOf]);
 
   const projects = useMemo(() => config.projects, [config.projects]);
@@ -1451,9 +1740,9 @@ export default function QuadrantScatterMap(props: {
     lastTooltipIdRef.current = tooltip.id;
   }, [tooltip?.id]);
 
-  // Larger embedded canvas with tighter gutters so the plot fills the card.
-  const width = 1600;
-  const height = 1220;
+  // Canvas size is preset-driven so standalone appendix views can use much larger layouts.
+  const width = config.canvasWidth;
+  const height = config.canvasHeight;
   const pad = 24;
 
   const plotW = width - pad * 2;
@@ -1681,10 +1970,11 @@ export default function QuadrantScatterMap(props: {
   const markerSize = config.markerSize;
   const axisSideLabelFontSize = config.axisSideLabelFontSize;
   const axisSideLabelYOffset = config.axisSideLabelYOffset;
-  const isRevenueReceivablesZoom = preset === "revenue_receivables_zoom";
+  const isRevenueReceivablesZoom =
+    preset === "revenue_receivables_zoom" || preset === "revenue_receivables_zoom_full";
 
   const volumeSizing = useMemo(() => {
-    if (!isRevenueReceivablesZoom) return null;
+    if (!config.enableVolumeScaledMarkers && !config.enableVolumeScaledLabels) return null;
 
     const values = projects
       .map((p) => p.creditVolume?.normalizedUsdBn)
@@ -1700,7 +1990,7 @@ export default function QuadrantScatterMap(props: {
       sqrtMin: Math.sqrt(min),
       sqrtMax: Math.sqrt(max),
     };
-  }, [isRevenueReceivablesZoom, projects]);
+  }, [config.enableVolumeScaledLabels, config.enableVolumeScaledMarkers, projects]);
 
   const markerSizeByProject = useMemo(() => {
     const map = new Map<string, number>();
@@ -1712,8 +2002,9 @@ export default function QuadrantScatterMap(props: {
     const zoomCircleShapeScale = Math.SQRT2;
 
     for (const p of projects) {
-      if (!isRevenueReceivablesZoom) {
-        map.set(p.id, markerSize);
+      if (!config.enableVolumeScaledMarkers) {
+        const broadScale = config.staticMarkerScaleById?.[p.id] ?? 1;
+        map.set(p.id, markerSize * broadScale);
         continue;
       }
 
@@ -1730,7 +2021,31 @@ export default function QuadrantScatterMap(props: {
     }
 
     return map;
-  }, [projects, markerSize, isRevenueReceivablesZoom, volumeSizing]);
+  }, [projects, markerSize, config.enableVolumeScaledMarkers, config.staticMarkerScaleById, isRevenueReceivablesZoom, volumeSizing]);
+
+  const labelScaleByProject = useMemo(() => {
+    const map = new Map<string, number>();
+
+    for (const p of projects) {
+      const baseScale = config.staticLabelScaleById?.[p.id] ?? 1;
+      if (!config.enableVolumeScaledLabels || !volumeSizing) {
+        map.set(p.id, baseScale);
+        continue;
+      }
+
+      const raw = p.creditVolume?.normalizedUsdBn;
+      if (typeof raw !== "number" || !Number.isFinite(raw) || raw <= 0) {
+        map.set(p.id, baseScale);
+        continue;
+      }
+
+      const denom = Math.max(0.0001, volumeSizing.sqrtMax - volumeSizing.sqrtMin);
+      const normalized = clamp((Math.sqrt(raw) - volumeSizing.sqrtMin) / denom, 0, 1);
+      map.set(p.id, baseScale * (0.92 + normalized * 0.36));
+    }
+
+    return map;
+  }, [projects, config.enableVolumeScaledLabels, config.staticLabelScaleById, volumeSizing]);
 
   const labelTextByProject = useMemo(() => {
     const map = new Map<string, string>();
@@ -1800,6 +2115,36 @@ export default function QuadrantScatterMap(props: {
     ],
   );
 
+  const projectDisplayPositions = useMemo(() => {
+    if (!config.relaxProjectPositions) {
+      return new Map(projects.map((p) => [p.id, { x: xToSvg(p.x), y: yToSvg(p.y) }]));
+    }
+
+    return relaxProjectCenters({
+      projects,
+      getAnchorPoint: (project) => ({ x: xToSvg(project.x), y: yToSvg(project.y) }),
+      markerSizeForProject: (projectId) => markerSizeByProject.get(projectId) ?? markerSize,
+      bounds: {
+        left: pad,
+        right: pad + plotW,
+        top: pad,
+        bottom: pad + plotH,
+      },
+      obstacles: axisLabelObstacles,
+    });
+  }, [
+    projects,
+    config.relaxProjectPositions,
+    xToSvg,
+    yToSvg,
+    markerSizeByProject,
+    markerSize,
+    pad,
+    plotW,
+    plotH,
+    axisLabelObstacles,
+  ]);
+
   const labelPlacements = useMemo(() => {
     const placements = computeLabelPlacements({
       projects,
@@ -1812,6 +2157,9 @@ export default function QuadrantScatterMap(props: {
       markerSize,
       markerSizeForProject: (projectId) => markerSizeByProject.get(projectId) ?? markerSize,
       labelTextForProject: (project) => labelTextByProject.get(project.id) ?? project.label,
+      labelScaleForProject: (projectId) => labelScaleByProject.get(projectId) ?? 1,
+      pointForProject: (project) =>
+        projectDisplayPositions.get(project.id) ?? { x: xToSvg(project.x), y: yToSvg(project.y) },
       applyHardLabelLocks: config.applyHardLabelLocks,
       fixedObstacles: axisLabelObstacles,
     });
@@ -1821,11 +2169,21 @@ export default function QuadrantScatterMap(props: {
     if (isRevenueReceivablesZoom) {
       const creditcoop = projects.find((p) => p.id === "creditcoop");
       if (creditcoop) {
-        const cx = xToSvg(creditcoop.x);
-        const cy = yToSvg(creditcoop.y);
+        const point =
+          projectDisplayPositions.get(creditcoop.id) ?? {
+            x: xToSvg(creditcoop.x),
+            y: yToSvg(creditcoop.y),
+          };
+        const cx = point.x;
+        const cy = point.y;
         const markerForProject = markerSizeByProject.get(creditcoop.id) ?? markerSize;
         const labelText = labelTextByProject.get(creditcoop.id) ?? creditcoop.label;
-        const metrics = projectLabelMetricsForProject(creditcoop, fontSize, labelText);
+        const metrics = projectLabelMetricsForProject(
+          creditcoop,
+          fontSize,
+          labelText,
+          labelScaleByProject.get(creditcoop.id) ?? 1,
+        );
         const halfW = metrics.pillW / 2;
         const halfH = metrics.pillH / 2;
         const minX = pad + halfW + 6;
@@ -1855,7 +2213,9 @@ export default function QuadrantScatterMap(props: {
     fontSize,
     markerSize,
     markerSizeByProject,
+    labelScaleByProject,
     labelTextByProject,
+    projectDisplayPositions,
     config.applyHardLabelLocks,
     axisLabelObstacles,
     isRevenueReceivablesZoom,
@@ -1872,12 +2232,17 @@ export default function QuadrantScatterMap(props: {
     const allCenters = new Map(
       projects.map((p) => {
         const size = markerSizeByProject.get(p.id) ?? markerSize;
+        const point =
+          projectDisplayPositions.get(p.id) ?? {
+            x: xToSvg(p.x),
+            y: yToSvg(p.y),
+          };
         return [
           p.id,
           {
             id: p.id,
-            x: xToSvg(p.x),
-            y: yToSvg(p.y),
+            x: point.x,
+            y: point.y,
             markerOuterRadius: markerOuterRadius(p.plane, size),
           },
         ];
@@ -2197,6 +2562,7 @@ export default function QuadrantScatterMap(props: {
     projects,
     xToSvg,
     yToSvg,
+    projectDisplayPositions,
     labelPlacements,
     axisLabelObstacles,
     maxProjectMarkerSize,
@@ -2311,7 +2677,7 @@ export default function QuadrantScatterMap(props: {
 
   return (
     <div
-      className="wrap"
+      className={`wrap ${isStandaloneFullView ? "fullView" : ""}`}
       aria-label={config.ariaLabel}
       style={{
         width: "100%",
@@ -2516,8 +2882,13 @@ export default function QuadrantScatterMap(props: {
             </text>
             {/* Points + labels */}
             {projects.map((p) => {
-              const cx = xToSvg(p.x);
-              const cy = yToSvg(p.y);
+              const point =
+                projectDisplayPositions.get(p.id) ?? {
+                  x: xToSvg(p.x),
+                  y: yToSvg(p.y),
+                };
+              const cx = point.x;
+              const cy = point.y;
               const isActive = tooltip?.id === p.id;
               const baseSize = markerSizeByProject.get(p.id) ?? markerSize;
               const size = isActive ? Math.max(36, baseSize + 8) : baseSize;
@@ -2536,7 +2907,12 @@ export default function QuadrantScatterMap(props: {
               const labelY = lp?.y ?? cy - 26;
 
               const labelText = labelTextByProject.get(p.id) ?? p.label;
-              const labelMetrics = projectLabelMetricsForProject(p, fontSize, labelText);
+              const labelMetrics = projectLabelMetricsForProject(
+                p,
+                fontSize,
+                labelText,
+                labelScaleByProject.get(p.id) ?? 1,
+              );
               const labelW = labelMetrics.pillW;
               const labelH = labelMetrics.pillH;
               const labelHalfW = labelW / 2;
@@ -3168,6 +3544,47 @@ export default function QuadrantScatterMap(props: {
           box-shadow: 0 8px 20px rgba(31, 50, 83, 0.1);
         }
 
+        .fullView .topBar {
+          gap: 10px;
+        }
+
+        .fullView .topRight {
+          width: 100%;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px 12px;
+        }
+
+        .fullView .clusterToggle,
+        .fullView .zoomControls,
+        .fullView .zoomHint {
+          flex: 0 0 auto;
+        }
+
+        .fullView .taxonomyHint {
+          flex: 1 1 560px;
+          max-width: none;
+          padding: 7px 10px;
+        }
+
+        .fullView .legendInline {
+          flex: 1 1 700px;
+          min-width: 0;
+          margin-left: auto;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 8px 14px;
+          padding: 7px 10px;
+        }
+
+        .fullView .legendItem,
+        .fullView .zoomHint {
+          white-space: nowrap;
+        }
+
         .tooltip {
           position: absolute;
           z-index: 20;
@@ -3415,8 +3832,26 @@ export default function QuadrantScatterMap(props: {
           .legendInline {
             align-self: stretch;
           }
+          .fullView .topRight {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .fullView .taxonomyHint {
+            flex-basis: auto;
+          }
+          .fullView .legendInline {
+            margin-left: 0;
+            flex-basis: auto;
+            justify-content: flex-start;
+          }
           .hint {
             display: none;
+          }
+        }
+
+        @media (min-width: 1400px) {
+          .fullView .taxonomyHint {
+            white-space: nowrap;
           }
         }
       `}</style>

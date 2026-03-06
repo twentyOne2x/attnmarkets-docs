@@ -1,5 +1,557 @@
 # ISSUES
 
+## 2026-03-06 - appendix full-view maps: horizontal control row and more map breathing room
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to give the standalone diagrams more breathing room, specifically by turning the top-right control/legend stack into a single horizontal row and increasing usable diagram area.
+- Missing info/questions: none. Implement as a full-view-only layout change so embedded docs charts stay compact.
+- Type: feature/layout polish
+- Status: completed
+- Context + suspected cause:
+  - In the standalone full-view maps, the cluster toggle, zoom controls, taxonomy note, and legend are stacked as a narrow vertical column.
+  - That column consumes visual weight and makes the top of the map feel tighter than necessary.
+- Fix intent:
+  1) Convert the standalone full-view map controls into a horizontal toolbar row.
+  2) Spread the legend inline horizontally in full-view mode.
+  3) Increase full-view map vertical canvas size so the diagrams get more on-screen breathing room.
+- Acceptance criteria:
+  - On standalone full-view maps, the control/legend area reads as a horizontal toolbar rather than a single right-side column.
+  - The standalone maps have more visible breathing room.
+  - Embedded docs maps remain unchanged in behavior/layout.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - apply toolbar/layout changes to standalone full-view presets only.
+    - preserve mobile responsiveness by allowing wrap/stack on smaller widths.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated standalone full-view map
+
+EXECUTOR
+- Implemented:
+  - Added a full-view-only toolbar mode in `components/QuadrantScatterMap.tsx`.
+  - In full-view mode, the cluster toggle, zoom controls, taxonomy note, and legend now render as a horizontal wrapped toolbar row instead of a right-side vertical stack.
+  - Increased full-view canvas height:
+    - `revenue_receivables_zoom_full`: `1460 -> 1560`
+    - `broad_detailed_full`: `1580 -> 1740`
+  - Increased standalone page width caps in `pages/appendix/full-view-maps.tsx` so wide screens can use more of the available canvas.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshot: `tmp/appendix-broad-detailed-toolbar-row-20260306.png`
+
+VERIFIER
+- PASS:
+  - Standalone full-view controls now read as a horizontal toolbar rather than a narrow column.
+  - The full-view maps have more visible breathing room due to the larger vertical canvas and wider stage cap.
+  - Embedded docs maps were left unchanged because the full-view layout is gated by preset.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
+## 2026-03-06 - map: enlarge pipe/clearco pills and refresh Uncapped/Stripe data
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for larger `pipe.com` and `clear.co` pills, and asked whether more public data can be added for `Uncapped` and `Stripe Capital`.
+- Missing info/questions: none. Proceeding with code updates plus a source-backed data refresh.
+- Type: feature/map styling + data refresh
+- Status: completed
+- Context + suspected cause:
+  - `pipe.com` and `clear.co` pills are still relatively compact even in the larger standalone/full-view maps.
+  - `Uncapped` and `Stripe Capital` currently carry limited public scale detail; some additional official product/scale context is available, but cumulative underwriting totals remain partly undisclosed.
+- Fix intent:
+  1) Increase `pipe.com` and `clear.co` pill sizing.
+  2) Refresh `Uncapped` with current official product/scale details.
+  3) Refresh `Stripe Capital` with clearer current official provider/product details and note what remains undisclosed.
+- Acceptance criteria:
+  - `pipe.com` and `clear.co` pills are visibly larger.
+  - `Uncapped` tooltip data is more informative and source-backed.
+  - `Stripe Capital` tooltip data is more informative and source-backed.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `components/quadrantMapData.ts`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - use only public, source-backed data.
+    - do not invent cumulative underwriting totals where they are not disclosed.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot if map visuals change materially
+
+EXECUTOR
+- Implemented:
+  - Added explicit larger label-metrics overrides for `pipe.com` and `clear.co` in `components/QuadrantScatterMap.tsx`.
+  - Refreshed `Stripe Capital` in `components/quadrantMapData.ts` with:
+    - official provider clarity (`Celtic Bank`, `YouLend`, or `Stripe`)
+    - official 2025 business-count signal (`76,000 businesses financed`)
+    - Capital-for-platforms metrics/reporting details
+    - non-Stripe data import capability
+    - explicit note that public cumulative dollar-underwritten totals remain undisclosed
+  - Refreshed `Uncapped` in `components/quadrantMapData.ts` with:
+    - official shift away from revenue-based financing
+    - fixed-term loan + revolving line-of-credit positioning
+    - official offer and pricing ranges
+    - official "funded thousands of ecommerce sellers since 2019" signal
+    - explicit note that public cumulative dollar-underwritten totals remain undisclosed
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshot: `tmp/appendix-broad-detailed-pipe-clearco-larger-20260306-2.png`
+
+VERIFIER
+- PASS:
+  - `pipe.com` and `clear.co` pills are visibly larger in the standalone detailed broad map.
+  - `Uncapped` tooltip data is more informative and source-backed.
+  - `Stripe Capital` tooltip data is more informative and source-backed.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+- Notes:
+  - `Uncapped` official pages are publicly reachable in browser/search but return `403` to simple `curl` because of bot protection; the linked sources are still valid public pages.
+
+## 2026-03-06 - appendix: reposition middleware, rain, and colossus in detailed broad map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to move the `Wallet + Policy Middleware` area lower while keeping it in the top-right quadrant, and to move `rain.xyz` plus `colossus.credit` further left while still in the top-right quadrant.
+- Missing info/questions: none.
+- Type: feature/layout polish
+- Status: completed
+- Context + suspected cause:
+  - The standalone detailed broad-map preset still had too much weight high in the top-right lane.
+  - A preset-specific coordinate rebalance is safer than changing shared base positions used by embedded maps.
+- Fix intent:
+  1) Add standalone detailed-broad coordinate overrides for the middleware firms.
+  2) Shift `rain.xyz` and `colossus.credit` left while preserving top-right quadrant placement.
+- Acceptance criteria:
+  - `Wallet + Policy Middleware` sits lower in the standalone detailed map while remaining above the midline and right of center.
+  - `rain.xyz` and `colossus.credit` render further left but remain in the top-right quadrant.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - apply to standalone detailed broad-map preset only.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated standalone second diagram
+
+EXECUTOR
+- Implemented:
+  - Added `BROAD_DETAILED_FULL_COORD_OVERRIDES` in `components/QuadrantScatterMap.tsx`.
+  - Shifted:
+    - `rain.xyz` left
+    - `colossus.credit` left
+    - `Privy`, `Para`, `onswig.com`, and `Squads (Protocol)` lower while staying in the top-right quadrant.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/appendix-broad-detailed-reposition-20260306-120415.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: middleware cluster sits lower but remains in the top-right quadrant.
+  - PASS: `rain.xyz` and `colossus.credit` are further left and still above/right of center.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-06 - appendix: larger selected pills and point repulsion in detailed broad map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested larger pills for `creditcoop.xyz`, `Shopify Capital`, `pipe.com`, and `clear.co`, and asked that the standalone second diagram prevent actual dot/ring overlap, not just label overlap.
+- Missing info/questions: none. Proceeding with deterministic point relaxation only for the standalone detailed broad-map preset.
+- Type: feature/layout + map readability
+- Status: completed
+- Context + suspected cause:
+  - The full-view second diagram currently relaxes labels but still renders multiple marker centers too close together in the top-right area, so dots and outline rings overlap.
+  - The larger standalone canvas also makes it reasonable to increase selected label pills that previously had to stay compact.
+- Fix intent:
+  1) Add deterministic point repulsion for `broad_detailed_full`.
+  2) Use relaxed point positions for cluster zones, labels, and final marker rendering.
+  3) Increase pill sizing for `creditcoop.xyz`, `Shopify Capital`, `pipe.com`, and `clear.co` in the standalone full-view detailed map.
+- Acceptance criteria:
+  - In the standalone broad detailed map, marker centers and outline rings no longer overlap materially.
+  - Cluster envelopes and labels follow the relaxed positions.
+  - `creditcoop.xyz`, `Shopify Capital`, `pipe.com`, and `clear.co` pills are visibly larger.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: `docs/plans/active/2026-03-06-detailed-broad-point-repulsion.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+    - `docs/plans/active/2026-03-06-detailed-broad-point-repulsion.md`
+  - Constraints:
+    - limit point relaxation to the standalone `broad_detailed_full` preset.
+    - preserve embedded map behavior.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated standalone second diagram
+
+EXECUTOR
+- Implemented:
+  - Added deterministic point relaxation for the standalone `broad_detailed_full` preset.
+  - Threaded the relaxed project positions through:
+    - label placement
+    - cluster envelope generation
+    - final marker rendering
+  - Added stronger full-view pill-size boosts for:
+    - `creditcoop.xyz`
+    - `Shopify Capital`
+    - `pipe.com`
+    - `clear.co`
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/appendix-broad-detailed-repel-pills-20260306-115821.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: standalone detailed broad-map marker centers and rings no longer overlap materially in the dense top-right region.
+  - PASS: cluster envelopes and labels follow the relaxed marker positions.
+  - PASS: `creditcoop.xyz`, `Shopify Capital`, `pipe.com`, and `clear.co` pills are visibly larger.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-06 - appendix: keep full-view map headers on one line
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested making the standalone full-view page titles and descriptions render on a single line instead of wrapping.
+- Missing info/questions: none.
+- Type: feature/layout polish
+- Status: completed
+- Context + suspected cause:
+  - The standalone page header copy used narrow width constraints (`max-width` and title character limits) that forced line wrapping even on wide desktop viewports.
+- Fix intent:
+  1) Remove desktop-only header width constraints for the standalone page.
+  2) Reduce desktop title/description font size slightly and apply `white-space: nowrap`.
+  3) Preserve wrapping behavior on smaller screens.
+- Acceptance criteria:
+  - Both standalone map section titles render on one line on desktop width.
+  - Both standalone descriptions render on one line on desktop width.
+  - Mobile/smaller viewports still allow wrapping.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - change standalone page headers only.
+    - keep smaller-screen wrapping behavior.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshots of both standalone sections
+
+EXECUTOR
+- Implemented:
+  - Removed desktop max-width constraints from the standalone header block.
+  - Set desktop `h1` and description copy to `white-space: nowrap`.
+  - Reduced desktop title and description font sizing slightly to fit a single line.
+  - Kept mobile breakpoint behavior set to normal wrapping.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/appendix-full-view-top-single-line-20260306-115024.png`
+    - `tmp/appendix-full-view-bottom-single-line-20260306-115024.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: both standalone section titles are single-line on desktop width.
+  - PASS: both standalone descriptions are single-line on desktop width.
+  - PASS: smaller-screen wrapping rules remain in place.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-06 - appendix: standalone full-view attn-in-context maps
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the two attn-in-context diagrams available as standalone full-view pages under docs, with a scroll-first full-page experience and a detailed broad map that can restore individual Web2 revenue/receivables firms.
+- Missing info/questions: none. Proceeding with one standalone full-view page that stacks map 1 then map 2, plus an appendix landing page for discovery.
+- Type: feature/navigation + map presentation
+- Status: completed
+- Context + suspected cause:
+  - The current `attn-in-context` page embeds both diagrams inside the Nextra docs content frame, which compresses the canvas and forces aggregation tradeoffs in the broader map.
+  - A standalone route outside the docs frame allows larger canvases, larger labels, and a detailed broad-map preset without making the embedded docs page too dense.
+- Fix intent:
+  1) Add new appendix routes under docs for standalone full-view map browsing.
+  2) Extend `QuadrantScatterMap` with full-view presets and sizing behavior.
+  3) Use a full-view broad preset that explodes the Web2 revenue/receivables cohort back into individual firms.
+  4) Improve full-view marker and pill sizing using public dollar-volume signals where available.
+- Acceptance criteria:
+  - There is a standalone appendix full-view page where the first viewport is map 1 and scrolling reveals map 2.
+  - The standalone broad map uses individual Web2 revenue/receivables firms instead of the aggregate placeholder.
+  - Full-view modes use larger canvases and volume-scaled dots/pills.
+  - The existing embedded docs page remains available.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: `docs/plans/active/2026-03-06-standalone-full-map-views.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+    - `docs/plans/active/2026-03-06-standalone-full-map-views.md`
+    - `pages/_meta.js`
+    - `pages/appendix/_meta.js`
+    - `pages/appendix/index.mdx`
+    - `pages/appendix/full-view-maps.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+  - Constraints:
+    - preserve current embedded `attn-in-context` experience.
+    - do not revert unrelated uncommitted map changes already in the repo.
+    - keep appendix full-view route on the docs domain, but outside the normal docs-content frame.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshots of the standalone full-view page
+
+EXECUTOR
+- Implemented:
+  - Added new appendix docs discovery content:
+    - `pages/appendix/index.mdx`
+    - `pages/appendix/_meta.js`
+    - root sidebar entry in `pages/_meta.js`
+  - Added a standalone route outside the docs-content frame:
+    - `pages/appendix/full-view-maps.tsx`
+  - Extended `QuadrantScatterMap` with full-view presets:
+    - `revenue_receivables_zoom_full`
+    - `broad_detailed_full`
+  - Kept embedded docs behavior intact while adding:
+    - larger preset-driven canvas sizes
+    - volume-scaled markers and pill sizing in full-view modes
+    - detailed broad-map mode with individual Web2 revenue/receivables firms restored
+  - Added a discovery link from `pages/introduction/attn-in-context.mdx` to the appendix full-view route.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshots:
+    - `tmp/appendix-full-view-top-20260306-114043.png`
+    - `tmp/appendix-full-view-bottom-20260306-114043.png`
+    - `tmp/appendix-full-view-full-20260306-114043.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: standalone appendix full-view page exists and scrolls from map 1 into map 2.
+  - PASS: standalone broad map shows individual Web2 revenue/receivables firms instead of the aggregate placeholder.
+  - PASS: full-view presets use larger canvases and volume-scaled sizing.
+  - PASS: embedded docs page remains available.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-05 - attn-in-context: reduce Web2 aggregate label pill size
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested making the Web2 aggregate pill smaller after the prior enlargement.
+- Missing info/questions: none.
+- Type: feature/map styling
+- Status: completed
+- Context + suspected cause:
+  - The prior update made the aggregate pill too prominent versus nearby labels.
+- Fix intent:
+  1) Reduce project-specific label sizing parameters for `web2_revenue_receivables_aggregate`.
+  2) Keep marker size and all other labels unchanged.
+- Acceptance criteria:
+  - Aggregate pill and text are smaller than the current state.
+  - Other label styles remain unchanged.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - adjust only aggregate label metrics.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated broad map
+
+EXECUTOR
+- Implemented:
+  - Reduced the aggregate label override parameters for `web2_revenue_receivables_aggregate` (font, max width, and padding) from the prior enlarged setting.
+  - Kept aggregate marker size (`1.5x`) and all non-aggregate labels unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-aggregate-pill-smaller-broad-20260305-095658.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: aggregate pill/text is smaller than previous enlarged version.
+  - PASS: other labels remain unchanged.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-05 - attn-in-context: enlarge Web2 aggregate label pill
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested making the Web2 aggregate pill name larger.
+- Missing info/questions: none.
+- Type: feature/map styling
+- Status: completed
+- Context + suspected cause:
+  - The aggregate dot was increased to `1.5x`, but its label pill/font remained close to default broad-map sizing.
+- Fix intent:
+  1) Add a project-specific label metric override for `web2_revenue_receivables_aggregate`.
+  2) Increase pill/font sizing while keeping layout collision handling active.
+- Acceptance criteria:
+  - Aggregate label pill and text are visibly larger in broad map.
+  - Other labels remain unchanged.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - broad-map aggregate label only.
+    - keep existing repulsion/non-overlap mechanics.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated broad map
+
+EXECUTOR
+- Implemented:
+  - Added a project-specific label metric override for `web2_revenue_receivables_aggregate`.
+  - Increased aggregate label/pill sizing (`baseFont`, `minFont`, `maxPillWidth`, and padding) while preserving existing collision/repulsion placement logic.
+  - Left all other project label metrics unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-aggregate-pill-larger-broad-20260305-093415.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: aggregate label pill/text is visibly larger in broad map.
+  - PASS: other labels unchanged.
+  - PASS: build and knowledge checks pass.
+
+## 2026-03-04 - attn-in-context: enlarge Web2 aggregate node in broad map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User requested making `Web2 Rev/Rec Credit (Aggregate)` bigger, approximately `1.5x`.
+- Missing info/questions: none.
+- Type: feature/map styling
+- Status: completed
+- Context + suspected cause:
+  - Aggregate node was introduced for readability, but visually it is still the same base size as other broad-map points.
+- Fix intent:
+  1) Add a broad-map marker-size override for `web2_revenue_receivables_aggregate`.
+  2) Keep zoom-map scaling logic unchanged.
+- Acceptance criteria:
+  - Aggregate node renders at ~1.5x marker size in the broad map.
+  - Other broad-map points keep existing sizing.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - no changes to zoom-map sizing behavior.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated broad map
+
+EXECUTOR
+- Implemented:
+  - Added a broad-map marker scale constant (`BROAD_AGGREGATE_MARKER_SCALE = 1.5`).
+  - Applied the scale only when rendering `web2_revenue_receivables_aggregate` in non-zoom mode.
+  - Left revenue/receivables zoom sizing logic unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - Screenshot:
+    - `tmp/attn-in-context-aggregate-15x-broad-20260304-224826.png`
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS.
+  - PASS: aggregate node renders at ~1.5x size in broad map.
+  - PASS: other broad-map points keep existing sizing.
+  - PASS: build and knowledge checks pass.
+
 ## 2026-03-04 - attn-in-context: aggregate Web2 rev/receivables in broad map
 
 Checklist

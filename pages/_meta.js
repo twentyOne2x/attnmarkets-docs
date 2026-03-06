@@ -119,6 +119,9 @@ const meta = {
   tokenomics: {
     title: sectionTitle('Tokenomics')
   },
+  appendix: {
+    title: sectionTitle('Appendix')
+  },
   roadmap: {
     title: sectionTitle('Roadmap')
   }

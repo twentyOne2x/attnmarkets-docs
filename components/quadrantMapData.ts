@@ -457,31 +457,32 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     x: 0.79,
     y: 0.86,
     narrative:
-      "Payments-native business financing via dashboard offers, with repayment withheld from Stripe sales.",
+      "Payments-native business financing surfaced inside Stripe or Connect flows, with repayment captured from payment volume on Stripe rails.",
     creditModel:
-      "Business loans and/or merchant cash advances (MCA), typically repaid as a fixed percentage of Stripe sales.",
+      "Business loans, merchant cash advances, and in some US flows line-of-credit / flex-loan variants, repaid through Stripe-linked withholdings plus bank debits if minimums are missed.",
     borrowerType: "Business borrowers (Stripe merchants)",
     distributionModel: "Platform-native (Stripe ecosystem)",
     exampleClients: [
       "Stripe merchants in eligible markets (platform-native distribution).",
-      "Capital for platforms users in US/UK public preview (platform names not publicly listed in cited docs).",
+      "Connect platforms using Capital for platforms in US/UK public preview (platform names not publicly listed in cited docs).",
     ],
     b2b2smbReliance: [
-      "Provider clarity: per Stripe docs, loans are issued by Celtic Bank and MCAs are provided by YouLend or Stripe. Capital for platforms is a Stripe-distributed channel (US/UK preview); the platform is the distribution partner, not the lender.",
+      "Provider clarity: per Stripe docs, loans are issued by Celtic Bank and merchant cash advances are provided by YouLend or Stripe. Capital for platforms is a Stripe-run partner channel in US/UK public preview; the platform is the distribution partner, not the lender.",
     ],
     creditVolume: {
       display: "n/a",
-      basis: "Stripe Capital cumulative underwriting volume is not publicly disclosed.",
+      basis: "Stripe Capital public docs disclose product mechanics and business counts, but not a company-wide cumulative dollar-underwritten total.",
     },
     scale: [
-      "Stripe 2025 annual letter reports $1.9tn total payment volume across Stripe; Capital-specific cumulative underwriting totals are not disclosed.",
-      "Stripe Capital standalone financing volume/revenue/profit is not separately disclosed in the cited public docs.",
-      "Docs list Stripe Capital availability in AU, DE, FR, GB, US (availability varies by country).",
-      "Capital for platforms is described as public preview and only available in US and UK (docs).",
+      "Stripe said it provided financing to 76,000 businesses in 2025 (official blog, 2025-12-17).",
+      "Stripe 2025 annual letter reports $1.9tn total payment volume across Stripe; Capital-specific cumulative underwriting totals are still not publicly disclosed.",
+      "Docs list direct Stripe Capital availability in AU, DE, FR, GB, and US; Capital for platforms is public preview and limited to US/UK.",
+      "Capital for platforms reporting includes origination volume, average accepted financing offer, and lifetime fully repaid financing metrics in Dashboard.",
     ],
     why: [
-      "Repayment is collected from card/payment volume on Stripe rails, matching revenue-linked financing mechanics.",
-      "Offer distribution is embedded in Stripe Dashboard (Capital tab), with eligibility based on account/payment history.",
+      "Repayment is collected from payment volume on Stripe rails, matching the flow-capture model that matters for revenue-linked credit.",
+      "Stripe can underwrite from native Stripe data and, in Capital for platforms, imported non-Stripe payments data.",
+      "Offer distribution is embedded in the Stripe Dashboard or Capital components, with eligibility tied to account/payment history.",
     ],
     sources: [
       {
@@ -499,6 +500,18 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       {
         label: "How Capital for platforms works (docs)",
         url: "https://docs.stripe.com/capital/how-capital-for-platforms-works",
+      },
+      {
+        label: "Capital metrics (origination volume, accepted offer, fully repaid financing)",
+        url: "https://docs.stripe.com/capital/reporting",
+      },
+      {
+        label: "Import non-Stripe data into Capital underwriting",
+        url: "https://docs.stripe.com/capital/import-non-stripe-data",
+      },
+      {
+        label: "Stripe blog: 76,000 businesses financed in 2025",
+        url: "https://stripe.com/blog/businesses-grow-revenue-on-stripe-faster-after-accepting-financing-through-stripe-capital",
       },
     ],
     href: "https://stripe.com/capital",
@@ -659,31 +672,33 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     x: 0.29,
     y: 0.36,
     narrative:
-      "Working-capital and ecommerce funding for SMBs with fixed-fee structures and no equity dilution.",
+      "Working-capital lender for ecommerce brands and retailers, now centered on fixed-term loans and revolving credit rather than classic revenue-share structures.",
     creditModel:
-      "Revenue-linked or fixed-fee growth financing products for SMB operators.",
+      "Fixed-term working-capital loans and revolving line-of-credit products for SMB operators; Uncapped says it no longer offers revenue-based financing.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct originator",
     exampleClients: [
-      "MORI.",
-      "Hedoine.",
-      "Additional DTC/ecommerce brands via the Uncapped success-stories hub.",
+      "NutriPaw.",
+      "Nestig.",
+      "Vetevo.",
     ],
     b2b2smbReliance: [
       "Primarily direct B2SMB; no material B2B2SMB dependency is shown in cited sources.",
     ],
     creditVolume: {
       display: "n/a",
-      basis: "Public cumulative underwriting/deployed total not clearly disclosed.",
+      basis: "Public company-wide cumulative dollar-underwritten / deployed total is still not clearly disclosed.",
     },
     scale: [
-      "Current public pages emphasize product sizing (for example, offers from $100k to $2m).",
-      "Public cumulative underwriting/deployed total is not clearly disclosed on the cited pages.",
-      "Standalone revenue/profit is not publicly disclosed on the cited pages.",
+      "FAQ says Uncapped offers range from $10k to $10m depending on the business.",
+      "Current term-loan pages market funding from $100k to $2m for core working-capital use cases.",
+      "FAQ says term-loan pricing starts at 0.7% per month and line-of-credit APR starts at 10.99%.",
+      "Line-of-credit pages say Uncapped has funded thousands of ecommerce sellers since launching in 2019.",
+      "Public company-wide cumulative deployed total, revenue, and profit are still not clearly disclosed on the cited public pages.",
     ],
     why: [
-      "Business-borrower working-capital lane with structures that map to receivables financing patterns.",
-      "Useful comparator even though public cumulative scale disclosures are limited.",
+      "Still a business-borrower working-capital comparator, but today the product is closer to term-loan / revolving-credit servicing than classic RBF.",
+      "Relevant because underwriting relies on business performance data from merchant, banking, and accounting systems rather than consumer credit rails.",
     ],
     sources: [
       {
@@ -691,16 +706,24 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         url: "https://www.weareuncapped.com/",
       },
       {
-        label: "Uncapped FAQ hub",
-        url: "https://www.weareuncapped.com/faq-categories/all",
+        label: "Uncapped FAQ: funding types, pricing, and offer ranges",
+        url: "https://www.weareuncapped.com/faq-categories/accessing-funds",
+      },
+      {
+        label: "Uncapped line of credit page",
+        url: "https://www.weareuncapped.com/funding/line-of-credit",
+      },
+      {
+        label: "Uncapped blog: no more revenue-based financing",
+        url: "https://www.weareuncapped.com/blog/uncapped-remove-rbf-offering",
       },
       {
         label: "Uncapped success stories",
         url: "https://www.weareuncapped.com/success-stories/",
       },
       {
-        label: "Tech.eu: Uncapped customer examples (MORI, Hedoine)",
-        url: "https://tech.eu/2023/10/19/uncapped-secures-200m-to-expand-its-services-to-us-and-european-entrepreneurs/",
+        label: "Vetevo case study",
+        url: "https://www.weareuncapped.com/success-stories/vetevo",
       },
     ],
     href: "https://www.weareuncapped.com/",
