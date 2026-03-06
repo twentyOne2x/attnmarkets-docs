@@ -1,5 +1,185 @@
 # ISSUES
 
+## 2026-03-06 - appendix full-view maps: align page chrome with docs styling
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for the standalone appendix pages to be styled consistently with the rest of the docs.
+- Missing info/questions: none. Interpret this as aligning the page chrome, spacing, and typography with the docs site while preserving the standalone full-view-map behavior.
+- Type: feature/UI consistency
+- Status: completed
+- Context + suspected cause:
+  - `pages/appendix/full-view-maps.tsx` currently uses a custom full-screen marketing-style shell with gradients and bespoke header styling.
+  - The rest of the docs site uses a more restrained docs-like frame and typography.
+- Fix intent:
+  1) Remove the custom landing-style shell treatment.
+  2) Reframe the page with docs-like spacing, typography, and navigation styling.
+  3) Keep the standalone maps and smaller stage sizing intact.
+- Acceptance criteria:
+  - The appendix full-view page visually feels like part of the docs site rather than a separate microsite.
+  - The standalone map route still works and keeps the smaller in-viewport map sizing.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep route structure and map behavior unchanged.
+    - do not revert the smaller map stage sizing.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of restyled appendix page
+
+EXECUTOR
+- Implemented:
+  - Replaced the custom landing-style shell in `pages/appendix/full-view-maps.tsx` with a restrained docs-style layout.
+  - Kept the standalone route, navigation, and smaller stage sizing intact.
+  - Restyled the appendix page header, link pills, section cards, spacing, and typography to align better with the rest of the docs.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-docs-style-top-20260306.png`
+    - `tmp/appendix-full-view-docs-style-bottom-20260306.png`
+
+VERIFIER
+- PASS:
+  - The appendix full-view page now reads like a docs page rather than a separate microsite.
+  - The smaller standalone map sizing remains intact.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
+## 2026-03-06 - appendix full-view maps: second shrink pass for single-viewport fit
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for the standalone appendix maps to be made smaller again so they fit in the visible viewport rather than spilling below the fold.
+- Missing info/questions: none. Apply a tighter standalone stage cap and recheck on a laptop-like viewport.
+- Type: feature/layout polish
+- Status: completed
+- Context + suspected cause:
+  - The first shrink pass reduced the maps, but the broad map in particular still sits too tall for a 1440x950-ish viewport.
+  - The limiting factor is rendered width, since the SVG height scales from the card width.
+- Fix intent:
+  1) Reduce standalone stage width caps again.
+  2) Keep the embedded docs maps unchanged.
+  3) Re-screenshot on a laptop-like viewport to confirm.
+- Acceptance criteria:
+  - Both standalone map sections are visibly smaller than the first shrink pass.
+  - A laptop-height viewport shows substantially more of each section without immediate clipping.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - standalone appendix only.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot at around `1440x950`
+
+EXECUTOR
+- Implemented:
+  - Reduced standalone stage width caps again in `pages/appendix/full-view-maps.tsx`:
+    - revenue map: `min(100%, 840px, 80vh)`
+    - broad map: `min(100%, 900px, 84vh)`
+  - Left embedded docs maps untouched.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-top-compact-v3-20260306.png`
+    - `tmp/appendix-full-view-bottom-compact-v3-20260306.png`
+
+VERIFIER
+- PASS:
+  - Both standalone maps are visibly smaller than the previous shrink pass.
+  - The map bodies fit the viewport substantially better on a 1440x950 capture.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
+## 2026-03-06 - appendix full-view maps: shrink stage to fit single screen
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for the standalone appendix diagrams to be smaller so each one fits more comfortably within a single screen view.
+- Missing info/questions: none. Scope this to the standalone appendix page only.
+- Type: feature/layout polish
+- Status: completed
+- Context + suspected cause:
+  - The standalone map stage was recently expanded for breathing room.
+  - That expansion pushed the rendered map height beyond a single desktop viewport on common screen sizes.
+- Fix intent:
+  1) Reduce standalone map render width.
+  2) Slightly tighten full-view section chrome so more of the map fits above the fold.
+  3) Reduce full-view canvas heights from the enlarged pass so the visible map area is shorter.
+- Acceptance criteria:
+  - The standalone maps render materially smaller than the current live version.
+  - Each standalone section is more likely to fit within one desktop screen without immediate vertical spill.
+  - Embedded docs maps remain unchanged.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - only affect the standalone appendix full-view page/presets.
+    - keep mobile wrapping behavior intact.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - screenshot of updated standalone map size
+
+EXECUTOR
+- Implemented:
+  - Reduced standalone appendix map stage caps in `pages/appendix/full-view-maps.tsx`:
+    - revenue map: `min(100%, 980px, 92vh)`
+    - broad map: `min(100%, 1040px, 96vh)`
+  - Tightened standalone section chrome in `pages/appendix/full-view-maps.tsx`:
+    - smaller section padding/gap
+    - smaller section title/description sizing
+  - Reduced full-view preset canvas heights in `components/QuadrantScatterMap.tsx`:
+    - `revenue_receivables_zoom_full`: `1560 -> 1460`
+    - `broad_detailed_full`: `1740 -> 1580`
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-top-compact-v2-20260306.png`
+    - `tmp/appendix-full-view-bottom-compact-v2-20260306.png`
+
+VERIFIER
+- PASS:
+  - Standalone appendix maps render materially smaller than the current live version.
+  - On a 1440x950 viewport, each section is substantially closer to a single-screen read and no longer feels oversized.
+  - Embedded docs maps remain unchanged.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - appendix full-view maps: horizontal control row and more map breathing room
 
 Checklist

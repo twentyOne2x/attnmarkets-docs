@@ -13,6 +13,7 @@ const mapSections = [
       "Closest-comparator lane for attn. This full view keeps the map narrow in concept but large in canvas, so volume-scaled dots and pill labels are easier to read.",
     preset: "revenue_receivables_zoom_full" as const,
     maxWidth: 2880,
+    stageMaxWidth: "min(100%, 840px, 80vh)",
   },
   {
     id: "strategic-context",
@@ -22,6 +23,7 @@ const mapSections = [
       "Broader landscape with the Web2 revenue/receivables cohort exploded back into individual firms. Use this view for detailed positioning rather than compressed docs-page scanning.",
     preset: "broad_detailed_full" as const,
     maxWidth: 3080,
+    stageMaxWidth: "min(100%, 900px, 84vh)",
   },
 ];
 
@@ -36,233 +38,174 @@ export default function FullViewMapsPage() {
         />
       </Head>
 
-      <div className="shell">
-        <div className="ambient ambientA" aria-hidden="true" />
-        <div className="ambient ambientB" aria-hidden="true" />
+      <main className="page">
+        <div className="content">
+          <header className="pageHeader">
+            <div className="eyebrow">Appendix</div>
+            <h1>Full-view maps</h1>
+            <p className="lede">
+              Standalone map views for `attn in context`, kept outside the embedded docs frame so the map itself can stay readable.
+            </p>
+            <nav className="pageNav" aria-label="Full view map navigation">
+              <a href="#revenue-credit">Revenue map</a>
+              <a href="#strategic-context">Strategic map</a>
+              <Link href="/appendix">Appendix index</Link>
+              <Link href="/introduction/attn-in-context">Back to docs view</Link>
+            </nav>
+          </header>
 
-        <header className="topbar">
-          <div className="brandBlock">
-            <div className="brand">attn.markets</div>
-            <div className="subbrand">appendix // full-view maps</div>
+          <div className="sections">
+            {mapSections.map((section) => (
+              <section key={section.id} id={section.id} className="sectionCard">
+                <div className="sectionHeader">
+                  <p className="sectionEyebrow">{section.eyebrow}</p>
+                  <h2>{section.title}</h2>
+                  <p className="description">{section.description}</p>
+                </div>
+
+                <div className="mapStage" style={{ maxWidth: section.stageMaxWidth }}>
+                  <QuadrantScatterMap
+                    asOf={AS_OF}
+                    preset={section.preset}
+                    maxWidth={section.maxWidth}
+                  />
+                </div>
+              </section>
+            ))}
           </div>
-
-          <nav className="nav" aria-label="Map section navigation">
-            <a href="#revenue-credit">Map 1</a>
-            <a href="#strategic-context">Map 2</a>
-            <Link href="/appendix">Appendix</Link>
-            <Link href="/introduction/attn-in-context">Back to docs view</Link>
-          </nav>
-        </header>
-
-        <main className="scrollStack">
-          {mapSections.map((section) => (
-            <section key={section.id} id={section.id} className="panel">
-              <div className="panelHeader">
-                <p className="eyebrow">{section.eyebrow}</p>
-                <h1>{section.title}</h1>
-                <p className="description">{section.description}</p>
-              </div>
-
-              <div className="mapStage">
-                <QuadrantScatterMap
-                  asOf={AS_OF}
-                  preset={section.preset}
-                  maxWidth={section.maxWidth}
-                />
-              </div>
-            </section>
-          ))}
-        </main>
-      </div>
+        </div>
+      </main>
 
       <style jsx>{`
-        .shell {
-          --page-bg: #041018;
-          --page-bg-alt: #071e28;
-          --page-text: #e7f2f6;
-          --page-muted: rgba(231, 242, 246, 0.72);
-          --page-border: rgba(125, 182, 196, 0.24);
-          --page-accent: #84f0da;
+        .page {
           min-height: 100vh;
-          background:
-            radial-gradient(circle at top left, rgba(132, 240, 218, 0.16), transparent 32%),
-            radial-gradient(circle at 85% 18%, rgba(98, 146, 255, 0.16), transparent 30%),
-            linear-gradient(180deg, var(--page-bg) 0%, var(--page-bg-alt) 100%);
-          color: var(--page-text);
         }
 
-        .ambient {
-          position: fixed;
-          inset: auto;
-          pointer-events: none;
-          z-index: 0;
-          border-radius: 999px;
-          filter: blur(60px);
-          opacity: 0.44;
-        }
-
-        .ambientA {
-          width: 22rem;
-          height: 22rem;
-          top: 10vh;
-          left: -6rem;
-          background: rgba(132, 240, 218, 0.15);
-        }
-
-        .ambientB {
-          width: 26rem;
-          height: 26rem;
-          right: -8rem;
-          bottom: 10vh;
-          background: rgba(98, 146, 255, 0.14);
-        }
-
-        .topbar {
-          position: sticky;
-          top: 0;
-          z-index: 20;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 1rem;
-          padding: 1rem 1.25rem;
-          backdrop-filter: blur(16px);
-          background: linear-gradient(180deg, rgba(4, 16, 24, 0.9), rgba(4, 16, 24, 0.72));
-          border-bottom: 1px solid var(--page-border);
-        }
-
-        .brandBlock {
-          display: flex;
-          flex-direction: column;
-          gap: 0.18rem;
-        }
-
-        .brand {
-          font-size: 0.9rem;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          font-weight: 700;
-        }
-
-        .subbrand {
-          font-size: 0.72rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--page-muted);
-        }
-
-        .nav {
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          justify-content: flex-end;
-          gap: 0.65rem;
-        }
-
-        .nav :global(a) {
-          text-decoration: none;
-          color: var(--page-text);
-          border: 1px solid var(--page-border);
-          background: rgba(255, 255, 255, 0.04);
-          padding: 0.6rem 0.92rem;
-          border-radius: 999px;
-          font-size: 0.78rem;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          font-weight: 700;
-          transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
-        }
-
-        .nav :global(a:hover) {
-          border-color: rgba(132, 240, 218, 0.56);
-          background: rgba(132, 240, 218, 0.1);
-          color: var(--page-accent);
-        }
-
-        .scrollStack {
-          position: relative;
-          z-index: 1;
-        }
-
-        .panel {
-          min-height: 100vh;
-          padding: 1.4rem 1.2rem 2rem;
-          scroll-margin-top: 5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          justify-content: center;
-        }
-
-        .panelHeader {
-          max-width: none;
+        .content {
+          max-width: 1180px;
           margin: 0 auto;
-          width: 100%;
+          padding: 1.1rem 1rem 2.4rem;
         }
 
-        .eyebrow {
-          margin: 0 0 0.45rem;
-          color: var(--page-accent);
+        .pageHeader {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          padding-bottom: 1rem;
+          margin-bottom: 1rem;
+          border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+        }
+
+        .eyebrow,
+        .sectionEyebrow {
+          margin: 0;
+          font-size: 0.76rem;
+          line-height: 1.2;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
-          letter-spacing: 0.14em;
-          font-size: 0.78rem;
           font-weight: 700;
+          color: rgba(94, 234, 212, 0.92);
         }
 
         h1 {
           margin: 0;
-          font-size: clamp(1.9rem, 3vw, 3.2rem);
-          line-height: 0.94;
-          letter-spacing: -0.04em;
-          font-weight: 900;
-          max-width: none;
-          white-space: nowrap;
+          font-size: clamp(1.7rem, 2.2vw, 2.35rem);
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+          font-weight: 800;
+        }
+
+        .lede {
+          margin: 0;
+          max-width: 72ch;
+          font-size: 0.94rem;
+          line-height: 1.5;
+          color: rgba(226, 232, 240, 0.78);
+        }
+
+        .pageNav {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.55rem;
+          margin-top: 0.15rem;
+        }
+
+        .pageNav :global(a),
+        .pageNav a {
+          text-decoration: none;
+          color: inherit;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          background: rgba(15, 23, 42, 0.34);
+          padding: 0.48rem 0.82rem;
+          border-radius: 999px;
+          font-size: 0.78rem;
+          line-height: 1;
+          font-weight: 600;
+          transition: border-color 0.18s ease, background-color 0.18s ease;
+        }
+
+        .pageNav :global(a:hover),
+        .pageNav a:hover {
+          border-color: rgba(94, 234, 212, 0.42);
+          background: rgba(20, 184, 166, 0.09);
+        }
+
+        .sections {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .sectionCard {
+          scroll-margin-top: 5rem;
+          border: 1px solid rgba(148, 163, 184, 0.16);
+          border-radius: 20px;
+          background: rgba(15, 23, 42, 0.16);
+          padding: 0.95rem 0.95rem 1.05rem;
+          backdrop-filter: blur(10px);
+        }
+
+        .sectionHeader {
+          display: flex;
+          flex-direction: column;
+          gap: 0.28rem;
+          margin-bottom: 0.7rem;
+        }
+
+        h2 {
+          margin: 0;
+          font-size: clamp(1.45rem, 1.95vw, 2rem);
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+          font-weight: 800;
         }
 
         .description {
-          margin: 0.8rem 0 0;
-          max-width: none;
-          font-size: clamp(0.92rem, 0.92vw, 1.02rem);
-          line-height: 1.45;
-          color: var(--page-muted);
-          white-space: nowrap;
+          margin: 0;
+          font-size: 0.87rem;
+          line-height: 1.4;
+          color: rgba(226, 232, 240, 0.72);
         }
 
         .mapStage {
           width: 100%;
-        }
-
-        @media (min-width: 960px) {
-          .scrollStack {
-            scroll-snap-type: y proximity;
-          }
-
-          .panel {
-            scroll-snap-align: start;
-          }
+          margin: 0 auto;
         }
 
         @media (max-width: 900px) {
-          .topbar {
-            padding: 0.9rem 1rem;
+          .content {
+            padding: 0.9rem 0.7rem 1.6rem;
           }
 
-          .nav {
-            justify-content: flex-start;
+          .pageHeader {
+            gap: 0.42rem;
+            padding-bottom: 0.85rem;
+            margin-bottom: 0.85rem;
           }
 
-          .panel {
-            padding: 1rem 0.6rem 1.4rem;
-            min-height: auto;
-          }
-
-          h1 {
-            max-width: none;
-            white-space: normal;
-          }
-
-          .description {
-            white-space: normal;
+          .sectionCard {
+            padding: 0.8rem 0.7rem 0.85rem;
+            border-radius: 16px;
           }
         }
       `}</style>
