@@ -1,5 +1,64 @@
 # ISSUES
 
+## 2026-03-06 - appendix full-view maps: enlarge 15 percent and rebalance typography
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked for the standalone full-view maps to be 15% bigger, the legend item names to be 2x larger, and the top/bottom axis titles to be 25% smaller.
+- Missing info/questions: none. Scope the typography changes to standalone full-view mode so embedded docs maps remain unchanged.
+- Type: feature/layout polish
+- Status: completed
+- Context + suspected cause:
+  - The recent 30% size reduction overcorrected.
+  - The legend text is still relatively small versus the full-view canvas, while the top/bottom axis titles currently read too large.
+- Fix intent:
+  1) Increase standalone stage caps by 15% from their current values.
+  2) Double the full-view legend item label sizing.
+  3) Reduce full-view top/bottom axis-title sizing by 25%.
+- Acceptance criteria:
+  - Revenue map stage cap increases from `1036px` to about `1191px`.
+  - Strategic map stage cap increases from `1120px` to about `1288px`.
+  - Full-view legend item names render about 2x larger than before.
+  - Full-view top/bottom axis titles render about 25% smaller than before.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - standalone appendix only for the typography deltas; do not regress embedded docs map sizing.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshots of both standalone sections
+
+EXECUTOR
+- Implemented:
+  - Increased the standalone stage caps in `pages/appendix/full-view-maps.tsx` by 15%.
+  - Updated `components/QuadrantScatterMap.tsx` so full-view legend labels render at 2x size with slightly larger markers/rings.
+  - Reduced full-view top/bottom axis-title sizing from `38px` to `29px` while leaving embedded map typography unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-top-15pct-bigger-legend-2x-axis-25pct-smaller-20260306.png`
+    - `tmp/appendix-full-view-bottom-15pct-bigger-legend-2x-axis-25pct-smaller-20260306.png`
+
+VERIFIER
+- PASS:
+  - The standalone appendix maps render larger again without reverting to the oversized pass.
+  - Legend item names are materially larger in full-view mode, and the top/bottom axis titles are visibly reduced.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - appendix full-view maps: reduce standalone size by 30 percent
 
 Checklist

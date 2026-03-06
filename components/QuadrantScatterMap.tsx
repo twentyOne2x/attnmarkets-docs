@@ -3576,13 +3576,32 @@ export default function QuadrantScatterMap(props: {
           flex-wrap: wrap;
           align-items: center;
           justify-content: flex-end;
-          gap: 8px 14px;
-          padding: 7px 10px;
+          gap: 10px 18px;
+          padding: 10px 14px;
+          font-size: 24px;
         }
 
         .fullView .legendItem,
         .fullView .zoomHint {
           white-space: nowrap;
+        }
+
+        .fullView .legendItem {
+          gap: 10px;
+          font-size: 24px;
+          font-weight: 700;
+        }
+
+        .fullView .legendItem :global(svg) {
+          width: 18px;
+          height: 18px;
+          flex: 0 0 auto;
+        }
+
+        .fullView .potentialRing {
+          width: 18px;
+          height: 18px;
+          border-width: 3px;
         }
 
         .tooltip {
@@ -3853,6 +3872,10 @@ export default function QuadrantScatterMap(props: {
           .fullView .taxonomyHint {
             white-space: nowrap;
           }
+        }
+
+        .fullView .axisTitleOutside {
+          font-size: 29px;
         }
       `}</style>
     </div>
