@@ -1,5 +1,63 @@
 # ISSUES
 
+## 2026-03-06 - appendix full-view maps: reduce map and legend sizing by 30 percent
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User asked to shrink the standalone map size and legend sizing by 30% from the current state, then commit/push.
+- Missing info/questions: none. Keep the current axis-title sizing and only reduce the map stage caps plus full-view legend sizing.
+- Type: feature/layout polish
+- Status: completed
+- Context + suspected cause:
+  - The latest 15% enlargement and 2x legend pass overshot.
+  - The user wants the maps and legend backed off without changing the rest of the full-view styling.
+- Fix intent:
+  1) Reduce the standalone map stage caps by 30% from their current values.
+  2) Reduce the full-view legend typography and marker sizing by 30%.
+  3) Leave the axis-title reduction intact.
+- Acceptance criteria:
+  - Revenue map stage cap drops from `1191px` to about `834px`.
+  - Strategic map stage cap drops from `1288px` to about `902px`.
+  - Full-view legend labels, icon sizes, and spacing are materially reduced by about 30%.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `pages/appendix/full-view-maps.tsx`
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - standalone appendix only; keep axis-title sizing and embedded docs behavior unchanged.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshots of both standalone sections
+
+EXECUTOR
+- Implemented:
+  - Reduced the standalone stage caps in `pages/appendix/full-view-maps.tsx` from `1191px/1288px` to `834px/902px`.
+  - Reduced full-view legend text, spacing, and marker sizing in `components/QuadrantScatterMap.tsx` by about 30%.
+  - Left the axis-title reduction and embedded docs behavior unchanged.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-top-map-legend-30pct-smaller-20260306.png`
+    - `tmp/appendix-full-view-bottom-map-legend-30pct-smaller-20260306.png`
+
+VERIFIER
+- PASS:
+  - The standalone maps and full-view legend are materially smaller than the previous live state.
+  - The axis-title sizing remains unchanged from the prior pass.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - appendix full-view maps: enlarge 15 percent and rebalance typography
 
 Checklist

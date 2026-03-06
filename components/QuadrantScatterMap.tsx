@@ -3576,9 +3576,9 @@ export default function QuadrantScatterMap(props: {
           flex-wrap: wrap;
           align-items: center;
           justify-content: flex-end;
-          gap: 10px 18px;
-          padding: 10px 14px;
-          font-size: 24px;
+          gap: 7px 13px;
+          padding: 7px 10px;
+          font-size: 17px;
         }
 
         .fullView .legendItem,
@@ -3587,21 +3587,21 @@ export default function QuadrantScatterMap(props: {
         }
 
         .fullView .legendItem {
-          gap: 10px;
-          font-size: 24px;
+          gap: 7px;
+          font-size: 17px;
           font-weight: 700;
         }
 
         .fullView .legendItem :global(svg) {
-          width: 18px;
-          height: 18px;
+          width: 13px;
+          height: 13px;
           flex: 0 0 auto;
         }
 
         .fullView .potentialRing {
-          width: 18px;
-          height: 18px;
-          border-width: 3px;
+          width: 13px;
+          height: 13px;
+          border-width: 2px;
         }
 
         .tooltip {
