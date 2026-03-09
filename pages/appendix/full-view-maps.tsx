@@ -16,8 +16,18 @@ const mapSections = [
     stageMaxWidth: "959px",
   },
   {
-    id: "strategic-context",
+    id: "credit-only",
     eyebrow: "Appendix / Full View 02",
+    title: "Credit-Only Landscape",
+    description:
+      "Bridge view: the full revenue and receivables cohort plus the broader reputation-based credit firms, without spend, treasury, or settlement-only narratives.",
+    preset: "credit_only_full" as const,
+    maxWidth: 3000,
+    stageMaxWidth: "1037px",
+  },
+  {
+    id: "strategic-context",
+    eyebrow: "Appendix / Full View 03",
     title: "Strategic Credit, Spend & Settlement",
     description:
       "Broader competitive surface with the Web2 revenue and receivables cohort exploded back into individual firms for full-surface scanning.",

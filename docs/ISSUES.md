@@ -1,5 +1,69 @@
 # ISSUES
 
+## 2026-03-09 - attn in context: add a credit-only middle map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants a new second diagram that is credit-only: the first diagram’s revenue/receivables cohort plus the reputation-based credit firms from the current broad map, with the existing broad map moved to third.
+- Missing info/questions: none. Use the existing `market_credit_debt` cluster membership from the broad map (`wildcat`, `threejane`, `claw`, `yumi`) as the additional reputation-based credit set.
+- Type: feature/map taxonomy
+- Status: completed
+- Context + suspected cause:
+  - The current jump from the narrow revenue/receivables map straight to the full strategic context map is too wide.
+  - A credit-only middle layer will bridge direct comparators and adjacent credit-native protocols before introducing spend/settlement narratives.
+- Fix intent:
+  1) Add a new `credit_only` preset (and full-view variant) in `QuadrantScatterMap.tsx`.
+  2) Insert the new credit-only diagram as the second map in `attn in context`.
+  3) Move the current broad strategic map to third in both the docs page and the full-view appendix page.
+- Acceptance criteria:
+  - `attn in context` has three diagrams in order: revenue/receivables, credit-only, strategic broad.
+  - The new credit-only map contains the revenue/receivables cohort plus `wildcat`, `threejane`, `claw`, and `yumi`.
+  - The standalone appendix full-view page reflects the same three-map order.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `pages/appendix/full-view-maps.tsx`
+    - `pages/appendix/index.mdx` if explanatory copy needs refresh
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep the existing broad map available as the third diagram.
+    - use existing project data and broad-map axes for the new middle map.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshots of the new second map and the reordered full-view page
+
+EXECUTOR
+- Implemented:
+  - Added `credit_only` and `credit_only_full` presets in `components/QuadrantScatterMap.tsx` using the revenue/receivables cohort plus the broad-map `Reputation-based credit` cluster (`wildcat`, `threejane`, `claw`, `yumi`).
+  - Inserted the new `Credit-only landscape` map as the second diagram in `pages/introduction/attn-in-context.mdx` and moved the existing broad strategic map to third.
+  - Updated `pages/appendix/full-view-maps.tsx` and `pages/appendix/index.mdx` so the standalone appendix page follows the same three-map order.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/attn-in-context-credit-only-middle-map-20260309.png`
+    - `tmp/appendix-full-view-credit-only-second-map-20260309.png`
+  - DOM order proof:
+    - embedded page h2 order includes `Revenue & receivables credit (zoom-in)`, `Credit-only landscape`, `Wider strategic credit, spend, and settlement map`
+    - standalone section order includes `Revenue & Receivables Credit`, `Credit-Only Landscape`, `Strategic Credit, Spend & Settlement`
+
+VERIFIER
+- PASS:
+  - The docs page now has a credit-only bridge map between the narrow comparator lane and the broad strategic map.
+  - The standalone appendix page mirrors the same three-map order.
+  - `npm run build` and `python3 scripts/knowledge_check.py` passed.
+
 ## 2026-03-06 - docs links: use absolute appendix full-view maps route
 
 Checklist

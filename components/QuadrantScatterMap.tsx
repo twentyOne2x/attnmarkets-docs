@@ -6,6 +6,8 @@ import { PROJECTS, type ExecutionPlane, type ProjectInfo } from "./quadrantMapDa
 
 type QuadrantPreset =
   | "broad"
+  | "credit_only"
+  | "credit_only_full"
   | "revenue_receivables_zoom"
   | "revenue_receivables_zoom_full"
   | "broad_detailed_full";
@@ -1490,6 +1492,36 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
   },
 ];
 
+const CREDIT_ONLY_ADJACENT_PROJECT_IDS = ["wildcat", "threejane", "claw", "yumi"] as const;
+const CREDIT_ONLY_PROJECT_IDS = [
+  ...REVENUE_RECEIVABLES_PROJECT_IDS,
+  ...CREDIT_ONLY_ADJACENT_PROJECT_IDS,
+] as const;
+
+const CREDIT_ONLY_CLUSTER_DEFS: ClusterDef[] = [
+  {
+    id: "entity_credit",
+    label: "Revenue & Receivables Credit",
+    oneLiner: "Revenue-linked business financing repaid from routed sales or receivables.",
+    stroke: "#2f6fdf",
+    fill: "#d6e5ff",
+    dash: "10 8",
+    connectivity: 0.45,
+    labelPlacement: "bottom-right",
+    projectIds: [...REVENUE_RECEIVABLES_PROJECT_IDS],
+  },
+  {
+    id: "market_credit_debt",
+    label: "Reputation-based credit",
+    oneLiner: "Credit models leaning on market/reputation signals over hard cashflow capture.",
+    stroke: "#5f66a8",
+    fill: "#dde2ff",
+    dash: "4 5",
+    connectivity: 0.68,
+    projectIds: [...CREDIT_ONLY_ADJACENT_PROJECT_IDS],
+  },
+];
+
 const EMBEDDED_BROAD_EXCLUDED_PROJECT_IDS = new Set([
   ...SOLANA_MERCHANT_PROJECT_IDS,
   ...WEB2_REVENUE_RECEIVABLES_MEMBER_IDS,
@@ -1547,6 +1579,7 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
   const detailedBroadProjects = Object.values(PROJECTS).filter(
     (p) => p.id !== "xitadel" && !FULL_BROAD_EXCLUDED_PROJECT_IDS.has(p.id),
   );
+  const creditOnlyProjectsBase = CREDIT_ONLY_PROJECT_IDS.map((id) => PROJECTS[id]);
 
   if (preset === "revenue_receivables_zoom" || preset === "revenue_receivables_zoom_full") {
     const projects = REVENUE_RECEIVABLES_PROJECT_IDS.map((id) => {
@@ -1641,6 +1674,51 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
     };
   }
 
+  if (preset === "credit_only" || preset === "credit_only_full") {
+    const projects = creditOnlyProjectsBase.map((project) => {
+      if (preset !== "credit_only_full") return project;
+      const override = BROAD_DETAILED_FULL_COORD_OVERRIDES[project.id];
+      return override ? { ...project, x: override.x, y: override.y } : project;
+    });
+
+    return {
+      title:
+        preset === "credit_only_full"
+          ? `Credit-Only Landscape Map (Full View) — as of ${asOf}`
+          : `Credit-Only Landscape Map — as of ${asOf}`,
+      hint:
+        preset === "credit_only_full"
+          ? `Standalone credit-only view: revenue/receivables comparators plus adjacent reputation-based credit firms. Showing ${projects.length} projects.`
+          : `Bridge view: direct revenue/receivables comparators plus adjacent reputation-based credit firms. Showing ${projects.length} projects.`,
+      taxonomyHint:
+        "Credit-only cut: includes revenue/receivables credit plus adjacent credit-native protocols, while excluding spend, treasury, payments, and settlement-only narratives.",
+      ariaLabel: `Credit-only landscape map (as of ${asOf})`,
+      axisTopTitle: "Back-end infrastructure",
+      axisBottomTitle: "User-facing distribution",
+      leftAxisText: "← Reputation / legal",
+      rightAxisText: "Programmatic controls →",
+      axisSideLabelFontSize: preset === "credit_only_full" ? 56 : 46,
+      axisSideLabelYOffset: preset === "credit_only_full" ? -28 : -26,
+      labelFontSize: preset === "credit_only_full" ? 28 : 24,
+      markerSize: preset === "credit_only_full" ? 38 : 34,
+      applyHardLabelLocks: true,
+      allowSingletonClusterZones: false,
+      splitDisconnectedClusterZones: true,
+      clusterZonePadding: preset === "credit_only_full" ? 12 : 10,
+      clusterFillOpacity: 0.18,
+      clusterStrokeOpacity: 0.92,
+      clusterStrokeWidth: preset === "credit_only_full" ? 2.8 : 2.6,
+      canvasWidth: preset === "credit_only_full" ? 2180 : 1600,
+      canvasHeight: preset === "credit_only_full" ? 1500 : 1260,
+      enableVolumeScaledMarkers: true,
+      enableVolumeScaledLabels: preset === "credit_only_full",
+      relaxProjectPositions: true,
+      projects,
+      clusterDefs: CREDIT_ONLY_CLUSTER_DEFS,
+      defaultShowClusters: true,
+    };
+  }
+
   return {
     title: `Strategic Credit, Spend & Settlement Map — as of ${asOf}`,
     hint: `Hover for details. Click a dot to pin. Esc clears. Showing ${embeddedBroadProjects.length} projects.`,
@@ -1683,7 +1761,9 @@ export default function QuadrantScatterMap(props: {
   const maxWidth = props.maxWidth ?? 2200;
   const preset = props.preset ?? "broad";
   const isStandaloneFullView =
-    preset === "revenue_receivables_zoom_full" || preset === "broad_detailed_full";
+    preset === "revenue_receivables_zoom_full" ||
+    preset === "credit_only_full" ||
+    preset === "broad_detailed_full";
   const config = useMemo(() => getPresetConfig(preset, asOf), [preset, asOf]);
 
   const projects = useMemo(() => config.projects, [config.projects]);
