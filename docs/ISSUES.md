@@ -1,5 +1,65 @@
 # ISSUES
 
+## 2026-03-09 - attn in context: retitle and remap the middle credit map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the new middle map regenerated with a clearer title and new business-credit axes so the visual matches the intended story.
+- Missing info/questions: none. Use the already-agreed framing: title `Business Credit Models`, Y-axis as `live revenue / receivables` vs `borrower reputation / balance sheet`, X-axis as `reputation / unsecured` vs `cash-flow captured / programmable`.
+- Type: feature/map framing
+- Status: completed
+- Context + suspected cause:
+  - The current middle-map framing still inherits the broader strategic-map axes, so it does not read as a purpose-built business-credit comparison.
+  - The map needs a direct commercial framing, not an infrastructure/distribution framing.
+- Fix intent:
+  1) Retitle the middle map to `Business Credit Models` in embedded and full-view surfaces.
+  2) Remap the middle preset axes to underwriting basis and repayment enforceability.
+  3) Refresh the docs copy and appendix nav so the new middle map is legible and reachable.
+- Acceptance criteria:
+  - The second map on `attn in context` is titled `Business credit models`.
+  - The `credit_only` preset uses the new credit-model axes instead of infrastructure/distribution axes.
+  - The appendix full-view page uses `Business Credit Models` for the second section and links to it from the page nav.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured for the updated middle map.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep the same firms in the middle map; only retitle and reframe the map.
+    - leave map 1 and map 3 taxonomies intact.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the updated middle map
+
+EXECUTOR
+- Implemented:
+  - Retitled the middle preset and both page sections to `Business Credit Models`.
+  - Remapped the middle map axes to compare underwriting basis (`live revenue / receivables` vs `borrower reputation / balance sheet`) and repayment enforceability (`reputation / unsecured` vs `cash-flow captured / programmable`).
+  - Updated the appendix full-view nav and page copy so the second map is discoverable and described in the new framing.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/attn-in-context-business-credit-models-20260309.png`
+    - `tmp/appendix-full-view-business-credit-models-20260309.png`
+
+VERIFIER
+- PASS:
+  - The middle map now reads as a business-credit comparison instead of reusing the broad strategic-map axes.
+  - Embedded and full-view titles are aligned to the same framing.
+
 ## 2026-03-09 - attn in context: add a credit-only middle map
 
 Checklist

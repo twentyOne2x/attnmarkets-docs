@@ -18,9 +18,9 @@ const mapSections = [
   {
     id: "credit-only",
     eyebrow: "Appendix / Full View 02",
-    title: "Credit-Only Landscape",
+    title: "Business Credit Models",
     description:
-      "Bridge view: the full revenue and receivables cohort plus the broader reputation-based credit firms, without spend, treasury, or settlement-only narratives.",
+      "Bridge view for business credit: compare underwriting basis and repayment enforceability across the revenue and receivables cohort plus adjacent reputation-based credit firms.",
     preset: "credit_only_full" as const,
     maxWidth: 3000,
     stageMaxWidth: "1037px",
@@ -44,7 +44,7 @@ export default function FullViewMapsPage() {
         <title>attn full-view maps</title>
         <meta
           name="description"
-          content="Standalone full-view maps for attn in context: revenue and receivables credit plus the strategic credit, spend, and settlement landscape."
+          content="Standalone full-view maps for attn in context: revenue and receivables credit, business credit models, and the strategic credit, spend, and settlement landscape."
         />
       </Head>
 
@@ -60,6 +60,7 @@ export default function FullViewMapsPage() {
 
             <nav className="nav" aria-label="Map section navigation">
               <a href="#revenue-credit">Revenue map</a>
+              <a href="#credit-only">Credit map</a>
               <a href="#strategic-context">Strategic map</a>
               <Link href="/appendix">Appendix</Link>
               <Link href="/introduction/attn-in-context">Back to docs view</Link>
