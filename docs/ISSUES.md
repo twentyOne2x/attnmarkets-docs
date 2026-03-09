@@ -1,5 +1,63 @@
 # ISSUES
 
+## 2026-03-09 - business credit map: replace slash-heavy axis labels
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the `Business Credit Models` map axes rewritten without slash-heavy phrasing because the current labels are overloaded and hard to parse.
+- Missing info/questions: none. Use shorter concept labels that preserve the meaning of underwriting basis and repayment-control structure.
+- Type: feature/copy framing
+- Status: completed
+- Context + suspected cause:
+  - The current axis labels bundle multiple concepts into each endpoint, which makes the map harder to read at a glance.
+  - `Borrower reputation / balance sheet` in particular conflates different underwriting inputs.
+- Fix intent:
+  1) Replace the middle-map axes with simpler single-concept labels.
+  2) Update the surrounding docs copy to explain the new framing without slash-heavy text.
+  3) Re-screenshot the updated map.
+- Acceptance criteria:
+  - The middle map no longer uses slash-heavy axis endpoint labels.
+  - The new labels are visibly simpler and map to the same two underlying questions: what is underwritten, and how repayment is secured.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `pages/appendix/full-view-maps.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep the same map composition and title.
+    - only simplify the axes/copy framing.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the updated map
+
+EXECUTOR
+- Implemented:
+  - Replaced the middle-map axes with `Cash-flow underwriting`, `Borrower underwriting`, `Behavior-based repayment`, and `Flow-based repayment`.
+  - Updated the docs copy to explain the same framing using `what gets underwritten` and `how repayment is secured`.
+  - Captured a fresh screenshot of the updated map.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshot:
+    - `tmp/appendix-full-view-business-credit-models-simple-axes-20260309.png`
+
+VERIFIER
+- PASS:
+  - The `Business Credit Models` map now uses cleaner axis labels without overloaded slash phrasing.
+  - The meaning of the map remains intact and is easier to scan.
+
 ## 2026-03-09 - attn in context: retitle and remap the middle credit map
 
 Checklist

@@ -20,7 +20,7 @@ const mapSections = [
     eyebrow: "Appendix / Full View 02",
     title: "Business Credit Models",
     description:
-      "Bridge view for business credit: compare underwriting basis and repayment enforceability across the revenue and receivables cohort plus adjacent reputation-based credit firms.",
+      "Bridge view for business credit: compare what gets underwritten and how repayment is secured across the revenue and receivables cohort plus adjacent reputation-based credit firms.",
     preset: "credit_only_full" as const,
     maxWidth: 3000,
     stageMaxWidth: "1037px",

@@ -1688,15 +1688,15 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
           : `Business Credit Models Map — as of ${asOf}`,
       hint:
         preset === "credit_only_full"
-          ? `Standalone business-credit view: compare underwriting basis and repayment enforceability across revenue/receivables firms and adjacent reputation-based credit models. Showing ${projects.length} projects.`
-          : `Bridge view: compare underwriting basis and repayment enforceability across revenue/receivables firms and adjacent reputation-based credit models. Showing ${projects.length} projects.`,
+          ? `Standalone business-credit view: compare what gets underwritten and how repayment is secured across revenue-linked firms and adjacent borrower-led credit models. Showing ${projects.length} projects.`
+          : `Bridge view: compare what gets underwritten and how repayment is secured across revenue-linked firms and adjacent borrower-led credit models. Showing ${projects.length} projects.`,
       taxonomyHint:
         "Business-credit cut: includes revenue/receivables credit plus adjacent credit-native protocols, while excluding spend, treasury, payments, and settlement-only narratives.",
       ariaLabel: `Business credit models map (as of ${asOf})`,
-      axisTopTitle: "Live revenue / receivables",
-      axisBottomTitle: "Borrower reputation / balance sheet",
-      leftAxisText: "← Reputation / unsecured",
-      rightAxisText: "Cash-flow captured / programmable →",
+      axisTopTitle: "Cash-flow underwriting",
+      axisBottomTitle: "Borrower underwriting",
+      leftAxisText: "← Behavior-based repayment",
+      rightAxisText: "Flow-based repayment →",
       axisSideLabelFontSize: preset === "credit_only_full" ? 56 : 46,
       axisSideLabelYOffset: preset === "credit_only_full" ? -28 : -26,
       labelFontSize: preset === "credit_only_full" ? 28 : 24,
