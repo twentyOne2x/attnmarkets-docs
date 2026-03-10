@@ -1,5 +1,66 @@
 # ISSUES
 
+## 2026-03-10 - strategic map: add Virtuals and Sprinter with sourced placement
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants `Virtuals` added to the map set and then asked to add `Sprinter` as well. The defensible scope is to add both to the wider strategic map, with `Virtuals` marked as a potential client and `Sprinter` placed as credit infrastructure.
+- Missing info/questions: none. The user-provided `Virtuals` X post text appears to describe a later revenue milestone than the current system date (`2026-03-10`), so placement will rely on currently accessible official Virtuals docs/whitepaper plus the user-provided context, not on an unverified future-dated social claim.
+- Type: feature/map taxonomy
+- Status: completed
+- Context + suspected cause:
+  - The current strategic map has no explicit `Virtuals` entry even though the repo now indexes the broader Artemis agentic-commerce ecosystem.
+  - The current map also leaves the `Embedded Credit Rails` cluster effectively unused, despite `Sprinter` now publicly positioning itself as a credit engine/API.
+- Fix intent:
+  1) Add `Virtuals` to the strategic map as an agent-commerce surface and potential client, backed by official Virtuals sources.
+  2) Add `Sprinter` to the strategic map as embedded credit infrastructure, backed by official Sprinter sources.
+  3) Update the written taxonomy so the docs narrative matches the map placements.
+- Acceptance criteria:
+  - `Virtuals` appears on the wider strategic map and is marked as a potential client.
+  - `Sprinter` appears on the wider strategic map with hover/source metadata.
+  - The strategic-map cluster labels and/or narrative copy remain coherent after the additions.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - do not force `Virtuals` into the business-credit map.
+    - do not rely on a future-dated or otherwise unverified revenue number for sizing.
+    - keep the written narrative aligned with the cluster logic.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the strategic map
+
+EXECUTOR
+- Implemented:
+  - Added `Virtuals` as an agent-commerce surface and potential client on the wider strategic map, using current official Virtuals docs/whitepaper for placement rather than relying on the user-provided future-dated social metric.
+  - Added `Sprinter` as strategic embedded credit infrastructure with official site/blog/docs links.
+  - Updated strategic cluster labeling so the agent-surface cluster reflects commerce + spend, and updated the written taxonomy in `attn in context` to include both new names.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshot:
+    - `tmp/appendix-full-view-strategic-virtuals-sprinter-20260310.png`
+
+VERIFIER
+- PASS:
+  - `Virtuals` now appears on the strategic map as a potential client, and its hover data explains why it is treated as an agent-commerce surface rather than as a direct credit protocol.
+  - `Sprinter` now appears on the strategic map with sourced credit-infrastructure positioning.
+  - The written taxonomy now matches the updated map placement.
+
 ## 2026-03-10 - appendix: index the Artemis agentic commerce market map
 
 Checklist

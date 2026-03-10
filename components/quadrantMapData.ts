@@ -1139,6 +1139,44 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://www.yumi.finance/",
   },
 
+  sprinter: {
+    id: "sprinter",
+    label: "sprinter.tech",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.59,
+    y: 0.71,
+    narrative:
+      "Onchain credit engine and API, evolved from crosschain solver infrastructure, positioning productive-collateral-backed credit for apps, businesses, and autonomous agents.",
+    creditModel:
+      "Embedded credit rails and credit-line infrastructure backed by productive collateral; broader than revenue-sweep-led business financing.",
+    borrowerType: "Applications, businesses, and autonomous agents",
+    distributionModel: "B2B API + embedded credit engine",
+    exampleClients: ["Public named live integrators are not enumerated in the cited sources."],
+    b2b2smbReliance: ["No public B2B2SMB distribution network is described in the cited sources."],
+    why: [
+      "Public positioning is that of a credit engine/API rather than a consumer or merchant-facing surface.",
+      "The current public materials fit better in strategic credit infrastructure than in the tighter business-credit comparator lane.",
+    ],
+    sources: [
+      { label: "Sprinter site", url: "https://sprinter.tech/" },
+      {
+        label: "Sprinter blog: Credit runs on Sprinter",
+        url: "https://blog.sprinter.tech/credit-runs-on-sprinter/",
+      },
+      {
+        label: "Sprinter docs: borrower get started",
+        url: "https://docs.sprinter.tech/borrower/get-started",
+      },
+      {
+        label: "Sprinter docs: lender get started",
+        url: "https://docs.sprinter.tech/lender/get-started",
+      },
+    ],
+    href: "https://blog.sprinter.tech/credit-runs-on-sprinter/",
+  },
+
   claw: {
     id: "claw",
     label: "claw.credit",
@@ -1509,6 +1547,56 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     ],
     sources: [{ label: "Sponge site", url: "https://paysponge.com/" }],
     href: "https://paysponge.com/",
+  },
+
+  virtuals: {
+    id: "virtuals",
+    label: "virtuals.io",
+    stack: "User-facing distribution",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    potentialClient: true,
+    x: 0.58,
+    y: 0.4,
+    narrative:
+      "Agent-commerce network and protocol where buyers and agents transact for real services using onchain wallets, escrow, and settlement flows.",
+    creditModel:
+      "Not a lender/originator; monetized agent-service surface that could consume working-capital or settlement-liquidity back ends once agent revenue is routable.",
+    borrowerType: "Agent builders, autonomous agents, and buyers of agent services",
+    distributionModel: "Agent network + commerce protocol + builder platform",
+    exampleClients: [
+      "Buyer agents sourcing services from seller agents through ACP flows.",
+      "Builders launching tokenized or non-tokenized agents on Virtuals.",
+    ],
+    b2b2smbReliance: [
+      "Public Virtuals ACP docs describe Privy-managed Butler wallets; no public Squads dependency is described in the cited sources.",
+    ],
+    infra: {
+      privy: "Yes",
+      squads: "No public evidence",
+      asOf: "2026-03-10",
+      note: "Virtuals ACP/Butler wallet docs describe managed wallets via Privy.",
+    },
+    why: [
+      "This is better understood as an agent-commerce and monetization surface than as a pure credit protocol.",
+      "If agent revenue becomes stable and routable, it is a plausible downstream consumer of credit and servicing back ends.",
+    ],
+    sources: [
+      { label: "Virtuals site", url: "https://www.virtuals.io/" },
+      {
+        label: "Virtuals whitepaper: ACP overview",
+        url: "https://whitepaper.virtuals.io/agent-commerce-protocol/agent-commerce-protocol-acp-overview",
+      },
+      {
+        label: "Virtuals whitepaper: buyers and sellers",
+        url: "https://whitepaper.virtuals.io/agent-commerce-protocol-acp/agent-commerce-protocol/buyers-and-sellers",
+      },
+      {
+        label: "Virtuals whitepaper: Butler wallets",
+        url: "https://whitepaper.virtuals.io/agent-commerce-protocol-acp/use-cases-butler/butler-wallets",
+      },
+    ],
+    href: "https://www.virtuals.io/",
   },
 
   slash: {
