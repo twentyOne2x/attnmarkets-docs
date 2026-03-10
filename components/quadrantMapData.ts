@@ -1536,6 +1536,61 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://www.slash.com/",
   },
 
+  natural: {
+    id: "natural",
+    label: "natural.co",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "hybrid",
+    x: 0.72,
+    y: 0.54,
+    narrative:
+      "Agentic money-movement platform spanning wallets, payments, ledgering, routing, identity, compliance, observability, risk, and credit.",
+    creditModel:
+      "Agent payments platform with revolving credit as an integrated product, not a standalone revenue-linked credit protocol.",
+    borrowerType: "Businesses, agents, and counterparties",
+    distributionModel: "API and dashboard platform for agent developers and businesses",
+    exampleClients: [
+      "Property-management workflows paying contractors and vendors.",
+      "Marketing automation workflows paying creators and affiliates.",
+      "Freight and logistics workflows paying carriers.",
+    ],
+    b2b2smbReliance: ["No public B2B2SMB partner network is described in the cited sources."],
+    infra: {
+      privy: "No public evidence",
+      squads: "No public evidence",
+      asOf: "2026-03-10",
+      note: "Natural public docs reviewed for launch, products, concepts, and compliance do not cite Privy or Squads.",
+    },
+    why: [
+      "Natural is broader than a single payment or wallet tool: it combines pay, wallet, compliance, subledgering, and planned credit for agent workflows.",
+      "Its control posture is policy- and API-driven, with regulated onboarding and transaction monitoring rather than pure UI distribution.",
+    ],
+    sources: [
+      {
+        label: "Introducing Natural",
+        url: "https://www.natural.co/blog/introducing-natural",
+      },
+      {
+        label: "Natural docs: Pay",
+        url: "https://docs.natural.co/guides/products/pay",
+      },
+      {
+        label: "Natural docs: Credit",
+        url: "https://docs.natural.co/guides/products/credit",
+      },
+      {
+        label: "Natural docs: Parties",
+        url: "https://docs.natural.co/guides/concepts/parties",
+      },
+      {
+        label: "Natural docs: Compliance",
+        url: "https://docs.natural.co/guides/overview/compliance",
+      },
+    ],
+    href: "https://www.natural.co/blog/introducing-natural",
+  },
+
   altitude: {
     id: "altitude",
     label: "Squads Altitude",

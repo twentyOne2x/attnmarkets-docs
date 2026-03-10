@@ -1,5 +1,64 @@
 # ISSUES
 
+## 2026-03-10 - attn in context: add Natural to the strategic map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants `Natural` added to the map set.
+- Missing info/questions: none. Based on the linked launch post and docs, place `Natural` on the wider strategic map only, not the pure business-credit map.
+- Type: feature/map taxonomy
+- Status: completed
+- Context + suspected cause:
+  - Natural launched publicly on 2026-03-10 as an agentic payments platform spanning wallet, pay, identity, compliance, observability, risk, and credit.
+  - It is broader than a pure credit protocol, so adding it to the business-credit map would muddy that map's scope.
+- Fix intent:
+  1) Add `Natural` as a first-class project with hover/source metadata.
+  2) Place it in the wider strategic map under the agent-native money/spend narrative.
+  3) Update the narrative list and capture a fresh screenshot.
+- Acceptance criteria:
+  - `Natural` appears on the wider strategic map.
+  - Hover content explains why it is on the strategic map and links to official Natural sources.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - keep `Natural` off the business-credit map.
+    - do not invent credit-volume data.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the wider strategic map
+
+EXECUTOR
+- Implemented:
+  - Added `Natural` as a hybrid agentic money-stack project with source-backed hover content from the launch post plus docs for `Pay`, `Credit`, `Parties`, and `Compliance`.
+  - Placed it on the wider strategic map in the `Agent Credit + Spend` cluster, not in the pure business-credit map.
+  - Updated the market-segment list and agent-economy narrative summary to include Natural.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/attn-in-context-natural-added-strategic-map-20260310.png`
+    - `tmp/appendix-full-view-strategic-natural-20260310.png`
+
+VERIFIER
+- PASS:
+  - Natural is now indexed in the strategic map with an appropriate narrative and official sources.
+  - The business-credit map remained focused.
+
 ## 2026-03-10 - business credit map: add onchain private credit cohort + volume sizing
 
 Checklist

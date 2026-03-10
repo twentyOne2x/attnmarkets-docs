@@ -1340,13 +1340,13 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   {
     id: "agent_credit_spend",
     label: "Agent Credit + Spend",
-    oneLiner: "Agent-focused spend/control surfaces that can consume a credit back end.",
+    oneLiner: "Agent-focused money stacks and spend/control surfaces that can consume or expose credit back ends.",
     stroke: "#c55d93",
     fill: "#ffe0ef",
     dash: "10 6",
     connectivity: 0.46,
     labelDistanceMultiplier: 1.9,
-    projectIds: ["frames", "sponge"],
+    projectIds: ["frames", "sponge", "natural"],
   },
   {
     id: "market_credit_debt",
@@ -1567,6 +1567,7 @@ const FULL_BROAD_EXCLUDED_PROJECT_IDS = new Set([
 const BROAD_DETAILED_FULL_COORD_OVERRIDES: Record<string, { x: number; y: number }> = {
   rain: { x: 0.53, y: 0.88 },
   colossus: { x: 0.515, y: 0.81 },
+  natural: { x: 0.705, y: 0.535 },
   privy: { x: 0.64, y: 0.515 },
   para: { x: 0.69, y: 0.54 },
   swig: { x: 0.745, y: 0.565 },
