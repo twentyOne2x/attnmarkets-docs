@@ -1,5 +1,60 @@
 # ISSUES
 
+## 2026-03-10 - map layout: match top and bottom axis titles to side labels
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User reports that the top and bottom axis titles are still visibly larger than the side-axis labels and wants them matched across the diagrams.
+- Missing info/questions: none. The mismatch can be explained directly from the current render path.
+- Type: bug/layout consistency
+- Status: completed
+- Context + suspected cause:
+  - The side-axis labels are rendered as SVG text inside the scaled chart.
+  - The top and bottom axis titles are rendered as separate HTML overlays with raw pixel font sizes.
+  - Equal `px` values therefore do not produce equal visible sizes once the SVG is scaled down to fit the page.
+- Fix intent:
+  1) Size the top and bottom axis titles from the actual rendered chart scale rather than from raw preset pixels.
+  2) Keep the fix generic so embedded and full-view maps both match.
+- Acceptance criteria:
+  - Top and bottom axis titles visually match the size of the side-axis labels at the default map zoom.
+  - The fix applies across embedded and standalone map presets.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - avoid preset-by-preset magic numbers if the mismatch comes from different render scaling.
+    - do not touch unrelated map placement logic.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot showing the corrected axis-title scale
+
+EXECUTOR
+- Implemented:
+  - Added render-scale tracking for the SVG canvas and used it to size the top and bottom HTML axis titles by the same visible scale as the SVG side-axis labels.
+  - Kept the fix generic so embedded and full-view maps inherit the same correction without preset-specific font hacks.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshot:
+    - `tmp/appendix-full-view-strategic-axis-size-match-20260310.png`
+
+VERIFIER
+- PASS:
+  - The top and bottom axis titles no longer dominate the chart and now visually match the side-axis labels at the default zoom.
+  - The fix is tied to actual render scale rather than arbitrary preset numbers.
+
 ## 2026-03-10 - strategic map: add Virtuals and Sprinter with sourced placement
 
 Checklist

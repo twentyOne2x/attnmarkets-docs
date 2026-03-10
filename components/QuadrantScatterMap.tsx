@@ -1819,6 +1819,7 @@ export default function QuadrantScatterMap(props: {
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [clusterHover, setClusterHover] = useState<ClusterHoverState | null>(null);
   const [legendFilter, setLegendFilter] = useState<LegendFilter | null>(null);
+  const [svgRenderScale, setSvgRenderScale] = useState(1);
   const [showClusters, setShowClusters] = useState(config.defaultShowClusters);
   const [view, setView] = useState({ zoom: 1, panX: 0, panY: 0 });
 
@@ -1945,6 +1946,30 @@ export default function QuadrantScatterMap(props: {
   const yMid = yToSvg(0.5);
   const MIN_ZOOM = 1;
   const MAX_ZOOM = 2.6;
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    const updateScale = () => {
+      const rect = svg.getBoundingClientRect();
+      if (!rect.width || !Number.isFinite(rect.width)) return;
+      setSvgRenderScale(rect.width / width);
+    };
+
+    updateScale();
+
+    const observer = new ResizeObserver(() => {
+      updateScale();
+    });
+    observer.observe(svg);
+    window.addEventListener("resize", updateScale);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateScale);
+    };
+  }, [width]);
 
   const clampPan = (zoom: number, panX: number, panY: number) => {
     const minPanX = width - width * zoom;
@@ -2166,10 +2191,10 @@ export default function QuadrantScatterMap(props: {
   const isBusinessCreditMap = preset === "credit_only" || preset === "credit_only_full";
   const axisTitleStyle = useMemo<React.CSSProperties>(
     () => ({
-      fontSize: `${axisSideLabelFontSize}px`,
+      fontSize: `${Math.max(12, axisSideLabelFontSize * svgRenderScale)}px`,
       fontWeight: 800,
     }),
-    [axisSideLabelFontSize],
+    [axisSideLabelFontSize, svgRenderScale],
   );
 
   const volumeSizing = useMemo(() => {
