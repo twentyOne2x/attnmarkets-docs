@@ -1,5 +1,62 @@
 # ISSUES
 
+## 2026-03-10 - business credit labels: surface totals + unify axis title sizing
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the second diagram (`Business Credit Models`) to show total-underwritten figures directly in the pill/name where public data exists, and wants the top/bottom axis-title sizing matched to the left/right axis-label sizing across all diagrams.
+- Missing info/questions: none. Existing project data already contains the public total-volume strings for the business-credit firms; the gap is rendering, not missing data.
+- Type: feature/map copy + layout consistency
+- Status: completed
+- Context + suspected cause:
+  - The revenue/receivables zoom map appends underwriting totals to labels, but the second map does not, so large names like `Maple` still rely too heavily on dot scale alone.
+  - Top/bottom axis titles use separate CSS font sizing from the side-axis labels, which makes the visual weight inconsistent between horizontal and vertical axis descriptors.
+- Fix intent:
+  1) Extend map label generation so `Business Credit Models` also appends public total-underwritten values to firm labels.
+  2) Drive top/bottom axis-title sizing from the same preset-specific axis font size already used for the side-axis labels.
+  3) Verify with a fresh screenshot of the updated second map.
+- Acceptance criteria:
+  - The second diagram appends total-underwritten text for firms with public totals (for example `Maple`).
+  - Firms without a public total remain concise and do not show `n/a`.
+  - Top and bottom axis-title font size matches the side-axis label size across all map presets.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/QuadrantScatterMap.tsx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - use the existing public `creditVolume.display` field; do not invent new volume numbers.
+    - keep `attn` label concise when no public total is disclosed.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the updated middle map
+
+EXECUTOR
+- Implemented:
+  - Extended label generation so `Business Credit Models` appends public total-underwritten text directly in each pill where `creditVolume.display` is known, while keeping firms without public totals concise.
+  - Matched top and bottom axis-title sizing to the preset-specific side-axis label size by driving all four axis labels from the same `axisSideLabelFontSize` value.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshot:
+    - `tmp/appendix-full-view-business-credit-models-label-totals-axis-match-20260310.png`
+
+VERIFIER
+- PASS:
+  - The second diagram now shows totals in labels such as `Maple · $17.0b total`.
+  - Firms without public totals still omit `n/a`.
+  - Horizontal and side axis labels now share the same preset-specific sizing logic.
+
 ## 2026-03-10 - attn in context: add Natural to the strategic map
 
 Checklist

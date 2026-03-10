@@ -2160,6 +2160,14 @@ export default function QuadrantScatterMap(props: {
   const axisSideLabelYOffset = config.axisSideLabelYOffset;
   const isRevenueReceivablesZoom =
     preset === "revenue_receivables_zoom" || preset === "revenue_receivables_zoom_full";
+  const isBusinessCreditMap = preset === "credit_only" || preset === "credit_only_full";
+  const axisTitleStyle = useMemo<React.CSSProperties>(
+    () => ({
+      fontSize: `${axisSideLabelFontSize}px`,
+      fontWeight: 800,
+    }),
+    [axisSideLabelFontSize],
+  );
 
   const volumeSizing = useMemo(() => {
     if (!config.enableVolumeScaledMarkers && !config.enableVolumeScaledLabels) return null;
@@ -2240,7 +2248,7 @@ export default function QuadrantScatterMap(props: {
     const omitVolumeLabelIds = new Set(["attn"]);
 
     for (const p of projects) {
-      if (!isRevenueReceivablesZoom) {
+      if (!isRevenueReceivablesZoom && !isBusinessCreditMap) {
         map.set(p.id, p.label);
         continue;
       }
@@ -2254,6 +2262,15 @@ export default function QuadrantScatterMap(props: {
       const annual = (p.creditVolume?.extendedPerYearDisplay ?? "").trim();
       const hasTotal = Boolean(total) && total.toLowerCase() !== "n/a";
       const hasAnnual = Boolean(annual) && annual.toLowerCase() !== "n/a";
+
+      if (isBusinessCreditMap) {
+        if (hasTotal) {
+          map.set(p.id, `${p.label} · ${total} total`);
+          continue;
+        }
+        map.set(p.id, p.label);
+        continue;
+      }
 
       if (!hasTotal && !hasAnnual) {
         map.set(p.id, p.label);
@@ -2273,7 +2290,7 @@ export default function QuadrantScatterMap(props: {
     }
 
     return map;
-  }, [projects, isRevenueReceivablesZoom]);
+  }, [projects, isRevenueReceivablesZoom, isBusinessCreditMap]);
 
   const maxProjectMarkerSize = useMemo(() => {
     let max = markerSize;
@@ -2925,7 +2942,9 @@ export default function QuadrantScatterMap(props: {
         </div>
 
         <div className="chartWrap" ref={chartWrapRef} onWheel={onChartWheel}>
-          <div className="axisTitleOutside axisTitleTop">{config.axisTopTitle}</div>
+          <div className="axisTitleOutside axisTitleTop" style={axisTitleStyle}>
+            {config.axisTopTitle}
+          </div>
           <svg
             ref={svgRef}
             viewBox={`0 0 ${width} ${height}`}
@@ -3362,7 +3381,9 @@ export default function QuadrantScatterMap(props: {
             </g>
 
           </svg>
-          <div className="axisTitleOutside axisTitleBottom">{config.axisBottomTitle}</div>
+          <div className="axisTitleOutside axisTitleBottom" style={axisTitleStyle}>
+            {config.axisBottomTitle}
+          </div>
 
           {clusterHoverRender ? (
             <div
@@ -3727,8 +3748,6 @@ export default function QuadrantScatterMap(props: {
           left: 50%;
           transform: translateX(-50%);
           z-index: 6;
-          font-size: 38px;
-          font-weight: 850;
           color: rgba(31, 50, 83, 0.96);
           letter-spacing: 0.005em;
           white-space: nowrap;
@@ -4107,10 +4126,6 @@ export default function QuadrantScatterMap(props: {
           .fullView .taxonomyHint {
             white-space: nowrap;
           }
-        }
-
-        .fullView .axisTitleOutside {
-          font-size: 29px;
         }
       `}</style>
     </div>
