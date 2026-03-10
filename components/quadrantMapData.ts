@@ -1170,6 +1170,177 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://claw.credit/",
   },
 
+  maple: {
+    id: "maple",
+    label: "Maple",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.68,
+    y: 0.84,
+    narrative:
+      "Institutional onchain credit and asset-management platform spanning secured lending and tokenized private-credit products.",
+    creditModel:
+      "Institutional lending and credit pools with onchain portfolio infrastructure; not revenue-sweep-led.",
+    borrowerType: "Institutional and business borrowers",
+    distributionModel: "Protocol and asset-manager surface",
+    exampleClients: [
+      "Aave and Fluid as distribution venues for Maple yield products.",
+      "Binance and OKX earn integrations.",
+      "Spark allocation into Maple products.",
+    ],
+    b2b2smbReliance: ["No material B2B2SMB distribution dependency in the cited sources."],
+    creditVolume: {
+      display: "$17.0b",
+      normalizedUsdBn: 17,
+      basis: "Maple-reported facilitated loans (2026-01-22/23).",
+      note:
+        "RWA.xyz shows about $8.0bn of total loans and about $2.2bn of current tokenized credit value; map sizing uses Maple's larger lifetime facilitated-loans figure for comparability.",
+    },
+    scale: [
+      "$17bn+ facilitated loans (Maple, 2026-01-22/23).",
+      "$4.59bn AUM by year-end 2025 (Maple, 2026-01-23).",
+      "RWA.xyz private-credit dashboard shows about $7.99bn total loans and about $1.82bn active loans.",
+    ],
+    why: [
+      "Relevant lower-half business-credit comparator because underwriting is borrower/pool-led rather than revenue-sweep-led.",
+      "Repayment control is more structured and programmatic than pure reputation-only credit.",
+    ],
+    sources: [
+      { label: "Maple site", url: "https://maple.finance/" },
+      { label: "Maple in 2025: Data Review", url: "https://maple.finance/insights/2025-data-review" },
+      { label: "Maple x Base", url: "https://maple.finance/insights/maple-base" },
+      { label: "RWA.xyz private credit", url: "https://app.rwa.xyz/private-credit" },
+    ],
+    href: "https://maple.finance/",
+  },
+
+  goldfinch: {
+    id: "goldfinch",
+    label: "Goldfinch",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Reputation / legal",
+    plane: "web3",
+    x: 0.34,
+    y: 0.84,
+    narrative:
+      "Onchain private-credit exposure spanning borrower pools and, more recently, Goldfinch Prime fund access.",
+    creditModel:
+      "Borrower/fund-underwritten credit exposure with onchain access rails; not repayment-first revenue capture.",
+    borrowerType: "Business borrowers and private-credit funds",
+    distributionModel: "Protocol and fund-access surface",
+    exampleClients: [
+      "Goldfinch Prime lists Ares, Apollo, Golub, KKR, and PGIM private-credit funds.",
+    ],
+    b2b2smbReliance: ["No material B2B2SMB distribution dependency in the cited sources."],
+    creditVolume: {
+      display: "$0.17b",
+      normalizedUsdBn: 0.171628109,
+      basis: "RWA.xyz total loans for Goldfinch private credit (2026-03-07).",
+      note:
+        "Goldfinch's 2026 public site highlights 1000+ loans and $1T+ fund-manager AUM, but not a cleaner current protocol-wide lifetime dollar total; map sizing uses the RWA.xyz total-loans figure.",
+    },
+    scale: [
+      "1000+ loans (Goldfinch Prime site).",
+      "$1T+ total fund manager AUM represented on Goldfinch Prime.",
+      "RWA.xyz private-credit dashboard shows about $171.6m total loans and about $57.2m active loans.",
+    ],
+    why: [
+      "Relevant because underwriting is borrower/fund-led rather than tied to captured receivables.",
+      "Control is more reputation/legal than embedded cashflow capture.",
+    ],
+    sources: [
+      { label: "Goldfinch site", url: "https://www.goldfinch.finance/" },
+      { label: "Goldfinch Dune", url: "https://dune.com/goldfinch/goldfinch" },
+      { label: "RWA.xyz private credit", url: "https://app.rwa.xyz/private-credit" },
+    ],
+    href: "https://www.goldfinch.finance/",
+  },
+
+  pareto: {
+    id: "pareto",
+    label: "Pareto",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Mixed / not primary",
+    plane: "web3",
+    x: 0.58,
+    y: 0.82,
+    narrative:
+      "Onchain private-credit marketplace connecting institutional lenders and borrowers through distributed credit products.",
+    creditModel:
+      "Structured private-credit marketplace rather than revenue-linked business financing.",
+    borrowerType: "Institutional and business borrowers",
+    distributionModel: "Marketplace and vault surface",
+    exampleClients: ["Public borrower roster is not enumerated in the cited sources."],
+    b2b2smbReliance: ["No material B2B2SMB distribution dependency in the cited sources."],
+    creditVolume: {
+      display: "$0.16b*",
+      normalizedUsdBn: 0.1598,
+      basis: "RWA.xyz tokenized-credit total value for Pareto (2026-03-07).",
+      note:
+        "* Current tokenized-credit value proxy. A public cumulative total-loans/originated figure was not found in Pareto's public materials.",
+    },
+    scale: [
+      "RWA.xyz tokenized-credit dashboard shows about $159.8m total value for Pareto (2026-03-07).",
+      "Pareto platform page on RWA.xyz showed about $122.1m total value as of 2026-01-27.",
+    ],
+    why: [
+      "Fits the lower-half borrower-underwritten lane better than the revenue-linked comparator set.",
+      "More structured/onchain than pure reputation-only credit, but still not revenue-capture-led.",
+    ],
+    sources: [
+      { label: "Pareto site", url: "https://pareto.credit/" },
+      { label: "Pareto on RWA.xyz", url: "https://app.rwa.xyz/platforms/pareto" },
+      { label: "RWA.xyz tokenized credit", url: "https://app.rwa.xyz/private_credit" },
+    ],
+    href: "https://pareto.credit/",
+  },
+
+  credix: {
+    id: "credix",
+    label: "Credix",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.5,
+    y: 0.79,
+    narrative:
+      "Tokenized private-credit and B2B financing platform, now centered on CrediPay for Brazilian B2B BNPL/workflow credit.",
+    creditModel:
+      "Structured private credit and B2B BNPL rather than revenue-sweep-led revolving credit.",
+    borrowerType: "Business borrowers and B2B buyers",
+    distributionModel: "Credit platform and financing infrastructure",
+    exampleClients: ["Public named sellers or financing partners are not enumerated in the cited sources."],
+    b2b2smbReliance: ["No material B2B2SMB distribution dependency is shown in the cited sources."],
+    creditVolume: {
+      display: "$0.05b",
+      normalizedUsdBn: 0.046225995,
+      basis: "RWA.xyz total loans for Credix private credit (2026-03-07).",
+      note:
+        "RWA.xyz currently gives a stronger public total-loans signal than Credix's own public pages; current official public cumulative dollar disclosure was not found.",
+    },
+    scale: [
+      "RWA.xyz private-credit dashboard shows about $46.2m total loans and about $10.8m active loans.",
+      "CrediPay is framed publicly as B2B BNPL for Brazil.",
+    ],
+    why: [
+      "Relevant lower-half comparator because the platform sits in structured business credit, not in revenue-linked routed repayment.",
+      "More credit-native than payments or issuing surfaces, so it belongs here ahead of Rain.",
+    ],
+    sources: [
+      {
+        label: "CrediPay docs",
+        url: "https://docs.credipay.credix.finance/docs/getting-started-introduction",
+      },
+      {
+        label: "Credix job post (CrediPay B2B BNPL description)",
+        url: "https://jobs.solana.com/companies/credix/jobs/69019597-sr-portfolio-manager#content",
+      },
+      { label: "RWA.xyz private credit", url: "https://app.rwa.xyz/private-credit" },
+    ],
+    href: "https://credix.finance/",
+  },
+
   krak: {
     id: "krak",
     label: "kraken.com/krak",

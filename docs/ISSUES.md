@@ -1,5 +1,71 @@
 # ISSUES
 
+## 2026-03-10 - business credit map: add onchain private credit cohort + volume sizing
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the `Business Credit Models` map to be denser in the lower half, with new credit firms added and volume-scaled dots backed by public sources.
+- Missing info/questions: none. Proceed with a defensible set only: `Maple`, `Goldfinch`, `Pareto`, and `Credix`. Keep `Rain` on the wider strategic map only because it is better framed as issuing/settlement infra than as a core credit comparator.
+- Type: feature/map data + taxonomy
+- Status: completed
+- Context + suspected cause:
+  - The lower half of the business-credit map is sparse because the preset currently reuses broad-map coordinates and only has one strong lower-half anchor (`Uncapped`).
+  - The map also lacks several relevant onchain private-credit names that would make the borrower-underwritten half more useful.
+- Fix intent:
+  1) Add `Maple`, `Goldfinch`, `Pareto`, and `Credix` to the project dataset with hover metadata and best-public volume signals.
+  2) Give the business-credit preset its own coordinate remap so the lower-half cohort actually occupies the bottom of the chart.
+  3) Resize the new dots using the same normalized volume system already used elsewhere, with explicit basis notes where the signal is proxy/current value rather than lifetime originations.
+- Acceptance criteria:
+  - The business-credit map includes the new lower-half cohort and is visibly denser.
+  - Hover data exists for each new firm with source links and credit-volume basis notes.
+  - Volume sizing reflects the best-public numbers found, especially for `Maple` and `Goldfinch`.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - Fresh screenshots are captured.
+- Complexity: medium
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `docs/ISSUES.md`
+  - Constraints:
+    - do not add firms with weak/no relevance just to pad the chart.
+    - note clearly when a volume figure is current value or historical lifetime volume rather than current cumulative originations.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the updated middle map
+
+EXECUTOR
+- Implemented:
+  - Added `Maple`, `Goldfinch`, `Pareto`, and `Credix` as first-class map projects with hover metadata, source links, and credit-volume basis notes.
+  - Added a dedicated `CREDIT_ONLY_COORDS` remap so the business-credit map can place borrower-underwritten and onchain private-credit names in the lower half without disturbing the wider strategic map.
+  - Split the adjacent lower-half cohort into `Reputation-based credit` and `Onchain private credit` cluster zones.
+  - Left `Rain` on the wider strategic map only because it still reads more cleanly as issuing/settlement infrastructure than as a core business-credit comparator.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-full-view-business-credit-models-private-credit-added-20260310.png`
+    - `tmp/attn-in-context-business-credit-models-private-credit-added-20260310.png`
+  - volume/source basis used:
+    - `Maple`: official $17bn+ facilitated loans, checked against Maple's 2025 data review / Maple x Base and RWA.xyz current loan/value figures.
+    - `Goldfinch`: RWA.xyz total-loans figure used because Goldfinch's current public site and linked Dune surface did not expose a cleaner comparable cumulative dollar number.
+    - `Pareto`: RWA.xyz current tokenized-credit value proxy used because public cumulative total loans were not found.
+    - `Credix`: RWA.xyz total-loans figure used because a stronger current official cumulative dollar disclosure was not found.
+
+VERIFIER
+- PASS:
+  - The business-credit map's lower half now has a meaningful cohort instead of one isolated point.
+  - New firms have hover support and scaled dots with explicit caveats where the public metric is a proxy rather than a lifetime-origination total.
+
 ## 2026-03-09 - business credit map: replace slash-heavy axis labels
 
 Checklist

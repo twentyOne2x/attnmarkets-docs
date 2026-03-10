@@ -1492,7 +1492,17 @@ const REVENUE_RECEIVABLES_CLUSTER_DEFS: ClusterDef[] = [
   },
 ];
 
-const CREDIT_ONLY_ADJACENT_PROJECT_IDS = ["wildcat", "threejane", "claw", "yumi"] as const;
+const CREDIT_ONLY_REPUTATION_PROJECT_IDS = ["wildcat", "threejane", "claw", "yumi"] as const;
+const CREDIT_ONLY_PRIVATE_CREDIT_PROJECT_IDS = [
+  "maple",
+  "goldfinch",
+  "pareto",
+  "credix",
+] as const;
+const CREDIT_ONLY_ADJACENT_PROJECT_IDS = [
+  ...CREDIT_ONLY_REPUTATION_PROJECT_IDS,
+  ...CREDIT_ONLY_PRIVATE_CREDIT_PROJECT_IDS,
+] as const;
 const CREDIT_ONLY_PROJECT_IDS = [
   ...REVENUE_RECEIVABLES_PROJECT_IDS,
   ...CREDIT_ONLY_ADJACENT_PROJECT_IDS,
@@ -1511,23 +1521,49 @@ const CREDIT_ONLY_CLUSTER_DEFS: ClusterDef[] = [
     projectIds: [...REVENUE_RECEIVABLES_PROJECT_IDS],
   },
   {
-    id: "market_credit_debt",
+    id: "reputation_credit",
     label: "Reputation-based credit",
-    oneLiner: "Credit models leaning on market/reputation signals over hard cashflow capture.",
+    oneLiner: "Credit models leaning on market or reputation signals over hard cashflow capture.",
     stroke: "#5f66a8",
     fill: "#dde2ff",
     dash: "4 5",
     connectivity: 0.68,
-    projectIds: [...CREDIT_ONLY_ADJACENT_PROJECT_IDS],
+    projectIds: [...CREDIT_ONLY_REPUTATION_PROJECT_IDS],
+  },
+  {
+    id: "private_credit",
+    label: "Onchain private credit",
+    oneLiner: "Structured and institutional credit protocols with programmatic capital rails but borrower-led underwriting.",
+    stroke: "#5e8b73",
+    fill: "#d8eee1",
+    dash: "7 6",
+    connectivity: 0.6,
+    projectIds: [...CREDIT_ONLY_PRIVATE_CREDIT_PROJECT_IDS],
   },
 ];
+
+const CREDIT_ONLY_COORDS: Partial<Record<(typeof CREDIT_ONLY_PROJECT_IDS)[number], { x: number; y: number }>> = {
+  uncapped: { x: 0.2, y: 0.22 },
+  wildcat: { x: 0.18, y: 0.55 },
+  threejane: { x: 0.26, y: 0.48 },
+  yumi: { x: 0.38, y: 0.56 },
+  claw: { x: 0.46, y: 0.44 },
+  credix: { x: 0.54, y: 0.42 },
+  pareto: { x: 0.62, y: 0.34 },
+  maple: { x: 0.74, y: 0.38 },
+  goldfinch: { x: 0.34, y: 0.37 },
+};
 
 const EMBEDDED_BROAD_EXCLUDED_PROJECT_IDS = new Set([
   ...SOLANA_MERCHANT_PROJECT_IDS,
   ...WEB2_REVENUE_RECEIVABLES_MEMBER_IDS,
+  ...CREDIT_ONLY_PRIVATE_CREDIT_PROJECT_IDS,
 ]);
 
-const FULL_BROAD_EXCLUDED_PROJECT_IDS = new Set([...SOLANA_MERCHANT_PROJECT_IDS]);
+const FULL_BROAD_EXCLUDED_PROJECT_IDS = new Set([
+  ...SOLANA_MERCHANT_PROJECT_IDS,
+  ...CREDIT_ONLY_PRIVATE_CREDIT_PROJECT_IDS,
+]);
 const BROAD_DETAILED_FULL_COORD_OVERRIDES: Record<string, { x: number; y: number }> = {
   rain: { x: 0.53, y: 0.88 },
   colossus: { x: 0.515, y: 0.81 },
@@ -1676,9 +1712,8 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
 
   if (preset === "credit_only" || preset === "credit_only_full") {
     const projects = creditOnlyProjectsBase.map((project) => {
-      if (preset !== "credit_only_full") return project;
-      const override = BROAD_DETAILED_FULL_COORD_OVERRIDES[project.id];
-      return override ? { ...project, x: override.x, y: override.y } : project;
+      const remap = CREDIT_ONLY_COORDS[project.id as keyof typeof CREDIT_ONLY_COORDS];
+      return remap ? { ...project, x: remap.x, y: remap.y } : project;
     });
 
     return {
@@ -1688,10 +1723,10 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
           : `Business Credit Models Map — as of ${asOf}`,
       hint:
         preset === "credit_only_full"
-          ? `Standalone business-credit view: compare what gets underwritten and how repayment is secured across revenue-linked firms and adjacent borrower-led credit models. Showing ${projects.length} projects.`
-          : `Bridge view: compare what gets underwritten and how repayment is secured across revenue-linked firms and adjacent borrower-led credit models. Showing ${projects.length} projects.`,
+          ? `Standalone business-credit view: compare what gets underwritten and how repayment is secured across revenue-linked firms, reputation-led credit, and onchain private-credit protocols. Showing ${projects.length} projects.`
+          : `Bridge view: compare what gets underwritten and how repayment is secured across revenue-linked firms, reputation-led credit, and onchain private-credit protocols. Showing ${projects.length} projects.`,
       taxonomyHint:
-        "Business-credit cut: includes revenue/receivables credit plus adjacent credit-native protocols, while excluding spend, treasury, payments, and settlement-only narratives.",
+        "Business-credit cut: includes revenue/receivables credit plus adjacent credit-native protocols, while excluding spend, treasury, payments, and settlement-only narratives. Dot size follows best-public credit-volume proxies.",
       ariaLabel: `Business credit models map (as of ${asOf})`,
       axisTopTitle: "Cash-flow underwriting",
       axisBottomTitle: "Borrower underwriting",
