@@ -1,5 +1,68 @@
 # ISSUES
 
+## 2026-03-10 - appendix: index the Artemis agentic commerce market map
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants a new docs page that indexes the firms shown on the live Artemis Agentic Commerce Market Map at `https://agenticpayments.artemisanalytics.com/`.
+- Missing info/questions: none. The live Artemis page exposes its source data through public Supabase-backed category and metadata tables, so the index can be generated from the underlying dataset instead of hand-transcribing the screenshot.
+- Type: feature/docs index
+- Status: completed
+- Context + suspected cause:
+  - The current docs repo does not contain a dedicated appendix/reference page for the broader agentic commerce ecosystem.
+  - The Artemis page is visually dense and grouped by category, so it is hard to scan or reuse without a text index.
+- Fix intent:
+  1) Snapshot the Artemis category + firm dataset into the repo in a maintainable local format.
+  2) Add a new appendix page that indexes the firms with category grouping and direct links.
+  3) Link the new page from the appendix navigation and verify the docs build.
+- Acceptance criteria:
+  - A new docs page exists under `appendix` that indexes the firms from the Artemis map.
+  - The page preserves Artemis category groupings and exposes firm names/links in a scannable format.
+  - The dataset is generated from the live Artemis source rather than manually copied from the screenshot.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-03-10-artemis-agentic-commerce-index.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/plans/completed/2026-03-10-artemis-agentic-commerce-index.md`
+    - `docs/ISSUES.md`
+    - `pages/appendix/_meta.js`
+    - `pages/appendix/index.mdx`
+    - new page/component/data/script files as needed for the Artemis index
+  - Constraints:
+    - use the live Artemis source data from the public Supabase-backed map.
+    - do not hardcode the dataset by hand from the screenshot.
+    - keep the page readable in the docs context even with 150+ listings.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the new appendix page
+
+EXECUTOR
+- Implemented:
+  - Added `scripts/generate_artemis_agentic_index.mjs` to snapshot the live Artemis map data from the public Artemis Supabase-backed source into a local checked-in dataset.
+  - Generated `components/artemisAgenticCommerceIndexData.ts` with 152 unique firms, 196 category placements, and 16 categories.
+  - Added a new appendix docs page at `/appendix/artemis-agentic-commerce-index` with a searchable firm index and preserved Artemis category sections.
+  - Linked the new page from appendix navigation and appendix overview copy.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-artemis-agentic-commerce-index-top-20260310.png`
+    - `tmp/appendix-artemis-agentic-commerce-index-category-20260310.png`
+
+VERIFIER
+- PASS:
+  - The docs repo now contains a standalone appendix page that indexes the Artemis map firms in both searchable unique-firm form and original category form.
+  - The dataset was generated from the live Artemis source rather than manually transcribed from the screenshot.
+
 ## 2026-03-10 - business credit labels: surface totals + unify axis title sizing
 
 Checklist

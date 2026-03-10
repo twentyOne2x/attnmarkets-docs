@@ -5,6 +5,9 @@ const itemTitle = (label) => (
 const sidebar = {
   index: {
     title: itemTitle('Overview')
+  },
+  'artemis-agentic-commerce-index': {
+    title: itemTitle('Artemis Commerce Index')
   }
 }
 
