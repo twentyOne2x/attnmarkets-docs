@@ -42,11 +42,11 @@ export type ArtemisAgenticCommerceIndexDataset = {
 
 export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDataset = {
   "sourceUrl": "https://agenticpayments.artemisanalytics.com/",
-  "sourceBundleUrl": "https://agenticpayments.artemisanalytics.com/_next/static/chunks/app/page-bd32c258f4406aa9.js?dpl=dpl_H8JNXvbAV7nnw24H3s5tTYcspUAj",
-  "generatedAt": "2026-03-10T20:19:56.694Z",
-  "uniqueFirmCount": 152,
+  "sourceBundleUrl": "https://agenticpayments.artemisanalytics.com/_next/static/chunks/app/page-5a4d9e677f96258d.js?dpl=dpl_JY5QwnEPtE2kPjqB6L1hSsQ1vAhm",
+  "generatedAt": "2026-03-17T08:36:17.411Z",
+  "uniqueFirmCount": 173,
   "categoryCount": 16,
-  "categoryListingCount": 196,
+  "categoryListingCount": 217,
   "firms": [
     {
       "protocol": "0xwork",
@@ -54,6 +54,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "description": "Onchain task marketplace on Base where humans and AI agents post, bid on, and complete work for USDC. Bidirectional: humans hire agents, agents hire humans, agents hire agents.",
       "website": "https://0xwork.org",
       "twitter": "https://x.com/Inner_Axiom",
+      "artemisProjectPage": null,
+      "categories": [
+        "discovery"
+      ],
+      "categoryLabels": [
+        "Discovery"
+      ]
+    },
+    {
+      "protocol": "402bot",
+      "name": "402.bot",
+      "description": "Discover and inspect live x402 agent APIs. Search ranked endpoints by capability and network, inspect trust and payment telemetry, and analyze wallet-level agent usage through a public read-only MCP surface. Paid execution stays on 402.bot’s x402 HTTP APIs.",
+      "website": "https://402.bot",
+      "twitter": "https://x.com/402bot",
       "artemisProjectPage": null,
       "categories": [
         "discovery"
@@ -74,6 +88,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "Data & Analytics"
+      ]
+    },
+    {
+      "protocol": "8k4",
+      "name": "8k4",
+      "description": "On-chain trust scores for AI agents. Score, verify, and pay agents you can actually trust. 8k4 indexes agent registrations across Ethereum, Base, and BSC, then score them using on-chain activity, validator attestations, and behavioural signals. Agents and apps query trust data in real-time via x402 micropayments or wallet-signed, self-created API keys. No subscriptions, just self-serve requests.",
+      "website": "https://8k4protocol.com",
+      "twitter": "https://x.com/8k4protocol",
+      "artemisProjectPage": null,
+      "categories": [
+        "identity-trust"
+      ],
+      "categoryLabels": [
+        "Identity & Trust"
       ]
     },
     {
@@ -119,6 +147,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ]
     },
     {
+      "protocol": "agentproof",
+      "name": "AgentProof",
+      "description": "Cross-chain reputation oracle for AI agents. 51,700+ agents indexed across 14 EVM chains, delivering trust scores via ERC-8004 for autonomous agent verification and insurance underwriting.",
+      "website": "https://agentproof.sh",
+      "twitter": "https://x.com/BuilderBenv1",
+      "artemisProjectPage": null,
+      "categories": [
+        "identity-trust"
+      ],
+      "categoryLabels": [
+        "Identity & Trust"
+      ]
+    },
+    {
       "protocol": "agonx402",
       "name": "Agonx402",
       "description": "Payment aggregation layer for x402 on Solana that enables autonomous AI agents and developers to execute instant USDC micropayments across any compatible API with a single initial deposit.Payments are processed entirely off-chain for infinite scalability and ultra-low latency (~5ms authorization), then settled to merchants in a single batched on-chain transaction. This architecture provides full privacy—no external party can observe spending details of your AI agent, developer, or business—along with customizable spending controls, instant withdrawals, and auto-refill functionality for seamless, cost-efficient operations.",
@@ -158,6 +200,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "Data & Analytics"
+      ]
+    },
+    {
+      "protocol": "algorand",
+      "name": "Algorand",
+      "description": "Algorand is a Layer-1 blockchain built for real-world scale. With super low fees, instant settlement, and high scalability, Algorand is the perfect home for agents and their payments.",
+      "website": "https://algorand.co",
+      "twitter": "https://x.com/AlgoFoundation",
+      "artemisProjectPage": null,
+      "categories": [
+        "blockchains"
+      ],
+      "categoryLabels": [
+        "Blockchains"
       ]
     },
     {
@@ -273,6 +329,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ]
     },
     {
+      "protocol": "asterpay",
+      "name": "AsterPay",
+      "description": "Trust layer for AI agent payments. KYA (Know Your Agent) compliance scoring + EUR/GBP/USD settlement via SEPA Instant. x402-native, MiCA-compliant. First IACPHook with third-party attestations in ERC-8183.",
+      "website": "https://asterpay.io/",
+      "twitter": "https://x.com/Asterpayment",
+      "artemisProjectPage": null,
+      "categories": [
+        "facilitators"
+      ],
+      "categoryLabels": [
+        "Facilitators"
+      ]
+    },
+    {
       "protocol": "aurracloud",
       "name": "AurraCloud",
       "description": "AurraCloud lowers barriers for agents to engage in real economic activity: agents can autonomously trade perps, send/receive x402 payments, monitor transactions via webhooks, and sell skills/services—all without complex setup, bootstrapping revenue loops in DeFi and machine-to-machine economies.",
@@ -370,6 +440,34 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "Blockchains"
+      ]
+    },
+    {
+      "protocol": "beep",
+      "name": "Beep",
+      "description": "Beep is building the leading agent economy protocol: fully autonomous AI agents that handle payments, treasury management, and trading.",
+      "website": "https://justbeep.it/",
+      "twitter": "https://x.com/0xbeepit",
+      "artemisProjectPage": null,
+      "categories": [
+        "agent-frameworks"
+      ],
+      "categoryLabels": [
+        "Agent Frameworks & Tooling"
+      ]
+    },
+    {
+      "protocol": "birdeye-data",
+      "name": "Birdeye Data",
+      "description": "Birdeye Data is a high-performance data provider that delivers real-time, accurate, and comprehensive on-chain data across tokens, wallets, trades, and protocols on Solana, Sui and major EVM chains. From fast-moving startups to global leaders like Phantom, Raydium, Coinbase, and Bybit, Birdeye Data powers teams of all sizes with the data they need to build and scale confidently.",
+      "website": "https://bds.birdeye.so/",
+      "twitter": "https://x.com/birdeye_data",
+      "artemisProjectPage": null,
+      "categories": [
+        "analytics"
+      ],
+      "categoryLabels": [
+        "Data & Analytics"
       ]
     },
     {
@@ -604,6 +702,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
         "Discovery",
         "Facilitators",
         "Wallets"
+      ]
+    },
+    {
+      "protocol": "conto",
+      "name": "Conto",
+      "description": "The control center for agentic payments. Spend management, relationship tracking, and network intelligence for autonomous AI agents making payments at scale via stablecoins and virtual cards.",
+      "website": "https://conto.finance",
+      "twitter": "https://x.com/contofinance",
+      "artemisProjectPage": null,
+      "categories": [
+        "payments"
+      ],
+      "categoryLabels": [
+        "Payment Infrastructure"
       ]
     },
     {
@@ -925,6 +1037,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ]
     },
     {
+      "protocol": "goplausible",
+      "name": "GoPlausible",
+      "description": "GoPlausible provides a dedicated Algorand x402 Facilitator with interoperability support for Base and Solana, along with x402-enabled Algorand plugins for agentic platforms such as Claude and OpenClaw, as well as Algorand x402 MCP tooling.",
+      "website": "https://goplausible.com",
+      "twitter": "https://x.com/GoPlausible",
+      "artemisProjectPage": null,
+      "categories": [
+        "facilitators"
+      ],
+      "categoryLabels": [
+        "Facilitators"
+      ]
+    },
+    {
       "protocol": "grok",
       "name": "Grok",
       "description": "xAI's Grok - conversational AI interface integrated with X platform.",
@@ -936,6 +1062,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "User Interfaces"
+      ]
+    },
+    {
+      "protocol": "growthepie",
+      "name": "growthepie",
+      "description": "Visualizing Ethereum’s Story Through Data. growthepie is the open analytics platform for the Ethereum ecosystem. From Mainnet to Layer 2s and onchain applications. Now tracking AI agents on all Ethereum chains.",
+      "website": "https://growthepie.com",
+      "twitter": "https://x.com/growthepie_eth",
+      "artemisProjectPage": null,
+      "categories": [
+        "analytics"
+      ],
+      "categoryLabels": [
+        "Data & Analytics"
       ]
     },
     {
@@ -996,6 +1136,34 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
         "Agent Networks",
         "Facilitators",
         "Hosting / Cloud / Compute"
+      ]
+    },
+    {
+      "protocol": "httpayer",
+      "name": "HTTPayer",
+      "description": "HTTPayer gives AI agents the ability to pay for any API instantly. Wallet optional, no blockchain setup, no complexity. Developers integrate via CLI or SDK in minutes. For API providers, any endpoint becomes a paid service with one simple integration.",
+      "website": "https://httpayer.com",
+      "twitter": "https://x.com/httpayer",
+      "artemisProjectPage": null,
+      "categories": [
+        "payments"
+      ],
+      "categoryLabels": [
+        "Payment Infrastructure"
+      ]
+    },
+    {
+      "protocol": "invoica",
+      "name": "Invoica",
+      "description": "Invoica is an autonomous invoicing infrastructure for the agentic economy — enabling AI agents to transact, bill, and collect payments without human intervention.",
+      "website": "https://invoica.ai",
+      "twitter": "https://x.com/invoica_ai",
+      "artemisProjectPage": null,
+      "categories": [
+        "payments"
+      ],
+      "categoryLabels": [
+        "Payment Infrastructure"
       ]
     },
     {
@@ -1253,6 +1421,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ]
     },
     {
+      "protocol": "moonpay",
+      "name": "Moonpay",
+      "description": "MoonPay is a financial technology company that builds payment infrastructure for crypto",
+      "website": "https://www.moonpay.com/agents",
+      "twitter": "https://x.com/moonpay",
+      "artemisProjectPage": null,
+      "categories": [
+        "payments"
+      ],
+      "categoryLabels": [
+        "Payment Infrastructure"
+      ]
+    },
+    {
       "protocol": "multiversx",
       "name": "MultiversX",
       "description": "MultiversX is a fully sharded, high-performance blockchain with native support for the complete agentic commerce stack — ACP, UCP, AP2, MCP, x402, and MX-8004 — enabling AI agents to discover, authorize, execute, and settle transactions onchain with gasless execution via Relayed v3, sub-second finality, and verifiable onchain agent identity and reputation.",
@@ -1278,6 +1460,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "Data & Analytics"
+      ]
+    },
+    {
+      "protocol": "nava",
+      "name": "Nava",
+      "description": "Guardrails for autonomous agents and safety tools for the agentic economy | Nava keeps agents within user-defined policy boundaries while verifying that their actions align from intent to settlement. By introducing escrow, dispute resolution, and economic backstops around agent activity, Nava allows developers to build agents that can safely transact, coordinate tasks, and manage value on behalf of users.",
+      "website": "https://navalabs.ai/",
+      "twitter": "https://x.com/navaai",
+      "artemisProjectPage": null,
+      "categories": [
+        "identity-trust"
+      ],
+      "categoryLabels": [
+        "Identity & Trust"
       ]
     },
     {
@@ -1442,6 +1638,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "Facilitators"
+      ]
+    },
+    {
+      "protocol": "para",
+      "name": "Para",
+      "description": "Modern wallet infra for fintech and crypto",
+      "website": "https://getpara.com",
+      "twitter": "https://x.com/get_para",
+      "artemisProjectPage": null,
+      "categories": [
+        "wallets"
+      ],
+      "categoryLabels": [
+        "Wallets"
       ]
     },
     {
@@ -1670,6 +1880,34 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "Facilitators"
+      ]
+    },
+    {
+      "protocol": "renderself",
+      "name": "render_self",
+      "description": "Agent-only e-commerce platform. AI agents purchase premium apparel for their humans using x402 payments (USDC on Base and Solana).",
+      "website": "https://renderself.com",
+      "twitter": "https://x.com/render_self",
+      "artemisProjectPage": null,
+      "categories": [
+        "agent-frameworks"
+      ],
+      "categoryLabels": [
+        "Agent Frameworks & Tooling"
+      ]
+    },
+    {
+      "protocol": "rep",
+      "name": "REP",
+      "description": "REP is a user-first, privacy-preserving trust engine for the AI internet.",
+      "website": "https://r3p.xyz/",
+      "twitter": "https://x.com/rep_hq",
+      "artemisProjectPage": null,
+      "categories": [
+        "identity-trust"
+      ],
+      "categoryLabels": [
+        "Identity & Trust"
       ]
     },
     {
@@ -1927,6 +2165,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ]
     },
     {
+      "protocol": "taiko",
+      "name": "Taiko",
+      "description": "Taiko is an Ethereum L2 where AI agents can transact, hold stablecoins and tap into DeFi, all with sub-cent fees and no API keys or approvals needed.",
+      "website": "https://taiko.xyz/",
+      "twitter": "https://x.com/taikoxyz",
+      "artemisProjectPage": null,
+      "categories": [
+        "blockchains"
+      ],
+      "categoryLabels": [
+        "Blockchains"
+      ]
+    },
+    {
       "protocol": "tator-trader",
       "name": "Tator Trader",
       "description": "The trading brain for crypto agents. Natural language in, unsigned transactions out. Supports swaps, bridges, perps, yield, and prediction markets across 24+ chains. Full custody, $0.20 via x402.",
@@ -2014,6 +2266,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "categoryLabels": [
         "Universal Balance & Account Abstraction",
         "Wallets"
+      ]
+    },
+    {
+      "protocol": "twitsh",
+      "name": "twit.sh",
+      "description": "Real-time Twitter/X data for AI agents. No sign-up, no API keys. Pay per request in USDC on Base via x402. Fully autonomous.",
+      "website": "https://twit.sh",
+      "twitter": "https://x.com/twitdotsh",
+      "artemisProjectPage": null,
+      "categories": [
+        "analytics"
+      ],
+      "categoryLabels": [
+        "Data & Analytics"
       ]
     },
     {
@@ -2115,6 +2381,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ]
     },
     {
+      "protocol": "valoria",
+      "name": "Valoria",
+      "description": "x402 market intelligence — see what's earning, find gaps, and price your API right using real on-chain payment data. ",
+      "website": "https://x402.valoria.net",
+      "twitter": "https://x.com/x402_valoria",
+      "artemisProjectPage": null,
+      "categories": [
+        "analytics"
+      ],
+      "categoryLabels": [
+        "Data & Analytics"
+      ]
+    },
+    {
       "protocol": "virtuals-protocol",
       "name": "Virtuals Protocol",
       "description": "AI agent launchpad on Base and Solana. Create tokenized agents via GAME framework. 17,000+ agents created.",
@@ -2186,6 +2466,20 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       ],
       "categoryLabels": [
         "Facilitators"
+      ]
+    },
+    {
+      "protocol": "x402engine",
+      "name": "x402engine",
+      "description": "pay per call api gateway for ai agents with 72 production apis and stablecoin micropayments across base, solana, and megaeth. no api keys or subscriptions, just payment in the request.",
+      "website": "https://x402engine.app",
+      "twitter": "https://x.com/x402engine",
+      "artemisProjectPage": null,
+      "categories": [
+        "payments"
+      ],
+      "categoryLabels": [
+        "Payment Infrastructure"
       ]
     },
     {
@@ -2270,7 +2564,7 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "wallets",
       "label": "Wallets",
       "bucket": "APP",
-      "itemCount": 20,
+      "itemCount": 21,
       "items": [
         {
           "protocol": "avocado",
@@ -2385,6 +2679,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "artemisProjectPage": null
         },
         {
+          "protocol": "para",
+          "name": "Para",
+          "description": "Modern wallet infra for fintech and crypto",
+          "website": "https://getpara.com",
+          "twitter": "https://x.com/get_para",
+          "artemisProjectPage": null
+        },
+        {
           "protocol": "phantom",
           "name": "Phantom",
           "description": "Digital wallet for securely managing cryptographic keys, storing/sending/receiving assets across chains, with direct agent extensions for autonomous operation.",
@@ -2438,7 +2740,7 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "discovery",
       "label": "Discovery",
       "bucket": "APP",
-      "itemCount": 14,
+      "itemCount": 15,
       "items": [
         {
           "protocol": "0xwork",
@@ -2446,6 +2748,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "description": "Onchain task marketplace on Base where humans and AI agents post, bid on, and complete work for USDC. Bidirectional: humans hire agents, agents hire humans, agents hire agents.",
           "website": "https://0xwork.org",
           "twitter": "https://x.com/Inner_Axiom",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "402bot",
+          "name": "402.bot",
+          "description": "Discover and inspect live x402 agent APIs. Search ranked endpoints by capability and network, inspect trust and payment telemetry, and analyze wallet-level agent usage through a public read-only MCP surface. Paid execution stays on 402.bot’s x402 HTTP APIs.",
+          "website": "https://402.bot",
+          "twitter": "https://x.com/402bot",
           "artemisProjectPage": null
         },
         {
@@ -2646,8 +2956,16 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "facilitators",
       "label": "Facilitators",
       "bucket": "CAPITAL_ALLOCATOR",
-      "itemCount": 20,
+      "itemCount": 22,
       "items": [
+        {
+          "protocol": "asterpay",
+          "name": "AsterPay",
+          "description": "Trust layer for AI agent payments. KYA (Know Your Agent) compliance scoring + EUR/GBP/USD settlement via SEPA Instant. x402-native, MiCA-compliant. First IACPHook with third-party attestations in ERC-8183.",
+          "website": "https://asterpay.io/",
+          "twitter": "https://x.com/Asterpayment",
+          "artemisProjectPage": null
+        },
         {
           "protocol": "aurracloud",
           "name": "AurraCloud",
@@ -2703,6 +3021,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "website": "https://dexter.cash/",
           "twitter": "https://x.com/dexteraisol",
           "artemisProjectPage": "https://app.artemisanalytics.com/asset/x402?from=assets&tab=deep_dives"
+        },
+        {
+          "protocol": "goplausible",
+          "name": "GoPlausible",
+          "description": "GoPlausible provides a dedicated Algorand x402 Facilitator with interoperability support for Base and Solana, along with x402-enabled Algorand plugins for agentic platforms such as Claude and OpenClaw, as well as Algorand x402 MCP tooling.",
+          "website": "https://goplausible.com",
+          "twitter": "https://x.com/GoPlausible",
+          "artemisProjectPage": null
         },
         {
           "protocol": "heurist",
@@ -2814,8 +3140,24 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "identity-trust",
       "label": "Identity & Trust",
       "bucket": "APP",
-      "itemCount": 13,
+      "itemCount": 17,
       "items": [
+        {
+          "protocol": "8k4",
+          "name": "8k4",
+          "description": "On-chain trust scores for AI agents. Score, verify, and pay agents you can actually trust. 8k4 indexes agent registrations across Ethereum, Base, and BSC, then score them using on-chain activity, validator attestations, and behavioural signals. Agents and apps query trust data in real-time via x402 micropayments or wallet-signed, self-created API keys. No subscriptions, just self-serve requests.",
+          "website": "https://8k4protocol.com",
+          "twitter": "https://x.com/8k4protocol",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "agentproof",
+          "name": "AgentProof",
+          "description": "Cross-chain reputation oracle for AI agents. 51,700+ agents indexed across 14 EVM chains, delivering trust scores via ERC-8004 for autonomous agent verification and insurance underwriting.",
+          "website": "https://agentproof.sh",
+          "twitter": "https://x.com/BuilderBenv1",
+          "artemisProjectPage": null
+        },
         {
           "protocol": "cascade",
           "name": "Cascade",
@@ -2857,6 +3199,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "artemisProjectPage": null
         },
         {
+          "protocol": "nava",
+          "name": "Nava",
+          "description": "Guardrails for autonomous agents and safety tools for the agentic economy | Nava keeps agents within user-defined policy boundaries while verifying that their actions align from intent to settlement. By introducing escrow, dispute resolution, and economic backstops around agent activity, Nava allows developers to build agents that can safely transact, coordinate tasks, and manage value on behalf of users.",
+          "website": "https://navalabs.ai/",
+          "twitter": "https://x.com/navaai",
+          "artemisProjectPage": null
+        },
+        {
           "protocol": "nuggets",
           "name": "Nuggets",
           "description": "Nuggets is a cryptographic authority layer for AI agents operating across systems and organizational boundaries that binds verifiable identity, delegated authority, and policy constraints to agent actions at runtime. Each action produces portable, audit-grade proof of who acted, on whose behalf, and under what authority. Their product extends existing IAM, PAM, and cloud infrastructure rather than replacing it, enabling accountable and compliant deployment of autonomous agents in production environments.",
@@ -2870,6 +3220,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "description": "Proofivy serves as a blockchain-based ledger for immutable, timestamped proofs of intellectual property, copyrights, and ideas by committing content fingerprints onchain without revealing the data, enabling verifiable ownership, authorship, and fraud/plagiarism protection critical for trust in agentic interactions involving AI-derived works.",
           "website": "https://proofivy.com",
           "twitter": null,
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "rep",
+          "name": "REP",
+          "description": "REP is a user-first, privacy-preserving trust engine for the AI internet.",
+          "website": "https://r3p.xyz/",
+          "twitter": "https://x.com/rep_hq",
           "artemisProjectPage": null
         },
         {
@@ -2980,8 +3338,16 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "blockchains",
       "label": "Blockchains",
       "bucket": "BLOCKCHAINS",
-      "itemCount": 16,
+      "itemCount": 18,
       "items": [
+        {
+          "protocol": "algorand",
+          "name": "Algorand",
+          "description": "Algorand is a Layer-1 blockchain built for real-world scale. With super low fees, instant settlement, and high scalability, Algorand is the perfect home for agents and their payments.",
+          "website": "https://algorand.co",
+          "twitter": "https://x.com/AlgoFoundation",
+          "artemisProjectPage": null
+        },
         {
           "protocol": "arbitrum",
           "name": "Arbitrum",
@@ -3103,6 +3469,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "artemisProjectPage": null
         },
         {
+          "protocol": "taiko",
+          "name": "Taiko",
+          "description": "Taiko is an Ethereum L2 where AI agents can transact, hold stablecoins and tap into DeFi, all with sub-cent fees and no API keys or approvals needed.",
+          "website": "https://taiko.xyz/",
+          "twitter": "https://x.com/taikoxyz",
+          "artemisProjectPage": null
+        },
+        {
           "protocol": "tempo",
           "name": "Tempo",
           "description": "Tempo is a distributed ledger network providing secure, transparent infrastructure for transaction settlement, smart contracts, and decentralized applications specifically tailored to agentic systems. It offers high-throughput (~0.6s finality, no re-orgs), dedicated payment lanes, and stablecoin-native features for scalable agent payments.",
@@ -3180,7 +3554,7 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "analytics",
       "label": "Data & Analytics",
       "bucket": "ANALYTICS",
-      "itemCount": 13,
+      "itemCount": 17,
       "items": [
         {
           "protocol": "8004scan",
@@ -3215,11 +3589,27 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "artemisProjectPage": "https://app.artemisanalytics.com/home"
         },
         {
+          "protocol": "birdeye-data",
+          "name": "Birdeye Data",
+          "description": "Birdeye Data is a high-performance data provider that delivers real-time, accurate, and comprehensive on-chain data across tokens, wallets, trades, and protocols on Solana, Sui and major EVM chains. From fast-moving startups to global leaders like Phantom, Raydium, Coinbase, and Bybit, Birdeye Data powers teams of all sizes with the data they need to build and scale confidently.",
+          "website": "https://bds.birdeye.so/",
+          "twitter": "https://x.com/birdeye_data",
+          "artemisProjectPage": null
+        },
+        {
           "protocol": "dune",
           "name": "Dune",
           "description": "Community-driven onchain analytics platform, enabling SQL queries, interactive dashboards, APIs, and DataShare for blockchain data across 100+ chains—with strong enterprise adoption and AI-assisted querying tools.",
           "website": "https://dune.com/discover/content/trending",
           "twitter": "https://x.com/Dune",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "growthepie",
+          "name": "growthepie",
+          "description": "Visualizing Ethereum’s Story Through Data. growthepie is the open analytics platform for the Ethereum ecosystem. From Mainnet to Layer 2s and onchain applications. Now tracking AI agents on all Ethereum chains.",
+          "website": "https://growthepie.com",
+          "twitter": "https://x.com/growthepie_eth",
           "artemisProjectPage": null
         },
         {
@@ -3276,6 +3666,22 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "description": "SQD (previously Subsquid) is a decentralized Web3 data infrastructure network that acts as a data layer for applications and AI agents, giving them fast, permissionless access to structured blockchain data across many chains via Portal API.",
           "website": "https://sqd.ai",
           "twitter": "https://x.com/helloSQD",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "twitsh",
+          "name": "twit.sh",
+          "description": "Real-time Twitter/X data for AI agents. No sign-up, no API keys. Pay per request in USDC on Base via x402. Fully autonomous.",
+          "website": "https://twit.sh",
+          "twitter": "https://x.com/twitdotsh",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "valoria",
+          "name": "Valoria",
+          "description": "x402 market intelligence — see what's earning, find gaps, and price your API right using real on-chain payment data. ",
+          "website": "https://x402.valoria.net",
+          "twitter": "https://x.com/x402_valoria",
           "artemisProjectPage": null
         },
         {
@@ -3380,7 +3786,7 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "agent-frameworks",
       "label": "Agent Frameworks & Tooling",
       "bucket": "APP",
-      "itemCount": 31,
+      "itemCount": 33,
       "items": [
         {
           "protocol": "a2a",
@@ -3412,6 +3818,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "description": "Bankr offers tools, skills (e.g., OpenClaw integrations), and infrastructure for building financially autonomous agents with token deployment, trading execution, and treasury automation capabilities.",
           "website": "https://bankr.bot/",
           "twitter": "https://x.com/bankrbot",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "beep",
+          "name": "Beep",
+          "description": "Beep is building the leading agent economy protocol: fully autonomous AI agents that handle payments, treasury management, and trading.",
+          "website": "https://justbeep.it/",
+          "twitter": "https://x.com/0xbeepit",
           "artemisProjectPage": null
         },
         {
@@ -3556,6 +3970,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "description": "Token security scanning API for 63+ chains. Detect honeypots, scams, tax manipulation, and ownership risks. $0.03 per scan via x402.",
           "website": "https://quickintel.io",
           "twitter": "https://x.com/quickintel_ai",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "renderself",
+          "name": "render_self",
+          "description": "Agent-only e-commerce platform. AI agents purchase premium apparel for their humans using x402 payments (USDC on Base and Solana).",
+          "website": "https://renderself.com",
+          "twitter": "https://x.com/render_self",
           "artemisProjectPage": null
         },
         {
@@ -3796,7 +4218,7 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
       "id": "payments",
       "label": "Payment Infrastructure",
       "bucket": "CAPITAL_ALLOCATOR",
-      "itemCount": 20,
+      "itemCount": 25,
       "items": [
         {
           "protocol": "acp",
@@ -3847,6 +4269,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "artemisProjectPage": null
         },
         {
+          "protocol": "conto",
+          "name": "Conto",
+          "description": "The control center for agentic payments. Spend management, relationship tracking, and network intelligence for autonomous AI agents making payments at scale via stablecoins and virtual cards.",
+          "website": "https://conto.finance",
+          "twitter": "https://x.com/contofinance",
+          "artemisProjectPage": null
+        },
+        {
           "protocol": "crossmint",
           "name": "Crossmint",
           "description": "Crossmint's platform offers fiat on-ramps and settlement tools enable agents to transact with real-world value entry/exit, supporting commerce flows (e.g., card-backed stablecoin purchases).",
@@ -3871,6 +4301,22 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "artemisProjectPage": null
         },
         {
+          "protocol": "httpayer",
+          "name": "HTTPayer",
+          "description": "HTTPayer gives AI agents the ability to pay for any API instantly. Wallet optional, no blockchain setup, no complexity. Developers integrate via CLI or SDK in minutes. For API providers, any endpoint becomes a paid service with one simple integration.",
+          "website": "https://httpayer.com",
+          "twitter": "https://x.com/httpayer",
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "invoica",
+          "name": "Invoica",
+          "description": "Invoica is an autonomous invoicing infrastructure for the agentic economy — enabling AI agents to transact, bill, and collect payments without human intervention.",
+          "website": "https://invoica.ai",
+          "twitter": "https://x.com/invoica_ai",
+          "artemisProjectPage": null
+        },
+        {
           "protocol": "lobstercash",
           "name": "lobster.cash",
           "description": "Open-source payment standard for OpenClaw agents enabling micropayments for AI agent services. Launched by Crossmint with Visa, Solana, Circle, and Stytch as partners.",
@@ -3892,6 +4338,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "description": "Meridian is a specialized payments protocol for AI agent economies, implementing the x402 standard to enable autonomous, onchain payments for services. It supports seamless cross-chain transfers via Across Protocol across networks like Base, Polygon, Optimism, Unichain, and Hyperliquid, with gasless token transfers through Mpay and EIP-2612 permits.",
           "website": "https://mrdn.finance/",
           "twitter": null,
+          "artemisProjectPage": null
+        },
+        {
+          "protocol": "moonpay",
+          "name": "Moonpay",
+          "description": "MoonPay is a financial technology company that builds payment infrastructure for crypto",
+          "website": "https://www.moonpay.com/agents",
+          "twitter": "https://x.com/moonpay",
           "artemisProjectPage": null
         },
         {
@@ -3957,6 +4411,14 @@ export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDat
           "website": "https://www.x402.org/",
           "twitter": null,
           "artemisProjectPage": "https://app.artemisanalytics.com/asset/x402"
+        },
+        {
+          "protocol": "x402engine",
+          "name": "x402engine",
+          "description": "pay per call api gateway for ai agents with 72 production apis and stablecoin micropayments across base, solana, and megaeth. no api keys or subscriptions, just payment in the request.",
+          "website": "https://x402engine.app",
+          "twitter": "https://x.com/x402engine",
+          "artemisProjectPage": null
         }
       ]
     }

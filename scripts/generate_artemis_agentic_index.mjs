@@ -41,7 +41,9 @@ async function extractSupabaseConfig() {
 
   const bundleUrl = new URL(bundleMatch[0], SOURCE_URL).toString();
   const bundle = await fetchText(bundleUrl);
-  const configMatch = bundle.match(/let c="([^"]+supabase\.co)",d="([^"]+)"/);
+  const configMatch = bundle.match(
+    /let\s+[a-zA-Z_$][\w$]*="([^"]+supabase\.co)",[a-zA-Z_$][\w$]*="([^"]+)"/,
+  );
   if (!configMatch) {
     throw new Error("Could not extract public Supabase config from Artemis bundle.");
   }

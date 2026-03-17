@@ -1,5 +1,200 @@
 # ISSUES
 
+## 2026-03-17 - appendix: ensure screenshot-supplied market map firms are covered
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User provided a screenshot of a broader `Agentic Finance Market Map` and asked to ensure those firms are covered on the Artemis appendix page.
+- Missing info/questions: none blocking. The screenshot itself is sufficient as the source of the requested coverage set, but the screenshot labels are not always identical to the canonical names in the Artemis snapshot.
+- Type: feature/docs update
+- Status: completed
+- Context + suspected cause:
+  - The current manual supplement only covers the smaller earlier text list, not the full screenshot-provided market map.
+  - The screenshot includes additional categories such as `Analytics & Verifiability` and uses product-level or display labels like `Coinbase x402`, `Virtuals GAME`, and `Pocket`.
+- Fix intent:
+  1) Expand the manual supplement so every visible screenshot label is covered under the relevant category.
+  2) Preserve screenshot wording verbatim where it differs from the Artemis snapshot.
+  3) Keep the supplement explicitly separated from the generated Artemis snapshot.
+- Acceptance criteria:
+  - The appendix page includes all visible labels from the provided screenshot in a readable manual supplement.
+  - The page clearly distinguishes screenshot/manual coverage from the Artemis-generated snapshot below.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - Screenshot handling: confirm the provided screenshot was used as the source of the requested additions.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - do not rewrite the generated Artemis dataset just to force screenshot labels into canonical snapshot data.
+    - preserve the distinction between display labels from the screenshot and Artemis snapshot protocol names.
+    - keep the supplement concise enough to scan.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Expanded the `Requested Additions` supplement in `pages/appendix/artemis-agentic-commerce-index.mdx` to cover the screenshot-supplied labels across:
+    - Agentic Payments
+    - Agent Cards
+    - Agent Wallets
+    - Analytics & Verifiability
+    - Applications
+    - Agent Frameworks & Tooling
+    - Agentic Commerce
+    - Blockchains & Stablecoins
+  - Preserved screenshot wording for display labels such as `Coinbase x402`, `Virtuals GAME`, `Pocket`, and `fxprotocol` so the page covers the image as shown even where Artemis snapshot naming differs.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+
+VERIFIER
+- PASS:
+  - The appendix page now covers the visible screenshot labels in a dedicated manual supplement.
+  - The manual supplement still remains distinct from the generated Artemis snapshot below.
+- Screenshot handling:
+  - The user-provided screenshot was used as the source of the added labels and matches the requested coverage change.
+  - No fresh rendered screenshot of the updated page was captured in this session, so the checklist item remains open.
+
+## 2026-03-17 - appendix: add requested firms to Artemis agentic commerce index
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants a specific grouped set of firms added to `https://docs.attn.markets/appendix/artemis-agentic-commerce-index`.
+- Missing info/questions: none blocking. The repo already has a generated Artemis snapshot plus a dedicated appendix page, so the work can be handled by refreshing the snapshot if the live Artemis source contains the firms, or by adding a clearly labeled supplemental section if the user-provided list is ahead of the snapshot.
+- Type: feature/docs update
+- Status: completed
+- Context + suspected cause:
+  - The current appendix page is a thin MDX wrapper over `ArtemisAgenticCommerceIndex`, which renders from a checked-in generated snapshot.
+  - The user provided a newer grouped list spanning agentic payments, cards, wallets, applications, frameworks, commerce, and chains.
+  - Some requested firms already exist in the snapshot, but not all of the exact requested groupings are guaranteed to be present in the live Artemis source.
+- Fix intent:
+  1) Check the live Artemis-backed snapshot path for the requested firms.
+  2) Refresh the generated dataset if the live source now contains them.
+  3) If the live source does not fully contain the requested grouping, add a clearly labeled supplemental section to the appendix page so the docs include the user-specified list without misrepresenting the Artemis snapshot.
+- Acceptance criteria:
+  - The appendix page includes the requested grouped firms in a readable text section and/or refreshed snapshot data.
+  - The page continues to distinguish the Artemis snapshot from any manual supplement.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/appendix/artemis-agentic-commerce-index.mdx`
+    - `components/artemisAgenticCommerceIndexData.ts` and/or `scripts/generate_artemis_agentic_index.mjs` if a snapshot refresh is warranted
+  - Constraints:
+    - preserve the page’s claim about what comes from the Artemis snapshot.
+    - do not silently merge manual user-provided entries into generated snapshot data unless they are confirmed in the live source.
+    - keep the manual addition concise and scannable.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Added a `Requested Additions` manual supplement to `pages/appendix/artemis-agentic-commerce-index.mdx` with the user-supplied groupings:
+    - Agentic Payments
+    - Agent Cards
+    - Agent Wallets
+    - Applications
+    - Agent Frameworks
+    - Agentic Commerce
+    - Chains
+  - Explicitly separated that supplement from the generated Artemis snapshot so the page still distinguishes manual curation from Artemis-backed data.
+  - Updated `scripts/generate_artemis_agentic_index.mjs` so it can extract the current Supabase config from the live Artemis bundle after the upstream minified variable names changed.
+  - Re-ran the generator and refreshed `components/artemisAgenticCommerceIndexData.ts` from the live Artemis source.
+- Proofs:
+  - `node scripts/generate_artemis_agentic_index.mjs` -> PASS (`Wrote .../components/artemisAgenticCommerceIndexData.ts`, `Unique firms: 173`, `Category listings: 217`, `Categories: 16`)
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+
+VERIFIER
+- PASS:
+  - The appendix page now contains the exact requested grouped additions in a manual section.
+  - The page still preserves the distinction between the Artemis snapshot and the manual supplement.
+  - The Artemis snapshot refresh path works again against the current upstream bundle shape.
+- NOTE:
+  - Browser/screenshot verification was not run in this session, so the checklist item remains open.
+
+## 2026-03-13 - colossus docs: add appendix index and refresh attn-in-context positioning
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the newly published Colossus docs indexed, added into the `attn in context` sections, and summarized from the docs themselves.
+- Missing info/questions: none. The docs site exposes a usable docs tree in its homepage payload plus route-level titles/descriptions, and key product claims are accessible from the docs pages directly.
+- Type: feature/docs index + map taxonomy refresh
+- Status: completed
+- Context + suspected cause:
+  - The current repo only cites the Colossus homepage and a Founders, Inc. note, so the map entry still underspecifies what the system actually is.
+  - `attn in context` still groups Colossus under a loose `BNPL + payments rails` framing that does not reflect the new docs set.
+- Fix intent:
+  1) Add a dedicated appendix page indexing the full Colossus docs tree and API surface.
+  2) Upgrade the Colossus project entry and `attn in context` narrative from the real docs.
+  3) Keep the strategic-map taxonomy coherent after the Colossus refresh.
+- Acceptance criteria:
+  - A new appendix page exists that indexes the Colossus docs sections and API routes.
+  - `attn in context` sections and narrative copy reflect the docs-backed Colossus positioning.
+  - The Colossus hover/map entry includes current docs links and more precise product framing.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+  - A fresh screenshot is captured.
+- Complexity: medium
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `pages/appendix/_meta.js`
+    - `pages/appendix/index.mdx`
+    - new appendix page for Colossus docs index
+    - `docs/ISSUES.md`
+  - Constraints:
+    - use the Colossus docs as the primary source of truth.
+    - do not overstate partner/adoption claims unless they are documented in the official docs.
+    - keep the map taxonomy readable after the wording change.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - fresh screenshot of the updated `attn in context` strategic map or appendix page
+
+EXECUTOR
+- Implemented:
+  - Added a new appendix page that indexes the current Colossus docs tree, guide set, API routes, and referenced repos.
+  - Refreshed the `colossus` project data from the official docs so the hover state now reflects issuer/acquirer/card-network infrastructure rather than generic payments-rails copy.
+  - Updated the strategic-map cluster wording and `attn in context` section copy so Colossus sits under a cleaner `consumer credit distribution + card rails` framing.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - screenshots:
+    - `tmp/appendix-colossus-docs-index-20260313.png`
+    - `tmp/attn-in-context-colossus-section-20260313.png`
+
+VERIFIER
+- PASS:
+  - The docs repo now contains a dedicated Colossus docs index page with the full current docs surface grouped into product, technical, guide, API, and repo sections.
+  - `attn in context` and the Colossus tooltip now reflect the docs-backed product framing rather than the older thin-source description.
+
 ## 2026-03-10 - map layout: match top and bottom axis titles to side labels
 
 Checklist
