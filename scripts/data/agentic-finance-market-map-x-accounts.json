@@ -1,0 +1,749 @@
+{
+  "capturedAt": "2026-03-17",
+  "source": "March 2026 screenshot-supplied Agentic Finance Market Map labels from the user thread",
+  "categories": [
+    {
+      "name": "Agentic Payments",
+      "entries": [
+        {
+          "label": "Coinbase x402",
+          "xHandle": "CoinbaseDev",
+          "xUrl": "https://x.com/CoinbaseDev",
+          "confidence": "medium",
+          "notes": "Screenshot label mapped to Coinbase Developer Platform / x402 workstream rather than the Coinbase consumer account."
+        },
+        {
+          "label": "Stripe",
+          "xHandle": "stripe",
+          "xUrl": "https://x.com/stripe",
+          "confidence": "high"
+        },
+        {
+          "label": "Circle",
+          "xHandle": "circle",
+          "xUrl": "https://x.com/circle",
+          "confidence": "high"
+        },
+        {
+          "label": "Crossmint",
+          "xHandle": "crossmint",
+          "xUrl": "https://x.com/crossmint",
+          "confidence": "high"
+        },
+        {
+          "label": "NaturalPay",
+          "xHandle": "naturalpay",
+          "xUrl": "https://x.com/naturalpay",
+          "confidence": "high"
+        },
+        {
+          "label": "Moonpay",
+          "xHandle": "moonpay",
+          "xUrl": "https://x.com/moonpay",
+          "confidence": "high"
+        },
+        {
+          "label": "lobster.cash",
+          "xHandle": "lobsterdotcash",
+          "xUrl": "https://x.com/lobsterdotcash",
+          "confidence": "high"
+        },
+        {
+          "label": "AgentCash",
+          "xHandle": "agentcashdev",
+          "xUrl": "https://x.com/agentcashdev",
+          "confidence": "medium",
+          "notes": "Mapped from the official site/docs domain and matching public X profile."
+        },
+        {
+          "label": "Bridge",
+          "xHandle": "StableCoin",
+          "xUrl": "https://x.com/StableCoin",
+          "confidence": "high"
+        },
+        {
+          "label": "BVNK",
+          "xHandle": "BVNKFinance",
+          "xUrl": "https://x.com/BVNKFinance",
+          "confidence": "high"
+        },
+        {
+          "label": "Callpay",
+          "xHandle": "callpay",
+          "xUrl": "https://x.com/callpay",
+          "confidence": "high"
+        },
+        {
+          "label": "Superfluid",
+          "xHandle": "Superfluid_HQ",
+          "xUrl": "https://x.com/Superfluid_HQ",
+          "confidence": "high"
+        },
+        {
+          "label": "Ampersend",
+          "xHandle": "ampersend_ai",
+          "xUrl": "https://x.com/ampersend_ai",
+          "confidence": "high"
+        },
+        {
+          "label": "Skyfire",
+          "xHandle": "trySkyfire",
+          "xUrl": "https://x.com/trySkyfire",
+          "confidence": "high"
+        },
+        {
+          "label": "deBridge",
+          "xHandle": "debridge",
+          "xUrl": "https://x.com/debridge",
+          "confidence": "high"
+        },
+        {
+          "label": "PaymanAI",
+          "xHandle": "paymanai",
+          "xUrl": "https://x.com/paymanai",
+          "confidence": "high"
+        },
+        {
+          "label": "PayPal",
+          "xHandle": "PayPal",
+          "xUrl": "https://x.com/PayPal",
+          "confidence": "high"
+        },
+        {
+          "label": "Across",
+          "xHandle": "AcrossProtocol",
+          "xUrl": "https://x.com/AcrossProtocol",
+          "confidence": "high"
+        },
+        {
+          "label": "fxprotocol",
+          "xHandle": "protocol_fx",
+          "xUrl": "https://x.com/protocol_fx",
+          "confidence": "high",
+          "notes": "Screenshot label mapped to the Protocol FX / fxUSD handle."
+        },
+        {
+          "label": "conto",
+          "xHandle": "contofinance",
+          "xUrl": "https://x.com/contofinance",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "name": "Agent Cards",
+      "entries": [
+        {
+          "label": "Visa",
+          "xHandle": "Visa",
+          "xUrl": "https://x.com/Visa",
+          "confidence": "high"
+        },
+        {
+          "label": "Mastercard",
+          "xHandle": "Mastercard",
+          "xUrl": "https://x.com/Mastercard",
+          "confidence": "high"
+        },
+        {
+          "label": "lobster.cash",
+          "xHandle": "lobsterdotcash",
+          "xUrl": "https://x.com/lobsterdotcash",
+          "confidence": "high"
+        },
+        {
+          "label": "Stripe",
+          "xHandle": "stripe",
+          "xUrl": "https://x.com/stripe",
+          "confidence": "high"
+        },
+        {
+          "label": "Ramp",
+          "xHandle": "RampNetwork",
+          "xUrl": "https://x.com/RampNetwork",
+          "confidence": "high"
+        },
+        {
+          "label": "Metamask",
+          "xHandle": "MetaMask",
+          "xUrl": "https://x.com/MetaMask",
+          "confidence": "high"
+        },
+        {
+          "label": "Slash",
+          "xHandle": "slashapp",
+          "xUrl": "https://x.com/slashapp",
+          "confidence": "high"
+        },
+        {
+          "label": "Clawcard.sh",
+          "xHandle": null,
+          "xUrl": null,
+          "confidence": "unresolved",
+          "notes": "No dedicated public X account was found on the official site. The product launch appears to have been promoted from individual-builder posts instead."
+        },
+        {
+          "label": "Agentcard.sh",
+          "xHandle": "agentcardai",
+          "xUrl": "https://x.com/agentcardai",
+          "confidence": "high",
+          "notes": "Updated from the user-supplied direct X post URL."
+        },
+        {
+          "label": "AgentCard by Alchemy",
+          "xHandle": "alchemy",
+          "xUrl": "https://x.com/alchemy",
+          "confidence": "medium",
+          "notes": "Screenshot label mapped to the parent Alchemy account."
+        },
+        {
+          "label": "machines.cash",
+          "xHandle": "machines_cash",
+          "xUrl": "https://x.com/machines_cash",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "name": "Agent Wallets",
+      "entries": [
+        {
+          "label": "Coinbase",
+          "xHandle": "coinbase",
+          "xUrl": "https://x.com/coinbase",
+          "confidence": "high"
+        },
+        {
+          "label": "Crossmint",
+          "xHandle": "crossmint",
+          "xUrl": "https://x.com/crossmint",
+          "confidence": "high"
+        },
+        {
+          "label": "Sponge",
+          "xHandle": "sponge_wallet",
+          "xUrl": "https://x.com/sponge_wallet",
+          "confidence": "high"
+        },
+        {
+          "label": "Privy",
+          "xHandle": "privy_io",
+          "xUrl": "https://x.com/privy_io",
+          "confidence": "high"
+        },
+        {
+          "label": "Circle",
+          "xHandle": "circle",
+          "xUrl": "https://x.com/circle",
+          "confidence": "high"
+        },
+        {
+          "label": "Turnkey",
+          "xHandle": "turnkeyhq",
+          "xUrl": "https://x.com/turnkeyhq",
+          "confidence": "high"
+        },
+        {
+          "label": "lobster.cash",
+          "xHandle": "lobsterdotcash",
+          "xUrl": "https://x.com/lobsterdotcash",
+          "confidence": "high"
+        },
+        {
+          "label": "Phantom",
+          "xHandle": "phantom",
+          "xUrl": "https://x.com/phantom",
+          "confidence": "high"
+        },
+        {
+          "label": "Pocket",
+          "xHandle": "PocketWallet",
+          "xUrl": "https://x.com/PocketWallet",
+          "confidence": "medium",
+          "notes": "Screenshot short label mapped to PocketWallet."
+        },
+        {
+          "label": "Openfort",
+          "xHandle": "openfort_hq",
+          "xUrl": "https://x.com/openfort_hq",
+          "confidence": "high"
+        },
+        {
+          "label": "Alchemy",
+          "xHandle": "alchemy",
+          "xUrl": "https://x.com/alchemy",
+          "confidence": "high"
+        },
+        {
+          "label": "thirdweb",
+          "xHandle": "thirdweb",
+          "xUrl": "https://x.com/thirdweb",
+          "confidence": "high"
+        },
+        {
+          "label": "Dynamic",
+          "xHandle": "dynamic_xyz",
+          "xUrl": "https://x.com/dynamic_xyz",
+          "confidence": "high"
+        },
+        {
+          "label": "PayWithLocus",
+          "xHandle": "paywithlocus",
+          "xUrl": "https://x.com/paywithlocus",
+          "confidence": "high"
+        },
+        {
+          "label": "Frames",
+          "xHandle": "framesag",
+          "xUrl": "https://x.com/framesag",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "name": "Analytics & Verifiability",
+      "entries": [
+        {
+          "label": "Allium",
+          "xHandle": "AlliumLabs",
+          "xUrl": "https://x.com/AlliumLabs",
+          "confidence": "high"
+        },
+        {
+          "label": "Artemis",
+          "xHandle": "artemis",
+          "xUrl": "https://x.com/artemis",
+          "confidence": "high"
+        },
+        {
+          "label": "t54.ai",
+          "xHandle": "t54ai",
+          "xUrl": "https://x.com/t54ai",
+          "confidence": "high"
+        },
+        {
+          "label": "VeryAI",
+          "xHandle": "VeryAI",
+          "xUrl": "https://x.com/VeryAI",
+          "confidence": "high"
+        },
+        {
+          "label": "x402Scan",
+          "xHandle": "x402scan",
+          "xUrl": "https://x.com/x402scan",
+          "confidence": "high"
+        },
+        {
+          "label": "ERC-8004",
+          "xHandle": null,
+          "xUrl": null,
+          "confidence": "unresolved",
+          "notes": "Protocol standard label. No dedicated canonical X account was found."
+        },
+        {
+          "label": "VestAuth",
+          "xHandle": "vestauthx",
+          "xUrl": "https://x.com/vestauthx",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "name": "Applications",
+      "entries": [
+        {
+          "label": "RentAHuman",
+          "xHandle": "rentahuman_ai",
+          "xUrl": "https://x.com/rentahuman_ai",
+          "confidence": "high"
+        },
+        {
+          "label": "Bankr",
+          "xHandle": "bankrbot",
+          "xUrl": "https://x.com/bankrbot",
+          "confidence": "high"
+        },
+        {
+          "label": "Unbrowse",
+          "xHandle": "getFoundry",
+          "xUrl": "https://x.com/getFoundry",
+          "confidence": "medium",
+          "notes": "Official site points to Foundry's X account rather than a separate Unbrowse account."
+        },
+        {
+          "label": "blockrun.ai",
+          "xHandle": "BlockRunAI",
+          "xUrl": "https://x.com/BlockRunAI",
+          "confidence": "high"
+        },
+        {
+          "label": "Clawpump",
+          "xHandle": "clawpump",
+          "xUrl": "https://x.com/clawpump",
+          "confidence": "high"
+        },
+        {
+          "label": "Li.FI",
+          "xHandle": "lifiprotocol",
+          "xUrl": "https://x.com/lifiprotocol",
+          "confidence": "high"
+        },
+        {
+          "label": "Semantic Layer",
+          "xHandle": "SemanticLayer",
+          "xUrl": "https://x.com/SemanticLayer",
+          "confidence": "medium"
+        },
+        {
+          "label": "Polymarket",
+          "xHandle": "Polymarket",
+          "xUrl": "https://x.com/Polymarket",
+          "confidence": "high"
+        },
+        {
+          "label": "Breeze",
+          "xHandle": "breezedotcash",
+          "xUrl": "https://x.com/breezedotcash",
+          "confidence": "high"
+        },
+        {
+          "label": "DFlow",
+          "xHandle": "DFlowProtocol",
+          "xUrl": "https://x.com/DFlowProtocol",
+          "confidence": "high"
+        },
+        {
+          "label": "Boba",
+          "xHandle": "bobanetwork",
+          "xUrl": "https://x.com/bobanetwork",
+          "confidence": "low",
+          "notes": "Screenshot label is ambiguous; mapped to the most plausible public Boba project account."
+        },
+        {
+          "label": "Kraken",
+          "xHandle": "krakenfx",
+          "xUrl": "https://x.com/krakenfx",
+          "confidence": "high"
+        },
+        {
+          "label": "Pagga",
+          "xHandle": "paggaapp",
+          "xUrl": "https://x.com/paggaapp",
+          "confidence": "medium"
+        },
+        {
+          "label": "HeySorin",
+          "xHandle": "HeySorinAI",
+          "xUrl": "https://x.com/HeySorinAI",
+          "confidence": "high"
+        },
+        {
+          "label": "Mirra",
+          "xHandle": "mirra",
+          "xUrl": "https://x.com/mirra",
+          "confidence": "high"
+        },
+        {
+          "label": "moltlaunch",
+          "xHandle": "moltlaunch",
+          "xUrl": "https://x.com/moltlaunch",
+          "confidence": "high"
+        },
+        {
+          "label": "loyal",
+          "xHandle": "loyal_hq",
+          "xUrl": "https://x.com/loyal_hq",
+          "confidence": "high"
+        },
+        {
+          "label": "Valeo",
+          "xHandle": "ValeoProtocol",
+          "xUrl": "https://x.com/ValeoProtocol",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "name": "Agent Frameworks & Tooling",
+      "entries": [
+        {
+          "label": "Coinbase AgentKit",
+          "xHandle": "CoinbaseDev",
+          "xUrl": "https://x.com/CoinbaseDev",
+          "confidence": "medium",
+          "notes": "Screenshot label mapped to Coinbase Developer Platform."
+        },
+        {
+          "label": "Virtuals GAME",
+          "xHandle": "virtuals_io",
+          "xUrl": "https://x.com/virtuals_io",
+          "confidence": "medium",
+          "notes": "Product label mapped to the parent Virtuals account."
+        },
+        {
+          "label": "Nevermined",
+          "xHandle": "neverminedio",
+          "xUrl": "https://x.com/neverminedio",
+          "confidence": "high",
+          "notes": "Official site also links a secondary `nevermined_ai` account."
+        },
+        {
+          "label": "OpenClaw",
+          "xHandle": "OpenClaw",
+          "xUrl": "https://x.com/OpenClaw",
+          "confidence": "high"
+        },
+        {
+          "label": "Hermes",
+          "xHandle": "NousResearch",
+          "xUrl": "https://x.com/NousResearch",
+          "confidence": "medium",
+          "notes": "Hermes is mapped to the parent Nous Research account."
+        },
+        {
+          "label": "OpenServ",
+          "xHandle": "openservai",
+          "xUrl": "https://x.com/openservai",
+          "confidence": "high"
+        },
+        {
+          "label": "Faremeter",
+          "xHandle": "corbits_dev",
+          "xUrl": "https://x.com/corbits_dev",
+          "confidence": "medium",
+          "notes": "Framework label mapped to the Corbits developer account."
+        },
+        {
+          "label": "Conway Research",
+          "xHandle": "ConwayResearch",
+          "xUrl": "https://x.com/ConwayResearch",
+          "confidence": "high"
+        },
+        {
+          "label": "RelAI",
+          "xHandle": "relayaisolana",
+          "xUrl": "https://x.com/relayaisolana",
+          "confidence": "high"
+        },
+        {
+          "label": "MoltyCash",
+          "xHandle": "moltycash",
+          "xUrl": "https://x.com/moltycash",
+          "confidence": "medium"
+        },
+        {
+          "label": "atxp.ai",
+          "xHandle": "atxp_ai",
+          "xUrl": "https://x.com/atxp_ai",
+          "confidence": "high"
+        },
+        {
+          "label": "Dexter",
+          "xHandle": "dexteraisol",
+          "xUrl": "https://x.com/dexteraisol",
+          "confidence": "high"
+        },
+        {
+          "label": "Daydreams",
+          "xHandle": "daydreamsagents",
+          "xUrl": "https://x.com/daydreamsagents",
+          "confidence": "high"
+        },
+        {
+          "label": "PayAI",
+          "xHandle": "PayAINetwork",
+          "xUrl": "https://x.com/PayAINetwork",
+          "confidence": "high"
+        },
+        {
+          "label": "Teneo",
+          "xHandle": "teneo_protocol",
+          "xUrl": "https://x.com/teneo_protocol",
+          "confidence": "medium",
+          "notes": "Mapped to Teneo Protocol, which matches the screenshot context more closely than unrelated Teneo-branded AI products."
+        },
+        {
+          "label": "XMTP",
+          "xHandle": "xmtp_",
+          "xUrl": "https://x.com/xmtp_",
+          "confidence": "high"
+        },
+        {
+          "label": "Merit Systems",
+          "xHandle": "merit_systems",
+          "xUrl": "https://x.com/merit_systems",
+          "confidence": "high"
+        },
+        {
+          "label": "Questflow",
+          "xHandle": "questflow",
+          "xUrl": "https://x.com/questflow",
+          "confidence": "high"
+        },
+        {
+          "label": "Heurist",
+          "xHandle": "heurist_ai",
+          "xUrl": "https://x.com/heurist_ai",
+          "confidence": "high"
+        },
+        {
+          "label": "InFlow",
+          "xHandle": "Inflowpay",
+          "xUrl": "https://x.com/Inflowpay",
+          "confidence": "medium"
+        },
+        {
+          "label": "QuickNode",
+          "xHandle": "Quicknode",
+          "xUrl": "https://x.com/Quicknode",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "name": "Agentic Commerce",
+      "entries": [
+        {
+          "label": "Purch",
+          "xHandle": "trypurch",
+          "xUrl": "https://x.com/trypurch",
+          "confidence": "high"
+        },
+        {
+          "label": "Cloudflare",
+          "xHandle": "Cloudflare",
+          "xUrl": "https://x.com/Cloudflare",
+          "confidence": "high"
+        },
+        {
+          "label": "Shopify",
+          "xHandle": "Shopify",
+          "xUrl": "https://x.com/Shopify",
+          "confidence": "high"
+        },
+        {
+          "label": "Stripe",
+          "xHandle": "stripe",
+          "xUrl": "https://x.com/stripe",
+          "confidence": "high"
+        },
+        {
+          "label": "OpenAI",
+          "xHandle": "OpenAI",
+          "xUrl": "https://x.com/OpenAI",
+          "confidence": "high"
+        },
+        {
+          "label": "Perplexity",
+          "xHandle": "perplexity_ai",
+          "xUrl": "https://x.com/perplexity_ai",
+          "confidence": "high",
+          "notes": "Mapped to the official company account, not the AskPerplexity bot account."
+        },
+        {
+          "label": "BasisTheory",
+          "xHandle": "basistheory",
+          "xUrl": "https://x.com/basistheory",
+          "confidence": "high"
+        },
+        {
+          "label": "OneText",
+          "xHandle": "OneText",
+          "xUrl": "https://x.com/OneText",
+          "confidence": "high"
+        },
+        {
+          "label": "Rye",
+          "xHandle": "rye",
+          "xUrl": "https://x.com/rye",
+          "confidence": "high"
+        },
+        {
+          "label": "Virtuals ACP",
+          "xHandle": "virtuals_io",
+          "xUrl": "https://x.com/virtuals_io",
+          "confidence": "medium",
+          "notes": "Product label mapped to the parent Virtuals account."
+        }
+      ]
+    },
+    {
+      "name": "Blockchains & Stablecoins",
+      "entries": [
+        {
+          "label": "Base",
+          "xHandle": "base",
+          "xUrl": "https://x.com/base",
+          "confidence": "high"
+        },
+        {
+          "label": "Solana",
+          "xHandle": "solana",
+          "xUrl": "https://x.com/solana",
+          "confidence": "high"
+        },
+        {
+          "label": "Ethereum",
+          "xHandle": "ethereum",
+          "xUrl": "https://x.com/ethereum",
+          "confidence": "high"
+        },
+        {
+          "label": "Arc",
+          "xHandle": "ARCdotXYZ",
+          "xUrl": "https://x.com/ARCdotXYZ",
+          "confidence": "high",
+          "notes": "Current official site points to `ARCdotXYZ`, which appears to supersede older shorthand references."
+        },
+        {
+          "label": "NEAR",
+          "xHandle": "NEARProtocol",
+          "xUrl": "https://x.com/NEARProtocol",
+          "confidence": "high"
+        },
+        {
+          "label": "Stable",
+          "xHandle": "Stable",
+          "xUrl": "https://x.com/Stable",
+          "confidence": "high"
+        },
+        {
+          "label": "Stellar",
+          "xHandle": "StellarOrg",
+          "xUrl": "https://x.com/StellarOrg",
+          "confidence": "high"
+        },
+        {
+          "label": "Tempo",
+          "xHandle": "tempo",
+          "xUrl": "https://x.com/tempo",
+          "confidence": "high"
+        },
+        {
+          "label": "Kite AI",
+          "xHandle": "GoKiteAI",
+          "xUrl": "https://x.com/GoKiteAI",
+          "confidence": "high"
+        },
+        {
+          "label": "Monad",
+          "xHandle": "monad",
+          "xUrl": "https://x.com/monad",
+          "confidence": "high"
+        },
+        {
+          "label": "Tether",
+          "xHandle": "tether",
+          "xUrl": "https://x.com/tether",
+          "confidence": "high"
+        },
+        {
+          "label": "Polygon",
+          "xHandle": "0xPolygon",
+          "xUrl": "https://x.com/0xPolygon",
+          "confidence": "high"
+        }
+      ]
+    }
+  ]
+}

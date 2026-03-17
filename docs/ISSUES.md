@@ -1,5 +1,121 @@
 # ISSUES
 
+## 2026-03-17 - appendix: add direct AgentCard X post and correct handle mapping
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User provided a specific X post (`https://x.com/agentcardai/status/2032521350901019080`) and wants it added to the appendix.
+- Missing info/questions: none blocking. The direct X URL is sufficient for the appendix reference, and it also provides a stronger handle source for `Agentcard.sh` than the earlier inferred mapping.
+- Type: docs/research follow-up
+- Status: completed
+- Context + suspected cause:
+  - The appendix currently lists `Agentcard.sh` in the manual supplement but does not include the direct X proof point the user shared.
+  - The structured X-account map currently points `Agentcard.sh` at an earlier weaker guess (`agentcard_`) rather than the now user-confirmed `agentcardai` account.
+- Fix intent:
+  1) Add the exact X post to the appendix under the `Agent Cards` manual supplement.
+  2) Update the `Agentcard.sh` account mapping to `@agentcardai`.
+  3) Re-run build and knowledge checks.
+- Acceptance criteria:
+  - The appendix page links the supplied AgentCard X post in the relevant section.
+  - The structured X-account map reflects `Agentcard.sh -> @agentcardai`.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/appendix/artemis-agentic-commerce-index.mdx`
+    - `scripts/data/agentic-finance-market-map-x-accounts.json`
+  - Constraints:
+    - keep the appendix addition narrow and directly tied to the supplied post.
+    - do not alter unrelated screenshot labels or the generated Artemis snapshot.
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Added the supplied AgentCard X post to the appendix manual supplement under `Agent Cards`.
+  - Corrected the structured X-account mapping for `Agentcard.sh` from `agentcard_` to the stronger user-confirmed `agentcardai` account.
+- Proofs:
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+
+VERIFIER
+- PASS:
+  - The appendix now links the supplied AgentCard X post in the relevant section.
+  - The structured X-account map now reflects `Agentcard.sh -> @agentcardai`.
+  - Build and knowledge checks passed.
+- NOTE:
+  - No rendered screenshot verification was captured in this follow-up.
+
+## 2026-03-17 - research: map X accounts for screenshot-supplied market map labels
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. User wants the screenshot-supplied firms mapped to their X accounts so the repo has a reusable source of truth before pulling latest posts, articles, and threads.
+- Missing info/questions: none blocking. The screenshot labels are enough to define scope, and existing Artemis snapshot data covers part of the mapping. Remaining labels can be verified from official sites and X profile discovery.
+- Type: research/data setup
+- Status: completed
+- Context + suspected cause:
+  - The appendix page now preserves the screenshot labels, but there is no structured account map for downstream social-content pulls.
+  - Some screenshot labels are product/display names rather than canonical entity names, so they need explicit mapping notes.
+  - A few labels may not have dedicated public X accounts and need to be marked accordingly rather than guessed.
+- Fix intent:
+  1) Create a structured X-account map for the screenshot labels, grouped by category.
+  2) Reuse current Artemis snapshot links where they already match.
+  3) Add explicit confidence/notes for screenshot labels that map to parent entities or lack a dedicated handle.
+- Acceptance criteria:
+  - The repo contains a structured mapping file for the screenshot labels and their X accounts.
+  - Entries are grouped by screenshot category and include enough metadata to drive later post/thread pulls.
+  - `python3 scripts/knowledge_check.py` passes.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - new structured mapping file under `scripts/data/`
+  - Constraints:
+    - preserve screenshot labels exactly as the lookup keys.
+    - do not silently overstate ambiguous mappings; flag them with confidence/notes.
+    - prefer current official or product-linked X handles over third-party directories when available.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Added `scripts/data/agentic-finance-market-map-x-accounts.json` as a structured lookup for the screenshot-supplied market-map labels.
+  - Kept the screenshot labels as the lookup keys and grouped them by screenshot category.
+  - Included `xHandle`, `xUrl`, `confidence`, and `notes` so the file can drive later post/thread pulls without losing screenshot-to-canonical mapping context.
+  - Reused Artemis snapshot links where available and filled the remaining gaps from current official sites / public X profile discovery.
+- Proofs:
+  - JSON validation pass:
+    - `entries 114`
+    - `unresolved 2`
+    - unresolved labels: `Clawcard.sh`, `ERC-8004`
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+
+VERIFIER
+- PASS:
+  - The repo now contains a structured X-account map for the screenshot labels.
+  - The file is grouped by screenshot category and contains enough metadata for downstream social-post pulls.
+  - Ambiguous or handle-less entries are explicitly marked instead of being silently guessed.
+- NOTE:
+  - `Clawcard.sh` remains unresolved because no dedicated official X account was found on the official site.
+  - `ERC-8004` remains unresolved because it is a protocol-standard label and no canonical dedicated X account was confirmed.
+
 ## 2026-03-17 - appendix: ensure screenshot-supplied market map firms are covered
 
 Checklist
