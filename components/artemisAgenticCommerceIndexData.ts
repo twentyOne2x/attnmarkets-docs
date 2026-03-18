@@ -43,7 +43,7 @@ export type ArtemisAgenticCommerceIndexDataset = {
 export const ARTEMIS_AGENTIC_COMMERCE_INDEX_DATA: ArtemisAgenticCommerceIndexDataset = {
   "sourceUrl": "https://agenticpayments.artemisanalytics.com/",
   "sourceBundleUrl": "https://agenticpayments.artemisanalytics.com/_next/static/chunks/app/page-5a4d9e677f96258d.js?dpl=dpl_JY5QwnEPtE2kPjqB6L1hSsQ1vAhm",
-  "generatedAt": "2026-03-17T08:36:17.411Z",
+  "generatedAt": "2026-03-18T16:15:04.789Z",
   "uniqueFirmCount": 173,
   "categoryCount": 16,
   "categoryListingCount": 217,

@@ -1,5 +1,512 @@
 # ISSUES
 
+## 2026-03-18 - docs: add aGDP.io and correct Virtuals ACP wallet/provider framing
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user wants `aGDP.io` placed precisely inside the dedicated agentic-commerce quadrant and supplied direct corrections about ACP smart-account provisioning and the scope of ACP beyond a simple job board.
+- Missing info/questions: none blocking. The user provided the product relationship and current provider correction, and the official `agdp.io` site plus `Virtual-Protocol/openclaw-acp` repo provide enough public product framing for placement.
+- Type: feature/docs correction
+- Status: in_progress
+- Context + suspected cause:
+  - The docs currently position `Virtuals` as an agent-commerce surface, but do not yet distinguish the dedicated `aGDP.io` product from the broader `Virtuals` / `ACP` protocol layer.
+  - The current `Virtuals` data still says ACP/Butler wallets use `Privy`, which conflicts with the user-supplied correction that ACP smart accounts are currently provisioned through `Alchemy`.
+  - The current copy understates ACP by making it read closer to a marketplace/job-board narrative than an end-to-end flow covering discovery, escrow, payments, and evaluation.
+- Fix intent:
+  1) Add `aGDP.io` as its own plotted commerce-surface node in the dedicated quadrant.
+  2) Correct the `Virtuals` wallet/provider note so it no longer implies current `Privy` usage and instead reflects the user-supplied `Alchemy` correction.
+  3) Update the written taxonomy so `aGDP.io` is described as a commerce surface sitting slightly to the settlement side of `Virtuals`, while ACP itself is framed as the broader end-to-end protocol layer.
+- Acceptance criteria:
+  - The dedicated agentic-commerce quadrant includes `aGDP.io` in a coherent commerce-surface position.
+  - `Virtuals` no longer shows the stale `Uses Privy` implication in the docs data.
+  - `attn in context` and the appendix reflect the end-to-end ACP framing rather than reducing it to a simple job board.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-03-18-agdp-virtuals-acp-correction.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/plans/completed/2026-03-18-agdp-virtuals-acp-correction.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/quadrantMapData.ts`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/QuadrantScatterMap.tsx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - keep `aGDP.io` inside the existing `Commerce Surfaces` lane rather than inventing a new cluster
+    - treat the user-supplied `Alchemy` wallet correction as current operator context and avoid preserving stale `Privy` claims in the `Virtuals` entry
+    - frame ACP as end-to-end discovery + escrow + payments + evaluation, not just a marketplace directory
+    - do not overwrite unrelated dirty-worktree changes
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - refresh the full-view quadrant screenshot after the correction
+
+EXECUTOR
+- Implemented:
+  - Added a new `aGDP.io` project record as a commerce-surface node built on ACP / Virtuals Protocol.
+  - Placed `aGDP.io` in the dedicated `Commerce Surfaces` lane, slightly to the settlement side of `Virtuals` and `AgentCash`, because it is more than a listing surface and includes live jobs, offerings, and revenue flows.
+  - Updated the `Virtuals` entry so it now reads as the broader end-to-end ACP protocol and builder platform covering discovery, trustless escrow, payments, evaluation, tokenization, and execution.
+  - Corrected the stale wallet-provider framing:
+    - removed the current `Uses Privy` implication from the `Virtuals` data entry
+    - replaced it with the user-supplied `Alchemy` smart-account provisioning correction in the infra note and distribution copy
+  - Updated `attn in context`:
+    - added `aGDP.io` to the grouped machine-commerce segment list
+    - clarified that `Virtuals` is the broader ACP layer while `aGDP.io` is the more concrete Fiverr-like marketplace surface built on that stack
+  - Updated the appendix:
+    - added `aGDP.io` next to `Virtuals ACP` under `Agentic Commerce`
+    - added a direct `aGDP.io` reference link
+
+VERIFIER
+- PASS:
+  - `aGDP.io` now appears in the dedicated quadrant in a coherent commerce-surface position: below wallet/rail infra, to the right of `Virtuals`, and still left of the lower-stack settlement lane.
+  - `Virtuals` no longer implies current `Privy` usage in the docs data; the entry now preserves the user-supplied `Alchemy` correction as the current operator context.
+  - `attn in context` and the appendix now frame ACP as an end-to-end commerce protocol rather than a simple marketplace directory.
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+  - Screenshot proofs captured at:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/full-view-agentic-commerce-section-20260318-c.png`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/full-view-agentic-commerce-map-20260318-c.png`
+
+## 2026-03-18 - docs: add Crossmint, FairScale, AgentCash, and Merit Systems to the agentic-commerce quadrant
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user wants additional agentic-commerce names positioned in the same dedicated quadrant that was just widened for Tempo, rails, and wallets.
+- Missing info/questions: none blocking. `AgentCash` and `Merit Systems` already exist in shared-knowledge captures and current docs prose; `Crossmint` is already in the Artemis snapshot; `FairScale` has an official onchain-reputation framing that is enough to place it as an upstream trust signal.
+- Type: feature/docs map taxonomy
+- Status: in_progress
+- Context + suspected cause:
+  - The dedicated quadrant now cleanly shows trust, credit execution, payment rails, wallets, and commerce surfaces, but it still omits several names the user expects to see as first-class nodes.
+  - `AgentCash` and `Merit Systems` are currently mentioned only as prose complements, not plotted points.
+  - `Crossmint` is present in the Artemis appendix snapshot but not in the canonical `attn in context` quadrant.
+  - `FairScale` is absent from both the quadrant and the appendix supplement even though it fits the trust/reputation side of the same machine-commerce lane.
+- Fix intent:
+  1) Add source-backed project records for `Crossmint`, `FairScale`, `AgentCash`, and `Merit Systems`.
+  2) Extend the dedicated `agentic_commerce` presets so those firms appear in the right cluster lanes without collapsing the current Tempo / wallet / commerce split.
+  3) Update the canonical docs copy and appendix references so the written taxonomy matches the plotted points.
+- Acceptance criteria:
+  - The agentic-commerce quadrant includes `Crossmint`, `FairScale`, `AgentCash`, and `Merit Systems` as plotted nodes.
+  - Their placement makes the trust, wallet, and open-agentic-commerce surface distinctions clearer rather than noisier.
+  - `attn in context` and relevant appendix references mention the new names coherently.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-03-18-agentic-commerce-quadrant-crossmint-fairscale-agentcash-merit.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/plans/completed/2026-03-18-agentic-commerce-quadrant-crossmint-fairscale-agentcash-merit.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/quadrantMapData.ts`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/QuadrantScatterMap.tsx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - preserve the current five-lane quadrant framing rather than inventing a new axis
+    - keep `FairScale` framed as reputation / qualification, not underwriting
+    - keep `Crossmint` framed as wallet infrastructure, not payment-rail settlement or credit
+    - keep `AgentCash` and `Merit Systems` framed as x402/open-agentic-commerce tooling and spend-access surfaces, not direct attn substitutes
+    - do not overwrite unrelated dirty-worktree changes
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - refresh the full-view quadrant screenshot after the new nodes are added
+
+EXECUTOR
+- Implemented:
+  - Added source-backed `PROJECTS` entries for:
+    - `FairScale` as an upstream onchain-reputation and trust-qualification node
+    - `Crossmint` as embedded smart-wallet infrastructure
+    - `AgentCash` as an x402-native paid-access and spend surface
+    - `Merit Systems` as open-agentic-commerce infrastructure/tooling
+  - Extended the dedicated `agentic_commerce` and `agentic_commerce_full` presets to include all four names.
+  - Updated cluster membership so the quadrant now reads as:
+    - trust + credit qualification
+    - credit execution back ends
+    - payment rails + settlement
+    - wallets + spend control
+    - commerce surfaces
+  - Retuned the dedicated quadrant coordinates and label scaling so the new nodes fit without collapsing the existing Tempo / wallet / commerce split.
+  - Updated `attn in context`:
+    - added `FairScale`, `Crossmint`, `AgentCash`, and `Merit Systems` to the grouped machine-commerce segment list
+    - moved `AgentCash` and `Merit Systems` from footnote-style mention into the main taxonomy
+    - rewrote the narrative so `FairScale` sits with trust/reputation, `Crossmint` with wallet infra, and `AgentCash` / `Merit Systems` with the open-agentic-commerce spend/tooling lane
+  - Updated the Artemis appendix:
+    - added a direct `Crossmint WalletKit` reference under `Agent Wallets`
+    - added `FairScale` plus its official site reference under `Analytics & Verifiability`
+
+VERIFIER
+- PASS:
+  - The dedicated quadrant now plots `Crossmint`, `FairScale`, `AgentCash`, and `Merit Systems` in coherent lanes that reinforce the current five-cluster framing.
+  - `attn in context` now treats those names as first-class parts of the machine-commerce taxonomy instead of leaving most of them in prose-only mentions.
+  - The appendix now preserves `FairScale` explicitly and adds a direct `Crossmint` reference without disturbing the generated Artemis snapshot.
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+  - Screenshot proofs captured at:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/full-view-agentic-commerce-section-20260318-b.png`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/full-view-agentic-commerce-map-20260318-b.png`
+
+## 2026-03-18 - docs: widen the agentic-commerce quadrant to show payment rails, wallets, and Tempo
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user wants the new agentic-commerce quadrant shown in full, widened so payment rails and wallets are explicit, and updated to include Tempo using the ATTN shared knowledge graph.
+- Missing info/questions: none blocking. The shared knowledge capture and Tempo's March 18, 2026 mainnet announcement provide enough source material for positioning.
+- Type: feature/docs map taxonomy
+- Status: in_progress
+- Context + suspected cause:
+  - The dedicated `agentic_commerce` quadrant already exists, but it still compresses most non-credit machine-commerce infrastructure into one broad `agent commerce surfaces` cluster.
+  - That makes it hard to visually separate payment rails, embedded wallet infra, spend-control surfaces, and market surfaces in the full-view appendix.
+  - The user referred to Tempo as `MCP`, but the shared knowledge graph and Tempo's launch materials describe the release as the `Machine Payments Protocol` (`MPP`) announced alongside mainnet on `2026-03-18`.
+- Fix intent:
+  1) Add Tempo as a source-backed payment-and-settlement infrastructure node in the dedicated agentic-commerce quadrant.
+  2) Split the current machine-commerce surface into clearer payment-rail, wallet, and commerce clusters in both the embedded and full-view maps.
+  3) Update the surrounding docs copy so the map text matches the new wallet/payment-rail taxonomy.
+- Acceptance criteria:
+  - The dedicated agentic-commerce quadrant includes Tempo and makes payment rails and wallets visibly distinct from trust and credit back ends.
+  - The standalone full-view appendix reflects the widened quadrant framing.
+  - `attn in context` narrative and grouped project list mention Tempo plus the wallet/payment-rail distinction.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-03-18-agentic-commerce-quadrant-wallets-rails-tempo.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/plans/completed/2026-03-18-agentic-commerce-quadrant-wallets-rails-tempo.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/quadrantMapData.ts`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/QuadrantScatterMap.tsx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/full-view-maps.tsx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/index.mdx`
+  - Constraints:
+    - keep the existing map interaction model and overall visual language
+    - use the shared knowledge capture plus official Tempo materials to position Tempo as payment/settlement infrastructure, not credit
+    - avoid duplicating Tempo into the broad strategic map if that creates a duplicate `Klarna + Tempo` narrative
+    - do not overwrite unrelated dirty-worktree changes
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+    - capture a refreshed screenshot of the standalone full-view agentic-commerce quadrant
+
+EXECUTOR
+- Implemented:
+  - Added a new source-backed `tempo` project record using Tempo's official site and the March 18, 2026 `Tempo Mainnet is live` post.
+  - Kept `tempo` out of the broader strategic maps so the existing `Klarna + Tempo` narrative does not turn into an unhelpful duplicate.
+  - Expanded the dedicated `agentic_commerce` and `agentic_commerce_full` presets from a coarse three-bucket cut into five explicit layers:
+    - trust + credit qualification
+    - credit execution back ends
+    - payment rails + settlement
+    - wallets + spend control
+    - commerce surfaces
+  - Tuned the dedicated quadrant coordinates so the full-view cluster overlays render cleanly on the larger canvas.
+  - Updated `attn in context`:
+    - widened the map introduction text to call out payment rails and wallet infrastructure explicitly
+    - added `Tempo`, `Privy`, and `Para` to the grouped machine-commerce segment list
+    - rewrote the `Agent economy surfaces` section so `Tempo` is framed as `Machine Payments Protocol (MPP)` settlement infrastructure, distinct from credit
+  - Updated the appendix copy:
+    - refined the standalone full-view map description to mention trust, credit execution, payment rails, wallet infrastructure, and commerce surfaces
+    - updated the appendix index copy so the third map's widened taxonomy is obvious before opening it
+
+VERIFIER
+- PASS:
+  - The dedicated agentic-commerce quadrant now includes `Tempo` and visually separates payment rails and wallet infrastructure from trust and credit layers.
+  - The standalone full-view appendix reflects the widened taxonomy and now shows all five highlighted cluster overlays.
+  - `attn in context` now names `Tempo`, `Privy`, and `Para` in the machine-commerce grouping and keeps Tempo framed as settlement infrastructure, not underwriting.
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+  - Screenshot proofs captured at:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/full-view-agentic-commerce-section-20260318.png`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/full-view-agentic-commerce-map-20260318.png`
+
+## 2026-03-18 - docs: add bond.credit and Valiron, plus a new agentic-commerce quadrant
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user wants `bond.credit` and `Valiron` added to both `attn in context` and the Artemis appendix, and also wants a new agentic-commerce quadrant that positions `attn` in the same style as the existing context maps.
+- Missing info/questions: none blocking. The supplied X handles and the official project pages are enough to position the two requested projects, and the existing quadrant-map component already supports additional presets.
+- Type: feature/docs map taxonomy
+- Status: completed
+- Context + suspected cause:
+  - `attn in context` currently has revenue, business-credit, and broad strategic maps, but no dedicated quadrant focused on the agentic-commerce lane.
+  - `Valiron` already exists in the generated Artemis snapshot, but `bond.credit` does not, so the appendix needs a narrow manual supplement rather than a misleading snapshot edit.
+  - The current narrative mentions agentic-commerce complements, but does not yet place `bond.credit` and `Valiron` explicitly next to `attn`.
+- Fix intent:
+  1) Add source-backed project records and a dedicated agentic-commerce quadrant preset.
+  2) Update `attn in context` so the new quadrant and written taxonomy agree on where `attn`, `bond.credit`, and `Valiron` sit.
+  3) Extend the Artemis appendix manual supplement so both requested names appear there without breaking the generated snapshot boundary.
+- Acceptance criteria:
+  - `attn in context` includes a new agentic-commerce quadrant rendered in the same style as the existing maps.
+  - `bond.credit` and `Valiron` appear in `attn in context` with source-backed positioning.
+  - The Artemis appendix page explicitly includes both requested names while keeping generated snapshot data distinct from manual additions.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-03-18-agentic-commerce-quadrant-and-requested-projects.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `docs/plans/active/2026-03-18-agentic-commerce-quadrant-and-requested-projects.md`
+    - `components/quadrantMapData.ts`
+    - `components/QuadrantScatterMap.tsx`
+    - `pages/introduction/attn-in-context.mdx`
+    - `pages/appendix/artemis-agentic-commerce-index.mdx`
+    - `pages/appendix/full-view-maps.tsx`
+    - `pages/appendix/index.mdx`
+    - optionally `components/artemisAgenticCommerceIndexData.ts` if a live snapshot refresh is run
+  - Constraints:
+    - preserve the existing map interaction model and overall page style
+    - use official project materials as the primary positioning source
+    - do not force `bond.credit` into the generated Artemis snapshot if it is still absent upstream
+    - do not overwrite unrelated worktree changes already present in the repo
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Added source-backed `PROJECTS` entries for `bond.credit` and `Valiron`.
+  - Added a dedicated `agentic_commerce` and `agentic_commerce_full` preset to `QuadrantScatterMap`, including a focused cluster model for:
+    - trust + credit signals
+    - credit execution back ends
+    - agent commerce surfaces
+  - Updated `attn in context`:
+    - inserted the new `Agentic commerce quadrant` as the third map
+    - shifted the broader strategic map to the fourth slot
+    - added `bond.credit` and `Valiron` to the grouped segment list
+    - refreshed the agent-economy narrative so `attn`, `bond.credit`, and `Valiron` are explicitly differentiated
+    - normalized page map `asOf` dates to `2026-03-18`
+  - Updated the appendix:
+    - added `Valiron` explicitly to the manual `Analytics & Verifiability` supplement
+    - added a new manual `Agent Trust + Credit` supplement containing `bond.credit` and `Valiron`
+    - added the new quadrant to the standalone full-view maps page and appendix overview copy
+  - Refreshed the live Artemis snapshot path:
+    - confirmed `Valiron` is already in the generated dataset
+    - confirmed `bond.credit` is still absent upstream
+    - kept the generated snapshot intact apart from the refreshed `generatedAt` timestamp
+      in `components/artemisAgenticCommerceIndexData.ts`
+
+VERIFIER
+- PASS:
+  - `attn in context` now contains a dedicated agentic-commerce quadrant in the same shared-map style as the other context diagrams.
+  - `bond.credit` and `Valiron` now appear in the canonical docs positioning, both in the written taxonomy and in hover-backed project data.
+  - The Artemis appendix now explicitly preserves both names while keeping generated snapshot data separate from manual additions.
+  - `npm run build` -> PASS
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+  - Rendered screenshot proofs captured at:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/attn-in-context-agentic-commerce-section-20260318.png`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/tmp/appendix-artemis-agentic-commerce-index-top-20260318.png`
+
+## 2026-03-18 - docs: add Tempo machine-payments reference to agentic-commerce docs
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [ ] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user supplied two Tempo launch posts and wants them routed using the AI-signal indexing rules.
+- Type: docs/content alignment
+- Status: completed
+- Context + suspected cause:
+  - `attn in context` already distinguishes revenue, identity, and x402-native access/payment surfaces
+  - the docs did not yet preserve Tempo as a machine-payments and settlement-infrastructure reference
+  - the Artemis appendix already lists `Tempo` under `Blockchains & Stablecoins`, but lacked a direct reference
+- Fix intent:
+  1) add a narrow Tempo framing note to `attn in context`
+  2) add a direct reference in the appendix where Tempo already appears
+  3) verify build and docs checks
+- Acceptance criteria:
+  - `attn in context` mentions Tempo as payment/settlement infrastructure rather than credit
+  - the appendix links the Tempo launch post
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass
+
+EXECUTOR
+- Added Tempo framing to `attn in context`.
+- Added the direct Tempo launch reference in the appendix.
+
+## 2026-03-18 - docs: add Arc / ERC-8004 identity and reputation reference to agentic-commerce docs
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user wants sources related to AI + credit / reputation / identity to flow into the canonical docs pages, and the supplied Arc / ERC-8004 material clearly fits the identity / reputation side of the stack.
+- Missing info/questions: none blocking. The supplied docs link is enough as a canonical reference.
+- Type: docs/content alignment
+- Status: completed
+- Context + suspected cause:
+  - `attn in context` now references spend, x402, Pump fun, and Virtuals ACP as part of the agentic-commerce stack.
+  - It does not yet explicitly call out Arc / ERC-8004 as a portable identity / reputation signal.
+  - The Artemis appendix already lists `ERC-8004` under `Analytics & Verifiability`, but lacks a direct reference.
+- Fix intent:
+  1) add a brief Arc / ERC-8004 framing note to `attn in context`,
+  2) add the direct Arc docs reference to the appendix under the analytics/verifiability section,
+  3) verify build and knowledge checks.
+- Acceptance criteria:
+  - `attn in context` mentions Arc / ERC-8004 as identity / portable reputation infrastructure,
+  - the appendix links the supplied Arc docs in the relevant section,
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - keep Arc / ERC-8004 framed as portable identity / reputation, not direct credit
+    - keep the appendix addition narrow
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Added Arc / ERC-8004 framing to `attn in context`.
+- Added the direct Arc docs reference in the appendix under `Analytics & Verifiability`.
+- Re-ran build and knowledge checks.
+
+VERIFIER
+- PASS:
+  - `attn in context` now references Arc / ERC-8004 as identity / portable reputation infrastructure.
+  - The appendix now links the supplied Arc docs in the relevant section.
+  - Build and knowledge checks passed.
+- NOTE:
+  - No rendered screenshot verification was captured in this follow-up.
+
+## 2026-03-17 - docs: add Pump fun tokenized-agent thread as an agentic-commerce anchor
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user wants the Pump fun tokenized-agent thread reflected in the docs network because it is now a core public anchor for the agentic-commerce narrative alongside Virtuals ACP.
+- Missing info/questions: none blocking. The user supplied the exact Pump fun thread and the desired framing.
+- Type: docs/content alignment
+- Status: completed
+- Context + suspected cause:
+  - `attn in context` currently mentions agent-commerce surfaces and x402-native complements, but does not yet call out Pump fun as public proof that agent revenue and token-linked financial mechanics are being pushed into market.
+  - The Artemis appendix already lists `Virtuals ACP`, but does not yet include the direct Pump fun Tokenized Agents reference that sharpens the revenue-linked narrative.
+- Fix intent:
+  1) add Pump fun as an explicit public anchor in `attn in context`,
+  2) add the direct Pump fun thread reference in the appendix near `Virtuals ACP`,
+  3) verify build and knowledge checks.
+- Acceptance criteria:
+  - `attn in context` explicitly mentions Pump fun as an agent-revenue / token-alignment anchor
+  - the appendix links the supplied Pump fun thread in the relevant section
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - frame Pump fun as public proof that agent revenue is becoming legible
+    - keep the distinction explicit that buybacks and burns are token-alignment mechanics, not attn-style credit
+    - keep the appendix addition narrow
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Added Pump fun tokenized-agent framing to `attn in context`.
+- Added the direct Pump fun thread reference in the appendix next to the `Virtuals ACP` section.
+- Re-ran build and knowledge checks.
+
+VERIFIER
+- PASS:
+  - `attn in context` now uses Pump fun as a public anchor for the agent-revenue narrative.
+  - The appendix now links the supplied Pump fun thread in the relevant section.
+  - Build and knowledge checks passed.
+- NOTE:
+  - No rendered screenshot verification was captured in this follow-up.
+
+## 2026-03-17 - docs: reflect Merit Systems, AgentCash, and x402scan in attn in context
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user asked to ensure `Merit Systems`, `AgentCash`, and `x402scan` are represented in the canonical docs repo, specifically in `attn in context` and the Artemis appendix.
+- Missing info/questions: none blocking. The appendix already contains the labels, but `attn in context` does not mention them, and the appendix would benefit from direct reference links.
+- Type: docs/content alignment
+- Status: completed
+- Context + suspected cause:
+  - `pages/appendix/artemis-agentic-commerce-index.mdx` already includes `AgentCash`, `x402Scan`, and `Merit Systems` in the manual supplement.
+  - `pages/introduction/attn-in-context.mdx` does not yet mention them, so the canonical positioning page understates the x402-native payment/discovery/tooling layer around agentic commerce.
+  - These firms are complements, not direct substitutes for attn's underwriting + servicing position.
+- Fix intent:
+  1) add explicit x402-native complement framing to `attn in context`,
+  2) add direct reference links in the appendix where these labels appear,
+  3) verify build and knowledge checks.
+- Acceptance criteria:
+  - `attn in context` explicitly mentions Merit Systems, AgentCash, and x402scan as x402-native complements
+  - the appendix includes direct links for the relevant entries
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass
+- Complexity: small
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - keep them framed as complements around x402-native paid access, discovery, and tooling
+    - do not overstate them as direct attn competitors
+    - keep the appendix additions narrow and text-first
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Added x402-native complement framing for Merit Systems, AgentCash, and x402scan to `attn in context`.
+- Added direct reference links in the appendix under the relevant categories.
+- Re-ran build and knowledge checks.
+
+VERIFIER
+- PASS:
+  - `attn in context` now mentions the three entities explicitly as complements.
+  - The appendix now provides direct reference links where the labels appear.
+  - Build and knowledge checks passed.
+- NOTE:
+  - No rendered screenshot verification was captured in this follow-up.
+
 ## 2026-03-17 - appendix: add direct AgentCard X post and correct handle mapping
 
 Checklist

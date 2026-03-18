@@ -6,6 +6,8 @@ import { PROJECTS, type ExecutionPlane, type ProjectInfo } from "./quadrantMapDa
 
 type QuadrantPreset =
   | "broad"
+  | "agentic_commerce"
+  | "agentic_commerce_full"
   | "credit_only"
   | "credit_only_full"
   | "revenue_receivables_zoom"
@@ -1338,6 +1340,19 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
     projectIds: ["yumi", "sprinter"],
   },
   {
+    id: "agent_trust_credit",
+    label: "Agent Trust + Credit",
+    oneLiner:
+      "Qualification and agent-credit layers that score machines before access or capital expands.",
+    stroke: "#8a62b8",
+    fill: "#eadfff",
+    dash: "9 6",
+    connectivity: 0.56,
+    labelPlacement: "mid-left",
+    labelDistanceMultiplier: 1.28,
+    projectIds: ["bond_credit", "valiron"],
+  },
+  {
     id: "agent_credit_spend",
     label: "Agent Commerce + Spend",
     oneLiner:
@@ -1397,8 +1412,8 @@ const BROAD_CLUSTER_DEFS: ClusterDef[] = [
   },
   {
     id: "payments_rails",
-    label: "B2B2C BNPL + Payments Rails",
-    oneLiner: "Merchant-integrated consumer financing and payments-rails narratives.",
+    label: "Consumer Credit + Card Rails",
+    oneLiner: "Consumer-credit distribution and card-network rails for checkout and card-present spend.",
     stroke: "#a150ac",
     fill: "#f1ddf4",
     dash: "14 7",
@@ -1559,14 +1574,18 @@ const EMBEDDED_BROAD_EXCLUDED_PROJECT_IDS = new Set([
   ...SOLANA_MERCHANT_PROJECT_IDS,
   ...WEB2_REVENUE_RECEIVABLES_MEMBER_IDS,
   ...CREDIT_ONLY_PRIVATE_CREDIT_PROJECT_IDS,
+  "tempo",
 ]);
 
 const FULL_BROAD_EXCLUDED_PROJECT_IDS = new Set([
   ...SOLANA_MERCHANT_PROJECT_IDS,
   ...CREDIT_ONLY_PRIVATE_CREDIT_PROJECT_IDS,
+  "tempo",
 ]);
 const BROAD_DETAILED_FULL_COORD_OVERRIDES: Record<string, { x: number; y: number }> = {
   rain: { x: 0.53, y: 0.88 },
+  bond_credit: { x: 0.5, y: 0.75 },
+  valiron: { x: 0.28, y: 0.72 },
   colossus: { x: 0.515, y: 0.81 },
   natural: { x: 0.705, y: 0.535 },
   virtuals: { x: 0.585, y: 0.415 },
@@ -1575,6 +1594,116 @@ const BROAD_DETAILED_FULL_COORD_OVERRIDES: Record<string, { x: number; y: number
   para: { x: 0.69, y: 0.54 },
   swig: { x: 0.745, y: 0.565 },
   squads_protocol: { x: 0.8, y: 0.595 },
+};
+
+const AGENTIC_COMMERCE_PROJECT_IDS = [
+  "attn",
+  "bond_credit",
+  "valiron",
+  "fairscale",
+  "sprinter",
+  "claw",
+  "tempo",
+  "natural",
+  "privy",
+  "para",
+  "crossmint",
+  "merit_systems",
+  "agentcash",
+  "agdp",
+  "virtuals",
+  "frames",
+  "sponge",
+] as const;
+
+const AGENTIC_COMMERCE_CLUSTER_DEFS: ClusterDef[] = [
+  {
+    id: "agent_trust_signals",
+    label: "Trust + Credit Qualification",
+    oneLiner:
+      "Scoring layers that decide which machines are credible enough for API access or capital expansion.",
+    stroke: "#8a62b8",
+    fill: "#eadfff",
+    dash: "8 6",
+    connectivity: 1.08,
+    labelPlacement: "top-left",
+    projectIds: ["valiron", "fairscale", "bond_credit"],
+  },
+  {
+    id: "agent_credit_execution",
+    label: "Credit Execution Back Ends",
+    oneLiner:
+      "Back-end systems that can route capital, set limits, or enforce repayment once agent activity qualifies.",
+    stroke: "#2f6fdf",
+    fill: "#d6e5ff",
+    dash: "10 8",
+    connectivity: 1.02,
+    labelPlacement: "top-left",
+    labelDistanceMultiplier: 1.16,
+    projectIds: ["attn", "sprinter", "claw"],
+  },
+  {
+    id: "agent_payment_rails",
+    label: "Payment Rails + Settlement",
+    oneLiner:
+      "Lower-stack payment and settlement infrastructure that makes machine spend and service delivery executable.",
+    stroke: "#127a68",
+    fill: "#d9f7ef",
+    dash: "10 7",
+    connectivity: 1.04,
+    labelPlacement: "mid-right",
+    labelDistanceMultiplier: 1.22,
+    projectIds: ["tempo", "natural"],
+  },
+  {
+    id: "agent_wallet_infra",
+    label: "Wallets + Spend Control",
+    oneLiner:
+      "Embedded wallet and spend-policy layers that let agents hold balances, sign, and transact safely.",
+    stroke: "#b56a1d",
+    fill: "#ffecd8",
+    dash: "9 7",
+    connectivity: 1.04,
+    labelPlacement: "mid-right",
+    labelDistanceMultiplier: 1.22,
+    projectIds: ["privy", "crossmint", "para", "frames"],
+  },
+  {
+    id: "agent_commerce_surfaces",
+    label: "Commerce Surfaces",
+    oneLiner:
+      "Networks, merchant-facing surfaces, and x402/open-agentic-commerce tooling where agent demand and paid access become visible.",
+    stroke: "#c55d93",
+    fill: "#ffe0ef",
+    dash: "10 6",
+    connectivity: 1.08,
+    labelPlacement: "mid-left",
+    labelDistanceMultiplier: 1.12,
+    projectIds: ["merit_systems", "virtuals", "agentcash", "agdp", "sponge"],
+  },
+];
+
+const AGENTIC_COMMERCE_COORDS: Record<
+  (typeof AGENTIC_COMMERCE_PROJECT_IDS)[number],
+  { x: number; y: number }
+> = {
+  attn: { x: 0.82, y: 0.8 },
+  bond_credit: { x: 0.31, y: 0.74 },
+  valiron: { x: 0.17, y: 0.81 },
+  fairscale: { x: 0.23, y: 0.77 },
+  sprinter: { x: 0.72, y: 0.72 },
+  claw: { x: 0.64, y: 0.68 },
+  tempo: { x: 0.8, y: 0.49 },
+  natural: { x: 0.72, y: 0.45 },
+  privy: { x: 0.56, y: 0.4 },
+  para: { x: 0.64, y: 0.35 },
+  crossmint: { x: 0.62, y: 0.43 },
+  merit_systems: { x: 0.23, y: 0.33 },
+  agentcash: { x: 0.39, y: 0.28 },
+  agdp: { x: 0.46, y: 0.31 },
+  virtuals: { x: 0.31, y: 0.3 },
+  frames: { x: 0.6, y: 0.25 },
+  sponge: { x: 0.4, y: 0.22 },
 };
 
 type PresetConfig = {
@@ -1758,6 +1887,65 @@ function getPresetConfig(preset: QuadrantPreset, asOf: string): PresetConfig {
     };
   }
 
+  if (preset === "agentic_commerce" || preset === "agentic_commerce_full") {
+    const projects = AGENTIC_COMMERCE_PROJECT_IDS.map((id) => {
+      const base = PROJECTS[id];
+      const remap = AGENTIC_COMMERCE_COORDS[id];
+      return {
+        ...base,
+        x: remap.x,
+        y: remap.y,
+      };
+    });
+
+    return {
+      title:
+        preset === "agentic_commerce_full"
+          ? `Agentic Commerce Quadrant (Full View) — as of ${asOf}`
+          : `Agentic Commerce Quadrant — as of ${asOf}`,
+      hint:
+        preset === "agentic_commerce_full"
+          ? `Standalone agentic-commerce view: compare trust gating, credit execution, payment rails, wallet infrastructure, and commerce surfaces across the machine-commerce lane. Showing ${projects.length} projects.`
+          : `Focused agentic-commerce view: compare trust gating, credit execution, payment rails, wallet infrastructure, and commerce surfaces. Showing ${projects.length} projects.`,
+      taxonomyHint:
+        "Lens: trust / access gating vs financing / settlement execution, and back-end qualification + control vs payment rails, wallets, and commerce surfaces.",
+      ariaLabel: `Agentic commerce quadrant (as of ${asOf})`,
+      axisTopTitle: "Back-end qualification + control",
+      axisBottomTitle: "Payment rails / wallet / commerce surfaces",
+      leftAxisText: "← Trust / access gating",
+      rightAxisText: "Financing / settlement execution →",
+      axisSideLabelFontSize: preset === "agentic_commerce_full" ? 56 : 46,
+      axisSideLabelYOffset: preset === "agentic_commerce_full" ? -28 : -26,
+      labelFontSize: preset === "agentic_commerce_full" ? 28 : 24,
+      markerSize: preset === "agentic_commerce_full" ? 38 : 34,
+      applyHardLabelLocks: true,
+      allowSingletonClusterZones: false,
+      splitDisconnectedClusterZones: true,
+      clusterZonePadding: preset === "agentic_commerce_full" ? 12 : 10,
+      clusterFillOpacity: 0.18,
+      clusterStrokeOpacity: 0.92,
+      clusterStrokeWidth: preset === "agentic_commerce_full" ? 2.8 : 2.6,
+      canvasWidth: preset === "agentic_commerce_full" ? 2180 : 1600,
+      canvasHeight: preset === "agentic_commerce_full" ? 1500 : 1260,
+      enableVolumeScaledMarkers: false,
+      enableVolumeScaledLabels: false,
+      relaxProjectPositions: true,
+      staticLabelScaleById: {
+        valiron: 0.96,
+        bond_credit: 0.98,
+        frames: 0.9,
+        fairscale: 0.92,
+        crossmint: 0.92,
+        merit_systems: 0.88,
+        agentcash: 0.92,
+        agdp: 0.92,
+      },
+      projects,
+      clusterDefs: AGENTIC_COMMERCE_CLUSTER_DEFS,
+      defaultShowClusters: true,
+    };
+  }
+
   return {
     title: `Strategic Credit, Spend & Settlement Map — as of ${asOf}`,
     hint: `Hover for details. Click a dot to pin. Esc clears. Showing ${embeddedBroadProjects.length} projects.`,
@@ -1800,6 +1988,7 @@ export default function QuadrantScatterMap(props: {
   const maxWidth = props.maxWidth ?? 2200;
   const preset = props.preset ?? "broad";
   const isStandaloneFullView =
+    preset === "agentic_commerce_full" ||
     preset === "revenue_receivables_zoom_full" ||
     preset === "credit_only_full" ||
     preset === "broad_detailed_full";

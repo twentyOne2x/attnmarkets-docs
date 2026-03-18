@@ -48,6 +48,12 @@ Once a facility is active:
 - utilization discipline is checked continuously,
 - limits update when risk changes.
 
+For the current Pump borrower-first lane, this also means:
+
+- Pump fee-admin control moves away from the borrower during ACTIVE,
+- the pledged Swig path becomes the current fee-control path,
+- creator-fee servicing is enforced through that path until the facility closes.
+
 ## 6. Step five: utilization discipline is enforced
 
 Borrowers cannot remain permanently maxed out.
@@ -65,6 +71,12 @@ If revenue deteriorates or risk spikes:
 - throttle mode reduces availability,
 - freeze mode stops new draws,
 - acceleration/default mode can route all eligible fees to repayment.
+
+Important nuance:
+
+- the ACTIVE control posture is onchain,
+- so a web-backend outage does not automatically unlock the fee route,
+- but guided servicing and guided close/offboarding still rely on the operator stack and keeper services being online.
 
 ## 8. Step seven: LPs see credit pool exposure and tape
 
@@ -86,4 +98,5 @@ LPs receive exposure through credit pools (and attnUSD where applicable), with r
 - [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
 - [Risk, limits, and control modes](./risk-and-limits.md)
 - [Pricing and parameter policy](./pricing-and-parameters.md)
+- [Revenue accounts and signing model](./revenue-accounts-and-signing-model.md)
 - [For Liquidity Providers](../users/for-liquidity-providers.md)

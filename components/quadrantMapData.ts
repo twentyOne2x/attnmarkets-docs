@@ -1177,6 +1177,80 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://blog.sprinter.tech/credit-runs-on-sprinter/",
   },
 
+  bond_credit: {
+    id: "bond_credit",
+    label: "bond.credit",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.52,
+    y: 0.74,
+    narrative:
+      "Agentic credit engine that scores autonomous onchain agents from live performance and routes more capital to stronger machines.",
+    creditModel:
+      "Performance-based agent credit limits and capital routing rather than revenue-linked business underwriting.",
+    borrowerType: "Autonomous onchain agents and agent strategies",
+    distributionModel: "Credit engine + leaderboard + capital routing layer",
+    exampleClients: ["Agentic Alpha contestants and autonomous yield agents."],
+    why: [
+      "The official site says every trade and vault update is recorded onchain and fed into its credit engine.",
+      "It is explicitly framed as the credit layer for the agentic economy, with higher credit limits and capital routing for outperforming agents.",
+    ],
+    sources: [
+      { label: "bond.credit", url: "https://www.bond.credit/" },
+      { label: "bond.credit leaderboard", url: "https://www.bond.credit/leaderboard" },
+    ],
+    href: "https://www.bond.credit/",
+  },
+
+  valiron: {
+    id: "valiron",
+    label: "valiron.co",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Reputation / legal",
+    plane: "hybrid",
+    x: 0.26,
+    y: 0.7,
+    narrative:
+      "Hybrid trust infrastructure for autonomous agents that scores them before they reach APIs or production infrastructure.",
+    creditModel:
+      "Not a lender; a pre-credit trust and abuse-scoring layer based on behavior, payment history, and onchain reputation.",
+    borrowerType: "API providers, infra operators, and autonomous agents",
+    distributionModel: "Trust-scoring + policy gating for machine-to-machine traffic",
+    exampleClients: ["API providers deciding which agents should reach production infra."],
+    why: [
+      "Valiron positions itself around knowing which agents should access an API before traffic reaches the backend.",
+      "Its control surface is thresholding and policy around reputation/payment history, which makes it a trust-gating complement rather than a financing backend.",
+    ],
+    sources: [{ label: "Valiron", url: "https://www.valiron.co/" }],
+    href: "https://www.valiron.co/",
+  },
+
+  fairscale: {
+    id: "fairscale",
+    label: "FairScale",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Reputation / legal",
+    plane: "web3",
+    x: 0.24,
+    y: 0.72,
+    narrative:
+      "Onchain reputation-scoring layer that turns wallet and agent behavior into a visible trust signal before capital or access expands.",
+    creditModel:
+      "Not a lender; upstream reputation and qualification infrastructure for agentic finance and access decisions.",
+    borrowerType: "Agents, wallets, and counterparties being scored for trust",
+    distributionModel: "Onchain reputation-score and trust layer",
+    why: [
+      "FairScale's official framing is an onchain reputation score, which places it upstream of credit execution.",
+      "That makes it closer to qualification and trust gating than to settlement rails or underwriting back ends.",
+    ],
+    sources: [
+      { label: "FairScale", url: "https://fairscale.xyz/" },
+      { label: "FairScale app", url: "https://app.fairscale.xyz/" },
+    ],
+    href: "https://fairscale.xyz/",
+  },
+
   claw: {
     id: "claw",
     label: "claw.credit",
@@ -1428,6 +1502,35 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://www.klarna.com/international/press/klarna-launches-klarnausd-as-stablecoin-transactions-hit-usd27-trillion/",
   },
 
+  tempo: {
+    id: "tempo",
+    label: "Tempo",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.84,
+    y: 0.58,
+    narrative:
+      "Payments-focused Layer 1 plus Machine Payments Protocol rails for machine-native settlement, sessions, and pay-per-use service flows.",
+    creditModel:
+      "Not a lender/originator; lower-stack payment and settlement infrastructure for agent and enterprise workflows.",
+    borrowerType: "Developers, agents, payment operators, and enterprises",
+    distributionModel: "Payments L1 + open machine-payments protocol",
+    exampleClients: [
+      "Agents paying programmatically for APIs, data, and infrastructure through MPP sessions.",
+      "Builders using Tempo for payouts, remittances, embedded-finance, and tokenized-deposit flows.",
+    ],
+    why: [
+      "Tempo positions itself as a purpose-built Layer 1 for payments at scale, including machine payments and agentic commerce.",
+      "Its March 18, 2026 mainnet launch introduced the Machine Payments Protocol (MPP), making it a settlement and coordination rail rather than a credit underwriter.",
+    ],
+    sources: [
+      { label: "Tempo", url: "https://tempo.xyz/" },
+      { label: "Tempo Mainnet is live — 2026-03-18", url: "https://tempo.xyz/blog/mainnet" },
+    ],
+    href: "https://tempo.xyz/blog/mainnet",
+  },
+
   affirm: {
     id: "affirm",
     label: "Affirm",
@@ -1529,6 +1632,35 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://frames.ag/tools",
   },
 
+  crossmint: {
+    id: "crossmint",
+    label: "Crossmint",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "hybrid",
+    potentialClient: true,
+    x: 0.66,
+    y: 0.44,
+    narrative:
+      "Embedded smart-wallet infrastructure for agent-dedicated accounts, passkey/email onboarding, and programmable transaction flows.",
+    creditModel:
+      "Not a lender/originator; wallet infrastructure that can host credit-enabled spend and servicing surfaces.",
+    borrowerType: "Developers, apps, agents, and merchant platforms",
+    distributionModel: "B2B wallet kit + agent infrastructure",
+    why: [
+      "Crossmint positions WalletKit around embedded smart wallets, secure key management, and programmatic wallet creation.",
+      "It fits the wallet-infrastructure lane rather than payment-rail settlement or direct credit underwriting.",
+    ],
+    sources: [
+      { label: "Crossmint WalletKit", url: "https://www.crossmint.com/ecosystem/walletkit" },
+      {
+        label: "Crossmint: Agentic commerce will be built on stablecoin rails",
+        url: "https://blog.crossmint.com/agentic-commerce-stablecoins/",
+      },
+    ],
+    href: "https://www.crossmint.com/ecosystem/walletkit",
+  },
+
   sponge: {
     id: "sponge",
     label: "paysponge.com",
@@ -1549,6 +1681,60 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     href: "https://paysponge.com/",
   },
 
+  agentcash: {
+    id: "agentcash",
+    label: "AgentCash",
+    stack: "User-facing distribution",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.38,
+    y: 0.27,
+    narrative:
+      "x402-native paid-access surface that gives agents one balance for buying data, tools, and API access behind paywalls.",
+    creditModel:
+      "Not a lender/originator; pay-per-use spend and access surface that could consume working capital or spend-control back ends.",
+    borrowerType: "Agents and developers paying for tools, data, and APIs",
+    distributionModel: "Developer tool + paid API spend surface",
+    why: [
+      "AgentCash explicitly frames itself as one balance for paid APIs and x402-based access.",
+      "It belongs with the open-agentic-commerce spend surfaces, not with trust scoring or credit execution back ends.",
+    ],
+    sources: [
+      { label: "AgentCash", url: "https://agentcash.dev/" },
+      { label: "AgentCash on X", url: "https://x.com/agentcashdev" },
+    ],
+    href: "https://agentcash.dev/",
+  },
+
+  agdp: {
+    id: "agdp",
+    label: "aGDP.io",
+    stack: "User-facing distribution",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.44,
+    y: 0.3,
+    narrative:
+      "Virtuals-powered agent-services marketplace surface that turns ACP into a live commerce venue for agent discovery, offerings, jobs, and revenue generation.",
+    creditModel:
+      "Not a lender/originator; commerce surface with escrow, payments, and evaluation flows that could consume working-capital or settlement-liquidity back ends.",
+    borrowerType: "Agents, builders, and buyers sourcing agent services",
+    distributionModel: "Agent marketplace + commerce surface built on ACP",
+    exampleClients: [
+      "Agents listing offerings and selling services through ACP flows.",
+      "Buyers sourcing agents, bounties, and completed jobs through the marketplace surface.",
+    ],
+    why: [
+      "aGDP.io is better read as the user-facing market surface for ACP than as a generic job board.",
+      "Because it includes discovery, service execution, and monetization, it belongs in commerce surfaces but slightly to the settlement side of a pure listing/discovery node.",
+    ],
+    sources: [
+      { label: "aGDP.io", url: "https://agdp.io/" },
+      { label: "Virtual-Protocol/openclaw-acp", url: "https://github.com/Virtual-Protocol/openclaw-acp" },
+    ],
+    href: "https://agdp.io/",
+  },
+
   virtuals: {
     id: "virtuals",
     label: "virtuals.io",
@@ -1559,26 +1745,27 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     x: 0.58,
     y: 0.4,
     narrative:
-      "Agent-commerce network and protocol where buyers and agents transact for real services using onchain wallets, escrow, and settlement flows.",
+      "Agent-commerce protocol and builder platform spanning agent discovery, trustless escrow, payments, evaluation, tokenization, and service execution.",
     creditModel:
       "Not a lender/originator; monetized agent-service surface that could consume working-capital or settlement-liquidity back ends once agent revenue is routable.",
     borrowerType: "Agent builders, autonomous agents, and buyers of agent services",
-    distributionModel: "Agent network + commerce protocol + builder platform",
+    distributionModel: "Agent network + end-to-end commerce protocol + builder platform",
     exampleClients: [
       "Buyer agents sourcing services from seller agents through ACP flows.",
       "Builders launching tokenized or non-tokenized agents on Virtuals.",
     ],
     b2b2smbReliance: [
-      "Public Virtuals ACP docs describe Privy-managed Butler wallets; no public Squads dependency is described in the cited sources.",
+      "Current operator correction says ACP smart accounts are assigned by Virtuals using Alchemy; no public Squads dependency is described in the cited sources.",
     ],
     infra: {
-      privy: "Yes",
+      privy: "No public evidence",
       squads: "No public evidence",
-      asOf: "2026-03-10",
-      note: "Virtuals ACP/Butler wallet docs describe managed wallets via Privy.",
+      asOf: "2026-03-18",
+      note:
+        "User-provided operator correction on 2026-03-18 says ACP smart accounts are currently provisioned through Alchemy by Virtuals; prior public ACP docs referenced Privy-managed Butler wallets.",
     },
     why: [
-      "This is better understood as an agent-commerce and monetization surface than as a pure credit protocol.",
+      "This is better understood as an end-to-end agent-commerce protocol and monetization surface than as a pure credit protocol.",
       "If agent revenue becomes stable and routable, it is a plausible downstream consumer of credit and servicing back ends.",
     ],
     sources: [
@@ -1597,6 +1784,28 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       },
     ],
     href: "https://www.virtuals.io/",
+  },
+
+  merit_systems: {
+    id: "merit_systems",
+    label: "Merit Systems",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
+    plane: "web3",
+    x: 0.25,
+    y: 0.33,
+    narrative:
+      "Open-agentic-commerce infrastructure umbrella spanning network discovery, paid-access tooling, and consumer-facing surfaces.",
+    creditModel:
+      "Not a lender/originator; ecosystem tooling and network infrastructure around open agentic commerce.",
+    borrowerType: "Developers, agents, and operators navigating open paid-access networks",
+    distributionModel: "Open-commerce infrastructure + tooling platform",
+    why: [
+      "Merit Systems describes itself as infrastructure for open agentic commerce.",
+      "Its linked products place it around network tooling and paid-access surfaces rather than underwriting or settlement execution itself.",
+    ],
+    sources: [{ label: "Merit Systems", url: "https://merit.systems/" }],
+    href: "https://merit.systems/",
   },
 
   slash: {
@@ -1902,28 +2111,52 @@ export const PROJECTS: Record<string, ProjectInfo> = {
   colossus: {
     id: "colossus",
     label: "colossus.credit",
-    stack: "Adjacent",
-    controlPrimitive: "Mixed / not primary",
+    stack: "Back-end infrastructure",
+    controlPrimitive: "Programmatic controls",
     plane: "web3",
     x: 0.58,
     y: 0.84,
     narrative:
-      "Closed-loop stablecoin card-network thesis: direct crypto settlement while using existing EMV terminals and acquirer distribution.",
+      "Stablecoin-native card network on an Ethereum L2, using existing EMV cards/terminals while vertically integrating issuer, processor, and network settlement.",
     creditModel:
-      "Network/settlement infrastructure rather than a standalone underwriting product; framed as replacing incumbent card-network economics.",
+      "Card-network and settlement infrastructure with direct-debit plus issuer-funded credit tiers; issuer credit policy remains external to ColossusNet.",
+    borrowerType: "Issuers, acquirers, merchants, and cardholders",
+    distributionModel: "Card network + issuer/acquirer infrastructure",
+    exampleClients: [
+      "Issuers funding consumer-credit transactions from collateral pools.",
+      "Acquirers registering merchants and terminals on-chain.",
+      "Merchants accepting ColossusNet payments through existing terminals.",
+    ],
+    scale: [
+      "Chain ID 951 and RID A000000951.",
+      "1 second blocks with 100ms preconfirmation.",
+      "172ms measured end-to-end authorization latency in the architecture docs.",
+    ],
     why: [
-      "Public pages claim EMV compatibility and settlement at existing terminals.",
-      "Positioning emphasizes acquirer integration and reduced dependence on incumbent Visa/Mastercard network layers.",
-      "Still best treated as rails/network adjacency rather than core credit enforcement.",
+      "The docs make clear this is not another Visa/Mastercard wrapper: ColossusNet provides its own settlement network, ISO 8583 middleware, and onchain issuer/acquirer configuration.",
+      "Credit risk and policy stay with issuers, while ColossusNet handles validation, settlement, gas sponsorship, and merchant/acquirer rails.",
+      "That makes it strategic payment/card infrastructure adjacent to attn, not a direct revenue-credit or underwriting peer.",
     ],
     sources: [
-      { label: "Colossus site", url: "https://colossus.credit/" },
+      { label: "Colossus docs: overview", url: "https://docs.colossus.credit/overview" },
       {
-        label: "Founders, Inc. portfolio note (acquirers + EMV + existing stack)",
-        url: "https://f.inc/portfolio/colossus/",
+        label: "Colossus docs: system architecture",
+        url: "https://docs.colossus.credit/technical/architecture",
+      },
+      {
+        label: "Colossus docs: for merchants",
+        url: "https://docs.colossus.credit/guides/merchants",
+      },
+      {
+        label: "Colossus docs: for issuers",
+        url: "https://docs.colossus.credit/guides/issuers",
+      },
+      {
+        label: "Colossus docs: for acquirers",
+        url: "https://docs.colossus.credit/guides/acquirers",
       },
     ],
-    href: "https://colossus.credit/",
+    href: "https://docs.colossus.credit/",
   },
 
   pye: {

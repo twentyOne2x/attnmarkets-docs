@@ -1,0 +1,87 @@
+# Colossus Docs Index
+
+As of **March 13, 2026**, the new [Colossus docs](https://docs.colossus.credit/) make the system much clearer.
+
+Colossus is not just another crypto card wrapper on top of Visa or Mastercard rails.
+The docs describe a **stablecoin-native card network** on an Ethereum L2 (`Chain ID 951`) that keeps the familiar EMV card and terminal flow while moving settlement, issuer/acquirer configuration, and auditability onchain.
+
+## What It Is
+
+- **Network model:** a vertically integrated card network with issuer, processor, and settlement layers tied together on ColossusNet.
+- **User experience:** same card-present EMV tap flow and existing terminals, but settlement runs through ColossusNet rather than legacy card-network rails.
+- **Credit model:** three modes are documented:
+  - `Direct Debit`
+  - `Consumer Credit`
+  - `Premium Credit`
+- **Who owns credit policy:** the issuer. ColossusNet provides the network, validation, settlement, gas sponsorship, and onchain audit trail.
+- **Core timing + identifiers:** `RID A000000951`, `Chain ID 951`, `1 second` block time, `100ms` preconfirmation, and `172ms` measured end-to-end authorization latency in the architecture docs.
+
+## Product Docs
+
+- [Overview](https://docs.colossus.credit/overview)
+  - What Colossus is, how it works, fee structure, settlement tiers, and network identifiers.
+- [Frequently Asked Questions](https://docs.colossus.credit/faq)
+  - Common questions around compatibility, regulation, and product boundaries.
+
+## Technical Docs
+
+- [System Architecture](https://docs.colossus.credit/technical/architecture)
+  - L2 parameters, account abstraction, middleware timing, and the `172ms` authorization budget.
+- [Card Architecture](https://docs.colossus.credit/technical/card)
+  - JavaCard applets, EMV interfaces, dual issuance, cryptographic design, and card registration.
+- [Transaction Flow](https://docs.colossus.credit/technical/transaction-flow)
+  - Contact/contactless flows, issuer-mediated settlement, `GENERATE AC`, and offline terminal behavior.
+- [Smart Contracts](https://docs.colossus.credit/technical/smart-contracts)
+  - `EMVValidator`, `EMVSettlement`, `AcquirerConfig`, and token/currency mapping.
+- [Cross-Chain Architecture](https://docs.colossus.credit/technical/cross-chain)
+  - Stablecoin bridging and source-chain module design.
+- [ISO 8583 Middleware](https://docs.colossus.credit/technical/middleware)
+  - Message parsing, API endpoints, UserOperation construction, and gas sponsorship.
+
+## Integration Guides
+
+- [For Merchants](https://docs.colossus.credit/guides/merchants)
+  - Fees, settlement, chargeback handling, wire liquidation, and why merchants do not carry traditional representment/arbitration burden.
+- [For Issuers](https://docs.colossus.credit/guides/issuers)
+  - Dual issuance, collateral pools, issuer hooks, interchange tiers, and the split between issuer credit policy and ColossusNet settlement.
+- [For Acquirers](https://docs.colossus.credit/guides/acquirers)
+  - ISO 8583 integration, onchain merchant/terminal registry, settlement export, wire liquidation, and gas sponsorship.
+- [For Cardholders](https://docs.colossus.credit/guides/cardholders)
+  - Wallet setup, card registration, funding, and payment flow.
+
+## API Reference
+
+- [Endpoints](https://docs.colossus.credit/api-reference)
+  - API index.
+- [Schemas](https://docs.colossus.credit/api-reference/schemas)
+  - Data models and type definitions.
+- [Service Information](https://docs.colossus.credit/api-reference/get)
+  - Root service metadata.
+- [Health Check](https://docs.colossus.credit/api-reference/health/get)
+  - Liveness/health endpoint.
+- [Process ARQC Message](https://docs.colossus.credit/api-reference/arqc/post)
+  - Authorization request processing.
+- [Prometheus Metrics](https://docs.colossus.credit/api-reference/metrics/get)
+  - Metrics endpoint.
+
+## Repos Referenced In Docs
+
+- [github.com/colossus-credit](https://github.com/colossus-credit)
+- [emv-validator](https://github.com/colossus-credit/emv-validator)
+- [emv-card-sim](https://github.com/colossus-credit/emv-card-sim)
+- [emvpt](https://github.com/colossus-credit/emvpt)
+- [kernel](https://github.com/colossus-credit/kernel)
+- [devnet](https://github.com/colossus-credit/devnet)
+- [rollup-boost](https://github.com/colossus-credit/rollup-boost)
+- [builder-playground](https://github.com/colossus-credit/builder-playground)
+
+## Why It Matters For attn
+
+- Colossus is **not** a direct `attnCredit` comparator.
+- It is closer to **card-network + issuer/acquirer settlement infrastructure**.
+- The relevant overlap is strategic:
+  - cards
+  - issuer-funded credit
+  - merchant settlement
+  - same-terminal stablecoin acceptance
+- That makes it useful context for `attn` partnerships and market mapping, especially where credit engines may sit behind card or payment surfaces rather than owning the front-end network.
