@@ -1,5 +1,152 @@
 # ISSUES
 
+## 2026-03-18 - quadrant project bios: full stale-copy and validity audit
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: solvable. The user explicitly asked for a full pass across all quadrant project bios to check whether the current data is still valid, not just the stale hover-note field.
+- Missing info/questions: none blocking. Use primary/official sources only and treat unverifiable claims conservatively.
+- Type: docs/content audit
+- Status: completed
+- Context + suspected cause:
+  - `components/quadrantMapData.ts` currently carries 56 project records spanning revenue/receivables credit, agentic commerce, payment rails, wallets, and strategic-credit comparators.
+  - Much of the copy was assembled iteratively across many follow-up edits. Some records now mix operator corrections, dated stats, dependency notes, and prior framing choices that may no longer be current.
+  - The stale `sprinter.tech` hover line suggests the broader project-bio layer needs a systematic audit rather than more one-off wording fixes.
+- Fix intent:
+  1) Inventory all project records and classify stale-risk fields.
+  2) Verify each project's current framing against primary sources already cited or refreshed first-party pages when needed.
+  3) Update any stale, overstated, or weakly-supported project bio fields conservatively.
+  4) Keep copy short, evidence-backed, and quadrant-appropriate.
+- Acceptance criteria:
+  - All project records in `components/quadrantMapData.ts` receive a fresh review against primary sources.
+  - Stale or weakly-supported project-bio copy is updated or narrowed rather than left ambiguous.
+  - Provider/dependency notes, distribution framing, and product-scope descriptions avoid stale operator assumptions where official sources do not support them.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass after the audit.
+- Complexity: large
+- Plan: `docs/plans/completed/2026-03-18-quadrant-project-bio-validity-audit.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/plans/active/2026-03-18-quadrant-project-bio-validity-audit.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/quadrantMapData.ts`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/QuadrantScatterMap.tsx` only if tooltip text or labels must change to stay accurate
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/ProjectHoverName.tsx` only if inline hover copy must change to stay accurate
+    - `/Users/user/PycharmProjects/attnmarkets-docs/scripts/copy_attn_in_context_to_clipboard.mjs` only if exported labels/fields must stay in sync
+  - Constraints:
+    - use primary/official sources only
+    - when a claim cannot be re-supported, narrow it or mark it as undisclosed instead of guessing
+    - do not overwrite unrelated dirty-worktree changes
+    - preserve useful operator corrections only when they are explicitly marked as such and not presented as public-source fact
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Reviewed all 56 project records in `components/quadrantMapData.ts` against current first-party pages.
+  - Ran a full cited-source sweep and replaced all dead 404 official URLs in the project-bio layer.
+  - Tightened or refreshed the records with actual current-source drift:
+    - `clearco`
+    - `youlend`
+    - `wayflyer`
+    - `decal`
+    - `moonpay_commerce`
+    - `depay`
+    - `loop_crypto`
+    - `sprinter`
+    - `frames`
+    - `crossmint`
+    - `virtuals`
+    - `slash`
+  - Specific fixes included:
+    - replaced dead source links with current official URLs
+    - removed stale customer examples where live source pages no longer supported them
+    - updated `Loop` to reflect the official transition/wind-down into Lead Bank
+    - replaced stale Helio-era MoonPay Commerce framing with current MoonPay Commerce product/partner evidence
+    - removed the prior operator-correction leak from `virtuals` and reset it to current public-doc truth
+    - removed the weak `slash` Privy inference because current public pages do not support it
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: all 56 project records received a fresh review against current first-party sources.
+  - PASS: stale or weakly-supported project-bio copy was narrowed or updated rather than left ambiguous.
+  - PASS: provider/dependency notes, distribution framing, and scope descriptions were reset to current public evidence where drift was found.
+  - PASS: cited-source sweep no longer shows 404 official URLs in the project-bio layer; remaining fetch failures are anti-bot `403` pages such as SEC filings, Uncapped, Dune, and Krak.
+  - PASS: `npm run build`
+  - PASS: `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+
+## 2026-03-18 - quadrant hover cards: replace B2B2SMB-only note with context-aware hover data
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (no screenshot provided)
+
+PLANNER
+- Spec check: solvable. The user flagged that hover data such as `No public B2B2SMB distribution network is described in the cited sources.` does not read naturally for entries like `sprinter.tech`, and the same template smell now exists across multiple quadrants.
+- Missing info/questions: none blocking.
+- Type: docs/content bug
+- Status: completed
+- Context + suspected cause:
+  - The hover-card block labeled `Who they use / rely on` is still backed by the old `b2b2smbReliance` field name and wording.
+  - That field is no longer only about partner-embedded B2B2SMB distribution. It is also being used for broader route-to-market caveats and dependency notes in payments, agentic-commerce, and strategic-credit entries.
+  - Because the label stayed narrow while the content expanded, records such as `sprinter.tech`, `natural.co`, `virtuals.io`, and infra/payment comparators now read like templated leftovers rather than accurate project-specific notes.
+- Fix intent:
+  1) Rename the hover-note field to a neutral context note that works across all quadrants.
+  2) Update the tooltip labels in both the main quadrant tooltip and inline hover names so they describe the note accurately.
+  3) Audit every current note using that field so the copy sounds like the actual company or protocol, not a stale B2B2SMB template.
+- Acceptance criteria:
+  - `sprinter.tech` no longer shows B2B2SMB-specific hover text.
+  - The hover-note label is neutral enough to fit revenue, agentic-commerce, payments, and strategic-credit entries.
+  - The note remains available in `QuadrantScatterMap`, `ProjectHoverName`, and the clipboard export script.
+  - `npm run build` and `python3 scripts/knowledge_check.py` pass.
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-03-18-quadrant-hover-context-notes.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/plans/completed/2026-03-18-quadrant-hover-context-notes.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/quadrantMapData.ts`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/QuadrantScatterMap.tsx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/components/ProjectHoverName.tsx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/scripts/copy_attn_in_context_to_clipboard.mjs`
+  - Constraints:
+    - keep hover cards concise; do not turn them into multi-paragraph docs
+    - keep the revenue-map partner-distribution distinctions explicit where they are genuinely important
+    - do not overwrite unrelated dirty-worktree changes
+  - Tests/proofs:
+    - `npm run build`
+    - `python3 scripts/knowledge_check.py`
+
+EXECUTOR
+- Implemented:
+  - Renamed the old hover-note field from `b2b2smbReliance` to `contextNotes` in the shared quadrant data model so the data shape matches how the notes are actually being used now.
+  - Updated both hover renderers:
+    - `components/QuadrantScatterMap.tsx`
+    - `components/ProjectHoverName.tsx`
+    so the note is labeled `Context note` instead of the stale `Who they use / rely on`.
+  - Updated the clipboard export in `scripts/copy_attn_in_context_to_clipboard.mjs` to use the same neutral label and new field name.
+  - Audited every current note using that field so the copy now matches the actual company/protocol context:
+    - partner-distribution notes stay explicit for `YouLend`, `Parafin`, `Liberis`, and the other revenue/receivables firms
+    - infra/payment comparators now read as route-to-market or dependency notes
+    - `sprinter.tech` now reads as a B2B credit-engine/API note instead of a bogus B2B2SMB network disclaimer
+
+VERIFIER
+- Compare proofs to acceptance criteria: PASS
+  - PASS: `sprinter.tech` no longer shows B2B2SMB-specific hover text.
+  - PASS: the hover-note label is now neutral enough to fit revenue, agentic-commerce, payments, and strategic-credit entries.
+  - PASS: the note is still available in `QuadrantScatterMap`, `ProjectHoverName`, and the clipboard export script.
+  - PASS: `npm run build`
+  - PASS: `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
+
 ## 2026-03-18 - docs: add aGDP.io and correct Virtuals ACP wallet/provider framing
 
 Checklist

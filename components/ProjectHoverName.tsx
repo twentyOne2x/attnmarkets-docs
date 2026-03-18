@@ -20,7 +20,7 @@ export default function ProjectHoverName({ id, label }: ProjectHoverNameProps) {
     ? `${info.creditVolume.display} — ${info.creditVolume.basis ?? "Best-public signal"}`
     : null;
   const examples = info.exampleClients?.slice(0, 3) ?? [];
-  const b2b2smbText = info.b2b2smbReliance?.length ? info.b2b2smbReliance[0] : null;
+  const contextText = info.contextNotes?.length ? info.contextNotes[0] : null;
 
   return (
     <span className="token">
@@ -45,9 +45,9 @@ export default function ProjectHoverName({ id, label }: ProjectHoverNameProps) {
             <strong>Volume:</strong> {volumeText}
           </span>
         ) : null}
-        {b2b2smbText ? (
+        {contextText ? (
           <span className="tooltipRow">
-            <strong>Who they use/rely on:</strong> {highlightFirmNames(b2b2smbText)}
+            <strong>Context note:</strong> {highlightFirmNames(contextText)}
           </span>
         ) : null}
         {examples.length ? (

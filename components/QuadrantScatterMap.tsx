@@ -1272,7 +1272,7 @@ const WEB2_REVENUE_RECEIVABLES_AGGREGATE: ProjectInfo = {
     "Revenue-linked SMB financing via mixed channels: platform-native, partner-embedded (B2B2SMB), and direct originators.",
   borrowerType: "Business borrowers (SMB merchants)",
   distributionModel: "Mixed (platform-native + partner-embedded + direct)",
-  b2b2smbReliance: [
+  contextNotes: [
     "Cohort firms: YouLend, Parafin, Liberis, Pipe, Clearco, Wayflyer, Uncapped, Stripe Capital, PayPal Working Capital, Shopify Capital, Square Loans.",
   ],
   exampleClients: [
@@ -3683,10 +3683,10 @@ export default function QuadrantScatterMap(props: {
                   {active.potentialClient ? <span className="chip">Potential client</span> : null}
                 </div>
 
-                {active.b2b2smbReliance?.length ? (
+                {active.contextNotes?.length ? (
                   <div className="block">
-                    <div className="label">Who they use / rely on</div>
-                    <div className="text">{highlightFirmNames(active.b2b2smbReliance[0])}</div>
+                    <div className="label">Context note</div>
+                    <div className="text">{highlightFirmNames(active.contextNotes[0])}</div>
                   </div>
                 ) : null}
 

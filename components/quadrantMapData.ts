@@ -57,7 +57,7 @@ export type ProjectInfo = {
   borrowerType?: string;
   distributionModel?: string;
   exampleClients?: string[];
-  b2b2smbReliance?: string[];
+  contextNotes?: string[];
   potentialClient?: boolean;
   infra?: InfraDependency;
 
@@ -89,8 +89,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     borrowerType: "Business entities",
     distributionModel: "Infrastructure-first (behind partner surfaces)",
     exampleClients: ["Public named design partners are not disclosed yet."],
-    b2b2smbReliance: [
-      "Can be consumed through partner-embedded channels, but public named channels are not yet disclosed.",
+    contextNotes: [
+      "Built to sit behind cards, commerce, and treasury partners, but public named distribution channels are not disclosed yet.",
     ],
     creditVolume: {
       display: "n/a",
@@ -132,8 +132,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     borrowerType: "Business entities",
     distributionModel: "Infrastructure-first (integrator-facing)",
     exampleClients: ["Public named customers are not listed in the cited docs."],
-    b2b2smbReliance: [
-      "Integrator-facing infra can sit behind partner channels, but public named B2B2SMB channels are not listed.",
+    contextNotes: [
+      "Integrator-facing infrastructure can sit behind partner channels, but the cited sources do not name live distribution partners.",
     ],
     creditVolume: {
       display: "$1.2b",
@@ -179,7 +179,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "orderbird merchants.",
       "Paysafe merchant network.",
     ],
-    b2b2smbReliance: ["Core model is B2B2SMB partner distribution."],
+    contextNotes: [
+      "Core route to market is partner-embedded: SMB merchants access capital through platforms and payment partners.",
+    ],
     creditVolume: {
       display: "$1.3b",
       normalizedUsdBn: 1.3,
@@ -210,8 +212,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         url: "https://docs.youlend.com/docs/cash-advance",
       },
       {
-        label: "YouLend x Castlelake (>$1.3bn SMB financings) — 2024-10-21",
-        url: "https://www.prnewswire.com/news-releases/castlelake-and-youlend-partner-to-advance-growth-for-small-businesses-across-the-uk-and-europe-302282055.html",
+        label: "YouLend x Castlelake (>$1.3bn UK+EU SMB financings; US facility) — 2024-10-21",
+        url: "https://youlend.com/pl/blog/castlelake-and-youlend-sign-multi-year-financing-facility-boosting-us-funding-potential",
       },
       {
         label: "Payment Account T&Cs",
@@ -241,8 +243,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Boulevard merchants.",
       "Housecall Pro merchants.",
     ],
-    b2b2smbReliance: [
-      "Mixed: includes partner channels, but not primarily described as a pure B2B2SMB model in cited sources.",
+    contextNotes: [
+      "Route to market is mixed: Pipe sells directly and through embedded platform partners rather than operating as a pure partner-network lender.",
     ],
     creditVolume: {
       display: "$0.25b",
@@ -290,9 +292,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Non-dilutive funding (including cash advance variants) with predictable capped weekly payments and receivables-based security interest.",
     borrowerType: "Business borrowers (SMB brands)",
     distributionModel: "Direct originator",
-    exampleClients: ["Andie Swim.", "Monos.", "Aroma360.", "JOI."],
-    b2b2smbReliance: [
-      "Primarily direct B2SMB; no material B2B2SMB dependency is shown in cited sources.",
+    exampleClients: ["Monos.", "Larroudé.", "Diggs."],
+    contextNotes: [
+      "Route to market is primarily direct to ecommerce brands rather than a broad partner-embedded merchant network.",
     ],
     creditVolume: {
       display: "$3.0b",
@@ -322,8 +324,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         url: "https://www.clear.co/ecommerce-funding",
       },
       {
-        label: "Clearco customer stories",
-        url: "https://www.clear.co/customer-stories",
+        label: "Clearco founder funding page (Monos + Larroudé)",
+        url: "https://clear.co/ecommerce-funding-for-founders",
+      },
+      {
+        label: "Clearco funding page (Diggs testimonial)",
+        url: "https://www.clear.co/thank-you/get-started-with-clearco",
       },
     ],
     href: "https://www.clear.co/",
@@ -347,8 +353,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "PayPal merchants in eligible markets (platform-native distribution).",
       "No public named partner-network client list for this product in cited disclosures.",
     ],
-    b2b2smbReliance: [
-      "No external B2B2SMB dependency for core product distribution; lending is native to PayPal’s own merchant ecosystem.",
+    contextNotes: [
+      "Capital is distributed inside PayPal's own merchant ecosystem rather than through an external partner network.",
     ],
     creditVolume: {
       display: "$30.0b",
@@ -407,8 +413,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Shopify merchants in eligible markets (platform-native distribution).",
       "No public named partner-network client list for this product in cited disclosures.",
     ],
-    b2b2smbReliance: [
-      "No external B2B2SMB dependency for core product distribution; lending is native to Shopify’s own merchant ecosystem.",
+    contextNotes: [
+      "Capital is distributed inside Shopify's own merchant ecosystem rather than through an external partner network.",
     ],
     creditVolume: {
       display: "n/a",
@@ -466,8 +472,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Stripe merchants in eligible markets (platform-native distribution).",
       "Connect platforms using Capital for platforms in US/UK public preview (platform names not publicly listed in cited docs).",
     ],
-    b2b2smbReliance: [
-      "Provider clarity: per Stripe docs, loans are issued by Celtic Bank and merchant cash advances are provided by YouLend or Stripe. Capital for platforms is a Stripe-run partner channel in US/UK public preview; the platform is the distribution partner, not the lender.",
+    contextNotes: [
+      "Capital is native to Stripe's ecosystem. In Capital for platforms, the platform is the distribution partner while lending still runs through Stripe, Celtic Bank, and/or YouLend structures.",
     ],
     creditVolume: {
       display: "n/a",
@@ -536,7 +542,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Walmart sellers.",
       "DoorDash merchants.",
     ],
-    b2b2smbReliance: ["Core model is B2B2SMB partner distribution."],
+    contextNotes: [
+      "Core route to market is partner-embedded: platforms such as Amazon, Walmart, and DoorDash are the customer-acquisition channel.",
+    ],
     creditVolume: {
       display: "$25.0b*",
       normalizedUsdBn: 25,
@@ -585,7 +593,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Clover UK merchants.",
       "Teya merchants.",
     ],
-    b2b2smbReliance: ["Core model is B2B2SMB partner distribution."],
+    contextNotes: [
+      "Core route to market is partner-embedded via software, payments, and commerce platforms.",
+    ],
     creditVolume: {
       display: "£3.0b",
       normalizedUsdBn: 3.8,
@@ -628,9 +638,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Working-capital advances/loans for SMB operators with non-dilutive repayment structures.",
     borrowerType: "Business borrowers (SMB merchants)",
     distributionModel: "Direct originator",
-    exampleClients: ["True Classic.", "Powerlete.", "Spongelle.", "Kekoa Foods."],
-    b2b2smbReliance: [
-      "Primarily direct B2SMB; no material B2B2SMB dependency is shown in cited sources.",
+    exampleClients: ["True Classic.", "Powerlete.", "Kekoa Foods."],
+    contextNotes: [
+      "Route to market is primarily direct to merchants and brands, not a broad partner-embedded network.",
     ],
     creditVolume: {
       display: "$6.0b",
@@ -657,7 +667,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       },
       {
         label: "Wayflyer customer stories",
-        url: "https://wayflyer.com/customers",
+        url: "https://wayflyer.com/en/our-customers",
       },
     ],
     href: "https://wayflyer.com/",
@@ -682,8 +692,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Nestig.",
       "Vetevo.",
     ],
-    b2b2smbReliance: [
-      "Primarily direct B2SMB; no material B2B2SMB dependency is shown in cited sources.",
+    contextNotes: [
+      "Route to market is primarily direct to merchants rather than a broad partner-embedded network.",
     ],
     creditVolume: {
       display: "n/a",
@@ -747,8 +757,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Square sellers in eligible markets (platform-native distribution).",
       "No public named partner-network client list for this product in cited disclosures.",
     ],
-    b2b2smbReliance: [
-      "No external B2B2SMB dependency for core product distribution; lending is native to Square’s seller ecosystem.",
+    contextNotes: [
+      "Capital is distributed inside Square's seller ecosystem rather than through an external partner network.",
     ],
     creditVolume: {
       display: "$22.0b",
@@ -838,10 +848,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Solana Pay-enabled merchants listed via Decal's Seeker Season directory.",
       "Web2 merchants adopting stablecoin processing and payouts (company positioning).",
     ],
-    b2b2smbReliance: [
-      "Likely relies on Para as third-party wallet-as-a-service (WaaS) in its public dashboard stack.",
-      "Privy appears in public bundle enums as a referenced wallet/auth path; production usage split is not publicly documented.",
-      "No public Squads dependency signal found in fetched Decal public assets (as of 2026-02-28).",
+    contextNotes: [
+      "Public assets suggest Para/Privy wallet infrastructure in Decal's stack, while no public Squads dependency is visible in the cited materials.",
     ],
     creditVolume: {
       display: "n/a",
@@ -862,11 +870,11 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       { label: "Decal dashboard login", url: "https://dashboard.usedecal.com/login" },
       {
         label: "Decal blog: Smart Payments, Payouts & Loyalty",
-        url: "https://decal.link/blogs/Smart-Payments%2C-Payouts-%26-Loyalty-with-DeCal%3A-All-Made-Easy",
+        url: "https://decal.link/blog/smart-payments",
       },
       {
         label: "Decal blog: Seeker Season (Solana Pay-enabled merchants)",
-        url: "https://decal.link/blogs/Seeker-Season%3A-Find-Solana-Pay-Enabled-Merchants",
+        url: "https://decal.link/blog/seeker-season-2025",
       },
     ],
     href: "https://usedecal.com/",
@@ -874,33 +882,31 @@ export const PROJECTS: Record<string, ProjectInfo> = {
 
   moonpay_commerce: {
     id: "moonpay_commerce",
-    label: "MoonPay Commerce (Helio)",
+    label: "MoonPay Commerce",
     stack: "User-facing distribution",
     controlPrimitive: "Programmatic controls",
     plane: "hybrid",
     x: 0.73,
     y: 0.55,
     narrative:
-      "Merchant checkout stack for accepting crypto/stablecoins, including Solana Pay plugin distribution through Helio.",
+      "Merchant checkout stack for accepting crypto and stablecoins, including Shopify and app-native distribution through MoonPay Commerce.",
     creditModel:
       "Payments infrastructure (checkout + settlement) rather than standalone credit underwriting.",
     borrowerType: "Merchants / business operators",
     distributionModel: "Merchant-embedded checkout + platform plugins",
-    exampleClients: [
-      "Shopify merchants using the Solana Pay app powered by Helio.",
-      "Online stores integrating Helio checkout APIs for crypto/stablecoin acceptance.",
-    ],
-    b2b2smbReliance: [
-      "Primarily partner/platform distributed (for example Shopify plugin and ecommerce integrations).",
+    exampleClients: ["Fortune Media.", "Dorsia.", "Bubblemaps BOLTS."],
+    contextNotes: [
+      "Route to market is partner/platform-led through ecommerce plugins and merchant integrations.",
     ],
     creditVolume: {
       display: "n/a",
       basis: "Public cumulative underwriting is not applicable; merchant-processing volume is reported at product level.",
-      note: "MoonPay acquisition release cites Helio transaction throughput metrics.",
+      note: "MoonPay now frames scale primarily through partner count and live commerce integrations.",
     },
     scale: [
-      "MoonPay said Helio had supported over 6,000 merchants and facilitated over $1.5bn in transactions at acquisition announcement (2024-01-17).",
-      "Solana case study reports 200+ Shopify stores and over $1m in savings from lower fees.",
+      "MoonPay Commerce says the platform is trusted by 6,000+ partners, including Shopify, The Solana Foundation, Ledger, Jupiter, Fortune Media, Dorsia, CoinMarketCap, and Solscan.",
+      "MoonPay Commerce App says shoppers can browse brands accepting crypto at checkout through MoonPay Commerce and Solana Pay on Shopify.",
+      "Bubblemaps uses MoonPay Commerce to power BOLTS payments across chains.",
     ],
     why: [
       "Directly maps to web2-merchant stablecoin checkout distribution on Solana rails.",
@@ -908,19 +914,23 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     ],
     sources: [
       {
-        label: "MoonPay newsroom: introduces MoonPay Commerce / acquires Helio (2024-01-17)",
-        url: "https://www.moonpay.com/newsroom/moonpay-introduces-moonpay-commerce-acquires-helio-to-expand-its-enterprise-solution",
+        label: "MoonPay Commerce product page",
+        url: "https://www.moonpay.com/business/commerce",
       },
       {
-        label: "Helio docs: Shopify (Solana Pay app powered by Helio)",
-        url: "https://docs.hel.io/for-merchants-and-partners/resources/integrations/shopify",
+        label: "MoonPay newsroom: MoonPay Commerce launches globally",
+        url: "https://www.moonpay.com/newsroom/moonpay-commerce",
       },
       {
-        label: "Solana customer story: Helio",
-        url: "https://solana.com/customers/helio",
+        label: "MoonPay newsroom: MoonPay Commerce App",
+        url: "https://www.moonpay.com/newsroom/moonpay-commerce-app",
+      },
+      {
+        label: "MoonPay newsroom: Bubblemaps uses MoonPay Commerce",
+        url: "https://www.moonpay.com/newsroom/moonpaycommerce-bubblemaps",
       },
     ],
-    href: "https://www.moonpay.com/commerce",
+    href: "https://www.moonpay.com/business/commerce",
   },
 
   depay: {
@@ -941,8 +951,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Shopify and WooCommerce merchants using DePay payment plugins.",
       "World App Mini Apps integrating DePay checkout.",
     ],
-    b2b2smbReliance: [
-      "Relies on merchant platform/app integrations (Shopify, WooCommerce, World App) for distribution.",
+    contextNotes: [
+      "Route to market depends on merchant and app integrations such as Shopify, WooCommerce, and World App.",
     ],
     creditVolume: {
       display: "n/a",
@@ -958,8 +968,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     ],
     sources: [
       { label: "DePay site", url: "https://depay.com/" },
-      { label: "DePay Solana MWA docs", url: "https://depay.com/solana-mwa" },
-      { label: "World App x DePay integration", url: "https://depay.com/world-app" },
+      { label: "DePay docs: Payments", url: "https://depay.com/docs/payments/" },
+      { label: "World App x DePay checkout", url: "https://depay.com/docs/checkouts/worldapp/" },
     ],
     href: "https://depay.com/",
   },
@@ -973,7 +983,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     x: 0.77,
     y: 0.6,
     narrative:
-      "Merchant billing stack for crypto/stablecoin invoicing and subscriptions, with native Solana support.",
+      "Merchant billing stack for crypto/stablecoin invoicing and subscriptions, now in wind-down as Loop joins Lead Bank.",
     creditModel:
       "Payments collections/settlement infrastructure; not a standalone credit underwriting system.",
     borrowerType: "Merchants / business operators",
@@ -982,27 +992,29 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Merchants accepting recurring USDC/USDT payments on Solana.",
       "Businesses using Loop to settle accepted payments in fiat or crypto.",
     ],
-    b2b2smbReliance: [
-      "Relies on merchant workflow integrations rather than captive consumer distribution.",
+    contextNotes: [
+      "Current official docs still describe merchant workflow integrations, but Loop's transition notice says merchants were given 60 days to wind down usage, ending on February 13, 2026, as Loop joins Lead Bank.",
     ],
     creditVolume: {
       display: "n/a",
       basis: "Public cumulative processing volume/revenue not disclosed in cited sources.",
     },
     scale: [
-      "Loop states support for Solana network payments and settlement in either fiat or crypto.",
+      "Current docs still describe Solana payments plus fiat or crypto settlement options.",
+      "Loop's transition notice says merchants had 60 days to wind down usage, ending on February 13, 2026, as the product folds into Lead Bank.",
       "Public cumulative processed volume and standalone revenue are not disclosed in cited sources.",
     ],
     why: [
-      "Solana-native merchant payment support makes it a close comparator to Decal-style processing rails.",
-      "Useful to separate payments-processing stacks from underwriting/servicing credit engines.",
+      "Loop remains a useful comparator for merchant stablecoin billing flows and settlement design.",
+      "The current public status is transition/wind-down rather than fresh go-to-market expansion, so it should not be read as an actively growing checkout network.",
     ],
     sources: [
-      { label: "Loop merchants", url: "https://www.loopcrypto.xyz/merchants" },
-      { label: "Loop build for web3", url: "https://www.loopcrypto.xyz/build-for-web3" },
+      { label: "Loop transition notice: joining Lead Bank", url: "https://docs.loopcrypto.xyz/news" },
+      { label: "Loop merchants", url: "https://docs.loopcrypto.xyz/payments/merchants" },
+      { label: "Loop create account / settlement setup", url: "https://docs.loopcrypto.xyz/docs/create-your-account-entity" },
       { label: "Loop docs", url: "https://docs.loopcrypto.xyz/" },
     ],
-    href: "https://www.loopcrypto.xyz/",
+    href: "https://docs.loopcrypto.xyz/news",
   },
 
   spherepay: {
@@ -1023,8 +1035,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Enterprise payment operations using stablecoin rails (company positioning).",
       "Public named merchant client list is not disclosed in cited sources.",
     ],
-    b2b2smbReliance: [
-      "Primarily B2B infrastructure integrations; merchant-facing experiences are downstream of partners.",
+    contextNotes: [
+      "Primarily sold as B2B payments infrastructure; merchant-facing experiences are typically downstream of partners.",
     ],
     creditVolume: {
       display: "n/a",
@@ -1154,7 +1166,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     borrowerType: "Applications, businesses, and autonomous agents",
     distributionModel: "B2B API + embedded credit engine",
     exampleClients: ["Public named live integrators are not enumerated in the cited sources."],
-    b2b2smbReliance: ["No public B2B2SMB distribution network is described in the cited sources."],
+    contextNotes: [
+      "Public materials frame Sprinter as a B2B credit engine and API; they do not describe a named merchant or platform distribution network.",
+    ],
     why: [
       "Public positioning is that of a credit engine/API rather than a consumer or merchant-facing surface.",
       "The current public materials fit better in strategic credit infrastructure than in the tighter business-credit comparator lane.",
@@ -1166,12 +1180,12 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         url: "https://blog.sprinter.tech/credit-runs-on-sprinter/",
       },
       {
-        label: "Sprinter docs: borrower get started",
-        url: "https://docs.sprinter.tech/borrower/get-started",
+        label: "Sprinter docs: borrow quote API",
+        url: "https://docs.sprinter.tech/Stash/borrow-quote-api",
       },
       {
-        label: "Sprinter docs: lender get started",
-        url: "https://docs.sprinter.tech/lender/get-started",
+        label: "Sprinter docs: liquidity hub pools",
+        url: "https://docs.sprinter.tech/Stash/liquidity-hub-pools",
       },
     ],
     href: "https://blog.sprinter.tech/credit-runs-on-sprinter/",
@@ -1301,7 +1315,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Binance and OKX earn integrations.",
       "Spark allocation into Maple products.",
     ],
-    b2b2smbReliance: ["No material B2B2SMB distribution dependency in the cited sources."],
+    contextNotes: [
+      "Distributed through protocol, asset-manager, and exchange surfaces rather than SMB partner networks.",
+    ],
     creditVolume: {
       display: "$17.0b",
       normalizedUsdBn: 17,
@@ -1344,7 +1360,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     exampleClients: [
       "Goldfinch Prime lists Ares, Apollo, Golub, KKR, and PGIM private-credit funds.",
     ],
-    b2b2smbReliance: ["No material B2B2SMB distribution dependency in the cited sources."],
+    contextNotes: [
+      "Distributed through protocol and fund-access surfaces rather than SMB partner networks.",
+    ],
     creditVolume: {
       display: "$0.17b",
       normalizedUsdBn: 0.171628109,
@@ -1384,7 +1402,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     borrowerType: "Institutional and business borrowers",
     distributionModel: "Marketplace and vault surface",
     exampleClients: ["Public borrower roster is not enumerated in the cited sources."],
-    b2b2smbReliance: ["No material B2B2SMB distribution dependency in the cited sources."],
+    contextNotes: [
+      "Distributed through marketplace and vault access rather than SMB partner networks.",
+    ],
     creditVolume: {
       display: "$0.16b*",
       normalizedUsdBn: 0.1598,
@@ -1423,7 +1443,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     borrowerType: "Business borrowers and B2B buyers",
     distributionModel: "Credit platform and financing infrastructure",
     exampleClients: ["Public named sellers or financing partners are not enumerated in the cited sources."],
-    b2b2smbReliance: ["No material B2B2SMB distribution dependency is shown in the cited sources."],
+    contextNotes: [
+      "Distributed through financing and protocol surfaces rather than a broad SMB partner network.",
+    ],
     creditVolume: {
       display: "$0.05b",
       normalizedUsdBn: 0.046225995,
@@ -1615,8 +1637,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     infra: {
       privy: "Yes",
       squads: "No public evidence",
-      asOf: "2026-02-21",
-      note: "Frames public JS bundle exposes Privy SDK symbols (e.g., PrivyClientError/usePrivyModal) and privy.io references.",
+      asOf: "2026-03-18",
+      note: "Frames' current web bundle fetched on 2026-03-18 still exposes Privy SDK hooks (for example usePrivy).",
     },
     why: [
       "Positions pay-per-use tooling and wallet controls suitable for programmatic spend.",
@@ -1625,8 +1647,8 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       { label: "Frames home", url: "https://frames.ag/" },
       { label: "Frames tools", url: "https://frames.ag/tools" },
       {
-        label: "Frames web bundle (Privy SDK symbols; fetched 2026-02-21)",
-        url: "https://frames.ag/_next/static/chunks/49d6c5edfd8f3a24.js",
+        label: "Frames web bundle (Privy SDK symbols; fetched 2026-03-18)",
+        url: "https://frames.ag/_next/static/chunks/aaa8787f0bdc6ebd.js?dpl=dpl_8wkp8bgSGksx3ncg8cN3UvHpfcrE",
       },
     ],
     href: "https://frames.ag/tools",
@@ -1652,13 +1674,16 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "It fits the wallet-infrastructure lane rather than payment-rail settlement or direct credit underwriting.",
     ],
     sources: [
-      { label: "Crossmint WalletKit", url: "https://www.crossmint.com/ecosystem/walletkit" },
+      {
+        label: "Crossmint wallet infrastructure",
+        url: "https://www.crossmint.com/products/wallet-infrastructure",
+      },
       {
         label: "Crossmint: Agentic commerce will be built on stablecoin rails",
         url: "https://blog.crossmint.com/agentic-commerce-stablecoins/",
       },
     ],
-    href: "https://www.crossmint.com/ecosystem/walletkit",
+    href: "https://www.crossmint.com/products/wallet-infrastructure",
   },
 
   sponge: {
@@ -1754,15 +1779,15 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Buyer agents sourcing services from seller agents through ACP flows.",
       "Builders launching tokenized or non-tokenized agents on Virtuals.",
     ],
-    b2b2smbReliance: [
-      "Current operator correction says ACP smart accounts are assigned by Virtuals using Alchemy; no public Squads dependency is described in the cited sources.",
+    contextNotes: [
+      "Current public ACP docs describe Butler onboarding and wallet initialization flows; the cited public materials do not show a public Squads dependency.",
     ],
     infra: {
-      privy: "No public evidence",
+      privy: "Yes",
       squads: "No public evidence",
       asOf: "2026-03-18",
       note:
-        "User-provided operator correction on 2026-03-18 says ACP smart accounts are currently provisioned through Alchemy by Virtuals; prior public ACP docs referenced Privy-managed Butler wallets.",
+        "Current public Virtuals docs include a Butler quick-start page stating ACP creates a Privy-managed Butler wallet; no public Squads dependency is cited in the current whitepaper pages reviewed.",
     },
     why: [
       "This is better understood as an end-to-end agent-commerce protocol and monetization surface than as a pure credit protocol.",
@@ -1772,15 +1797,19 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       { label: "Virtuals site", url: "https://www.virtuals.io/" },
       {
         label: "Virtuals whitepaper: ACP overview",
-        url: "https://whitepaper.virtuals.io/agent-commerce-protocol/agent-commerce-protocol-acp-overview",
+        url: "https://whitepaper.virtuals.io/about-virtuals/agent-commerce-protocol-acp",
       },
       {
-        label: "Virtuals whitepaper: buyers and sellers",
-        url: "https://whitepaper.virtuals.io/agent-commerce-protocol-acp/agent-commerce-protocol/buyers-and-sellers",
+        label: "Virtuals whitepaper: ACP concepts + architecture",
+        url: "https://whitepaper.virtuals.io/acp-product-resources/acp-concepts-terminologies-and-architecture",
       },
       {
-        label: "Virtuals whitepaper: Butler wallets",
-        url: "https://whitepaper.virtuals.io/agent-commerce-protocol-acp/use-cases-butler/butler-wallets",
+        label: "Virtuals whitepaper: initialize and whitelist wallet",
+        url: "https://whitepaper.virtuals.io/acp-product-resources/acp-dev-onboarding-guide/set-up-agent-profile/initialize-and-whitelist-wallet",
+      },
+      {
+        label: "Virtuals whitepaper: Butler quick-start (CN)",
+        url: "https://whitepaper.virtuals.io/virtuals-bai-pi-shu/xin-xi-zhong-xin/yong-hu-zhong-xin/butler-kuai-su-ru-men-zhi-nan",
       },
     ],
     href: "https://www.virtuals.io/",
@@ -1820,10 +1849,10 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Business banking + corporate cards + global USD accounts (distribution surface).",
     creditModel: "Working capital details vary; depends on integrated backend.",
     infra: {
-      privy: "Yes",
+      privy: "No public evidence",
       squads: "No public evidence",
-      asOf: "2026-02-21",
-      note: "Privy is shown on Slash pages (customer/logo context); treated here as a usage signal per current mapping rule.",
+      asOf: "2026-03-18",
+      note: "Current public Slash site and product/blog pages reviewed for this audit do not provide direct evidence of Privy or Squads as product dependencies; prior customer/logo inference was removed.",
     },
     why: ["Primarily a surface; can embed different credit backends."],
     sources: [
@@ -1852,7 +1881,9 @@ export const PROJECTS: Record<string, ProjectInfo> = {
       "Marketing automation workflows paying creators and affiliates.",
       "Freight and logistics workflows paying carriers.",
     ],
-    b2b2smbReliance: ["No public B2B2SMB partner network is described in the cited sources."],
+    contextNotes: [
+      "Public materials describe a direct API/dashboard product for agent developers and businesses, not a named partner-distribution network.",
+    ],
     infra: {
       privy: "No public evidence",
       squads: "No public evidence",

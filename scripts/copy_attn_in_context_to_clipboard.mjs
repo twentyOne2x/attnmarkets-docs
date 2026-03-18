@@ -183,8 +183,8 @@ function formatFirmHoverData(projects) {
         ? `- Credit volume: ${p.creditVolume.display} (${p.creditVolume.basis ?? "Best-public signal"})`
         : "- Credit volume: n/a",
       p.creditVolume?.note ? `- Credit volume note: ${p.creditVolume.note}` : null,
-      "- Who they use / rely on:",
-      formatList(p.b2b2smbReliance),
+      "- Context note:",
+      formatList(p.contextNotes),
       "- Who they service (examples):",
       formatList(p.exampleClients),
       "- Scale:",
