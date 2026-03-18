@@ -26,6 +26,14 @@ This makes repayment legible and auditable.
 Implementation note (v1): this is typically implemented as a Squads-controlled revenue account (timelocked config + spending limits),
 so sweeps to repayment can run without giving an executor broad permissions.
 
+For the current Pump borrower-first lane, the practical lifecycle is more specific:
+
+- before onboarding, the borrower controls Pump creator-fee admin,
+- during ACTIVE, Pump fee-admin control moves to the pledged Swig path,
+- after CLOSE, fee-admin control is transferred back to the borrower or the borrower-selected target.
+
+That means attn is **not** intended to take permanent ownership of the creator-fee stream. The ACTIVE period is a temporary, policy-controlled control posture designed to keep repayment rails enforceable.
+
 ### 2. Revenue-swept advances
 
 You can take a short-dated advance against a policy-defined share of expected earnings.
@@ -60,6 +68,15 @@ Apply -> Route fees -> Draw -> Sweeps -> Close
    Automated repayment sweeps run from routed earnings while the facility is active.
 5. **Close**
    Facility winds down after repayment and returns to normal operating policy.
+
+### Important operational note
+
+Once the onchain fee-routing state is configured, creator-fee control does not depend on a web server staying online. But the current guided product flow still relies on attn-operated backend and keeper services for:
+
+- servicing automation,
+- debt-state checks,
+- guided close,
+- and verified offboarding back to the borrower or chosen target.
 
 ## Optional collateral extensions
 

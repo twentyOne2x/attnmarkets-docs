@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import QuadrantScatterMap from "../../components/QuadrantScatterMap";
 
-const AS_OF = "2026-02-21";
+const AS_OF = "2026-03-18";
 
 const mapSections = [
   {
@@ -26,8 +26,18 @@ const mapSections = [
     stageMaxWidth: "1037px",
   },
   {
-    id: "strategic-context",
+    id: "agentic-commerce",
     eyebrow: "Appendix / Full View 03",
+    title: "Agentic Commerce Quadrant",
+    description:
+      "Focused agentic-commerce lane showing where trust gating, credit execution, payment rails, wallet infrastructure, and commerce surfaces sit relative to attn.",
+    preset: "agentic_commerce_full" as const,
+    maxWidth: 3000,
+    stageMaxWidth: "1037px",
+  },
+  {
+    id: "strategic-context",
+    eyebrow: "Appendix / Full View 04",
     title: "Strategic Credit, Spend & Settlement",
     description:
       "Broader competitive surface with the Web2 revenue and receivables cohort exploded back into individual firms for full-surface scanning.",
@@ -44,7 +54,7 @@ export default function FullViewMapsPage() {
         <title>attn full-view maps</title>
         <meta
           name="description"
-          content="Standalone full-view maps for attn in context: revenue and receivables credit, business credit models, and the strategic credit, spend, and settlement landscape."
+          content="Standalone full-view maps for attn in context: revenue and receivables credit, business credit models, the agentic-commerce quadrant with trust, payment-rail, wallet, and commerce layers, and the strategic credit, spend, and settlement landscape."
         />
       </Head>
 
@@ -61,6 +71,7 @@ export default function FullViewMapsPage() {
             <nav className="nav" aria-label="Map section navigation">
               <a href="#revenue-credit">Revenue map</a>
               <a href="#credit-only">Credit map</a>
+              <a href="#agentic-commerce">Agentic map</a>
               <a href="#strategic-context">Strategic map</a>
               <Link href="/appendix">Appendix</Link>
               <Link href="/introduction/attn-in-context">Back to docs view</Link>

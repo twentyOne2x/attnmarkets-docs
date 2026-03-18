@@ -20,7 +20,7 @@ Use two simple commercial lenses to read it:
 
 `B2B2SMB` is shorthand for partner-embedded business financing (for example, YouLend distributed via partner platforms).
 
-<QuadrantScatterMap asOf="2026-02-21" preset="revenue_receivables_zoom" maxWidth={900} />
+<QuadrantScatterMap asOf="2026-03-18" preset="revenue_receivables_zoom" maxWidth={900} />
 
 ### Quick read (commercial model)
 
@@ -36,16 +36,25 @@ It compares firms on two commercial axes: **what gets underwritten** (`cash-flow
 It now includes revenue-linked firms, reputation-led credit, and onchain private-credit protocols so the lower half is a real cohort rather than empty whitespace.
 Use it as the bridge view between direct comparator analysis and the full market-context map.
 
-<QuadrantScatterMap asOf="2026-02-21" preset="credit_only" maxWidth={920} />
+<QuadrantScatterMap asOf="2026-03-18" preset="credit_only" maxWidth={920} />
+
+## Agentic commerce quadrant
+
+This third map isolates the machine-commerce lane rather than the full fintech surface.
+It compares projects on two practical axes: **trust / access gating** vs **financing / settlement execution**, and **back-end qualification + control** vs **payment rails / wallet / commerce surfaces**.
+The point of widening it is to separate trust scoring, credit back ends, payment rails, wallet infrastructure, and commerce networks instead of collapsing them into one generic agent-surface bucket.
+Use it to explain where `attn` fits once agents start looking more like businesses with routable revenue, credit needs, and spend controls.
+
+<QuadrantScatterMap asOf="2026-03-18" preset="agentic_commerce" maxWidth={920} />
 
 ## Wider strategic credit, spend, and settlement map
 
-This third map zooms out and places that first lane inside the broader market context.
+This fourth map zooms out and places that first lane inside the broader market context.
 It includes adjacent credit, spend, treasury, issuance, and payments-rail narratives so it is easier to separate direct substitutes from complements.
 To keep this broad view readable, the Web2 revenue/receivables lender cohort is shown as one aggregated node.
 Use this view for partner mapping and BD prioritization, not just direct competitor ranking.
 
-<QuadrantScatterMap asOf="2026-02-21" />
+<QuadrantScatterMap asOf="2026-03-18" />
 
 ## How to read these maps
 
@@ -55,7 +64,7 @@ Use this view for partner mapping and BD prioritization, not just direct competi
 
 ## Market segments (grouped by narrative)
 
-As of **2026-02-21**, this is a practical BD map, not perfect taxonomy.
+As of **2026-03-18**, this is a practical BD map, not perfect taxonomy.
 Hover firm names to see quick data, including who they service and who they use/rely on.
 
 ### 1) Enforcement-first entity credit (revenue / receivables)
@@ -83,13 +92,26 @@ Hover firm names to see quick data, including who they service and who they use/
 - <ProjectHoverName id="yumi" label="Yumi.finance" />
 - <ProjectHoverName id="sprinter" label="Sprinter (sprinter.tech)" />
 
-### 4) Agent-native commerce, credit + spend surfaces
+### 4) Agent-native trust, credit, payment rails + wallet surfaces
 
+- <ProjectHoverName id="bond_credit" label="bond.credit" />
+- <ProjectHoverName id="valiron" label="Valiron" />
+- <ProjectHoverName id="fairscale" label="FairScale" />
 - <ProjectHoverName id="claw" label="claw.credit" />
+- <ProjectHoverName id="tempo" label="Tempo" />
 - <ProjectHoverName id="natural" label="Natural" />
+- <ProjectHoverName id="privy" label="Privy" />
+- <ProjectHoverName id="para" label="Para" />
+- <ProjectHoverName id="crossmint" label="Crossmint" />
+- <ProjectHoverName id="merit_systems" label="Merit Systems" />
+- <ProjectHoverName id="agentcash" label="AgentCash" />
+- <ProjectHoverName id="agdp" label="aGDP.io" />
 - <ProjectHoverName id="virtuals" label="Virtuals" />
 - <ProjectHoverName id="frames" label="Frames (frames.ag/tools)" />
 - <ProjectHoverName id="sponge" label="Sponge (paysponge.com)" />
+
+Adjacent x402-native complement worth tracking here is [x402scan](https://x402scan.com/).
+It is better read as observability and ecosystem discovery around these surfaces than as a direct substitute for underwriting itself.
 
 ### 5) Market-based credit + debt issuance
 
@@ -114,7 +136,7 @@ Hover firm names to see quick data, including who they service and who they use/
 - <ProjectHoverName id="slash" label="Slash" />
 - <ProjectHoverName id="altitude" label="Squads Altitude" />
 
-### 8) B2B2C BNPL + payments rails
+### 8) Consumer credit distribution + card rails
 
 - <ProjectHoverName id="klarna_tempo" label="Klarna + Tempo" />
 - <ProjectHoverName id="affirm" label="Affirm" />
@@ -148,7 +170,14 @@ Hover firm names to see quick data, including who they service and who they use/
 
 ### Agent economy surfaces
 
- **Virtuals** is the agent-commerce and monetization network. **Natural** is the broader agentic money stack. **Frames** and **Sponge** are spend/control surfaces. **claw.credit** and **Sprinter** are closer to credit execution and credit-engine rails. These can consume a back-end credit+servicing layer when durable revenue or collateral exists.
+ **Valiron** and **FairScale** sit furthest toward trust gating: both are better read as reputation and qualification layers that decide which agents or wallets look credible enough for access, spend, or later capital expansion. **bond.credit** sits one step closer to capital: it turns live onchain agent performance into credibility, higher credit limits, and routed capital for autonomous strategies.
+ **claw.credit**, **Sprinter**, and **attn** are the more execution-heavy credit back ends in this cut. They sit closer to the part of the stack that can actually expand limits, route capital, or enforce repayment once the activity is good enough to finance.
+ **Tempo** and **Natural** point lower in the stack. Tempo's **March 18, 2026** mainnet launch introduced the **Machine Payments Protocol (MPP)**, which is best read here as machine-native payment and settlement infrastructure rather than underwriting. Natural is the broader money-movement platform that combines pay, wallets, compliance, ledgering, and credit APIs in one agentic-finance surface.
+ **Privy**, **Para**, and **Crossmint** are embedded wallet infrastructure. They make agent-held balances, signing, passkey onboarding, and wallet distribution more legible. **Frames** is a spend-control wallet and paid-tools surface. **Sponge** is a merchant-facing gateway and agent wallet surface.
+ **Virtuals** should be read here as the broader ACP protocol and builder platform, not just a marketplace directory. In this framing it covers discovery, trustless escrow, payments, evaluation, tokenization, and service execution. `aGDP.io` then sits as the more concrete marketplace surface built on top of that stack: effectively the Fiverr-like venue for agents, but still slightly to the settlement side of pure discovery because it carries jobs, offerings, revenue tracking, and end-to-end commerce flows. **AgentCash** is the direct x402-native spend surface for buying paid API access with one balance. **Merit Systems** is the broader open-agentic-commerce umbrella around that lane, tying together network discovery, paid-access tooling, and consumer-facing surfaces.
+ **Pump fun** now matters here too. Its Tokenized Agents rollout makes the revenue side of agentic commerce easier to point to in public by routing agent-linked revenue into automated buybacks and burns. That is not the same thing as credit, but it is strong public proof that agents are being treated more like businesses with monetization, treasury decisions, and financial alignment.
+ **Arc / ERC-8004** matters on a different axis. It makes portable agent identity, discoverability, and reputation easier to point to in public. That is useful for trust and finance-adjacent qualification, but it still sits upstream of underwriting and repayment.
+ [x402scan](https://x402scan.com/) remains the observability and ecosystem-discovery complement around those surfaces. None of these names replace attn's underwriting + repayment layer; they make the revenue, access, and spend side of agentic commerce more legible.
 
 ### Distribution surfaces
 
@@ -161,11 +190,13 @@ Hover firm names to see quick data, including who they service and who they use/
 
 ### Market and rails narratives
 
- **Wildcat**/**3Jane**/**Xitadel** emphasize market or issuance models; **Klarna + Tempo** and **Affirm** are B2B2C BNPL distribution (merchant-integrated, shopper-facing), while **Colossus.credit** emphasizes a payments-rails narrative. attn's differentiator remains enforceable servicing around routed revenue accounts.
+ **Wildcat**/**3Jane**/**Xitadel** emphasize market or issuance models. **Klarna + Tempo** and **Affirm** are B2B2C BNPL distribution (merchant-integrated, shopper-facing). **Colossus.credit** is different again: a stablecoin-native card network with issuer/acquirer infrastructure, direct-debit plus issuer-funded credit tiers, and same-terminal EMV settlement. attn's differentiator remains enforceable servicing around routed revenue accounts.
 
 ## Related pages
 
 - [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
 - [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [For Cards, Commerce, and Settlement Partners](../users/for-cards-and-commerce-partners.md)
+- [Appendix full-view maps](/appendix/full-view-maps)
+- [Colossus docs index](/appendix/colossus-docs-index)
 - [For Liquidity Providers](../users/for-liquidity-providers.md)

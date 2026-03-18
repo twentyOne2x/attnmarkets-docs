@@ -8,6 +8,9 @@ const sidebar = {
   },
   'artemis-agentic-commerce-index': {
     title: itemTitle('Artemis Commerce Index')
+  },
+  'colossus-docs-index': {
+    title: itemTitle('Colossus Docs Index')
   }
 }
 
