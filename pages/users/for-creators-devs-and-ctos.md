@@ -10,7 +10,7 @@ You have:
 - active build and distribution costs,
 - a need to fund operations without repeatedly selling token inventory.
 
-attnCredit helps convert routed earnings into an enforceable financing facility.
+attn Credit helps convert routed earnings into an enforceable financing facility.
 
 ## What you get
 
@@ -95,6 +95,6 @@ Teams should disclose:
 ## Related pages
 
 - [View demo app](https://app.attn.markets/credit-line)
-- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [attn Credit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)

@@ -1,48 +1,49 @@
 # Who attn Is For
 
-attnCredit serves borrowers, LPs, and infrastructure partners who need enforceable credit operations against routed revenue.
+attn serves teams and partners that already have onchain activity, but still do not have a clean credit layer behind it.
 
-## 1. Onchain fee businesses (borrowers)
+## 1. Agents, creators, and onchain businesses
 
-Best fit for teams that have:
+Best fit when there is:
 
-- recurring or high-frequency onchain fee flow,
-- willingness to route fees through controlled revenue accounts,
-- need for faster working-capital access.
+- visible revenue or payment activity,
+- a real working-capital need,
+- willingness to operate inside a repayment-first setup.
 
-## 2. Liquidity providers and credit funds
+## 2. Apps, wallets, and commerce surfaces
 
-Best fit for LPs that want:
+Best fit for products that want to place credit behind an existing user experience:
 
-- pool-specific exposure,
-- deterministic control policies,
-- lender-grade reporting and audit trails.
+- marketplaces,
+- wallet and spend surfaces,
+- cards and commerce flows,
+- treasury and operating tools.
 
-## 3. Issuer/treasury/capital-markets teams
+## 3. Capital and credit partners
 
-Best fit for partners that need:
+Best fit for partners that care about:
 
-- settlement liquidity facilities,
-- reconciled servicing outputs,
-- operationally conservative underwriting profiles.
+- repayment discipline,
+- clear controls and reporting,
+- separation between different risk boxes as the product expands.
 
 ## 4. Launchpads and ecosystem operators
 
 Best fit when partners want:
 
-- embedded distribution for revenue-swept facilities,
-- policy-bounded limits and controls,
-- clean handoff into LP-facing reporting.
+- a financing layer behind existing communities,
+- a clearer path from revenue to working capital,
+- infrastructure that can later plug into broader commerce surfaces.
 
-## 5. Product lane mapping
+## 5. Current direction
 
-- **Pump lane:** rapid proving lane, higher volatility, tighter caps.
-- **Settlement lane:** conservative lane, institutional buyer profile.
-
-Early stages keep these lanes separated in capital and risk.
+The strongest current public proof is still the Pump borrower flow.
+The broader direction is agent-commerce credit first, with more conservative commerce and receivables use cases later.
 
 ## 6. Related pages
 
-- [For Liquidity Providers](../users/for-liquidity-providers.md)
+- [attn 1-pager](../1-pager.md)
+- [For Agents and Apps](../users/for-apps-daos-and-builders.md)
 - [For Cards, Commerce, and Settlement Partners](../users/for-cards-and-commerce-partners.md)
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [For Liquidity Providers](../users/for-liquidity-providers.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)

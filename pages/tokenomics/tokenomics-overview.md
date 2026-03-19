@@ -17,7 +17,7 @@ Tokenomics and governance are designed to support durable credit operations, not
 
 ## 2. LP economics
 
-LP returns come from managed credit pool performance, including:
+If and when LP capital is active, returns would come from managed credit pool performance, including:
 
 - facility fees and spreads,
 - utilization and servicing behavior,
@@ -36,7 +36,7 @@ Governance should control:
 ## 4. Lane-aware policy
 
 - **Pump lane:** higher-yield credit pool with tighter caps and stricter fast-response controls.
-- **Settlement lane:** conservative credit pool with institutional reporting and underwriting constraints.
+- **Broader commerce / receivables lane:** conservative credit pool with tighter reporting and underwriting constraints.
 
 Early phases keep credit pools separated and non-commingled.
 

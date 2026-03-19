@@ -1,8 +1,9 @@
-# attnCredit Engine and attnUSD
+# attn Credit Engine and attnUSD
 
-This page is the canonical technical model for **attnCredit**.
+This page describes the target capital-side model for **attn Credit**.
+The strongest current public proof is still the borrower-side Pump flow; broader pool-side rollout comes later.
 
-attnCredit is a revolving credit system for onchain businesses, with repayment automated from routed cashflows.
+attn Credit is a credit and servicing system for onchain revenue, with repayment automated from routed cashflows.
 
 Hover highlighted terms for quick glossary definitions.
 
@@ -15,7 +16,7 @@ Hover highlighted terms for quick glossary definitions.
 - **<abbr title="Risk-adjusted lendable amount calculated from collectable routed revenue.">Borrowing base</abbr>**
   Risk-adjusted lendable amount derived from observed collectable revenue.
 - **Credit pool**
-  Capital bucket with its own risk policy (Pump lane or Settlement lane).
+  Capital bucket with its own risk policy (for example, a Pump proving lane versus a more conservative commerce or receivables lane).
 - **<abbr title="LP portfolio share token over managed credit pool exposure and performance.">attnUSD</abbr>**
   LP share in one or more managed credit pools, marked from underlying facility performance.
 
@@ -76,7 +77,7 @@ If stress is not cured, facilities enter deterministic default handling:
 - acceleration rules apply where policy requires,
 - cure and resolution states are logged for audit and reporting.
 
-## 7. Capital segmentation (two lanes)
+## 7. Capital segmentation
 
 ### 7.1 Pump lane (wedge / proving ground)
 
@@ -85,12 +86,12 @@ If stress is not cured, facilities enter deterministic default handling:
 - high-yield pricing consistent with tail risk and operating cost,
 - fully automated policy enforcement.
 
-### 7.2 Settlement lane (settlement liquidity lane)
+### 7.2 Broader commerce / receivables lane
 
-- conservative settlement liquidity profile,
+- more conservative underwriting profile,
 - stricter reporting and governance requirements,
 - lower-variance underwriting box,
-- buyer profile: issuer/treasury/capital markets.
+- buyer profile: commerce, treasury, and capital partners.
 
 ### 7.3 No early commingling
 

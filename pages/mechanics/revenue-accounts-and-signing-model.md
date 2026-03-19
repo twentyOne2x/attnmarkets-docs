@@ -104,7 +104,7 @@ Squads v4 has two ways a safe's configuration can be governed:
 - **Autonomous safe**: there is no privileged config-admin key. Config changes go through member approvals and the timelock.
 - **Controlled safe**: a specific **config authority** key can sign certain config changes directly.
 
-For attnCredit, the timelock story only works if config cannot be changed instantly.
+For attn Credit, the timelock story only works if config cannot be changed instantly.
 
 So while a credit position is active, we require one of these to be true:
 
@@ -134,7 +134,7 @@ Typical allowlisted paths:
 Important nuance:
 
 - Spending limits allowlist destination authority pubkeys, not token-account addresses.
-  - For attnCreditline repayment, the destination authority is the facility's vault authority PDA (not the repayment vault token account).
+  - For attn Credit line repayment, the destination authority is the facility's vault authority PDA (not the repayment vault token account).
 
 ### 3.5 Who can move funds? (plain English)
 
@@ -449,4 +449,4 @@ Canonical internal spec:
 
 **Does attn custody funds?**
 
-No. Funds live in onchain accounts controlled by the borrower's safe and its vault authorities. attnCredit is designed to be non-custodial while still making repayment controls enforceable.
+No. Funds live in onchain accounts controlled by the borrower's safe and its vault authorities. attn Credit is designed to be non-custodial while still making repayment controls enforceable.

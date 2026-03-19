@@ -1,52 +1,44 @@
 # Banking the Internet of Revenue
 
-attn treats onchain revenue as financeable cashflow when repayment is enforceable and observable.
+The internet already has revenue rails.
+What it still lacks is a credit layer that can sit behind them.
 
-## 1. Core model
+attn is built around that idea: if agents, apps, and onchain businesses can earn and operate onchain, they should also be able to access working capital in a disciplined way.
 
-The attnCredit model combines:
+## 1. Revenue is getting more operational
 
-- controlled routing of eligible fees,
-- dynamic underwriting from observed cashflows,
-- automated servicing through sweeps,
-- deterministic control modes under stress.
+- creator fees, marketplaces, and agent jobs make revenue more visible,
+- wallets and payment rails make balances and permissions more programmable,
+- spend surfaces make it easier to use that money in real workflows.
 
-## 2. Products built on the model
+That stack is getting built quickly.
+Credit is still the missing layer.
 
-### 2.1 Revenue-swept advances
+## 2. Where attn fits
 
-- borrower routes fees into a controlled revenue account,
-- facility is sized from risk-adjusted trailing revenue,
-- repayment is serviced directly from routed flows.
+attn sits behind that stack as the credit and servicing layer:
 
-### 2.2 Revenue-backed revolving lines
+- it reads revenue and payment activity,
+- works with programmable accounts and controls,
+- sets working-capital limits,
+- keeps repayment and servicing tied to the operating flow.
 
-- availability updates as risk and cashflows change,
-- utilization discipline and paydown rules are enforced,
-- stress controls can tighten or freeze new draws.
+The point is not to build another wallet, card, or marketplace.
+It is to make credit native to the systems where agents and onchain businesses already operate.
 
-## 3. attnUSD for LP exposure
+## 3. Why this matters
 
-attnUSD represents pool-level exposure to managed facility portfolios.
-It is not framed as principal-guaranteed yield.
+- more onchain revenue becomes financeable,
+- commerce surfaces can embed working capital instead of only payments,
+- capital can be matched to observable activity instead of informal promises.
 
-## 4. Lane strategy
+## 4. Current direction
 
-- **Pump lane:** proving ground for high-volatility flow with strict controls.
-- **Settlement lane:** conservative settlement liquidity facilities for institutional buyer profiles.
+The strongest current public proof is still in the Pump borrower flow.
+The broader direction is agent commerce first, then more conservative commerce and receivables-style use cases over time.
 
-Early-stage credit pool separation avoids commingled risk.
+## 5. Go deeper
 
-## 5. Why this matters
-
-This model moves from narrative credit to operational credit:
-
-- repayment is enforced, not requested,
-- risk responses are policy-bounded, not ad hoc,
-- reporting is loan-level and auditable.
-
-## 6. Go deeper
-
-- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
-- [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [Vision: attn as the credit layer](./vision-attn.md)
+- [attn in context](./attn-in-context.mdx)

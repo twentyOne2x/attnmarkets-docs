@@ -1,6 +1,9 @@
 # Risk, Limits, and Concentration Framework
 
-attnCredit manages risk through policy-bounded underwriting plus deterministic servicing controls.
+This page describes the target risk framework for attn Credit.
+The strongest current public proof is still the borrower-side Pump flow; broader capital-side expansion comes later.
+
+attn Credit manages risk through policy-bounded underwriting plus deterministic servicing controls.
 The objective is controlled loss behavior under stress, not discretionary reaction.
 
 ## 1. Risk types
@@ -32,9 +35,9 @@ Each facility is bounded by policy limits such as:
   - lower borrower caps,
   - tighter concentration bands,
   - faster throttling and stricter freeze thresholds.
-- **Settlement lane**
-  - conservative concentration profile,
-  - stronger reporting/covenant expectations,
+- **Broader commerce / receivables lane**
+  - more conservative concentration profile,
+  - stronger reporting and covenant expectations,
   - slower but stricter governance-controlled parameter changes.
 
 No early commingling: lane limits and credit pool accounting stay separate.
@@ -92,6 +95,6 @@ Governance scope:
 
 ## 7. Related pages
 
-- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+- [attn Credit Engine and attnUSD](./pt-yt-attnusd.md)
 - [Pricing, Spreads, and Core Parameters](./pricing-and-parameters.md)
 - [For Liquidity Providers](../users/for-liquidity-providers.md)

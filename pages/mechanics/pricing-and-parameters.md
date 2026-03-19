@@ -1,5 +1,8 @@
 # Pricing, Spreads, and Core Parameters
 
+This page describes the target pricing framework for attn Credit.
+The strongest current public proof is still the borrower-side Pump flow; broader capital-side expansion comes later.
+
 Pricing is policy-driven and lane-specific.
 Rates reflect cashflow volatility, enforceability strength, operational cost, and expected loss behavior.
 
@@ -34,9 +37,9 @@ Typical characteristics:
 - faster repricing when risk signals worsen,
 - stricter step-up criteria.
 
-## 4. Settlement lane policy
+## 4. Broader commerce / receivables lane policy
 
-Settlement lane pricing reflects conservative underwriting and institutional reporting requirements.
+This lane pricing reflects more conservative underwriting and stronger reporting expectations.
 
 Typical characteristics:
 
@@ -65,5 +68,5 @@ Governance reviews and updates:
 ## 7. Related pages
 
 - [Risk, Limits, and Concentration Framework](./risk-and-limits.md)
-- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+- [attn Credit Engine and attnUSD](./pt-yt-attnusd.md)
 - [Roadmap (Indicative)](../roadmap.md)

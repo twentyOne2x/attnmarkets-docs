@@ -1,80 +1,47 @@
-# For Apps, DAOs, and Builders
+# For Agents and Apps
 
-attnCredit helps onchain teams finance operations against routed fee cashflows without relying only on token sales.
+attn helps agents, apps, and builders add a credit layer behind onchain revenue and commerce without turning credit into a separate product.
 
 ## What attn provides
 
-1. **Controlled revenue accounts**
-   Fee flows route into policy-governed revenue accounts for enforceable servicing.
-2. **Revenue-swept advances**
-   Short-cycle upfront liquidity against defined repayment shares.
-3. **Revenue-backed revolving facilities**
-   Dynamic limits that adjust with observed performance and risk.
+- working capital against visible activity,
+- repayment-first servicing and policy controls,
+- account setup that keeps the flow programmable,
+- a path to embed credit behind your own user surface.
 
-## How facilities are enforced
+## Where it fits best
 
-- hard sweeps prioritize repayment from routed fees,
-- mandatory utilization discipline prevents indefinite maxed-out borrowing,
-- dynamic limits tighten or expand with cashflow quality,
-- deterministic throttle/freeze/default controls activate under stress.
+- products where users or agents already earn and spend,
+- teams with real onchain revenue or payment activity,
+- operators who want disciplined servicing instead of manual repayment promises.
 
-## What this funds
+## What teams should expect
 
-Teams typically use proceeds for:
-
-- product and infrastructure execution,
-- growth and distribution,
-- operating runway management,
-- strategic initiatives approved by governance.
-
-## Operating model
-
-### Revenue account setup
-
-Borrowers configure routing into controlled accounts and define policy-compatible operating permissions.
-In v1 this is typically implemented as a Squads multisig + vault setup with timelocked config changes and spending-limit allowlists for servicing routes.
-
-### Facility sizing
-
-Limits are set using risk-adjusted trailing revenue, concentration, and volatility assumptions.
-
-### Continuous servicing
-
-Repayment and risk controls run continuously, with reporting outputs for operators and LPs.
-
-## Lane strategy context
-
-- **Pump lane:** higher-volatility profile with tighter caps and faster control reactions.
-- **Settlement lane:** conservative profile for institutional settlement-liquidity use cases.
-
-Early phases keep lane capital separated to avoid commingled risk.
+- a real revenue source worth underwriting,
+- a clear account and permissions setup,
+- agreement up front on how repayment and controls work.
 
 ## What to communicate to your community
 
 Projects should be explicit about:
 
-- what share of cashflows is pledged,
-- how proceeds are used,
-- what control policies govern stress behavior,
-- how this reduces dependence on repeated token issuance.
+- what activity is being financed,
+- how repayment works,
+- what the money is being used for,
+- why this is better than relying only on repeated token issuance or ad hoc financing.
 
-## Implementation checklist
+## Current direction
 
-Before going live, confirm:
-
-1. **Routing readiness**
-   Identify eligible fee streams, route them into controlled revenue accounts, and verify repayment-priority routing works as expected.
-2. **Multisig setup**
-   Configure a production-safe multisig posture (signer separation, timelock configuration, and spending-limit allowlists for servicing paths).
-3. **Policy constraints**
-   Pre-define utilization discipline, sweep behavior, throttle/freeze triggers, and escalation/default handling so controls are explicit before the first draw.
+The strongest current public proof is still the Pump borrower flow.
+The broader goal is credit behind agent-commerce, wallet, and commerce surfaces.
 
 ## Next action
 
-- [Estimate credit line](https://app.attn.markets/credit-line)
+- [Open credit simulation](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
 
 ## Related pages
 
-- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [attn 1-pager](../1-pager.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [Who attn is for](../introduction/who-attn-is-for.md)
 - [For Liquidity Providers](./for-liquidity-providers.md)

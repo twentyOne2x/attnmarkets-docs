@@ -1,55 +1,47 @@
-# Vision: attnCredit as the Revenue Credit Control Plane
+# Vision: attn as the Credit Layer for Agent Commerce
 
-attn's long-term role is to be the credit and servicing layer for onchain businesses with routed fee cashflows.
+attn's long-term role is simple:
+be the credit and servicing layer behind agent commerce and onchain revenue.
 
-The product center is **attnCredit**:
+The product center is still **attn Credit**, but the larger idea is broader than one borrower lane.
 
-- revenue-underwritten revolving facilities,
-- enforced repayment via hard sweeps,
-- dynamic limits and utilization discipline,
-- deterministic stress controls,
-- lender-grade reporting tape.
+## 1. What stays constant
 
-## 1. Product trajectory
+Across different surfaces, the same pieces matter:
 
-attn scales in two explicitly separated lanes:
+- visible revenue and payment activity,
+- programmable accounts and permissions,
+- credit logic that sets and adjusts limits,
+- servicing that keeps repayment first.
 
-- **Pump lane (wedge):** high-yield, high-volatility, tightly capped, fully automated.
-- **Settlement lane (settlement liquidity):** conservative settlement liquidity facilities for issuer/treasury buyers.
+## 2. How the product expands
 
-These lanes are separate in early stages, with no capital commingling.
+- start where revenue and repayment are easiest to verify,
+- prove the controls in a narrower borrower flow,
+- reuse the same layer behind broader commerce, wallet, treasury, and receivables-style use cases.
 
-## 2. Why this path
+## 3. Why this path
 
-- Pump lane proves controls and servicing on live flows.
-- The same rails can be reused for settlement facilities.
-- Live tape and incident discipline improve institutional financeability.
+- the internet side of the stack is already getting built,
+- credit should not live only inside one app,
+- the same servicing layer can support many product surfaces over time.
 
-## 3. What borrowers get
+## 4. Current proof and direction
 
-- fast access to working capital against routed fees,
-- transparent draw and repayment behavior,
-- predictable policy responses under stress.
+The strongest current public proof is still the Pump borrower flow.
+That is the proving ground.
 
-## 4. What LPs and credit partners get
+The broader direction is agent-commerce credit first, with more conservative commerce and receivables expansion later.
 
-- explicit pool-level exposure,
-- deterministic control modes,
-- recurring facility-level reporting,
-- clear governance on caps and risk parameters.
+## 5. Why builders and partners care
 
-## 5. What does not change
-
-Across all lanes, attn remains centered on:
-
-- controlled revenue accounts,
-- enforceable repayment priority,
-- policy-bounded underwriting,
-- auditable servicing operations.
+- borrowers get working capital against observable activity,
+- commerce partners get a credit layer they can place behind their own surfaces,
+- capital partners get a model centered on repayment discipline instead of loose promises.
 
 ## 6. Related pages
 
-- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
-- [For Liquidity Providers](../users/for-liquidity-providers.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [Who attn is for](./who-attn-is-for.md)
+- [For cards and commerce partners](../users/for-cards-and-commerce-partners.md)
 - [Roadmap (Indicative)](../roadmap.md)

@@ -1,22 +1,25 @@
 # Welcome to attn
 
-attn builds **attnCredit**: a revolving credit engine for onchain businesses, repaid automatically from routed revenue.
+attn builds **attn Credit**: a credit and servicing layer for agent commerce and onchain revenue.
 
-At a high level:
+It helps software agents, apps, and onchain businesses turn visible revenue into working capital while keeping repayment and controls first.
 
-- borrowers route fees into controlled revenue accounts,
-- repayment is enforced through hard sweeps from routed cashflows,
-- limits adjust dynamically as revenue stability changes,
-- utilization discipline prevents permanent maxed-out borrowing,
-- deterministic freeze/default modes protect capital when risk spikes.
+At a high level, attn:
 
-attn also offers **attnUSD**, an LP share in managed credit pools with explicit risk and reporting.
+- reads revenue and payment activity to understand borrowing capacity,
+- works with programmable accounts, routing rules, and policy controls,
+- adjusts limits as activity changes,
+- can sit behind wallets, marketplaces, cards, and commerce flows.
+
+Some pages in these docs go deeper into capital-side mechanics, pool design, and LP reporting.
+The strongest current public proof is still the narrower Pump borrower flow.
 
 ## Where to start
 
-- [How attnCredit works (non-technical)](./mechanics/how-it-works-nontechnical.md)
-- [attnCredit engine and attnUSD](./mechanics/pt-yt-attnusd.md)
-- [Risk, limits, and control modes](./mechanics/risk-and-limits.md)
-- [Pricing and parameter policy](./mechanics/pricing-and-parameters.md)
-- [For liquidity providers](./users/for-liquidity-providers.md)
+- [attn 1-pager](./1-pager.md)
+- [How attn Credit works (non-technical)](./mechanics/how-it-works-nontechnical.md)
+- [The missing layer for onchain revenues](./introduction/the-missing-layer-for-onchain-revenues.md)
+- [Who attn is for](./introduction/who-attn-is-for.md)
 - [For cards and commerce partners](./users/for-cards-and-commerce-partners.md)
+- [For liquidity providers](./users/for-liquidity-providers.md)
+- [Risk, limits, and control modes](./mechanics/risk-and-limits.md)

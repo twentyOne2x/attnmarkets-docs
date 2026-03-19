@@ -1,102 +1,79 @@
-# How attnCredit Works (Non-Technical)
+# How attn Credit Works (Non-Technical)
 
-attnCredit gives onchain businesses liquidity against routed fees while enforcing repayment through automation and controls.
+attn Credit helps agents and onchain businesses borrow against visible revenue without treating repayment as an afterthought.
 
-## 1. The actors
+## 1. Revenue becomes legible
 
-- **Borrower:** routes eligible fees and draws from a facility.
-- **attn operator stack:** runs policy, servicing, monitoring, and controls.
-- **LPs / capital providers:** fund credit pools and receive risk-adjusted exposure.
-- **Partners (issuer/treasury stacks):** consume settlement liquidity facilities in the conservative lane.
+The starting point is simple:
+a team, creator, or agent already has revenue or payment activity that can be observed and reasoned about.
 
-## 2. Step one: route revenue into a controlled revenue account
+That could be creator fees, marketplace income, or another onchain business flow.
+Credit only works if there is something real to underwrite.
 
-A borrower configures fee routing so eligible revenue flows into a controlled revenue account.
-In v1 this is typically implemented as a Squads-managed revenue account (timelocked config + spending limits) so servicing routes are verifiable onchain.
+## 2. Accounts and policies create a repayment path
 
-Core purpose:
+attn works with controlled accounts, routing, and permissions so repayment is part of the operating setup rather than a manual afterthought.
+
+The exact account model can vary, but the purpose stays the same:
 
 - make repayment collectible,
 - make limits measurable,
 - make control actions enforceable.
 
-## 3. Step two: limits are set from observed cashflows
+## 3. Credit is sized from observed activity
 
-The system computes a dynamic lendable amount using trailing revenue and risk policy.
+Limits are set from observed revenue and risk policy.
+As the activity changes, the available credit can change too.
 
-Inputs include:
+What matters most is not one static score.
+It is the combination of revenue quality, operating discipline, and whether the repayment path is actually enforceable.
 
-- revenue continuity and volatility,
-- concentration,
-- enforceability horizon,
-- reserve requirements.
+## 4. Borrowers use the facility for working capital
 
-## 4. Step three: borrower draws from the facility
+Once active, the facility can fund normal operating needs such as growth, working capital, treasury smoothing, and other approved uses.
 
-Borrowers can draw up to current availability, subject to lane and policy rules.
+The point is to help a business or agent keep operating without depending only on token sales or manual financing every time cash timing gets tight.
 
-Two lane contexts:
+## 5. Servicing runs in the background
 
-- **Pump lane:** tighter caps and faster throttles.
-- **Settlement lane:** conservative profile and institutional reporting expectations.
+Repayment is serviced through the same operating flow.
+Revenue keeps moving, and the system keeps track of what should go to debt service.
 
-## 5. Step four: servicing runs continuously
+That means:
 
-Once a facility is active:
+- repayment stays tied to the underlying activity,
+- limits and availability can update over time,
+- operators can monitor facility health instead of relying on ad hoc follow-up.
 
-- routed fees are swept to debt service,
-- utilization discipline is checked continuously,
-- limits update when risk changes.
+In the current Pump proving lane, this also means the fee-control path moves into the repayment setup while the facility is active.
 
-For the current Pump borrower-first lane, this also means:
+## 6. Controls tighten when risk changes
 
-- Pump fee-admin control moves away from the borrower during ACTIVE,
-- the pledged Swig path becomes the current fee-control path,
-- creator-fee servicing is enforced through that path until the facility closes.
+If revenue deteriorates or controls break, the system does not just keep lending as if nothing happened.
 
-## 6. Step five: utilization discipline is enforced
+Instead:
 
-Borrowers cannot remain permanently maxed out.
-
-If utilization fails policy requirements:
-
-- draw capacity tightens,
+- availability can tighten,
 - new draws can be frozen,
-- sweep intensity can increase.
+- repayment can be prioritized more aggressively.
 
-## 7. Step six: stress controls activate when needed
+The exact playbooks get more detailed in the deeper mechanics pages.
 
-If revenue deteriorates or risk spikes:
-
-- throttle mode reduces availability,
-- freeze mode stops new draws,
-- acceleration/default mode can route all eligible fees to repayment.
-
-Important nuance:
-
-- the ACTIVE control posture is onchain,
-- so a web-backend outage does not automatically unlock the fee route,
-- but guided servicing and guided close/offboarding still rely on the operator stack and keeper services being online.
-
-## 8. Step seven: LPs see credit pool exposure and tape
-
-LPs receive exposure through credit pools (and attnUSD where applicable), with reporting on:
-
-- balances and utilization,
-- sweep and repayment behavior,
-- incidents and corrective actions,
-- concentration and performance by lane.
-
-## 9. What this is not
+## 7. What this is not
 
 - Not an unsecured blank-check credit model.
 - Not a principal-guaranteed cash-equivalent token.
-- Not a single commingled risk pool in early stages.
+- Not a product where every future lane should be assumed live today.
 
-## 10. Where to go deeper
+## 8. Current direction
 
-- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+The strongest current public proof is still the Pump borrower flow.
+The broader direction is the same credit layer sitting behind agent-commerce, wallet, and commerce surfaces over time.
+
+## 9. Where to go deeper
+
+- [attn 1-pager](../1-pager.md)
 - [Risk, limits, and control modes](./risk-and-limits.md)
 - [Pricing and parameter policy](./pricing-and-parameters.md)
-- [Revenue accounts and signing model](./revenue-accounts-and-signing-model.md)
+- [For Agents and Apps](../users/for-apps-daos-and-builders.md)
 - [For Liquidity Providers](../users/for-liquidity-providers.md)

@@ -1,61 +1,50 @@
 # Roadmap (Indicative)
 
-This roadmap prioritizes live proof of controls, then institutional scaling.
+This roadmap starts from the current proving lane, then widens toward the broader agent-commerce vision.
 
 ## Action rail
 
-[**`> REQUEST ACCESS`**](https://attn.markets/request-access) [**`> OPEN DEMO`**](https://app.attn.markets/credit-line)
+[**`> REQUEST ACCESS`**](https://attn.markets/request-access) [**`> OPEN CREDIT SIMULATION`**](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
 
-Pilot is permissioned. Demo is public.
+Request access is still permissioned.
+The simulation is public.
 
-<div style="position: sticky; bottom: 0; z-index: 40; margin: 1rem 0 1.5rem; padding: 0.65rem 0.85rem; border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; background: rgba(8,8,8,0.92); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;">
-  <span style="font-size: 0.85rem; color: #c9c9c9;">Want in?</span>
-  <span style="display: flex; align-items: center; gap: 0.9rem;">
-    <a href="https://attn.markets/request-access" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.02em; text-decoration: none;">&gt; REQUEST ACCESS</a>
-    <a href="https://app.attn.markets/credit-line" style="font-size: 0.78rem; opacity: 0.85;">Demo</a>
-  </span>
-</div>
+## Phase 0 - Prove the borrower flow
 
-## Phase 0 - Control plane and pilot servicing
+- prove repayment controls in a live borrower lane,
+- keep the qualification and activation flow simple,
+- collect repeatable operating proof.
 
-- revenue-account routing templates and validation,
-- sweep executor and utilization-discipline enforcement,
-- baseline monitoring, reconciliation, and incident logging,
-- pilot facilities with tight policy caps.
+_If this is you: want an indicative limit + terms -> [Open credit simulation](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)._
 
-_If this is you: want an indicative limit + terms -> [Estimate credit line](https://app.attn.markets/credit-line)._
+## Phase 1 - Harden servicing and reporting
 
-## Phase 1 - Pump lane proving ground
-
-- launch high-volatility credit pool with strict limits,
-- run deterministic throttle/freeze/default playbooks,
-- collect repeatable lender tape and drill evidence,
-- iterate parameter bands from live outcomes.
+- improve monitoring, reconciliation, and incident handling,
+- tighten the operating playbooks around activation, servicing, and close,
+- make the proof easier to review and repeat.
 
 _If this is you: ready to route revenue + draw -> [Request access](https://attn.markets/request-access)._
 
-## Phase 2 - Lane hardening and reporting maturity
+## Phase 2 - Expand into agent-commerce surfaces
 
-- expand reporting cadence and loan-level disclosures,
-- tighten governance over caps, reserves, and trigger bands,
-- improve stress-mode automation and exception handling,
-- deepen LP tooling for credit-pool-level oversight.
+- place the same credit layer behind more wallets, marketplaces, and spend surfaces,
+- support partner-owned user experiences rather than a single front end,
+- keep repayment and controls consistent as distribution expands.
 
-_If this is you: evaluating pool reporting + risk controls -> [For Liquidity Providers](./users/for-liquidity-providers.md)._
+_If this is you: exploring partner integration -> [For Cards, Commerce, and Settlement Partners](./users/for-cards-and-commerce-partners.md)._
 
-## Phase 3 - Settlement lane onboarding
+## Phase 3 - Broaden into more conservative commerce and receivables use cases
 
-- onboard issuer/treasury-style settlement liquidity facilities,
-- keep separate credit pool and underwriting box,
-- publish institutional reporting pack expectations,
-- formalize partner operating runbooks.
+- support more conservative treasury, commerce, and receivables-style workflows,
+- keep distinct risk boxes as the product broadens,
+- formalize the reporting and operating standards needed for larger partners.
 
-_If this is you: exploring settlement-liquidity integration -> [For Cards, Commerce, and Settlement Partners](./users/for-cards-and-commerce-partners.md)._
+_If this is you: evaluating the longer-term capital side -> [For Liquidity Providers](./users/for-liquidity-providers.md)._
 
-## Phase 4 - Scaled distribution and allocator layer
+## Phase 4 - Capital-side scaling
 
-- broader partner distribution across ecosystems,
-- potential allocator layer across proven credit pools,
-- conservative expansion only after independent credit pool performance is established.
+- expand distribution only after the earlier lanes are proven,
+- widen capital access and reporting only as the operating record supports it,
+- keep growth subordinate to proof and servicing quality.
 
 _If this is you: planning broader distribution partnerships -> [For Launchpads & Incubators](./users/for-launchpads-and-incubators.md)._

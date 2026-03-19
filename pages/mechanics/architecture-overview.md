@@ -1,6 +1,9 @@
 # Architecture Overview
 
-attnCredit is organized around control, underwriting, servicing, and reporting.
+This page describes the target attn Credit architecture.
+The strongest current public proof is still the borrower-side Pump flow; broader capital-side expansion comes later.
+
+attn Credit is organized around control, underwriting, servicing, and reporting.
 The architecture is designed so repayment enforcement and risk controls are observable and deterministic.
 
 ## 1. Core components
@@ -30,9 +33,9 @@ The architecture is designed so repayment enforcement and risk controls are obse
   - Produces facility-level reporting, reconciliations, and incident logs.
   - Maintains operational audit history for lenders and governance.
 
-- **Credit Pools and attnUSD**
-  - Separate Pump and Settlement credit pools.
-  - attnUSD reflects pool-level portfolio exposure and performance.
+- **Capital Segmentation**
+  - Separate risk boxes as the product expands.
+  - Capital-side reporting and LP structures sit on top of those boxes where applicable.
 
 ## 2. Data flows (simplified)
 
@@ -64,14 +67,14 @@ The architecture is designed so repayment enforcement and risk controls are obse
 
 - **Pump lane**
   - Higher volatility assumptions, tighter caps, faster control reactions.
-- **Settlement lane**
-  - Conservative underwriting, stricter reporting/governance profile.
+- **Broader commerce / receivables lane**
+  - More conservative underwriting, stricter reporting/governance profile.
 - **No early commingling**
   - Separate credit pool accounting and risk limits in early phases.
 
 ## 4. Related pages
 
-- [How attnCredit works (non-technical)](./how-it-works-nontechnical.md)
-- [attnCredit Engine and attnUSD](./pt-yt-attnusd.md)
+- [How attn Credit works (non-technical)](./how-it-works-nontechnical.md)
+- [attn Credit Engine and attnUSD](./pt-yt-attnusd.md)
 - [Risk, Limits, and Concentration Framework](./risk-and-limits.md)
 - [Pricing, Spreads, and Core Parameters](./pricing-and-parameters.md)

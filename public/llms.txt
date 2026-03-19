@@ -1,22 +1,24 @@
 # attn.markets docs
 
-> Documentation for attnCredit (revenue-swept revolving credit for onchain businesses) and attnUSD (LP exposure to managed credit pools). Use these pages for product concepts, mechanics, controls, risk policy, pricing parameters, tokenomics, and roadmap.
+> Documentation for attn and attn Credit: a credit and servicing layer for agent commerce and onchain revenue. Use these pages for product concepts, non-technical mechanics, controls, risk policy, roadmap, and deeper capital-side design where relevant.
 
 These docs describe product mechanics and policy. They are not legal, tax, or investment advice.
+The strongest current public proof is still the narrower Pump borrower flow; broader commerce and capital-side expansion pages should be read as direction where stated.
 
 ## Start here
 - [Overview](https://docs.attn.markets/): entrypoint and navigation
 - [attn 1-pager](https://docs.attn.markets/1-pager): concise product overview
 - [The missing layer for onchain revenues](https://docs.attn.markets/introduction/the-missing-layer-for-onchain-revenues)
-- [Banking the internet of revenue](https://docs.attn.markets/introduction/banking-the-internet-of-revenue)
-- [How attnCredit works (non-technical)](https://docs.attn.markets/mechanics/how-it-works-nontechnical)
+- [How attn Credit works (non-technical)](https://docs.attn.markets/mechanics/how-it-works-nontechnical)
+- [attn in context](https://docs.attn.markets/introduction/attn-in-context)
+- [Who attn is for](https://docs.attn.markets/introduction/who-attn-is-for)
 
 ## Mechanics and controls
 - [Architecture overview](https://docs.attn.markets/mechanics/architecture-overview)
 - [Revenue accounts and signing model](https://docs.attn.markets/mechanics/revenue-accounts-and-signing-model)
-- [attnCredit engine and attnUSD](https://docs.attn.markets/mechanics/pt-yt-attnusd)
 - [Risk, limits, and concentration framework](https://docs.attn.markets/mechanics/risk-and-limits)
 - [Pricing, spreads, and core parameters](https://docs.attn.markets/mechanics/pricing-and-parameters)
+- [Capital-side model and attnUSD](https://docs.attn.markets/mechanics/pt-yt-attnusd)
 
 ## Who this is for
 - [Who attn is for](https://docs.attn.markets/introduction/who-attn-is-for)
@@ -31,5 +33,5 @@ These docs describe product mechanics and policy. They are not legal, tax, or in
 - [Roadmap](https://docs.attn.markets/roadmap)
 
 ## Optional
-- [attn in context](https://docs.attn.markets/introduction/attn-in-context)
+- [Banking the internet of revenue](https://docs.attn.markets/introduction/banking-the-internet-of-revenue)
 - [Docs source repository](https://github.com/twentyOne2x/attnmarkets-docs)

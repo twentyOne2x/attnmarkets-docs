@@ -1,5 +1,201 @@
 # ISSUES
 
+## 2026-03-19 - docs navigation: top-level section headings are not clickable
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The docs site is running, but the primary sidebar section headings (`Introduction`, `Users`, `Mechanics`, `Tokenomics`) are rendered as folder toggle buttons instead of navigable section pages, which makes the site feel broken.
+- Missing info/questions: none blocking. Local browser reproduction plus Nextra docs confirm the missing `asIndexPage` wiring.
+- Type: docs UX / navigation
+- Status: completed
+- Context + suspected cause:
+  - In the local docs site, top-level section labels are wrapped in `BUTTON` elements, not anchors.
+  - Nextra only makes folder titles navigable when the folder has an index page configured with `asIndexPage: true`.
+  - This repo currently lacks section index pages for `introduction`, `users`, `mechanics`, and `tokenomics`; `appendix/index.mdx` exists but is not flagged as an index page.
+- Fix intent:
+  1) add section overview pages with `asIndexPage: true`
+  2) make existing section titles route to those overview pages while preserving expand/collapse behavior
+  3) keep the copy concise and useful instead of adding filler pages
+- Acceptance criteria:
+  - Clicking `Introduction`, `Users`, `Mechanics`, and `Tokenomics` in the sidebar navigates to section pages.
+  - `Appendix` also becomes a proper section page instead of a dead label.
+  - The child page links remain visible and usable.
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/index.mdx` (new)
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/index.mdx` (new)
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/mechanics/index.mdx` (new)
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/tokenomics/index.mdx` (new)
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/index.mdx`
+  - Constraints:
+    - keep the old docs frontend/theme intact
+    - do not redesign the site
+    - keep overview pages short and navigational
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+VERIFIER
+- PASS: added section overview routes for `Introduction`, `Users`, `Mechanics`, and `Tokenomics`, and flagged the existing appendix overview so all major sidebar sections have real landing pages.
+- PASS: added a sidebar folder navigation bridge in `/Users/user/PycharmProjects/attnmarkets-docs/components/SidebarFolderNavigationBridge.jsx` so clicking a section title navigates to the section route while chevron clicks still preserve folder toggle behavior.
+- PASS: headless browser verification against `http://127.0.0.1:3216` confirms section-title clicks now resolve to `/introduction`, `/users`, `/mechanics`, `/tokenomics`, and `/appendix` with matching page `h1` values.
+- PASS: section landing titles no longer duplicate their sidebar labels, and the Users subsection label now uses the simpler `Agents & Apps` wording.
+- PASS: `python3 scripts/knowledge_check.py`.
+- PASS: `git diff --check`.
+- PASS: `npm run build`.
+
+## 2026-03-19 - docs: add Metaplex Agent Kit to the agentic-commerce taxonomy
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user supplied a Metaplex post about Agent Kit and asked to add it to the graph, which makes it relevant to the docs taxonomy and X-account map.
+- Missing info/questions: none blocking. The post provides a clear canonical handle plus explicit stack placement: Solana wallet, `x402` APIs, and onchain identity for agent-to-agent commerce.
+- Type: docs / taxonomy update
+- Status: completed
+- Context + suspected cause:
+  - the appendix and account map already cover wallet infra, agent frameworks, `x402`, and identity-adjacent surfaces
+  - they did not yet preserve Metaplex Agent Kit as a named bundle across those lanes
+  - `attn in context` also lacked a sentence placing that bundle in the stack
+- Fix intent:
+  1) add `Metaplex Agent Kit` to the appendix under frameworks/tooling
+  2) add a dedicated `Metaplex Agent Kit -> @metaplex` entry to the X-account map
+  3) add a concise `attn in context` line placing it as runtime tooling, not credit
+- Acceptance criteria:
+  - the appendix includes `Metaplex Agent Kit` with the direct post reference
+  - the X-account map includes `Metaplex Agent Kit -> @metaplex`
+  - `attn in context` frames it as wallet / `x402` / identity tooling rather than underwriting
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/scripts/data/agentic-finance-market-map-x-accounts.json`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+  - Constraints:
+    - keep Metaplex Agent Kit out of the credit lane
+    - frame it as agent-runtime tooling that bundles wallet, `x402`, and identity
+    - keep the added wording concise and role-specific
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added `Metaplex Agent Kit` to the appendix and linked the direct `@metaplex` post.
+- Added a dedicated `Metaplex Agent Kit -> @metaplex` entry to the X-account map.
+- Added a concise `attn in context` line placing Metaplex Agent Kit across wallet, `x402`, identity, registry, and runtime tooling rather than the credit layer.
+
+VERIFIER
+- PASS.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; direct document inspection used instead of UI screenshots.
+
+## 2026-03-19 - docs alignment: shift surrounding public docs to the high-level agent-commerce baseline
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user asked to review the surrounding docs around the updated 1-pager/spec and implement the needed changes, but keep the work local so they can verify before any push.
+- Missing info/questions: none blocking. The repo already contains the desired high-level direction in `/1-pager` and the broader agent-commerce taxonomy in `pages/introduction/attn-in-context.mdx`, while shared knowledge still anchors the current public proof to Pump-first credit and later private-market expansion.
+- Type: docs/alignment pass
+- Status: completed
+- Context + suspected cause:
+  - the 1-pager was reset to a simpler high-level agent-commerce frame, but the surrounding landing, intro, roadmap, and non-technical docs still present the older "revolving credit for onchain businesses / settlement liquidity facilities / attnUSD pool exposure" framing as the default story
+  - that mismatch makes the docs feel internally inconsistent and over-precise at the top of the funnel
+- Fix intent:
+  1) keep the unchanged 1-pager structure as the writing baseline
+  2) align adjacent public docs to a simpler story: attn as a credit and servicing layer behind agent commerce and onchain revenue
+  3) preserve current-proof boundaries by treating Pump as the strongest live lane and broader commerce / settlement expansion as direction, not a blanket live claim
+- Acceptance criteria:
+  - landing and intro docs match the high-level 1-pager tone
+  - non-technical mechanics and commerce-partner pages stop leading with overly narrow settlement-liquidity framing
+  - roadmap language reflects current direction without overclaiming maturity
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: medium
+- Plan: `docs/plans/completed/2026-03-19-agent-commerce-docs-alignment.md`
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/plans/active/2026-03-19-agent-commerce-docs-alignment.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/index.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/public/llms.txt`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/the-missing-layer-for-onchain-revenues.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/banking-the-internet-of-revenue.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/vision-attn.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/who-attn-is-for.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/mechanics/how-it-works-nontechnical.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/for-cards-and-commerce-partners.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/for-apps-daos-and-builders.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/roadmap.md`
+  - Constraints:
+    - do not touch unrelated dirty files
+    - use the current `/1-pager` as the tone and structure baseline
+    - stay high-level and product-level; cut unnecessary jargon
+    - keep `attn` lowercase
+    - do not turn future lanes into current blanket product claims
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote the high-visibility docs entrypoints to match the simpler agent-commerce-first baseline:
+  - `pages/index.md`
+  - `public/llms.txt`
+  - `pages/introduction/the-missing-layer-for-onchain-revenues.md`
+  - `pages/introduction/banking-the-internet-of-revenue.md`
+  - `pages/introduction/vision-attn.md`
+  - `pages/introduction/who-attn-is-for.md`
+  - `pages/mechanics/how-it-works-nontechnical.md`
+  - `pages/users/for-apps-daos-and-builders.md`
+  - `pages/users/for-cards-and-commerce-partners.md`
+  - `pages/roadmap.md`
+- Added narrower capital-side status corrections to deeper pages so they no longer imply broader live scope than the current public proof supports:
+  - `pages/users/for-liquidity-providers.md`
+  - `pages/mechanics/pt-yt-attnusd.md`
+  - `pages/mechanics/architecture-overview.md`
+  - `pages/mechanics/risk-and-limits.md`
+  - `pages/mechanics/pricing-and-parameters.md`
+  - `pages/tokenomics/tokenomics-overview.md`
+- Also aligned `pages/introduction/attn-in-context.mdx` on top of its pre-existing local edit so it no longer contradicts the updated baseline.
+
+VERIFIER
+- PASS for local implementation and repo checks.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; verified through source review plus successful static build.
+- Follow-up:
+  - approved for commit/push/merge on 2026-03-20.
+
 ## 2026-03-19 - 1-pager reset: use original structure and keep agent-commerce framing high-level
 
 Checklist

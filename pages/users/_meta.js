@@ -4,7 +4,7 @@ const itemTitle = (label) => (
 
 const sidebar = {
   'for-apps-daos-and-builders': {
-    title: itemTitle('Apps & DAOs')
+    title: itemTitle('Agents & Apps')
   },
   'for-creators-devs-and-ctos': {
     title: itemTitle('Devs, Creators & CTOs')

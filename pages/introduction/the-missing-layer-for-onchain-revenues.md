@@ -1,48 +1,51 @@
 # The Missing Layer for Onchain Revenues
 
-Onchain systems make fee generation visible, but they do not automatically make those fees financeable.
+Agents and onchain businesses can already earn, pay, and move money onchain.
+What is still missing is credit.
 
-The missing piece is a credit control layer that turns recurring onchain cashflows into underwritable, enforceable facilities.
+Revenue may be visible, but visibility alone does not make it easy to finance.
+The missing piece is a layer that can underwrite against that activity and keep repayment disciplined inside the flow itself.
 
 ## What is missing today
 
-Most projects still run revenue in ways that are hard to finance:
+Most onchain revenue still sits in setups that are hard to lend against:
 
-- fee flows land in generic wallets,
-- repayment priorities are not enforced,
-- treasury and operating balances are mixed,
-- there is limited lender-grade reporting on servicing behavior.
+- income lands in generic wallets,
+- repayment is still treated as a promise instead of part of the setup,
+- trust and control sit outside the operating flow,
+- partners can see activity but still cannot safely finance it.
 
-Even with public dashboards, capital providers often lack a clean, enforceable way to fund against those flows.
+That is true even when dashboards, wallets, or payment rails already exist.
 
 ## What attn adds
 
-attn focuses on that missing layer with **attnCredit**:
+attn focuses on that missing layer with **attn Credit**:
 
-- controlled revenue-account routing,
-- policy-bounded underwriting,
-- automated repayment sweeps,
-- deterministic stress and default modes,
-- lender-grade tape and operations visibility.
+- reads revenue and payment activity,
+- works with programmable accounts and policy controls,
+- sets working-capital limits against observable activity,
+- keeps repayment and servicing first.
 
-This shifts the model from discretionary repayment to serviced repayment.
+This shifts the model from manual repayment to serviced repayment.
 
 > **30-second example**
 >
-> Example: a pump.fun creator routes fees into a controlled revenue account -> attn estimates a credit line -> automated sweeps route fees to repayment.
+> Example: a creator or agent starts earning onchain -> attn estimates working capital -> repayment is serviced through the same operating flow instead of depending only on manual promises.
 
 ## Why this matters
 
-When fee flows are controlled and serviceable, projects can access working capital without depending only on token sales or ad hoc bilateral financing.
+When revenue becomes financeable, teams do not have to rely only on token sales, treasury drawdowns, or ad hoc bilateral deals every time they need working capital.
 
-Capital providers can evaluate exposure using:
+The broader point is simple:
+- agent commerce can already earn,
+- wallets and payment rails can already move money,
+- credit still needs its own layer.
 
-- repayment behavior,
-- concentration and volatility controls,
-- documented incident and governance actions.
+The strongest current public proof is still the narrower Pump borrower flow.
+The broader direction is credit behind agent commerce and other onchain business activity.
 
 ## Next pages
 
 - [Banking the internet of revenue](./banking-the-internet-of-revenue.md)
-- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [Who attn is for](./who-attn-is-for.md)

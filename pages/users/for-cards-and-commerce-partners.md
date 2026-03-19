@@ -1,58 +1,48 @@
 # For Cards, Commerce, and Settlement Partners
 
-attnCredit provides settlement liquidity facilities and repayment servicing rails for issuer, treasury, and commerce stacks.
+attn is meant to sit behind cards, wallets, marketplaces, and commerce flows as the credit and servicing layer.
 
 ## What attn provides
 
-- revenue-account routing and control setup,
-- revolving settlement liquidity facilities,
-- automated sweeps and utilization discipline,
-- deterministic stress-mode controls,
-- lender-grade reporting and reconciliation outputs.
+- working-capital logic tied to visible revenue,
+- policy-bound limits and controls,
+- repayment servicing that stays inside the operating flow,
+- reporting and oversight for operators and capital partners.
 
-## Primary buyer profile
+## Where it can fit
 
-attn is typically sold to:
+### 1. Embedded operating credit
 
-- issuer treasury teams,
-- capital-markets / structured-credit teams,
-- operating partners managing settlement timing gaps.
+- credit behind a wallet, marketplace, or commerce surface,
+- financing that is visible to the partner but does not need to become a separate product experience,
+- support for operators that already have routable activity and repayment paths.
 
-## Integration patterns
+### 2. Treasury and settlement support
 
-### 1) Settlement liquidity revolver
+- help with timing gaps and operating smoothing,
+- repayment that stays tied to the same business flow,
+- controls that tighten when the underlying activity changes.
 
-- Facility sized from routed receivables and policy limits.
-- Draws support settlement timing and working-capital gaps.
-- Sweeps service repayment directly from eligible routed flows.
+### 3. Agent-commerce surfaces
 
-### 2) Embedded card/commerce operating support
+- the longer-term fit is credit behind agent marketplaces, spend surfaces, and machine-driven payment flows,
+- the partner owns the user experience while attn provides the credit layer behind it.
 
-- Policy-aware top-up behavior for approved settlement paths.
-- Tight controls on draw availability during stress regimes.
-- Reconciliation outputs for treasury and finance workflows.
+## What partners should expect
 
-### 3) Expansion lanes
+- clear qualification rules,
+- repayment-first account and policy setup,
+- controls that activate when risk changes,
+- room to separate the credit layer from the end-user surface.
 
-- Additional payment/commerce workflows can be added if they reuse the same control and servicing rails.
+## Current direction
 
-## Risk and control expectations
-
-Partners should expect:
-
-- hard repayment prioritization from routed fees,
-- lane-specific underwriting and concentration policy,
-- freeze/default escalation behavior,
-- auditable config changes and incident response.
-
-## How this maps to lane strategy
-
-- **Pump lane** proves rails and servicing performance under higher-volatility conditions.
-- **Settlement lane** applies the same control plane in a conservative underwriting box with separate capital.
+The strongest current public proof is still the narrower Pump borrower flow.
+The broader cards, commerce, and settlement role is the direction of travel, not a blanket public-live claim today.
 
 ## Related pages
 
-- [Architecture Overview](../mechanics/architecture-overview.md)
-- [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)
-- [For Liquidity Providers](./for-liquidity-providers.md)
+- [attn 1-pager](../1-pager.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [Vision: attn as the credit layer](../introduction/vision-attn.md)
 - [Roadmap (Indicative)](../roadmap.md)

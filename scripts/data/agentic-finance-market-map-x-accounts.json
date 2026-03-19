@@ -164,6 +164,13 @@
           "confidence": "high"
         },
         {
+          "label": "Ramp Agent Cards",
+          "xHandle": "RampLabs",
+          "xUrl": "https://x.com/RampLabs",
+          "confidence": "high",
+          "notes": "User-supplied direct X post plus `agents.ramp.com/cards` indicate a developer-facing agent-card surface available via API, MCP, and CLI. Keep separate from the broader Ramp corporate account mapping."
+        },
+        {
           "label": "Metamask",
           "xHandle": "MetaMask",
           "xUrl": "https://x.com/MetaMask",
@@ -597,6 +604,13 @@
           "xHandle": "Quicknode",
           "xUrl": "https://x.com/Quicknode",
           "confidence": "high"
+        },
+        {
+          "label": "Metaplex Agent Kit",
+          "xHandle": "metaplex",
+          "xUrl": "https://x.com/metaplex",
+          "confidence": "high",
+          "notes": "Direct X post frames Agent Kit as agent-runtime tooling that bundles a Solana wallet, x402 APIs, and onchain identity for agent-to-agent commerce."
         }
       ]
     },

@@ -5,7 +5,7 @@ import ProjectHoverName from "../../components/ProjectHoverName";
 
 attn is easiest to understand when seen next to other projects working on credit, payments, yield, and underwriting.
 
-attn's focus is **attnCredit**: revolving credit for onchain businesses, repaid automatically from **routed onchain revenue accounts**.
+attn's focus is **attn Credit**: a credit and servicing layer for agent commerce and onchain revenue, built around routable activity and repayment controls.
 
 For a standalone version with full-screen canvases, see the [appendix full-view maps](/appendix/full-view-maps).
 
@@ -69,7 +69,7 @@ Hover firm names to see quick data, including who they service and who they use/
 
 ### 1) Enforcement-first entity credit (revenue / receivables)
 
-- <ProjectHoverName id="attn" label="attn (attnCredit)" />
+- <ProjectHoverName id="attn" label="attn (attn Credit)" />
 - <ProjectHoverName id="creditcoop" label="creditcoop.xyz" />
 - <ProjectHoverName id="youlend" label="YouLend" />
 - <ProjectHoverName id="parafin" label="Parafin" />
@@ -158,7 +158,7 @@ It is better read as observability and ecosystem discovery around these surfaces
 
 - **attn is a control layer:** underwriting + servicing + enforceability rails around routed revenue.
 - **attn targets entity-level revenue risk, not consumer-credit distribution.**
-- **attn can sit behind cards, commerce, treasury, and agent spend surfaces** as working-capital and settlement-liquidity infrastructure.
+- **attn can sit behind cards, commerce, treasury, and agent spend surfaces** as working-capital and credit-servicing infrastructure.
 
 ## attn fit by segment
 
@@ -173,7 +173,8 @@ It is better read as observability and ecosystem discovery around these surfaces
  **Valiron** and **FairScale** sit furthest toward trust gating: both are better read as reputation and qualification layers that decide which agents or wallets look credible enough for access, spend, or later capital expansion. **bond.credit** sits one step closer to capital: it turns live onchain agent performance into credibility, higher credit limits, and routed capital for autonomous strategies.
  **claw.credit**, **Sprinter**, and **attn** are the more execution-heavy credit back ends in this cut. They sit closer to the part of the stack that can actually expand limits, route capital, or enforce repayment once the activity is good enough to finance.
  **Tempo** and **Natural** point lower in the stack. Tempo's **March 18, 2026** mainnet launch introduced the **Machine Payments Protocol (MPP)**, which is best read here as machine-native payment and settlement infrastructure rather than underwriting. Natural is the broader money-movement platform that combines pay, wallets, compliance, ledgering, and credit APIs in one agentic-finance surface.
- **Privy**, **Para**, and **Crossmint** are embedded wallet infrastructure. They make agent-held balances, signing, passkey onboarding, and wallet distribution more legible. **Frames** is a spend-control wallet and paid-tools surface. **Sponge** is a merchant-facing gateway and agent wallet surface.
+ **Privy**, **Para**, and **Crossmint** are embedded wallet infrastructure. They make agent-held balances, signing, passkey onboarding, and wallet distribution more legible. **Frames** is a spend-control wallet and paid-tools surface. **Sponge** is a merchant-facing gateway and agent wallet surface. **Ramp Agent Cards** pushes the card layer in a more developer-facing direction through API, MCP, and CLI access, which makes programmable spend easier to reason about without changing where underwriting lives.
+ **Metaplex Agent Kit** is a useful bridge across those lanes. It packages a Solana wallet, `x402` APIs, onchain identity, and agent-registry/runtime tooling into one surface, which makes agent-to-agent commerce easier to ship without changing where credit sits.
  **Virtuals** should be read here as the broader ACP protocol and builder platform, not just a marketplace directory. In this framing it covers discovery, trustless escrow, payments, evaluation, tokenization, and service execution. `aGDP.io` then sits as the more concrete marketplace surface built on top of that stack: effectively the Fiverr-like venue for agents, but still slightly to the settlement side of pure discovery because it carries jobs, offerings, revenue tracking, and end-to-end commerce flows. **AgentCash** is the direct x402-native spend surface for buying paid API access with one balance. **Merit Systems** is the broader open-agentic-commerce umbrella around that lane, tying together network discovery, paid-access tooling, and consumer-facing surfaces.
  **Pump fun** now matters here too. Its Tokenized Agents rollout makes the revenue side of agentic commerce easier to point to in public by routing agent-linked revenue into automated buybacks and burns. That is not the same thing as credit, but it is strong public proof that agents are being treated more like businesses with monetization, treasury decisions, and financial alignment.
  **Arc / ERC-8004** matters on a different axis. It makes portable agent identity, discoverability, and reputation easier to point to in public. That is useful for trust and finance-adjacent qualification, but it still sits upstream of underwriting and repayment.
@@ -194,8 +195,8 @@ It is better read as observability and ecosystem discovery around these surfaces
 
 ## Related pages
 
-- [How attnCredit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
+- [attn Credit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [For Cards, Commerce, and Settlement Partners](../users/for-cards-and-commerce-partners.md)
 - [Appendix full-view maps](/appendix/full-view-maps)
 - [Colossus docs index](/appendix/colossus-docs-index)

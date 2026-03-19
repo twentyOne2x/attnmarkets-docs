@@ -1,6 +1,6 @@
 # For Launchpads & Incubators
 
-attnCredit can be embedded as a financing layer for projects with routed onchain fee flows.
+attn Credit can be embedded as a financing layer for projects with routed onchain fee flows.
 
 ## What attn provides
 
@@ -33,6 +33,6 @@ attnCredit can be embedded as a financing layer for projects with routed onchain
 
 ## Related pages
 
-- [attnCredit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
+- [attn Credit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)
 - [For Liquidity Providers](./for-liquidity-providers.md)

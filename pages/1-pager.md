@@ -1,11 +1,11 @@
-# attnCredit - Credit for Agent Commerce
+# attn Credit - Credit for Agent Commerce
 
-attnCredit helps onchain businesses and agent-driven businesses turn revenue into working capital.
+attn Credit helps onchain businesses and agent-driven businesses turn revenue into working capital.
 Think of it as a credit layer for agent commerce: agents can already earn, pay, and operate onchain; attn adds financing on top.
 
 ## What this is
 
-attnCredit is a revenue-backed credit system designed to do two things at once:
+attn Credit is a revenue-backed credit system designed to do two things at once:
 - unlock capital against visible onchain business activity,
 - keep repayment disciplined through controls and servicing.
 

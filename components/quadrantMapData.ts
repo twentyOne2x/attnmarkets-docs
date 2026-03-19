@@ -106,7 +106,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
         url: "https://docs.attn.markets/introduction/attn-in-context",
       },
       {
-        label: "How attnCredit works (non-technical)",
+        label: "How attn Credit works (non-technical)",
         url: "https://docs.attn.markets/mechanics/how-it-works-nontechnical",
       },
       {
