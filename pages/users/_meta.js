@@ -3,6 +3,9 @@ const itemTitle = (label) => (
 )
 
 const sidebar = {
+  index: {
+    title: itemTitle('Audience overview')
+  },
   'for-apps-daos-and-builders': {
     title: itemTitle('Agents & Apps')
   },

@@ -3,6 +3,9 @@ const itemTitle = (label) => (
 )
 
 const sidebar = {
+  index: {
+    title: itemTitle('System overview')
+  },
   'how-it-works-nontechnical': {
     title: itemTitle('How it works')
   },
