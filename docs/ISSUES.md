@@ -1,5 +1,356 @@
 # ISSUES
 
+## 2026-03-19 - 1-pager reset: use original structure and keep agent-commerce framing high-level
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user asked to stop being so precise, cited, and jargon-heavy, and to use the unchanged version as the baseline.
+- Missing info/questions: none blocking.
+- Type: docs/reset pass
+- Status: completed
+- Context + suspected cause:
+  - the recent rewrites corrected direction but drifted away from the original page's simplicity
+  - the original committed page had the right 1-pager structure, but it needed a gentler agent-commerce framing rather than a technical product-status rewrite
+- Fix intent:
+  1) use the committed pre-edit `pages/1-pager.md` as the structural baseline
+  2) keep the tone broad and product-level
+  3) introduce agent-commerce framing without turning the page into a proof/status memo
+- Acceptance criteria:
+  - page keeps the original simple structure
+  - page reads higher-level and less technical than the recent versions
+  - agent-commerce framing is present but not over-explained
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md`
+  - Constraints:
+    - use the original committed page as the writing baseline
+    - stay high-level
+    - avoid status-report language and excessive product taxonomy
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md` back toward the original page shape and tone.
+- Kept the message simple: attn as a credit layer for agent commerce and onchain businesses, with Pump as an early proving ground rather than the whole identity of the page.
+
+VERIFIER
+- PASS.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; verified by direct source review plus successful build output.
+
+## 2026-03-19 - 1-pager compression: keep agent-commerce frame but make it actually short
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user clarified that the article was reference only and that the 1-pager must stay very short.
+- Missing info/questions: none blocking.
+- Type: docs/compression follow-up
+- Status: completed
+- Context + suspected cause:
+  - the prior rewrite had the right stack framing but still read too much like a mini-article
+  - the page needs to preserve the agent-commerce thesis while cutting depth and repetition
+- Fix intent:
+  1) collapse the page into four compact sections max
+  2) keep only the highest-signal stack references
+  3) preserve the current-product boundary in one short block rather than multiple explanatory sections
+- Acceptance criteria:
+  - page is materially shorter
+  - agent-commerce thesis remains first
+  - current proof boundaries remain truthful
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md`
+  - Constraints:
+    - do not revert to borrower-first framing
+    - do not copy the article literally
+    - keep the result compact enough to feel like a true 1-pager
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Compressed `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md` into a short stack-thesis page:
+  - short intro
+  - one compact stack section
+  - one `where attn fits` section
+  - one `current proof` section
+  - short CTA block
+
+VERIFIER
+- PASS.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; verified by direct source review plus successful build output.
+
+## 2026-03-19 - 1-pager rewrite: use agent-commerce stack framing from latest article
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user provided a newer article draft that frames the story as an agent-commerce stack first, then places `attn` as the credit layer built on top of that stack.
+- Missing info/questions: none blocking. The repo already contains the same stack taxonomy in `pages/introduction/attn-in-context.mdx`.
+- Type: docs/positioning rewrite
+- Status: completed
+- Context + suspected cause:
+  - the prior page pivot made agent commerce primary, but it was still more abstract than the user's latest article
+  - the article's sequence is stronger: revenue -> payments -> wallets -> spend surfaces -> trust -> where `attn` fits
+- Fix intent:
+  1) rewrite `/1-pager` around the stack shape from the article
+  2) preserve the tighter docs guardrails by qualifying current public proof and current non-claimable states
+  3) keep the language crisp enough for a one-pager rather than a long article
+- Acceptance criteria:
+  - the page opens with the agent-commerce / missing-credit thesis
+  - the stack is broken into concrete layers
+  - `attn` is positioned as the underwriting + servicing layer behind those layers
+  - the current Pump borrower-first lane remains present as the strongest current proof, not the entire identity of the product
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md`
+  - Constraints:
+    - reuse the user's stack order where it sharpens the story
+    - keep `attn` lowercase
+    - do not convert article-level speculation into current-product claims
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md` using the article's stack framing:
+  - agents have jobs, income, and bills; credit is the missing layer
+  - revenue layer
+  - payment layer
+  - wallet / account layer
+  - spend surfaces
+  - trust / starter-line layer
+  - where `attn` fits
+- Kept the page truthful by separating:
+  - long-term agent-commerce positioning
+  - current strongest public proof lane: Pump borrower-first Swig
+  - current non-claimable states
+
+VERIFIER
+- PASS.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; verified through source review and successful build output.
+
+## 2026-03-19 - 1-pager pivot: make agent-commerce credit the primary frame
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user clarified that the 1-pager should prioritize the agent-commerce credit story first and foremost, with Pump borrower credit treated as the current proof lane.
+- Missing info/questions: none blocking. The repo already has canonical agent-commerce positioning in `pages/introduction/attn-in-context.mdx` plus the cards/commerce partner page.
+- Type: docs/positioning follow-up
+- Status: completed
+- Context + suspected cause:
+  - the prior rewrite corrected the borrower truth but still made the page feel borrower-lane-first
+  - the stronger ATTN positioning in this repo is broader: attn as the credit and servicing layer behind agent commerce, cards, commerce, treasury, and settlement surfaces
+- Fix intent:
+  1) shift the title and opening paragraphs from Pump borrower credit to agent-commerce credit
+  2) frame Pump borrower-first Swig as the current proving lane, not the core identity
+  3) reorder CTAs so agent-commerce context and cards/commerce docs come before the borrower simulation path
+- Acceptance criteria:
+  - first two paragraphs frame attn as credit infrastructure for agent commerce / receivables / settlement flows
+  - Pump remains present but clearly subordinated as the first enforceable lane
+  - next actions are ordered with agent-commerce context first
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: tiny
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md`
+  - Constraints:
+    - keep the sharper agent-commerce-first frame concise
+    - do not lose the truthful borrower/pilot boundaries added in the previous pass
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Reframed `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md` around attn as the credit layer behind agent commerce, cards, commerce, treasury, and settlement flows.
+- Kept the Pump borrower-first Swig lane, but moved it into a dedicated `Current proving lane` section rather than the headline identity of the page.
+- Reordered the `Next actions` block so the agent-commerce context and cards/commerce partner docs come before the borrower simulation entrypoint.
+
+VERIFIER
+- PASS.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; verified by direct source review plus successful build output.
+
+## 2026-03-19 - 1-pager refresh: align public docs to current borrower-first credit truth
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user asked for an updated `/1-pager` after checking the latest shared-knowledge repo plus the recent attn-credit treasury-funded borrower thread.
+- Missing info/questions: none blocking. The current live page is readable from `https://docs.attn.markets/1-pager`, the canonical shared-knowledge repo is local, and the latest attn-credit truth is documented in the March 18-19 borrower-first Swig specs and runbooks.
+- Type: docs/product-truth refresh
+- Status: completed
+- Context + suspected cause:
+  - the current `/1-pager` still reads like a broad, generic revenue-credit overview for onchain businesses
+  - the latest shared knowledge and attn-credit docs are more specific: current strongest lane is Pump borrower-first Swig, with a restricted treasury-funded private-pilot posture and explicit no-overclaim boundaries
+  - the current top CTA also points at `https://app.attn.markets/credit-line`, while the public discovery entry for the borrower flow is now `https://www.attn.markets/credit-simulation`
+- Fix intent:
+  1) rewrite `/1-pager` around the current borrower product truth rather than abstract lane language
+  2) state the current posture explicitly: restricted treasury-funded private pilot, not public self-serve pool-backed credit
+  3) explain the borrower journey, repayment, and offboarding in the same terms used by the current attn-credit surfaces
+  4) replace the top CTA with the public credit-simulation entrypoint and keep the copy free of lender-mainnet, grouped-mainnet, or ClawPump parity overclaims
+- Acceptance criteria:
+  - `/1-pager` leads with the current Pump borrower-first story in the first two paragraphs
+  - the page explicitly distinguishes the restricted treasury-funded pilot from the later pool-backed borrower/lender path
+  - repayment and offboarding language matches current attn-credit docs: creator-fee-driven ACTIVE repayment, manual repay support, guided offboarding only after debt close
+  - the primary CTA points to `https://www.attn.markets/credit-simulation`
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md`
+  - Constraints:
+    - use the latest local ATTN shared knowledge and current attn-credit proof docs
+    - keep `attn` lowercase and avoid generic credit-landing filler
+    - do not claim public-live credit, lender mainnet, grouped-mainnet default readiness, or ClawPump parity
+    - keep the page concise and scannable
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Updated `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md` to:
+  - replace the generic onchain-business credit framing with the current Pump borrower-first story
+  - state the current posture explicitly as a restricted treasury-funded private pilot
+  - explain the borrower journey in the same terms as the current attn-credit surfaces: credit simulation -> onboarding -> borrower-first Swig handoff -> ACTIVE creator-fee repayment -> offboarding after CLOSE
+  - add explicit no-overclaim boundaries for pool-backed public draw, lender mainnet, grouped-mainnet default readiness, and ClawPump parity
+  - change the primary CTA from `https://app.attn.markets/credit-line` to `https://www.attn.markets/credit-simulation?cluster=mainnet-beta`
+- Source basis used for the rewrite:
+  - current live docs page at `https://docs.attn.markets/1-pager`
+  - `/Users/user/PycharmProjects/attn-shared-knowledge/kb/03_faq.md`
+  - `/Users/user/PycharmProjects/attn-shared-knowledge/kb/08_attn_repo_interactions_map.md`
+  - `/Users/user/.codex/skills/attn-farm-credit-lifecycle/references/current-status.md`
+  - March 18-19 attn-credit treasury-funded borrower specs and runbooks under `/Users/user/PycharmProjects/attn-credit/docs/plans/active/`
+
+VERIFIER
+- PASS.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; verified by direct source review plus successful build output instead of screenshots.
+
+## 2026-03-18 - docs: add Ramp Agent Cards to the agentic-commerce taxonomy
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification (docs-only review)
+
+PLANNER
+- Spec check: solvable. The user supplied a Ramp Labs agent-cards launch signal plus the official `agents.ramp.com/cards` page, and the indexing rules require canonical docs updates for agent-finance stack-placement signals.
+- Missing info/questions: none blocking. The user provided the canonical handle and the official product page.
+- Type: docs / taxonomy update
+- Status: completed
+- Context + suspected cause:
+  - the appendix already had a broad `Ramp` mention under agent cards, but not the more specific `Ramp Agent Cards` product surface
+  - the X-account map did not distinguish the generic corporate Ramp account from the new agent-card surface
+  - `attn in context` did not yet mention Ramp Labs in the card-layer narrative
+- Fix intent:
+  1) add `Ramp Agent Cards` to the appendix with the direct post reference
+  2) add a dedicated `Ramp Agent Cards -> @RampLabs` entry to the X-account map without overwriting the existing generic Ramp mapping
+  3) add a concise role-specific line in `attn in context` that keeps programmable cards separate from underwriting
+- Acceptance criteria:
+  - the appendix includes `Ramp Agent Cards` and the Ramp Labs post reference
+  - the X-account map preserves both `RampNetwork` and `RampLabs` in their correct roles
+  - `attn in context` mentions Ramp Agent Cards as spend/card infrastructure rather than credit
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/scripts/data/agentic-finance-market-map-x-accounts.json`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+  - Constraints:
+    - keep Ramp Agent Cards separate from the generic Ramp corporate account mapping
+    - do not imply programmable cards are equivalent to credit
+    - keep the added wording concise and role-specific
+  - Tests:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added `Ramp Agent Cards` to the appendix and linked the direct `@RampLabs` post.
+- Added a separate `Ramp Agent Cards -> @RampLabs` entry to the X-account map while preserving the existing `Ramp -> @RampNetwork` mapping.
+- Added a concise `attn in context` line placing Ramp Agent Cards in the programmable card / spend-infrastructure layer rather than the credit layer.
+
+VERIFIER
+- PASS.
+- Validation:
+  - `python3 scripts/knowledge_check.py` -> PASS
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+- Visual/screenshot verification:
+  - docs-only change; direct document inspection used instead of UI screenshots.
+
 ## 2026-03-18 - quadrant project bios: full stale-copy and validity audit
 
 Checklist

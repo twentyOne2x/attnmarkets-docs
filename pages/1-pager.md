@@ -1,64 +1,42 @@
-# attnCredit - Revenue-Backed Credit for Onchain Businesses
+# attnCredit - Credit for Agent Commerce
 
-attnCredit helps onchain businesses turn routed revenue into working capital.
-Think YouLend-style revenue financing, rebuilt for onchain businesses with programmable repayment rails and onchain-verifiable controls.
+attnCredit helps onchain businesses and agent-driven businesses turn revenue into working capital.
+Think of it as a credit layer for agent commerce: agents can already earn, pay, and operate onchain; attn adds financing on top.
 
 ## What this is
 
-attnCredit is a revolving credit and control system designed to do two things at once:
-- give businesses faster access to capital against observable cashflows,
-- keep lender risk bounded with deterministic controls and monitoring.
+attnCredit is a revenue-backed credit system designed to do two things at once:
+- unlock capital against visible onchain business activity,
+- keep repayment disciplined through controls and servicing.
 
 ## Product system
 
-- **Foundation rail (Squads v4):** built on Squads v4 multisig rails for custody, timelocks, and spending controls.
-- **Money-routing and permissions rules (control plane):** defines where revenue goes, who can approve key changes, and which timelock/spending guardrails apply.
-- **Limit and pricing logic (credit engine):** adjusts borrowing capacity as cashflow changes and applies policy-based pricing bands.
-- **Repayment operations (servicing engine):** runs repayment-first sweeps, mandatory paydown checks, and freeze/default handling.
-- **Audit and operating evidence (monitoring and tape):** keeps loan-level reporting, reconciliations, event logs, and incident history.
+- **Revenue signals:** reads business activity, income, and payment flow to understand borrowing capacity.
+- **Account controls:** works with programmable accounts, routing rules, and policy controls.
+- **Credit logic:** sets limits and pricing as activity changes.
+- **Servicing:** keeps repayment first and tracks facility health over time.
 
-## Operating lanes (separated by design)
+## Operating lanes
 
-- **Pump lane (proving ground):**
-  higher-volatility revenue advances and lines with tighter caps and stricter automation.
-- **Settlement lane (institutional path):**
-  conservative settlement liquidity revolvers with institutional reporting expectations.
-- **No early commingling:**
-  lane-specific risk boxes and separate credit pools.
+- **Agent commerce:** the long-term frame is credit behind agent marketplaces, spend surfaces, and payment flows.
+- **Pump:** the first proving ground for revenue-backed borrower flows.
+- **Settlement and receivables:** the broader direction as attn expands into more conservative business-finance use cases.
 
-## Lifecycle (from setup to servicing)
+## Why this matters
 
-1. Set up routed revenue controls and signer posture.
-2. Verify enforceability posture before activation.
-3. Activate facility with policy-bound parameters.
-4. Run continuous servicing and repayment-first cashflow handling.
-5. Monitor for weakening signals and trigger freeze workflows when required.
+- agents and onchain businesses already have ways to earn and spend,
+- but credit is still missing from that stack,
+- and the same credit layer can sit behind many different product surfaces instead of living only inside one app.
 
-## Why this sequencing
+## Current direction
 
-- Pump lane generates operating proof quickly.
-- The same control rails can then support lower-volatility settlement flows.
-- Servicing history and incident discipline improve long-term financeability.
-
-## Governance and risk policy
-
-Governance scope centers on:
-- pool-level exposure caps,
-- parameter bands for limits and throttles,
-- reserve and loss-allocation policy,
-- reporting standards and incident discipline.
-
-## Roadmap shape
-
-1. Scale Pump lane with strict controls and bounded exposure.
-2. Build repeatable servicing tape and incident response evidence.
-3. Expand settlement lane with separate capital and reporting standards.
-4. Add allocator layer only after independent credit pools are proven.
+The broader vision is agent-commerce credit.
+The strongest current public proof is still in the narrower Pump borrower flow, with broader lending and pool infrastructure coming later.
 
 ## Next actions
 
 > **What to do next**
 >
-> - [Estimate credit line](https://app.attn.markets/credit-line)
-> - [View demo dashboard](https://app.attn.markets/monitoring)
+> - [See agent-commerce context](./introduction/attn-in-context.mdx)
+> - [Open credit simulation](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
 > - [Read non-technical overview](./mechanics/how-it-works-nontechnical.md)
