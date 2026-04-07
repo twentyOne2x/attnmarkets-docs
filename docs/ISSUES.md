@@ -1,5 +1,56 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide should link to the public SDK reference
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The user correctly flagged that once the standalone SDK repo exists, the public integration guide should point to it explicitly instead of referring to an abstract SDK that the reader cannot access. The fix is to link the guide to the public repository and the package-level SDK reference.
+- Missing info/questions: none blocking.
+- Type: hosted docs / public SDK reference linkage
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already explains what is standardized in the SDK.
+  - Until now, the page still referred to the SDK as a concept rather than a public reference because the standalone repo did not yet exist.
+- Fix intent:
+  1) link the guide to the public SDK repo,
+  2) link directly to the package README and schema reference,
+  3) keep the guide/doc split intact.
+- Acceptance criteria:
+  - section `1.2` links to the public SDK repo,
+  - section `7` links to the public SDK reference,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - use stable GitHub links,
+    - keep the guide readable,
+    - do not turn the page into an SDK tutorial.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Linked the public integration guide to the standalone public SDK repository and the package-level SDK reference.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - readers can now move directly from the public guide to the public SDK reference without relying on a private repo handoff.
+
 ## 2026-04-08 - creator-fee guide should introduce response and evidence labels earlier
 
 Checklist

@@ -78,7 +78,11 @@ The SDK now provides:
 - `claim-level or stage classification helpers`: helpers that map the available evidence to the staged path in this guide instead of leaving stage assignment to ad hoc prose.
 
 Those are the reusable mechanics.
-The exact object shapes and receipt formats should live in the SDK reference, not in this public guide.
+The exact object shapes and receipt formats should live in the public SDK reference, not in this public guide:
+
+- [attn-credit-sdk](https://github.com/twentyOne2x/attn-credit-sdk)
+- [packages/sdk/README.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/sdk/README.md)
+- [packages/sdk/src/schema.ts](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/sdk/src/schema.ts)
 
 ### 1.3 What the SDK cannot solve for the partner
 
@@ -485,10 +489,13 @@ The right flow is:
 1. read sections `1` through `6` so the standard and stage ladder are clear,
 2. send one concise response package using section `9`,
 3. attach whatever evidence from section `13` already exists,
-4. use the SDK reference during implementation review if exact payload shapes are needed.
+4. use the public SDK reference during implementation review if exact payload shapes are needed.
 
 The public guide is intentionally about control outcomes, stages, and evidence.
-The exact payloads, receipt formats, and validation rules should live in the `@attn-credit/sdk` integration reference that attn shares directly during technical review.
+The exact payloads, receipt formats, and validation rules should live in the public `@attn-credit/sdk` reference:
+
+- [attn-credit-sdk](https://github.com/twentyOne2x/attn-credit-sdk)
+- [packages/sdk/README.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/sdk/README.md)
 
 ## 8. How attn evaluates the response
 
