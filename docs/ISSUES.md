@@ -1,5 +1,62 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee guide should surface acceptable staged paths before the response sections
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The single-page guide is now structurally much better, but the acceptable staged-path ladder still sits too late in the document. The user is right that partners should see the allowable intermediary paths early, before they are asked to respond against the standard. The right fix is to move the staged-path section up immediately after the requirements summary, then renumber the downstream sections and subsection headings cleanly.
+- Missing info/questions: none blocking. The content already exists in the page and can be reordered without changing the actual standard.
+- Type: hosted docs / creator-fee guide ordering
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already has the correct staged-path content.
+  - It currently appears after the response templates, which weakens the first-read flow.
+  - Some subsection labels also still carry stale numbers from earlier reshuffles.
+- Fix intent:
+  1) move `Acceptable staged paths before the full standard` up near the top of the doc,
+  2) place it after the requirements summary and before the response templates,
+  3) renumber the rest of the page cleanly,
+  4) fix stale subsection numbering inside the response and staged sections.
+- Acceptance criteria:
+  - the staged-path ladder appears among the first major sections,
+  - the page now reads requirements -> acceptable stages -> how to use -> response templates,
+  - section numbering and subsection numbering are internally consistent,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep one canonical page,
+    - preserve the staged-path substance,
+    - improve the reading order for a first partner pass.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Moved the acceptable staged-path ladder up so it sits immediately after the requirements summary.
+- Renumbered the page so it now reads requirements, acceptable stages, how to use, then response templates.
+- Fixed stale subsection numbering in the staged-path and response sections.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the staged-path ladder is now part of the first-read framing instead of a late detail,
+  - and the page structure is internally consistent again.
+
 ## 2026-04-07 - creator-fee integration guide should add gated signer and operator security thresholds
 
 Checklist

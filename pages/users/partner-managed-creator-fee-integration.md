@@ -7,10 +7,10 @@ It is intentionally written as a requirements and response document, not a produ
 If you are the partner team, the goal is simple:
 
 - read this page once,
-- read sections `1` through `6` first,
-- answer the response sections `7`, `8`, and `13` at the level of detail you have today,
+- read sections `1` through `7` first,
+- answer the response sections `8`, `9`, and `13` at the level of detail you have today,
 - attach the evidence listed in section `14`,
-- and use sections `9` through `18` to scope the earliest honest pilot and the strongest honest claim level.
+- and use sections `6` through `18` to scope the earliest honest pilot and the strongest honest claim level.
 
 ## 1. What this page is for
 
@@ -146,314 +146,7 @@ attn must be able to tell:
 
 If the lane has no defined degraded-state or release behavior, that should be treated as a real limitation rather than hand-waved away.
 
-## 6. How to use this page
-
-This page is not asking the partner to produce a perfect diligence packet on day one.
-
-The right way to use it is:
-
-1. read sections `1` through `5` first so the requirements are clear,
-2. answer sections `7` and `8` in plain English at the level of detail you already have,
-3. if the lane still looks promising, answer section `13` for the first bounded pilot,
-4. then attach whatever evidence from section `14` you can already provide.
-
-A good first response does **not** need to be polished.
-It can be:
-
-- one short explanation of the revenue path,
-- one payout topology diagram or export,
-- one explanation of who can change payout routing,
-- and one explanation of what happens when debt is open versus closed.
-
-That is enough to determine whether the lane is:
-
-- only compatibility-level,
-- usable for manual underwriting,
-- or strong enough for a bounded first pilot.
-
-The point of the response sections is not to trap the partner.
-It is to let both sides decide quickly whether the lane is structurally viable before anyone spends time pretending it is already at the full standard.
-
-## 7. Revenue-functioning response template
-
-This is the first thing the partner should answer once the requirements above are understood.
-
-### 5.1 What revenues count?
-
-Please answer:
-
-1. Which revenues are in scope for the lane?
-   - creator fees
-   - service fees
-   - platform fees
-   - other
-2. Which revenues are repayment-relevant?
-3. Which revenues are visible but not repayment-relevant?
-
-What attn needs:
-
-- one named revenue scope,
-- a plain-language explanation,
-- and sample evidence showing the scope is real.
-
-Minimum pilot bar:
-
-- repayment-relevant revenues are named,
-- and the partner can show example records or exports for that scope.
-
-### 5.2 Where do those revenues land first?
-
-Please answer:
-
-1. What wallet or router receives the revenues first?
-2. Is that wallet:
-   - creator-controlled,
-   - partner-controlled,
-   - shared,
-   - or policy-routed?
-3. Are there separate sponsor, treasury, or settlement wallets involved?
-
-What attn needs:
-
-- first landing point,
-- current recipients,
-- and the topology around that flow.
-
-Minimum pilot bar:
-
-- attn can see the first landing wallet or router,
-- and the live recipients that matter for the lane.
-
-### 5.3 What happens while debt is open?
-
-Please answer:
-
-1. What portion of the revenue path changes while debt is open?
-2. Where does the repayment-relevant portion go?
-3. Is it:
-   - a single destination,
-   - a waterfall,
-   - a split,
-   - or a manual operating process?
-4. How is that kept true while the lane is active?
-
-What attn needs:
-
-- the debt-open destination or waterfall,
-- and a concrete explanation of how it stays true.
-
-Minimum pilot bar:
-
-- the debt-open repayment path is explicit,
-- and it cannot drift silently without attn being able to detect it.
-
-### 5.4 What happens if that routing changes?
-
-Please answer:
-
-1. Who can change payout routing or payout policy?
-2. Can one person do it, or is there a quorum, approval flow, or policy engine?
-3. What receipt or log exists when that happens?
-4. How quickly can attn detect the change?
-
-What attn needs:
-
-- known edit authority,
-- bounded change surface,
-- and retained change receipts.
-
-Minimum pilot bar:
-
-- payout-edit authority is named,
-- change events are attributable,
-- and the partner can show how attn would detect drift.
-
-## 8. Policy response template
-
-This section is the control contract.
-
-### 6.1 Launch attribution policy
-
-Please answer:
-
-1. How does the platform determine which launch, mint, or creator belongs to which lane?
-2. What is the source of truth for that mapping?
-3. Can you provide:
-   - launch identifier,
-   - creator or entity identifier,
-   - cluster,
-   - and timestamp?
-
-Minimum pilot bar:
-
-- attribution is deterministic enough that attn can tell which revenue source belongs to which lane.
-
-### 6.2 Revenue-scope policy
-
-Please answer:
-
-1. How is repayment-relevant revenue defined?
-2. Is that scope contractual, configurable, or inferred?
-3. Can the scope change over time?
-4. If yes, who can change it and how is that change recorded?
-
-Minimum pilot bar:
-
-- the revenue scope is explicit and stable enough to underwrite conservatively.
-
-### 6.3 Wallet-topology policy
-
-Please answer:
-
-1. What are the key wallets or payout routers involved?
-2. Which of them can materially affect the repayment path?
-3. Which actor controls each one?
-
-Minimum pilot bar:
-
-- attn can see the wallets and actors that matter to repayment integrity.
-
-### 6.4 Debt-open destination policy
-
-Please answer:
-
-1. What is the required destination or waterfall while debt is open?
-2. How is that destination enforced in practice?
-3. What would count as a violation?
-
-Minimum pilot bar:
-
-- the debt-open destination is explicit,
-- and a violation is detectable rather than arguable.
-
-### 6.5 Change-control policy
-
-Please answer:
-
-1. Who can edit payout recipients, payout percentages, or payout logic?
-2. What approvals are required?
-3. What receipt exists after the change?
-
-Minimum pilot bar:
-
-- known actor,
-- known process,
-- retained receipts.
-
-### 6.6 Readback policy
-
-Please answer:
-
-1. What can attn inspect directly?
-2. What must be provided as exports or reports?
-3. How current is the readback?
-
-Minimum pilot bar:
-
-- attn can inspect enough live or near-live state to detect drift.
-
-### 6.7 Release and offboard policy
-
-Please answer:
-
-1. What changes after the debt closes?
-2. Who regains control of what?
-3. What receipt proves the release or offboard happened?
-
-Minimum pilot bar:
-
-- the release path is defined,
-- and the post-close state is not ambiguous.
-
-### 6.8 Incident policy
-
-Please answer:
-
-1. What happens if payout integrity is compromised?
-2. What freeze, pause, or quarantine actions exist?
-3. What receipts exist for incident and recovery actions?
-
-Minimum pilot bar:
-
-- there is a real degraded-state response,
-- not only a normal-mode explanation.
-
-## 9. Requirement status model
-
-attn will generally classify each requirement as:
-
-- `missing`
-- `partial`
-- `verified`
-
-Interpretation:
-
-- too many `missing` items means the lane stays `compatibility-only`,
-- a mix of `partial` and `verified` items may still support manual underwriting review,
-- a strong cluster of `verified` items is required for a bounded first pilot.
-
-## 10. What attn can honestly claim at each stage
-
-### Compatibility-only
-
-This means:
-
-- attn can understand the revenue surface,
-- but cannot claim strong repayment-path control.
-
-### Underwriting-compatible
-
-This means:
-
-- attn can reason about revenues and topology,
-- but debt-open repayment control is still weaker than the baseline.
-
-### Bounded pilot eligible
-
-This means:
-
-- the lane can run in a narrow pilot shape,
-- the repayment path is explicit,
-- change control is bounded,
-- and readback is strong enough to monitor the lane honestly.
-
-### Stronger partner-control claim
-
-This should only happen if the partner can prove the same practical outcomes that the borrower-first baseline is trying to preserve:
-
-- debt-open repayment destination stays true,
-- payout edits are bounded and attributable,
-- readback is real,
-- and release or offboard behavior is clear.
-
-## 11. Interim platform-counterparty posture
-
-If the partner is not ready for the stronger payout-control claim yet, attn can still evaluate a narrower interim posture where the platform itself is the direct counterparty for the first lane.
-
-That means:
-
-- attn does not pretend the payout path has stronger control integrity than it really has,
-- the platform stands behind the lane operationally,
-- reporting and readback still matter,
-- and the lane stays bounded.
-
-This is an acceptable interim shape only if the partner can still provide:
-
-- named revenue scope,
-- named payout topology,
-- named operational owner,
-- periodic reporting or readback,
-- and a clear explanation of what happens if the intended repayment behavior changes.
-
-This should be described honestly as:
-
-- `platform counterparty risk`
-
-and not as:
-
-- `fully policy-controlled creator-fee repayment parity`
-
-## 12. Acceptable staged paths before the full standard
+## 6. Acceptable staged paths before the full standard
 
 The full requirements above describe the target state.
 
@@ -463,7 +156,7 @@ So this page also defines the acceptable intermediary steps below the full stand
 These are not marketing tiers.
 They are claim-bounded proof stages.
 
-### 10.1 What stays true across every stage
+### 6.1 What stays true across every stage
 
 Even the lightest acceptable stage still needs:
 
@@ -480,7 +173,7 @@ No stage below the full standard should be described as:
 - Swig-equivalent control parity,
 - or fully automated debt-open enforcement.
 
-### 10.2 Stage 0: Compatibility-only
+### 6.2 Stage 0: Compatibility-only
 
 This is the lightest stage.
 
@@ -514,7 +207,7 @@ Minimum evidence:
 - named wallets or payout routers,
 - one explanation of who controls what today.
 
-### 10.3 Stage 1: Platform-as-counterparty MVP
+### 6.3 Stage 1: Platform-as-counterparty MVP
 
 This is the first meaningful pilot stage if the platform is willing to stand behind the lane before stronger payout controls are in place.
 
@@ -547,7 +240,7 @@ Minimum evidence:
 - named operator owners,
 - documented pause, dispute, or unwind path.
 
-### 10.4 Stage 2: Observable payout-path MVP
+### 6.4 Stage 2: Observable payout-path MVP
 
 This stage is stronger than pure platform-counterparty trust.
 
@@ -580,7 +273,7 @@ Minimum evidence:
 - drift-detection rule,
 - manual escalation path.
 
-### 10.5 Stage 3: Policy-bounded first pilot
+### 6.5 Stage 3: Policy-bounded first pilot
 
 This is the strongest acceptable intermediary stage before the full standard.
 
@@ -622,7 +315,7 @@ Minimum evidence:
 - incident or freeze posture,
 - one bounded pilot pack.
 
-### 10.6 Stage 4: Full-standard partner-managed lane
+### 6.6 Stage 4: Full-standard partner-managed lane
 
 This is the target state for the rest of this document.
 
@@ -634,7 +327,7 @@ At this stage, attn should be able to reason about the partner-managed lane as p
 - incident response,
 - and release or offboard clarity.
 
-### 10.7 Fastest acceptable paths in practice
+### 6.7 Fastest acceptable paths in practice
 
 If the partner wants the fastest honest route, the usual choices are:
 
@@ -642,7 +335,7 @@ If the partner wants the fastest honest route, the usual choices are:
 - `Stage 2` when payout observability already exists but stronger policy bounding is not yet ready,
 - `Stage 3` when one real bounded pilot is within reach.
 
-### 10.8 What each stage proves
+### 6.8 What each stage proves
 
 | Stage | What it proves | What it does not prove |
 | --- | --- | --- |
@@ -652,7 +345,7 @@ If the partner wants the fastest honest route, the usual choices are:
 | `Stage 3` | one bounded first pilot can run with real control, readback, and incident posture | no public-live or broad lender-ready claim |
 | `Stage 4` | the partner-managed lane meets the full stricter requirements | still not the same thing as permissionless or open-lender readiness by default |
 
-### 10.9 When not to move forward
+### 6.9 When not to move forward
 
 Do not move past discovery if:
 
@@ -664,6 +357,313 @@ Do not move past discovery if:
 
 At that point the right answer is not `ship anyway`.
 The right answer is `stay at compatibility-only`.
+
+## 7. How to use this page
+
+This page is not asking the partner to produce a perfect diligence packet on day one.
+
+The right way to use it is:
+
+1. read sections `1` through `6` first so the requirements and the acceptable stage ladder are clear,
+2. answer sections `8` and `9` in plain English at the level of detail you already have,
+3. if the lane still looks promising, answer section `13` for the first bounded pilot,
+4. then attach whatever evidence from section `14` you can already provide.
+
+A good first response does **not** need to be polished.
+It can be:
+
+- one short explanation of the revenue path,
+- one payout topology diagram or export,
+- one explanation of who can change payout routing,
+- and one explanation of what happens when debt is open versus closed.
+
+That is enough to determine whether the lane is:
+
+- only compatibility-level,
+- usable for manual underwriting,
+- or strong enough for a bounded first pilot.
+
+The point of the response sections is not to trap the partner.
+It is to let both sides decide quickly whether the lane is structurally viable before anyone spends time pretending it is already at the full standard.
+
+## 8. Revenue-functioning response template
+
+This is the first thing the partner should answer once the requirements above are understood.
+
+### 8.1 What revenues count?
+
+Please answer:
+
+1. Which revenues are in scope for the lane?
+   - creator fees
+   - service fees
+   - platform fees
+   - other
+2. Which revenues are repayment-relevant?
+3. Which revenues are visible but not repayment-relevant?
+
+What attn needs:
+
+- one named revenue scope,
+- a plain-language explanation,
+- and sample evidence showing the scope is real.
+
+Minimum pilot bar:
+
+- repayment-relevant revenues are named,
+- and the partner can show example records or exports for that scope.
+
+### 8.2 Where do those revenues land first?
+
+Please answer:
+
+1. What wallet or router receives the revenues first?
+2. Is that wallet:
+   - creator-controlled,
+   - partner-controlled,
+   - shared,
+   - or policy-routed?
+3. Are there separate sponsor, treasury, or settlement wallets involved?
+
+What attn needs:
+
+- first landing point,
+- current recipients,
+- and the topology around that flow.
+
+Minimum pilot bar:
+
+- attn can see the first landing wallet or router,
+- and the live recipients that matter for the lane.
+
+### 8.3 What happens while debt is open?
+
+Please answer:
+
+1. What portion of the revenue path changes while debt is open?
+2. Where does the repayment-relevant portion go?
+3. Is it:
+   - a single destination,
+   - a waterfall,
+   - a split,
+   - or a manual operating process?
+4. How is that kept true while the lane is active?
+
+What attn needs:
+
+- the debt-open destination or waterfall,
+- and a concrete explanation of how it stays true.
+
+Minimum pilot bar:
+
+- the debt-open repayment path is explicit,
+- and it cannot drift silently without attn being able to detect it.
+
+### 8.4 What happens if that routing changes?
+
+Please answer:
+
+1. Who can change payout routing or payout policy?
+2. Can one person do it, or is there a quorum, approval flow, or policy engine?
+3. What receipt or log exists when that happens?
+4. How quickly can attn detect the change?
+
+What attn needs:
+
+- known edit authority,
+- bounded change surface,
+- and retained change receipts.
+
+Minimum pilot bar:
+
+- payout-edit authority is named,
+- change events are attributable,
+- and the partner can show how attn would detect drift.
+
+## 9. Policy response template
+
+This section is the control contract.
+
+### 9.1 Launch attribution policy
+
+Please answer:
+
+1. How does the platform determine which launch, mint, or creator belongs to which lane?
+2. What is the source of truth for that mapping?
+3. Can you provide:
+   - launch identifier,
+   - creator or entity identifier,
+   - cluster,
+   - and timestamp?
+
+Minimum pilot bar:
+
+- attribution is deterministic enough that attn can tell which revenue source belongs to which lane.
+
+### 9.2 Revenue-scope policy
+
+Please answer:
+
+1. How is repayment-relevant revenue defined?
+2. Is that scope contractual, configurable, or inferred?
+3. Can the scope change over time?
+4. If yes, who can change it and how is that change recorded?
+
+Minimum pilot bar:
+
+- the revenue scope is explicit and stable enough to underwrite conservatively.
+
+### 9.3 Wallet-topology policy
+
+Please answer:
+
+1. What are the key wallets or payout routers involved?
+2. Which of them can materially affect the repayment path?
+3. Which actor controls each one?
+
+Minimum pilot bar:
+
+- attn can see the wallets and actors that matter to repayment integrity.
+
+### 9.4 Debt-open destination policy
+
+Please answer:
+
+1. What is the required destination or waterfall while debt is open?
+2. How is that destination enforced in practice?
+3. What would count as a violation?
+
+Minimum pilot bar:
+
+- the debt-open destination is explicit,
+- and a violation is detectable rather than arguable.
+
+### 9.5 Change-control policy
+
+Please answer:
+
+1. Who can edit payout recipients, payout percentages, or payout logic?
+2. What approvals are required?
+3. What receipt exists after the change?
+
+Minimum pilot bar:
+
+- known actor,
+- known process,
+- retained receipts.
+
+### 9.6 Readback policy
+
+Please answer:
+
+1. What can attn inspect directly?
+2. What must be provided as exports or reports?
+3. How current is the readback?
+
+Minimum pilot bar:
+
+- attn can inspect enough live or near-live state to detect drift.
+
+### 9.7 Release and offboard policy
+
+Please answer:
+
+1. What changes after the debt closes?
+2. Who regains control of what?
+3. What receipt proves the release or offboard happened?
+
+Minimum pilot bar:
+
+- the release path is defined,
+- and the post-close state is not ambiguous.
+
+### 9.8 Incident policy
+
+Please answer:
+
+1. What happens if payout integrity is compromised?
+2. What freeze, pause, or quarantine actions exist?
+3. What receipts exist for incident and recovery actions?
+
+Minimum pilot bar:
+
+- there is a real degraded-state response,
+- not only a normal-mode explanation.
+
+## 10. Requirement status model
+
+attn will generally classify each requirement as:
+
+- `missing`
+- `partial`
+- `verified`
+
+Interpretation:
+
+- too many `missing` items means the lane stays `compatibility-only`,
+- a mix of `partial` and `verified` items may still support manual underwriting review,
+- a strong cluster of `verified` items is required for a bounded first pilot.
+
+## 11. What attn can honestly claim at each stage
+
+### Compatibility-only
+
+This means:
+
+- attn can understand the revenue surface,
+- but cannot claim strong repayment-path control.
+
+### Underwriting-compatible
+
+This means:
+
+- attn can reason about revenues and topology,
+- but debt-open repayment control is still weaker than the baseline.
+
+### Bounded pilot eligible
+
+This means:
+
+- the lane can run in a narrow pilot shape,
+- the repayment path is explicit,
+- change control is bounded,
+- and readback is strong enough to monitor the lane honestly.
+
+### Stronger partner-control claim
+
+This should only happen if the partner can prove the same practical outcomes that the borrower-first baseline is trying to preserve:
+
+- debt-open repayment destination stays true,
+- payout edits are bounded and attributable,
+- readback is real,
+- and release or offboard behavior is clear.
+
+## 12. Interim platform-counterparty posture
+
+If the partner is not ready for the stronger payout-control claim yet, attn can still evaluate a narrower interim posture where the platform itself is the direct counterparty for the first lane.
+
+That means:
+
+- attn does not pretend the payout path has stronger control integrity than it really has,
+- the platform stands behind the lane operationally,
+- reporting and readback still matter,
+- and the lane stays bounded.
+
+This is an acceptable interim shape only if the partner can still provide:
+
+- named revenue scope,
+- named payout topology,
+- named operational owner,
+- periodic reporting or readback,
+- and a clear explanation of what happens if the intended repayment behavior changes.
+
+This should be described honestly as:
+
+- `platform counterparty risk`
+
+and not as:
+
+- `fully policy-controlled creator-fee repayment parity`
 
 ## 13. Bounded first-pilot response template
 
