@@ -1,5 +1,57 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide should use formal standards language throughout
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The user correctly flagged that parts of the page still read like operator conversation rather than a partner-facing standards document. The fix is to replace colloquial phrasing with formal evaluation language while preserving the underlying policy meaning.
+- Missing info/questions: none blocking.
+- Type: hosted docs / creator-fee guide tone and standards-language cleanup
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` had already been improved structurally, but several phrases still used conversational framing such as `honest pilot`, `pretending`, `worth deeper work`, `what is still false`, and other language better suited to internal discussion than a forwardable standards document.
+  - The issue is tonal and interpretive, not doctrinal.
+- Fix intent:
+  1) replace conversational framing with formal standards language,
+  2) keep the stage ladder and requirements intact,
+  3) make the page read more like an evaluation memo and less like internal commentary.
+- Acceptance criteria:
+  - the flagged conversational wording is removed from the page,
+  - stage sections use cleaner labels such as `supports` and `does not establish`,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - preserve the underlying requirements and stage logic,
+    - avoid adding new doctrine,
+    - prefer formal evaluation language over conversational emphasis.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote stage, response, and security-threshold language to use formal standards wording.
+- Replaced conversational phrases with cleaner evaluation terms such as `supportable`, `supported`, `does not establish`, `warrants further evaluation`, and `material limitation`.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the guide now reads more like a partner-facing standards document and less like internal operator commentary.
+
 ## 2026-04-08 - creator-fee guide evidence examples should avoid vague document words
 
 Checklist
