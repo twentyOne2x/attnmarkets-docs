@@ -1,5 +1,56 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide should explain what attn enables before the detailed standard
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The guide is clearer than before, but the user is right that it still opens too abruptly into requirement language. A first-share document should explain what attn actually enables with a partner-managed revenue lane before it asks the reader to evaluate policy and evidence details.
+- Missing info/questions: none blocking. The repo already has the right stage model and sdk split; the gap is introductory framing.
+- Type: hosted docs / creator-fee guide opening clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` opens with a direct requirements framing, but a new reader may still not immediately understand what attn is enabling for the partner.
+  - The doc needs a plain-language explanation that this is a way to finance against creator-fee or service-fee revenues without forcing an immediate wallet migration, while still keeping the lane bounded and honest.
+- Fix intent:
+  1) add a short high-level explanation of what attn enables in this setup,
+  2) state what the partner keeps and what attn is evaluating,
+  3) make the requirements framing the second step instead of the first impression.
+- Acceptance criteria:
+  - the top of the page explains the setup in plain language before diving into the standard,
+  - the doc still stays concise and forwardable,
+  - `python3 scripts/knowledge_check.py` and `git diff --check` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - improve comprehension without turning the page into a longer product essay,
+    - preserve the sdk-first split,
+    - keep the public page focused on guarantees, stages, and evidence.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+
+EXECUTOR
+- Added a plain-language opening that explains what attn enables with a partner-managed creator-fee lane before the page moves into requirements.
+- Clarified that the partner keeps its wallet and payout system while attn evaluates whether the revenue path is bounded enough for a pilot.
+- Tightened the first requirements section so it immediately names the four practical questions attn is trying to answer.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+- Result:
+  - the page now explains the setup before it asks the partner to reason about the standard.
+
 ## 2026-04-07 - creator-fee guide should explain guarantees and sdk scope before the detailed response template
 
 Checklist

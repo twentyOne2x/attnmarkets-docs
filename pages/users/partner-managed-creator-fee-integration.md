@@ -2,7 +2,15 @@
 
 This page is the single document a creator-fee platform should use when evaluating an attn integration while keeping its own wallet and payout infrastructure.
 
-It is intentionally written as a requirements and response document, not a product explainer.
+At a high level, attn enables a financing lane against creator-fee or service-fee revenues without forcing the partner to migrate those revenues into attn-owned wallets or into a borrower-owned Swig stack first.
+
+The point of this setup is straightforward:
+
+- the partner keeps its existing wallet and payout system,
+- attn evaluates whether the revenue path is clear and controlled enough to support a bounded lane,
+- and both sides can start with the earliest honest pilot instead of pretending the lane is already public-ready.
+
+This page is intentionally written as a requirements and response document, not a product explainer or internal playbook.
 
 If you are the partner team, the goal is simple:
 
@@ -19,12 +27,14 @@ This page answers one question:
 **What must be true for attn to support a creator-fee lane when the partner keeps its own wallet and payout stack?**
 
 The page is not asking you to migrate to Swig, Privy, or Squads.
-It is asking whether your existing payout and wallet stack can make the repayment path:
+It is asking whether your existing payout and wallet stack can make the repayment path clear, bounded, auditable, and monitorable enough for a real lane.
 
-- clear,
-- bounded,
-- auditable,
-- and monitorable enough for a real lane.
+In practical terms, attn is trying to answer four things:
+
+1. which revenues actually matter for the lane
+2. where the repayment-relevant share goes while debt is open
+3. who can change that path
+4. how drift, degradation, and release are detected and evidenced
 
 ### 1.1 What this setup is meant to guarantee
 
@@ -53,11 +63,11 @@ What this setup does **not** guarantee on its own:
 - automatic outside-lender readiness,
 - or automatic equivalence to attn's borrower-first managed-revenue baseline.
 
-### 1.2 What can be standardized in an SDK
+### 1.2 What is standardized in the SDK
 
-A lot of the integration surface can be standardized.
+A large part of the integration surface is now standardized in `@attn-credit/sdk`.
 
-The SDK can package things like:
+The SDK now provides:
 
 - schema and response shapes for revenue scope and payout topology,
 - readback endpoints or adapters,
@@ -72,16 +82,16 @@ The exact object shapes and receipt formats should live in the SDK reference, no
 
 ### 1.3 What the SDK cannot solve for the partner
 
-The SDK cannot create the facts that matter most.
+The SDK cannot create the underlying facts that matter most.
 
 It cannot manufacture:
 
-- real payout authority,
-- real debt-open routing behavior,
-- real change-control integrity,
-- real incident posture,
-- real counterparty responsibility,
-- or real release and offboard behavior.
+- payout authority,
+- debt-open routing behavior,
+- change-control integrity,
+- incident posture,
+- counterparty responsibility,
+- or release and offboard behavior.
 
 Those are the partner-specific truths attn still has to evaluate.
 
