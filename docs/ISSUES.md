@@ -1,5 +1,64 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee integration guide should state requirements before asking questions
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The current single-page guide is canonical and complete enough, but the reading flow is still wrong. It lands on questions before it clearly states the integration requirements, which makes the document feel more like an interrogation than a handoff. The right fix is to keep one page, add a short requirements-at-a-glance section, add a brief "how to use this page" bridge, and rename the questionnaire sections into response templates.
+- Missing info/questions: none blocking. The requirements already exist elsewhere in the same page and can be elevated earlier without changing the substantive standard.
+- Type: hosted docs / creator-fee guide readability and structure
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already contains the right substance.
+  - The current top-of-page flow still moves from framing into `Revenue-functioning questionnaire`, which can make the partner feel like they are being asked to fill out a form before the standard is explained.
+  - The user explicitly wants the page to state the requirements first, then ask the partner to answer against them.
+- Fix intent:
+  1) add a concise requirements-at-a-glance section before any questions,
+  2) add a short "how to use this page" bridge before the response sections,
+  3) rename questionnaire sections into response templates,
+  4) keep the document as one canonical forwardable page.
+- Acceptance criteria:
+  - the main guide states the integration requirements before the partner-facing questions,
+  - the document explicitly tells the partner how to use the page and what a good first response looks like,
+  - the response sections are framed as templates rather than abrupt questionnaires,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep one canonical page,
+    - preserve the existing staged-path content and requirements substance,
+    - improve reading flow without watering down the standard.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added a new `Requirements at a glance` section before the partner-facing response templates.
+- Added a new `How to use this page` bridge that explains which sections to read first, how light the first response can be, and what a useful first package looks like.
+- Renamed the questionnaire sections into `response template` sections so the partner is answering against a stated standard rather than being dropped into a form immediately.
+- Updated the opening instructions so the document now tells the partner to read the requirements and page-usage sections before answering the response sections.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the guide now reads as requirements first, response second,
+  - the partner gets orientation before questions,
+  - and the page remains one canonical forwardable document.
+
 ## 2026-04-07 - hosted docs should collapse creator-fee MVP stages back into the main guide
 
 Checklist

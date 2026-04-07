@@ -7,9 +7,10 @@ It is intentionally written as a requirements and response document, not a produ
 If you are the partner team, the goal is simple:
 
 - read this page once,
-- answer the questions in sections `3` through `11`,
-- attach the evidence listed in section `12`,
-- and use sections `10` through `15` to scope the earliest honest pilot.
+- read sections `1` through `6` first,
+- answer the response sections `7`, `8`, and `13` at the level of detail you have today,
+- attach the evidence listed in section `14`,
+- and use sections `9` through `17` to scope the earliest honest pilot and the strongest honest claim level.
 
 ## 1. What this page is for
 
@@ -77,9 +78,105 @@ It does need to produce the same practical outcomes where policy matters.
 That means attn is not looking for "same implementation."
 It is looking for "same control result."
 
-## 5. Revenue-functioning questionnaire
+## 5. Requirements at a glance
 
-This is the first thing the partner should answer.
+Before the partner answers anything in detail, the integration standard should be clear.
+
+For a partner-managed creator-fee lane to be supportable, attn needs these outcomes to be true:
+
+### 5.1 Revenue scope must be explicit
+
+attn must be able to tell:
+
+- which revenues are in scope,
+- which subset is repayment-relevant,
+- and which visible revenues are out of scope.
+
+If the revenue scope is fuzzy, the lane may still be commercially interesting, but it is not yet a credit-ready lane.
+
+### 5.2 Wallet topology must be legible
+
+attn must be able to tell:
+
+- where revenues land first,
+- which wallets, routers, or policies affect the path,
+- and which actors control those surfaces.
+
+If the payout topology cannot be explained plainly, the lane cannot be relied on.
+
+### 5.3 Debt-open payout behavior must be explicit
+
+attn must be able to tell:
+
+- what changes while debt is open,
+- where the repayment-relevant share goes,
+- and whether the path is a single destination, a split, a waterfall, or an operating process.
+
+The important thing is not matching the Swig implementation.
+The important thing is making the debt-open repayment behavior explicit and monitorable.
+
+### 5.4 Change authority must be bounded
+
+attn must be able to tell:
+
+- who can change payout routing or payout policy,
+- whether one person can do it or whether approvals are required,
+- and what log, receipt, or event exists when that happens.
+
+If payout authority exists but is not attributable, that is still a control gap.
+
+### 5.5 Readback must exist
+
+attn must be able to inspect enough live or near-live state to answer:
+
+- what the current payout path is,
+- what the current recipients are,
+- who can edit them,
+- and whether anything changed recently.
+
+Without readback, the lane can still be discussed, but only at a lower claim level.
+
+### 5.6 Degrade, release, and offboard behavior must be defined
+
+attn must be able to tell:
+
+- what happens if payout routing degrades or drifts,
+- what the incident posture is while a lane is open,
+- and what release or offboard looks like after close.
+
+If the lane has no defined degraded-state or release behavior, that should be treated as a real limitation rather than hand-waved away.
+
+## 6. How to use this page
+
+This page is not asking the partner to produce a perfect diligence packet on day one.
+
+The right way to use it is:
+
+1. read sections `1` through `5` first so the requirements are clear,
+2. answer sections `7` and `8` in plain English at the level of detail you already have,
+3. if the lane still looks promising, answer section `13` for the first bounded pilot,
+4. then attach whatever evidence from section `14` you can already provide.
+
+A good first response does **not** need to be polished.
+It can be:
+
+- one short explanation of the revenue path,
+- one payout topology diagram or export,
+- one explanation of who can change payout routing,
+- and one explanation of what happens when debt is open versus closed.
+
+That is enough to determine whether the lane is:
+
+- only compatibility-level,
+- usable for manual underwriting,
+- or strong enough for a bounded first pilot.
+
+The point of the response sections is not to trap the partner.
+It is to let both sides decide quickly whether the lane is structurally viable before anyone spends time pretending it is already at the full standard.
+
+## 7. Revenue-functioning response template
+
+This is the first thing the partner should answer once the requirements above are understood.
 
 ### 5.1 What revenues count?
 
@@ -171,7 +268,7 @@ Minimum pilot bar:
 - change events are attributable,
 - and the partner can show how attn would detect drift.
 
-## 6. Policy questionnaire
+## 8. Policy response template
 
 This section is the control contract.
 
@@ -281,7 +378,7 @@ Minimum pilot bar:
 - there is a real degraded-state response,
 - not only a normal-mode explanation.
 
-## 7. Requirement status model
+## 9. Requirement status model
 
 attn will generally classify each requirement as:
 
@@ -295,7 +392,7 @@ Interpretation:
 - a mix of `partial` and `verified` items may still support manual underwriting review,
 - a strong cluster of `verified` items is required for a bounded first pilot.
 
-## 8. What attn can honestly claim at each stage
+## 10. What attn can honestly claim at each stage
 
 ### Compatibility-only
 
@@ -329,7 +426,7 @@ This should only happen if the partner can prove the same practical outcomes tha
 - readback is real,
 - and release or offboard behavior is clear.
 
-## 9. Interim platform-counterparty posture
+## 11. Interim platform-counterparty posture
 
 If the partner is not ready for the stronger payout-control claim yet, attn can still evaluate a narrower interim posture where the platform itself is the direct counterparty for the first lane.
 
@@ -356,7 +453,7 @@ and not as:
 
 - `fully policy-controlled creator-fee repayment parity`
 
-## 10. Acceptable staged paths before the full standard
+## 12. Acceptable staged paths before the full standard
 
 The full requirements above describe the target state.
 
@@ -568,7 +665,7 @@ Do not move past discovery if:
 At that point the right answer is not `ship anyway`.
 The right answer is `stay at compatibility-only`.
 
-## 11. Bounded first-pilot questionnaire
+## 13. Bounded first-pilot response template
 
 Please answer these before claiming the first pilot is ready:
 
@@ -591,7 +688,7 @@ The first pilot should fail closed:
 - if incident posture is undefined, treat the lane as operationally weaker,
 - if release or offboard is undefined, disclose that explicitly.
 
-## 12. Evidence package the partner should send
+## 14. Evidence package the partner should send
 
 The best response from the partner is one package that includes:
 
@@ -618,7 +715,7 @@ If the partner wants a direct response template, this is sufficient:
 8. What incident or freeze posture already exists?
 9. If stronger payout-path control is not ready yet, are you willing to stand behind the lane as the direct platform counterparty for a bounded pilot?
 
-## 13. Minimum technical surfaces
+## 15. Minimum technical surfaces
 
 attn does not need a large rewrite to start.
 It does need enough technical surface to qualify and monitor the lane.
@@ -637,7 +734,7 @@ The minimum useful surfaces are usually:
 If some of these are missing, the lane can still be discussed.
 The claim level just stays lower.
 
-## 14. First technical review agenda
+## 16. First technical review agenda
 
 If attn and the partner have a technical review call, the clean agenda is:
 
@@ -657,7 +754,7 @@ If attn and the partner have a technical review call, the clean agenda is:
 
 That meeting should end with a concrete yes or no on whether a bounded first pilot is realistically closable.
 
-## 15. Technical references
+## 17. Technical references
 
 This page should be enough for the first partner conversation.
 If the partner engineering team wants supporting references, use these next:
@@ -669,7 +766,7 @@ If the partner engineering team wants supporting references, use these next:
 - [Pricing, spreads, and core parameters](../mechanics/pricing-and-parameters.md)
 - [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
-## 16. Current concrete mapping
+## 18. Current concrete mapping
 
 For the current live partner discussion, the platform in view is ClawPump.
 
@@ -683,7 +780,7 @@ Read the requirements above against these working assumptions:
 That means the immediate question is not whether the partner can mimic the borrower-first Swig implementation.
 The immediate question is whether the partner can expose enough revenue, control, and readback truth for a bounded first pilot.
 
-## 17. What this page is not claiming
+## 19. What this page is not claiming
 
 This page does not claim:
 
@@ -694,7 +791,7 @@ This page does not claim:
 
 It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
 
-## 18. Related pages
+## 20. Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
 - [Revenue accounts and signing model](../mechanics/revenue-accounts-and-signing-model.md)
