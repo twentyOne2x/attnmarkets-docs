@@ -1,5 +1,56 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide core requirements should include concrete examples
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The user is right that even with better intro sentences, the requirement sections can still feel abstract. The best next step is not to add long prose everywhere. It is to add one short concrete example under each core `5.x` requirement so the abstract standard becomes easier to interpret.
+- Missing info/questions: none blocking. The existing section structure is stable and already has space for lightweight examples.
+- Type: hosted docs / creator-fee examples for requirement sections
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` now explains the setup and the purpose of each `5.x` requirement subsection.
+  - But the requirements can still read as abstract control language unless the reader can picture one plausible implementation.
+- Fix intent:
+  1) add one short `Example` block to each `5.1` through `5.6` section,
+  2) keep the examples illustrative rather than canonical,
+  3) improve comprehension without turning the page into a detailed implementation playbook.
+- Acceptance criteria:
+  - each core requirement section has one short example,
+  - the examples stay concise and do not overclaim,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - preserve the actual standard,
+    - keep examples short,
+    - avoid turning the examples into attn-specific promises or partner-specific assumptions.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added one short quoted `Example` block under each `5.1` through `5.6` requirement subsection.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the abstract requirement sections now include concrete illustrations without turning the page into a longer implementation manual.
+
 ## 2026-04-08 - creator-fee guide requirement subsections should orient readers before bullet lists
 
 Checklist

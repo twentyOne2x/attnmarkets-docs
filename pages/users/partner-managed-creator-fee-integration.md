@@ -174,6 +174,10 @@ attn must be able to tell:
 
 If the revenue scope is ambiguous, the lane is not yet credit-ready.
 
+> **Example**
+>
+> Creator fees on launches `A` and `B` count toward the lane, platform subscription revenue does not, and secondary royalties are visible but out of scope unless they are named explicitly.
+
 ### 5.2 Wallet topology must be legible
 
 The second requirement is that the payout path can be explained plainly from first landing point to final recipients.
@@ -185,6 +189,10 @@ attn must be able to tell:
 - and which actors control those surfaces.
 
 If the payout topology cannot be explained plainly, the lane cannot be relied on.
+
+> **Example**
+>
+> Fees land first in a platform-controlled router wallet, then split between the creator treasury, the platform fee wallet, and the debt-open repayment destination according to one named payout policy.
 
 ### 5.3 Debt-open payout behavior must be explicit
 
@@ -199,6 +207,10 @@ attn must be able to tell:
 The important thing is not matching attn's internal implementation.
 The important thing is making the debt-open repayment behavior explicit and monitorable.
 
+> **Example**
+>
+> While debt is open, `30%` of each in-scope creator-fee event goes to a repayment wallet, `70%` goes to the creator treasury, and that split remains in force until the release condition is met.
+
 ### 5.4 Change authority must be bounded
 
 Knowing the intended payout path is not enough if nobody can explain who is allowed to change it.
@@ -210,6 +222,10 @@ attn must be able to tell:
 - and what log, receipt, or event exists when that happens.
 
 If payout authority exists but is not attributable, that is still a control gap.
+
+> **Example**
+>
+> A payout split can be changed only by two named platform operators through an approval flow, and each change emits a retained receipt with the old state, the new state, the approvers, and the timestamp.
 
 ### 5.5 Readback must exist
 
@@ -224,6 +240,10 @@ attn must be able to inspect enough live or near-live state to answer:
 
 Without readback, the lane can still be discussed, but only at a lower claim level.
 
+> **Example**
+>
+> attn can query the current payout recipients, the active debt-open mode, and the last three payout-policy changes from an API or signed export without waiting for a manual explanation each time.
+
 ### 5.6 Degrade, release, and offboard behavior must be defined
 
 Finally, the lane needs a defined response for when things go wrong and a defined state for when the lane ends.
@@ -235,6 +255,10 @@ attn must be able to tell:
 - and what release or offboard looks like after close.
 
 If the lane has no defined degraded-state or release behavior, that should be treated as a real limitation rather than left undefined.
+
+> **Example**
+>
+> If payout routing drifts, the lane moves to a paused state, operators are alerted, repayments stop being treated as healthy, and after close a release receipt confirms that the debt-open routing rule has been removed.
 
 ## 6. Acceptable staged paths before the full standard
 
