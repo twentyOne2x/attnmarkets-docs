@@ -1,30 +1,44 @@
 # attn.markets docs
 
-> Documentation for attn and attn Credit: a credit and servicing layer for agent commerce and onchain revenue. Use these pages for product concepts, non-technical mechanics, controls, risk policy, roadmap, and deeper capital-side design where relevant.
+> Documentation for attn and attn Credit: the credit and servicing layer for agent commerce. Use these pages for product concepts, non-technical mechanics, controls, risk policy, roadmap, and deeper capital-side design where relevant.
 
 These docs describe product mechanics and policy. They are not legal, tax, or investment advice.
-The strongest current public proof is still the narrower Pump borrower flow; broader commerce and capital-side expansion pages should be read as direction where stated.
+These docs currently describe two public product surfaces:
+- agent credit for approved Tempo services and approved Virtuals jobs
+- borrower credit backed by Pump.fun creator fees
+
+The framing to keep in mind is:
+- onchain revenues are proof that the agent already does useful work
+- reputation helps shape the starter line before enough repayment history exists
+- spend stays bounded to approved rails while the public product remains narrow
+
+Current public proof is still narrow. Hosted agent credit is proven on approved Tempo services and approved Virtuals jobs. Pump borrower remains the strongest borrower-side proof. XLayer should still be read as more tightly bounded where stated.
 
 ## Start here
 - [Overview](https://docs.attn.markets/): entrypoint and navigation
 - [attn 1-pager](https://docs.attn.markets/1-pager): concise product overview
-- [The missing layer for onchain revenues](https://docs.attn.markets/introduction/the-missing-layer-for-onchain-revenues)
+- [Agent credit guide](https://attn.markets/skill.md): how an agent gets small attn credit after one Matrica check to pay for approved services or jobs
+- [Borrower estimate](https://www.attn.markets/credit-simulation): estimate flow for credit backed by Pump.fun creator fees
+- [The missing layer is credit](https://docs.attn.markets/introduction/the-missing-layer-for-onchain-revenues)
 - [How attn Credit works (non-technical)](https://docs.attn.markets/mechanics/how-it-works-nontechnical)
+- [Partner-managed wallet integration requirements](https://docs.attn.markets/mechanics/partner-wallet-integration-requirements)
 - [attn in context](https://docs.attn.markets/introduction/attn-in-context)
 - [Who attn is for](https://docs.attn.markets/introduction/who-attn-is-for)
 
 ## Mechanics and controls
 - [Architecture overview](https://docs.attn.markets/mechanics/architecture-overview)
 - [Revenue accounts and signing model](https://docs.attn.markets/mechanics/revenue-accounts-and-signing-model)
+- [Partner-managed wallet integration requirements](https://docs.attn.markets/mechanics/partner-wallet-integration-requirements)
 - [Risk, limits, and concentration framework](https://docs.attn.markets/mechanics/risk-and-limits)
 - [Pricing, spreads, and core parameters](https://docs.attn.markets/mechanics/pricing-and-parameters)
 - [Capital-side model and attnUSD](https://docs.attn.markets/mechanics/pt-yt-attnusd)
 
 ## Who this is for
 - [Who attn is for](https://docs.attn.markets/introduction/who-attn-is-for)
-- [Apps, DAOs, and builders](https://docs.attn.markets/users/for-apps-daos-and-builders)
-- [Creators, devs, and memecoin CTOs](https://docs.attn.markets/users/for-creators-devs-and-ctos)
+- [Agent builders and apps](https://docs.attn.markets/users/for-apps-daos-and-builders)
+- [Where agent revenue comes from today](https://docs.attn.markets/users/for-creators-devs-and-ctos)
 - [Launchpads and incubators](https://docs.attn.markets/users/for-launchpads-and-incubators)
+- [Partner-managed creator-fee integration guide](https://docs.attn.markets/users/partner-managed-creator-fee-integration)
 - [Liquidity providers](https://docs.attn.markets/users/for-liquidity-providers)
 - [Cards, commerce, and settlement partners](https://docs.attn.markets/users/for-cards-and-commerce-partners)
 

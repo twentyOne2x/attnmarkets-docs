@@ -259,6 +259,10 @@ That full control lifecycle is not currently proven for ClawPump, so the correct
 - **compatibility only**
 - not **fee-admin / ACTIVE-lock / offboarding parity**
 
+If a partner wants to qualify for a treasury-backed first lane without migrating into Swig or Squads, the next page to read is:
+
+- [Partner-managed wallet integration requirements](./partner-wallet-integration-requirements.md)
+
 ### Does backend uptime matter for fee routing?
 
 Two different things matter here:

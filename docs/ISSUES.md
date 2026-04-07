@@ -1,5 +1,350 @@
 # ISSUES
 
+## 2026-04-07 - hosted docs need one self-contained creator-fee partner integration guide
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and medium. The hosted docs now have a generic partner-wallet page plus a standalone creator-fee partner guide, but the standalone guide still risks making the reader bounce around to infer the revenue-functioning model, explicit policy requirements, and the interim counterparty-risk posture where attn underwrites the platform first while harder payout controls are still being established.
+- Missing info/questions: none blocking. The requirement set is already frozen in the attn-credit repo and can be translated into public docs language.
+- Type: hosted docs / partner-managed wallet integration requirements
+- Status: completed
+- Context + suspected cause:
+  - `pages/mechanics/revenue-accounts-and-signing-model.md` already says ClawPump is compatibility-only rather than full control parity.
+  - `pages/users/for-launchpads-and-incubators.md` explains the launchpad fit but not the exact treasury-first partner-wallet qualification contract.
+  - There is currently no single fully self-contained public page for partners that keep their own wallet infrastructure and want both the policy matrix and the revenue-functioning model in one place.
+- Fix intent:
+  1) keep the generic mechanics page as supporting context,
+  2) upgrade the standalone creator-fee partner integration guide so it is self-contained,
+  3) add the actual revenue-functioning model for debt-open operation,
+  4) add an explicit policy matrix instead of only invariant prose,
+  5) add the interim counterparty-risk mode where attn underwrites the platform first,
+  6) and keep the claims honest: no public-live or Swig-parity overclaim.
+- Acceptance criteria:
+  - `pages/mechanics/partner-wallet-integration-requirements.md` exists,
+  - `pages/users/partner-managed-creator-fee-integration.md` exists,
+  - the standalone guide clearly states what attn requires for a partner-managed wallet stack,
+  - the standalone guide clearly explains how revenues are expected to function while debt is open,
+  - the standalone guide includes an explicit policy matrix,
+  - the standalone guide explains the interim counterparty-risk mode,
+  - the standalone guide clearly states what the current partner would need to show for a treasury-first pilot,
+  - existing relevant pages link to it,
+  - `public/llms.txt` includes it,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/mechanics/_meta.js`
+    - `pages/mechanics/partner-wallet-integration-requirements.md`
+    - `pages/users/_meta.js`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+    - `pages/mechanics/revenue-accounts-and-signing-model.md`
+    - `pages/users/for-launchpads-and-incubators.md`
+    - `pages/index.md`
+    - `public/llms.txt`
+  - Constraints:
+    - keep the language forwardable to any partner with its own wallet infrastructure,
+    - explain the requirements without exposing internal-only implementation trivia,
+    - do not imply the lane is already public-live or runtime-proven.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added the new forwardable public mechanics page:
+  - `pages/mechanics/partner-wallet-integration-requirements.md`
+- Added the new standalone partner-specific page:
+  - `pages/users/partner-managed-creator-fee-integration.md`
+- Wired it into the existing public docs surfaces:
+  - `pages/mechanics/_meta.js`
+  - `pages/users/_meta.js`
+  - `pages/mechanics/revenue-accounts-and-signing-model.md`
+  - `pages/users/for-launchpads-and-incubators.md`
+  - `pages/index.md`
+  - `public/llms.txt`
+- Kept the claims tight:
+  - private-treasury first,
+  - partner-managed wallet stack retained,
+  - no public-live or Swig-parity overclaim.
+- Then upgraded the standalone guide further so it is closer to one-link handoff material:
+  - revenue-functioning model is described inline,
+  - policy topics are translated into an explicit matrix,
+  - requirement-to-evidence mapping is in the same page,
+  - first-pilot evidence checklist is in the same page,
+  - and the interim counterparty-risk platform lane is explained inline instead of being left implicit.
+- Then tightened the standalone guide again so it behaves more like a partner response document and less like an attn explainer:
+  - the page now leads with concrete integration questions,
+  - the core middle sections are organized as revenue-functioning, policy, evidence, and bounded-pilot questionnaires,
+  - attn-side capital posture is no longer a first-class narrative branch,
+  - and the technical references are pushed to the end as optional follow-up material rather than required reading.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/mechanics/_meta.js pages/mechanics/partner-wallet-integration-requirements.md pages/users/_meta.js pages/users/partner-managed-creator-fee-integration.md pages/mechanics/revenue-accounts-and-signing-model.md pages/users/for-launchpads-and-incubators.md pages/index.md public/llms.txt`
+  - `npm run build`
+- Result:
+  - the hosted docs repo now has one clean forwardable generic page for partner-managed wallet integration requirements,
+  - plus one standalone creator-fee partner guide that maps those requirements to the concrete current integration,
+  - the existing revenue-account and launchpad pages now route readers to them,
+  - the standalone guide now behaves more like a self-contained counterparty questionnaire,
+  - and the build produced the new public route `/mechanics/partner-wallet-integration-requirements`.
+- Remaining blocker:
+  - no fresh rendered screenshot was captured in this pass, so the visual verification checklist remains open.
+
+## 2026-03-26 - appendix: preserve full Jordan Lyall Agent Payments Stack firm list
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user clarified that adding only the Jordan Lyall post/site reference was not sufficient; they want the firms themselves added to the appendix.
+- Missing info/questions: none blocking. The public `https://agentpaymentsstack.com/data.json` feed exposes a six-layer project list that can be preserved as a manual supplement in the appendix.
+- Type: docs / appendix coverage follow-up
+- Status: completed
+- Context + suspected cause:
+  - The earlier 2026-03-26 follow-up only added the source reference, not the full firm list.
+  - The appendix already separates manual supplements from the generated Artemis snapshot, so the safest fix is to add a new clearly labeled source-backed supplement rather than mutate snapshot data.
+  - On March 26, 2026, the live public JSON feed exposed 86 project rows across six layers even though the March 25, 2026 post copy says `87 projects`.
+- Fix intent:
+  1) fetch the full public project list from `agentpaymentsstack.com/data.json`,
+  2) add the firms to the appendix in the source's six-layer grouping,
+  3) keep the addition explicitly manual and source-backed,
+  4) avoid changing the generated Artemis snapshot below.
+- Acceptance criteria:
+  - the appendix includes the full six-layer project list exposed by the live public JSON feed,
+  - the source post, site, and JSON are cited,
+  - the addition remains clearly distinct from the generated Artemis snapshot,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - keep the new section narrow, text-first, and explicitly sourced from the public JSON feed.
+    - do not alter unrelated local dirt or the generated Artemis snapshot.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Added a new manual `Agent Payments Stack (Jordan Lyall, March 25, 2026)` section to `pages/appendix/artemis-agentic-commerce-index.mdx`.
+  - Preserved the full six-layer project list from the live public `agentpaymentsstack.com/data.json` feed and cited the post, site, and JSON source directly.
+  - Kept the new section separate from the generated Artemis snapshot and from the earlier screenshot-preserved thematic grouping.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+
+VERIFIER
+- PASS:
+  - The appendix now explicitly contains the full six-layer project list exposed by the live public JSON feed.
+  - The section cites the March 25, 2026 post, the live site, and the JSON feed.
+  - The addition remains clearly manual and does not alter the generated Artemis snapshot below.
+  - Knowledge check, diff check, and docs build all passed.
+- NOTE:
+  - The source post/site say `87 projects`, but the live JSON feed queried on March 26, 2026 exposed 86 project rows; the appendix text now reflects that exact source basis.
+  - No fresh rendered screenshot verification was captured in this follow-up, so the visual verification checklist item remains open.
+
+## 2026-03-26 - appendix: add Jordan Lyall Agent Payments Stack reference
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The user provided a specific X post plus the live `agentpaymentsstack.com` site and asked for it to be added to the agentic payment appendix.
+- Missing info/questions: none blocking. The supplied post and site are enough to add a narrow manual reference without altering the generated Artemis snapshot.
+- Type: docs / appendix reference update
+- Status: completed
+- Context + suspected cause:
+  - The appendix page already keeps a manual supplement for user-supplied names and direct references that sit alongside, but separate from, the generated Artemis snapshot.
+  - The March 25, 2026 Jordan Lyall post introduces `The Agent Payments Stack` as a six-layer market map covering agent payments from settlement to application.
+  - The appendix currently does not reference that external landscape map in the `Agentic Payments` section.
+- Fix intent:
+  1) add the supplied Jordan Lyall post and `agentpaymentsstack.com` as direct references in the appendix,
+  2) keep the addition narrow and text-first,
+  3) avoid changing the generated Artemis snapshot below.
+- Acceptance criteria:
+  - the appendix includes the supplied X post and `agentpaymentsstack.com` in the relevant section,
+  - the addition is clearly part of the manual supplement, not the generated Artemis snapshot,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: tiny
+- Plan: inline.
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/appendix/artemis-agentic-commerce-index.mdx`
+  - Constraints:
+    - keep the appendix addition narrow and directly tied to the supplied post/site.
+    - do not alter unrelated local dirt or the generated Artemis snapshot.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Implemented:
+  - Added the supplied Jordan Lyall X post and `The Agent Payments Stack` site to the `Agentic Payments` manual supplement references in `pages/appendix/artemis-agentic-commerce-index.mdx`.
+- Proofs:
+  - `python3 scripts/knowledge_check.py` -> PASS (`OK: knowledge base checks passed.`)
+  - `git diff --check` -> PASS
+  - `npm run build` -> PASS
+
+VERIFIER
+- PASS:
+  - The appendix now includes the supplied X post and `agentpaymentsstack.com` in the relevant `Agentic Payments` section.
+  - The addition remains in the manual supplement and does not alter the generated Artemis snapshot below.
+  - Knowledge check, diff check, and docs build all passed.
+- NOTE:
+  - No fresh rendered screenshot verification was captured in this follow-up, so the visual verification checklist item remains open.
+
+## 2026-03-24 - docs repo copy still under-explains attn as the credit layer for agent commerce
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [ ] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and medium. The docs repo already has a strong high-level frame, but the public copy still leans too hard on the old single proving-lane story. It does not yet cleanly explain attn as the credit layer for agent commerce, with onchain revenues as proof that an agent already does real work and bounded spend plus reputation shaping the current public credit product.
+- Type: docs copy / positioning refresh
+- Status: in_progress
+- Context + suspected cause:
+  - The user meant the separate docs repo at `/Users/user/PycharmProjects/attnmarkets-docs`, not the app/landing repos.
+  - The pages explicitly frozen by the user are:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/attn-in-context.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/appendix/artemis-agentic-commerce-index.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md`
+  - The sharper framing requested by the user is:
+    - the missing layer is credit, not just another revenue dashboard,
+    - onchain revenues such as Pump.fun creator fees, Virtuals ACP jobs, and services sold and paid through Tempo MPP are the proof the agent can already do useful work,
+    - in the current public product, starter credit is still shaped by reputation plus bounded spend on approved rails.
+  - High-signal pages that still need the multirail copy refresh are:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/index.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/public/llms.txt`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/roadmap.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/vision-attn.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/the-missing-layer-for-onchain-revenues.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/who-attn-is-for.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/mechanics/how-it-works-nontechnical.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/_meta.js`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/for-apps-daos-and-builders.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/for-creators-devs-and-ctos.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/for-cards-and-commerce-partners.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/for-launchpads-and-incubators.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/for-liquidity-providers.md`
+- Fix intent:
+  1. keep the existing docs structure and styling,
+  2. explain attn as the credit layer for agent commerce more plainly,
+  3. frame revenues as proof of useful agent work instead of as the product itself,
+  4. reflect the newer Tempo / Virtuals / XLayer agent-credit progress without overstating scope,
+  5. tighten audience-page labels and top-of-page positioning,
+  6. leave the frozen pages untouched.
+- Acceptance criteria:
+  - docs entrypoints describe attn as the credit layer for agent commerce plainly,
+  - revenue sources are framed as proof of work rather than the whole product,
+  - roadmap reflects the current narrow live lanes plus later expansion,
+  - audience pages have clearer positioning and sidebar labels,
+  - `attn in context`, Artemis, and `/1-pager` are unchanged,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: medium
+- Plan:
+  - `/Users/user/PycharmProjects/attnmarkets-docs/docs/plans/active/2026-03-24-multirail-docs-copy-refresh.md`
+- Executor prompt:
+  - Refresh the docs repo copy only. Keep the visual structure and routes the same. Explain the split between agent credit and borrower credit more clearly, tighten stale Pump-only phrasing, and update the user-page positioning and labels. Do not touch `attn in context`, the Artemis appendix page, or `/1-pager`. Do not deploy.
+
+EXECUTOR
+- Pending.
+
+VERIFIER
+- Pending.
+
+## 2026-03-20 - docs navigation: remove synthetic section overview pages
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [x] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable. The sidebar section landing pages added on 2026-03-19 keep section headings clickable, but they also introduce synthetic overview pages the user does not want.
+- Missing info/questions: none blocking. Treat "these pages" as the section overview routes for `Introduction`, `Users`, `Mechanics`, and `Tokenomics`; keep `Appendix` untouched unless the implementation proves it has to move with them.
+- Type: docs UX / navigation cleanup
+- Status: completed
+- Context + suspected cause:
+  - The old docs surface uses folder buttons for top-level sections.
+  - Making those buttons navigable by adding section `index.mdx` pages solved the dead-click problem but created redundant pages under each section.
+  - The user explicitly wants those synthetic section overview pages removed.
+- Fix intent:
+  1) remove the synthetic section overview pages added for `Introduction`, `Users`, `Mechanics`, and `Tokenomics`
+  2) keep section headings useful by redirecting section-root routes to the first real page in each section
+  3) remove any sidebar index entries that only existed to surface those overview pages
+- Acceptance criteria:
+  - `/introduction`, `/users`, `/mechanics`, and `/tokenomics` no longer render synthetic overview pages.
+  - Visiting those routes lands on the first real page for that section.
+  - Sidebar section headings remain clickable and no longer show duplicate overview child entries.
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/next.config.mjs`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/_meta.js`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/_meta.js`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/mechanics/_meta.js`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/tokenomics/_meta.js`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/introduction/index.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/users/index.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/mechanics/index.mdx`
+    - `/Users/user/PycharmProjects/attnmarkets-docs/pages/tokenomics/index.mdx`
+  - Constraints:
+    - keep the old docs frontend/theme intact
+    - do not reintroduce dead section-title clicks
+    - do not touch unrelated local dirt
+- Tests:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check`
+  - `npm run build`
+
+EXECUTOR
+- Removed the synthetic overview routes for `Introduction`, `Users`, `Mechanics`, and `Tokenomics` by deleting their `index.mdx` pages.
+- Removed the matching sidebar index entries from each section `_meta.js`.
+- Added route redirects in `/Users/user/PycharmProjects/attnmarkets-docs/next.config.mjs` so section-root URLs now land on the first real page in each section instead of on overview stubs.
+
+VERIFIER
+- PASS: `/introduction`, `/users`, `/mechanics`, and `/tokenomics` no longer build standalone overview pages; they resolve to their first real content routes.
+- PASS: local headless-browser check against `http://127.0.0.1:3216` confirmed:
+  - visiting `/introduction` lands on `/introduction/the-missing-layer-for-onchain-revenues`
+  - clicking the `Users` section header lands on `/users/for-apps-daos-and-builders`
+  - synthetic sidebar child entries like `Start here`, `Audience overview`, and `System overview` are gone
+- PASS: `python3 scripts/knowledge_check.py`.
+- PASS: `git diff --check`.
+- PASS: `npm run build`.
+
 ## 2026-03-19 - docs navigation: top-level section headings are not clickable
 
 Checklist

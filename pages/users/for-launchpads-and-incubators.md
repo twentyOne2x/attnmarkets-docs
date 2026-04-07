@@ -17,6 +17,18 @@ attn Credit can be embedded as a financing layer for projects with routed onchai
 - risk controls are transparent to capital providers,
 - facilities can scale with observed performance.
 
+The current near-term borrower expression is still the Pump creator-fee lane, while broader partner distribution remains later.
+
+For partners that keep their own wallet and payout infrastructure, the correct near-term shape is narrower:
+
+- first lane funded from attn private treasury,
+- partner-managed wallet stack retained,
+- and qualification based on explicit payout, control, and readback requirements rather than forced migration into Swig or Squads.
+
+If you want the concrete creator-fee platform handoff guide, use:
+
+- [Partner-managed creator-fee integration guide](./partner-managed-creator-fee-integration.md)
+
 ## Integration model
 
 1. Verify project fee-routing readiness.
@@ -33,6 +45,8 @@ attn Credit can be embedded as a financing layer for projects with routed onchai
 
 ## Related pages
 
+- [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
+- [Partner-managed creator-fee integration guide](./partner-managed-creator-fee-integration.md)
 - [attn Credit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)
 - [For Liquidity Providers](./for-liquidity-providers.md)

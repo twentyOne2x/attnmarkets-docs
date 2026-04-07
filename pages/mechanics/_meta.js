@@ -3,9 +3,6 @@ const itemTitle = (label) => (
 )
 
 const sidebar = {
-  index: {
-    title: itemTitle('System overview')
-  },
   'how-it-works-nontechnical': {
     title: itemTitle('How it works')
   },
@@ -14,6 +11,9 @@ const sidebar = {
   },
   'revenue-accounts-and-signing-model': {
     title: itemTitle('Revenue accounts')
+  },
+  'partner-wallet-integration-requirements': {
+    title: itemTitle('Partner-managed wallets')
   },
   'pt-yt-attnusd': {
     title: itemTitle('attn Credit engine')

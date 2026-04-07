@@ -1,10 +1,5 @@
-node_modules
-.next
 .next_backup_*
 .next_prev_*
-out
-.DS_Store
 tmp/
 test-results/
 playwright-report/
-.vercel
