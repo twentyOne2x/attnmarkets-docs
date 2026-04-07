@@ -1,5 +1,59 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee guide should remove the partner-specific mapping section
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The creator-fee guide is meant to be a forwardable partner standard, so the explicit `Current concrete mapping` section naming a live counterparty is unnecessary and potentially unhelpful. The user is right that this should not be in the public document. The right fix is to remove the section entirely and keep the page generic.
+- Missing info/questions: none blocking. The section is self-contained and can be deleted cleanly.
+- Type: hosted docs / creator-fee guide genericity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` currently includes `## 19. Current concrete mapping`.
+  - That section names `ClawPump` directly and frames the doc around a live partner conversation.
+  - The rest of the page is already generic enough to stand on its own.
+- Fix intent:
+  1) remove the partner-specific mapping section,
+  2) keep the guide fully generic,
+  3) renumber the remaining tail sections cleanly.
+- Acceptance criteria:
+  - the document no longer names `ClawPump`,
+  - the `Current concrete mapping` section is removed,
+  - later section numbers are consistent,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the page generic and forwardable,
+    - do not reintroduce partner-specific language elsewhere.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Removed the `Current concrete mapping` section from the creator-fee guide.
+- Renumbered the final sections so the guide remains structurally consistent.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the public guide is fully generic again,
+  - and it no longer names a live counterparty.
+
 ## 2026-04-07 - creator-fee guide should collapse the standalone platform-counterparty section into Stage 1
 
 Checklist

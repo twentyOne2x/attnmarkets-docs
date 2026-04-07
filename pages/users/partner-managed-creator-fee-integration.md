@@ -801,21 +801,7 @@ If the partner engineering team wants supporting references, use these next:
 - [Pricing, spreads, and core parameters](../mechanics/pricing-and-parameters.md)
 - [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
-## 19. Current concrete mapping
-
-For the current live partner discussion, the platform in view is ClawPump.
-
-Read the requirements above against these working assumptions:
-
-- the partner keeps the wallet stack,
-- the partner may control per-mint dev wallets,
-- the partner may sponsor gas separately,
-- and creator-fee or service-fee routing may happen inside the partner payout surfaces rather than the borrower-owned path used in attn's standard borrower-first implementation.
-
-That means the immediate question is not whether the partner can mimic attn's standard borrower-first implementation.
-The immediate question is whether the partner can expose enough revenue, control, and readback truth for a bounded first pilot.
-
-## 20. What this page is not claiming
+## 19. What this page is not claiming
 
 This page does not claim:
 
@@ -826,7 +812,7 @@ This page does not claim:
 
 It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
 
-## 21. Related pages
+## 20. Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
 - [Revenue accounts and signing model](../mechanics/revenue-accounts-and-signing-model.md)
