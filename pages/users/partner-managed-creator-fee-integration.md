@@ -176,7 +176,7 @@ If the revenue scope is ambiguous, the lane is not yet credit-ready.
 
 > **Example**
 >
-> Creator fees on launches `A` and `B` count toward the lane, platform subscription revenue does not, and secondary royalties are visible but out of scope unless they are named explicitly.
+> Suppose the partner currently earns revenue from three places: creator fees on named launches for Creator One and Creator Two, a monthly platform subscription sold to teams using the product, and secondary-market royalties that appear in reporting after launch. The lane may include only the creator-fee revenue from those two named launches. The subscription revenue remains out of scope, and the secondary royalties remain visible in reporting but out of scope unless the lane definition explicitly includes them.
 
 ### 5.2 Wallet topology must be legible
 

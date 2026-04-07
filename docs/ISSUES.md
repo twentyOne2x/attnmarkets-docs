@@ -1,5 +1,56 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide examples should avoid placeholder launch labels
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and tiny. The user correctly flagged that example wording like `launches A and B` reads like internal placeholder text, not a serious partner-facing illustration. The fix is to rewrite the example as a fuller plain-language scenario.
+- Missing info/questions: none blocking.
+- Type: hosted docs / creator-fee guide example clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already uses quoted examples under the core requirement sections.
+  - One example in `5.1` still used synthetic labels that force the reader to mentally decode what the example is trying to say.
+- Fix intent:
+  1) replace placeholder labels with a fuller revenue-scope scenario,
+  2) keep the example concrete,
+  3) preserve the underlying requirement unchanged.
+- Acceptance criteria:
+  - the `5.1` example no longer uses placeholder labels like `A` and `B`,
+  - the example explicitly distinguishes in-scope creator fees from out-of-scope revenues,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: tiny
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the example partner-facing,
+    - use a fuller natural-language scenario,
+    - do not broaden the requirement itself.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote the `5.1` revenue-scope example into a fuller scenario with named revenue lines and explicit in-scope versus out-of-scope treatment.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the first revenue-scope example now reads like a partner-facing scenario instead of internal placeholder text.
+
 ## 2026-04-08 - creator-fee guide SDK bullets should explain the interface surfaces inline
 
 Checklist
