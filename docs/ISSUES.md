@@ -1,5 +1,62 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee guide should remove stale baseline wording and explain how attn evaluates the response
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The partner guide is structurally strong now, but two issues remain. First, the phrase `The current strongest borrower-side control baseline is still...` reads wrong in a first-share document. Second, the document still does not say clearly enough how attn will use the partner's response once it is received. The right fix is to remove the `still` phrasing and add one short, high-level section explaining how attn evaluates the response without exposing the full internal playbook.
+- Missing info/questions: none blocking. The change is editorial and the intended `How attn evaluates the response` layer is already well-scoped from thread context.
+- Type: hosted docs / creator-fee guide clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` is meant to be a first forwardable document.
+  - `still` implies prior context that may not exist for the first reader.
+  - The partner can now see the requirements and response templates, but the doc does not yet state clearly how attn consumes the submitted information.
+- Fix intent:
+  1) remove the stale `still` wording from the borrower-side baseline sentence,
+  2) add a short `How attn evaluates the response` section,
+  3) keep that section high-level and non-proprietary,
+  4) renumber the downstream sections cleanly.
+- Acceptance criteria:
+  - the `still` phrasing is removed,
+  - the guide contains one clear section on how attn evaluates the response,
+  - the new section explains intake, stage classification, evidence gaps, pilot scoping, and stop conditions at a high level,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep one canonical page,
+    - keep the new attn-consumption section high-level,
+    - do not turn the document into an internal operator playbook.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Removed `still` from the borrower-side baseline sentence.
+- Added a new `How attn evaluates the response` section after the page-usage section.
+- The new section explains how attn classifies the lane, checks evidence, scopes a bounded pilot, and identifies stop conditions without exposing internal underwriting or servicing detail.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the document reads correctly as a first-share artifact,
+  - and it now explains how attn consumes the partner response at the right level.
+
 ## 2026-04-07 - creator-fee integration guide should remove chatty or low-signal counterparty copy
 
 Checklist

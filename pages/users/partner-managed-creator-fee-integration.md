@@ -8,9 +8,9 @@ If you are the partner team, the goal is simple:
 
 - read this page once,
 - read sections `1` through `7` first,
-- answer the response sections `8`, `9`, and `13` at the level of detail you have today,
-- attach the evidence listed in section `14`,
-- and use sections `6` through `18` to scope the earliest honest pilot and the strongest honest claim level.
+- answer the response sections `9`, `10`, and `14` at the level of detail you have today,
+- attach the evidence listed in section `15`,
+- and use sections `6` through `19` to scope the earliest honest pilot and the strongest honest claim level.
 
 ## 1. What this page is for
 
@@ -62,7 +62,7 @@ This page is not about:
 
 ## 4. The baseline attn is comparing against
 
-The current strongest borrower-side control baseline is still the borrower-first Pump path.
+The strongest borrower-side control baseline in attn today is the borrower-first Pump path.
 
 At a high level, that baseline gives attn:
 
@@ -363,9 +363,10 @@ This page is not asking the partner to produce a perfect diligence packet on day
 The right way to use it is:
 
 1. read sections `1` through `6` first so the requirements and the acceptable stage ladder are clear,
-2. answer sections `8` and `9` in plain English at the level of detail you already have,
-3. if the lane still looks promising, answer section `13` for the first bounded pilot,
-4. then attach whatever evidence from section `14` you can already provide.
+2. review section `8` so the attn evaluation lens is clear,
+3. answer sections `9` and `10` in plain English at the level of detail you already have,
+4. if the lane still looks promising, answer section `14` for the first bounded pilot,
+5. then attach whatever evidence from section `15` you can already provide.
 
 An initial response can be concise.
 It can include:
@@ -383,11 +384,36 @@ That is enough to determine whether the lane is:
 
 The response sections are intended to determine quickly whether the lane is structurally viable before it is treated as meeting the full standard.
 
-## 8. Revenue-functioning response template
+## 8. How attn evaluates the response
+
+attn uses the partner response for five things:
+
+1. confirm whether the lane is identifiable and bounded,
+2. classify the lane against the stage model in this document,
+3. identify which requirements are already evidenced versus still partial or missing,
+4. decide whether a bounded first pilot is worth scoping,
+5. and determine whether the lane should stop at compatibility, remain manual, or move toward a stronger claim level.
+
+At a high level, attn is checking:
+
+- whether the revenue scope is precise enough,
+- whether the payout topology is legible enough,
+- whether debt-open behavior is explicit enough,
+- whether change authority and readback are strong enough,
+- and whether incident and release behavior are defined enough.
+
+If the response is strong, attn can map the lane to one of the acceptable stages and define the next evidence package or pilot shape.
+If the response is incomplete, attn can ask for the specific missing evidence rather than continuing with vague integration language.
+If the response shows unresolved ambiguity on core controls, attn should stop at a lower claim level instead of stretching the lane into a stronger posture than the facts support.
+
+This section is intentionally high-level.
+It explains how attn consumes the response without turning the public guide into a private underwriting or servicing manual.
+
+## 9. Revenue-functioning response template
 
 This is the first thing the partner should answer once the requirements above are understood.
 
-### 8.1 What revenues count?
+### 9.1 What revenues count?
 
 Please answer:
 
@@ -410,7 +436,7 @@ Minimum pilot bar:
 - repayment-relevant revenues are named,
 - and the partner can show example records or exports for that scope.
 
-### 8.2 Where do those revenues land first?
+### 9.2 Where do those revenues land first?
 
 Please answer:
 
@@ -433,7 +459,7 @@ Minimum pilot bar:
 - attn can see the first landing wallet or router,
 - and the live recipients that matter for the lane.
 
-### 8.3 What happens while debt is open?
+### 9.3 What happens while debt is open?
 
 Please answer:
 
@@ -456,7 +482,7 @@ Minimum pilot bar:
 - the debt-open repayment path is explicit,
 - and it cannot drift silently without attn being able to detect it.
 
-### 8.4 What happens if that routing changes?
+### 9.4 What happens if that routing changes?
 
 Please answer:
 
@@ -477,11 +503,11 @@ Minimum pilot bar:
 - change events are attributable,
 - and the partner can show how attn would detect drift.
 
-## 9. Policy response template
+## 10. Policy response template
 
 This section is the control contract.
 
-### 9.1 Launch attribution policy
+### 10.1 Launch attribution policy
 
 Please answer:
 
@@ -497,7 +523,7 @@ Minimum pilot bar:
 
 - attribution is deterministic enough that attn can tell which revenue source belongs to which lane.
 
-### 9.2 Revenue-scope policy
+### 10.2 Revenue-scope policy
 
 Please answer:
 
@@ -510,7 +536,7 @@ Minimum pilot bar:
 
 - the revenue scope is explicit and stable enough to underwrite conservatively.
 
-### 9.3 Wallet-topology policy
+### 10.3 Wallet-topology policy
 
 Please answer:
 
@@ -522,7 +548,7 @@ Minimum pilot bar:
 
 - attn can see the wallets and actors that matter to repayment integrity.
 
-### 9.4 Debt-open destination policy
+### 10.4 Debt-open destination policy
 
 Please answer:
 
@@ -535,7 +561,7 @@ Minimum pilot bar:
 - the debt-open destination is explicit,
 - and a violation is detectable rather than arguable.
 
-### 9.5 Change-control policy
+### 10.5 Change-control policy
 
 Please answer:
 
@@ -549,7 +575,7 @@ Minimum pilot bar:
 - known process,
 - retained receipts.
 
-### 9.6 Readback policy
+### 10.6 Readback policy
 
 Please answer:
 
@@ -561,7 +587,7 @@ Minimum pilot bar:
 
 - attn can inspect enough live or near-live state to detect drift.
 
-### 9.7 Release and offboard policy
+### 10.7 Release and offboard policy
 
 Please answer:
 
@@ -574,7 +600,7 @@ Minimum pilot bar:
 - the release path is defined,
 - and the post-close state is not ambiguous.
 
-### 9.8 Incident policy
+### 10.8 Incident policy
 
 Please answer:
 
@@ -587,7 +613,7 @@ Minimum pilot bar:
 - there is a real degraded-state response,
 - not only a normal-mode explanation.
 
-## 10. Requirement status model
+## 11. Requirement status model
 
 attn will generally classify each requirement as:
 
@@ -601,7 +627,7 @@ Interpretation:
 - a mix of `partial` and `verified` items may still support manual underwriting review,
 - a strong cluster of `verified` items is required for a bounded first pilot.
 
-## 11. What attn can honestly claim at each stage
+## 12. What attn can honestly claim at each stage
 
 ### Compatibility-only
 
@@ -635,7 +661,7 @@ This should only happen if the partner can prove the same practical outcomes tha
 - readback is real,
 - and release or offboard behavior is clear.
 
-## 12. Interim platform-counterparty posture
+## 13. Interim platform-counterparty posture
 
 If the partner is not ready for the stronger payout-control claim yet, attn can still evaluate a narrower interim posture where the platform itself is the direct counterparty for the first lane.
 
@@ -662,7 +688,7 @@ and not as:
 
 - `fully policy-controlled creator-fee repayment parity`
 
-## 13. Bounded first-pilot response template
+## 14. Bounded first-pilot response template
 
 Please answer these before claiming the first pilot is ready:
 
@@ -685,7 +711,7 @@ The first pilot should fail closed:
 - if incident posture is undefined, treat the lane as operationally weaker,
 - if release or offboard is undefined, disclose that explicitly.
 
-## 14. Evidence package the partner should send
+## 15. Evidence package the partner should send
 
 The best response from the partner is one package that includes:
 
@@ -712,7 +738,7 @@ If the partner wants a direct response template, this is sufficient:
 8. What incident or freeze posture already exists?
 9. If stronger payout-path control is not ready yet, are you willing to stand behind the lane as the direct platform counterparty for a bounded pilot?
 
-## 15. Minimum technical surfaces
+## 16. Minimum technical surfaces
 
 attn does not need a large rewrite to start.
 It does need enough technical surface to qualify and monitor the lane.
@@ -731,7 +757,7 @@ The minimum useful surfaces are usually:
 If some of these are missing, the lane can still be discussed.
 The claim level just stays lower.
 
-## 16. First technical review agenda
+## 17. First technical review agenda
 
 If attn and the partner have a technical review call, the clean agenda is:
 
@@ -751,7 +777,7 @@ If attn and the partner have a technical review call, the clean agenda is:
 
 That meeting should end with a concrete yes or no on whether a bounded first pilot is realistically closable.
 
-## 17. When stronger signer and operator security requirements apply
+## 18. When stronger signer and operator security requirements apply
 
 This page is intentionally focused on integration requirements first.
 So the stronger signer and operator security controls do **not** need to dominate the earliest partner conversation.
@@ -787,7 +813,7 @@ If the partner engineering or security team wants the deeper external baseline, 
 - [Security Alliance: signing verification](https://frameworks.securityalliance.org/wallet-security/signing-and-verification/signing-verification)
 - [Security Alliance: secure multisig best practices](https://frameworks.securityalliance.org/wallet-security/secure-multisig-best-practices/)
 
-## 18. Technical references
+## 19. Technical references
 
 This page should be enough for the first partner conversation.
 If the partner engineering team wants supporting references, use these next:
@@ -799,7 +825,7 @@ If the partner engineering team wants supporting references, use these next:
 - [Pricing, spreads, and core parameters](../mechanics/pricing-and-parameters.md)
 - [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
-## 19. Current concrete mapping
+## 20. Current concrete mapping
 
 For the current live partner discussion, the platform in view is ClawPump.
 
@@ -813,7 +839,7 @@ Read the requirements above against these working assumptions:
 That means the immediate question is not whether the partner can mimic the borrower-first Swig implementation.
 The immediate question is whether the partner can expose enough revenue, control, and readback truth for a bounded first pilot.
 
-## 20. What this page is not claiming
+## 21. What this page is not claiming
 
 This page does not claim:
 
@@ -824,7 +850,7 @@ This page does not claim:
 
 It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
 
-## 21. Related pages
+## 22. Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
 - [Revenue accounts and signing model](../mechanics/revenue-accounts-and-signing-model.md)
