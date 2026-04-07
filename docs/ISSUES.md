@@ -1,5 +1,60 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee guide should explain the borrower-side baseline before naming internal implementation labels
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The creator-fee guide now has the right overall structure, but the baseline section still names internal labels like `Swig` and `borrower-first Pump path` before a new reader knows what those terms mean. In a first-share document, the standard should be described generically first and any internal implementation name should be secondary. The right fix is to make the baseline self-contained, remove the early `Swig` reference from the integration-target framing, and mention the concrete internal implementation only after the standard is stated.
+- Missing info/questions: none blocking. The existing baseline bullets already describe the standard; they just need cleaner framing.
+- Type: hosted docs / creator-fee guide baseline clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` is meant to be shareable with counterparties who may have no prior context on attn internals.
+  - Early references to `Swig` and `borrower-first Pump path` read like internal shorthand.
+  - The user explicitly wants the baseline to be understandable if it is mentioned at all.
+- Fix intent:
+  1) replace the early `Swig` parity wording with a generic borrower-first managed-revenue baseline reference,
+  2) describe the baseline in plain terms first,
+  3) mention the internal implementation name only as a secondary note.
+- Acceptance criteria:
+  - the early framing no longer assumes the reader knows `Swig`,
+  - section 4 explains the baseline in plain language before naming any internal implementation,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the baseline standard intact,
+    - improve first-read clarity,
+    - avoid expanding into a long internal architecture explanation.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Replaced the early `Swig` parity reference with a generic borrower-first managed-revenue baseline reference.
+- Rewrote the baseline section so it states the standard first in plain language.
+- Kept the internal `Pump/Swig` name only as a secondary implementation note.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the first-share guide no longer assumes prior knowledge of `Swig`,
+  - and the borrower-side baseline is understandable on its own.
+
 ## 2026-04-07 - creator-fee guide should remove stale baseline wording and explain how attn evaluates the response
 
 Checklist

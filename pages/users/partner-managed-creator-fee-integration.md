@@ -58,11 +58,11 @@ This page is not about:
 
 - a public self-serve borrower product,
 - public lender readiness,
-- or automatic parity with the current borrower-first Swig path.
+- or automatic parity with attn's borrower-first managed-revenue baseline.
 
 ## 4. The baseline attn is comparing against
 
-The strongest borrower-side control baseline in attn today is the borrower-first Pump path.
+The strongest borrower-side control baseline in attn today is a borrower-first managed-revenue path.
 
 At a high level, that baseline gives attn:
 
@@ -70,6 +70,8 @@ At a high level, that baseline gives attn:
 - bounded change control while debt is open,
 - readback and auditability,
 - and a defined release or offboard path after close.
+
+In attn today, that baseline is implemented through the borrower-first Pump/Swig path.
 
 The partner-managed lane does not need to look the same at the account or wallet level.
 It does need to produce the same practical outcomes where policy matters.
@@ -111,7 +113,7 @@ attn must be able to tell:
 - where the repayment-relevant share goes,
 - and whether the path is a single destination, a split, a waterfall, or an operating process.
 
-The important thing is not matching the Swig implementation.
+The important thing is not matching attn's internal implementation.
 The important thing is making the debt-open repayment behavior explicit and monitorable.
 
 ### 5.4 Change authority must be bounded
@@ -169,7 +171,7 @@ No stage below the full standard should be described as:
 
 - public-live borrower readiness,
 - public lender readiness,
-- Swig-equivalent control parity,
+- equivalence to attn's borrower-first managed-revenue baseline,
 - or fully automated debt-open enforcement.
 
 ### 6.2 Stage 0: Compatibility-only
@@ -261,7 +263,7 @@ What attn can honestly claim:
 What is still false:
 
 - no strong claim that payout policy is fully locked or fully automated,
-- no Swig-equivalent control parity claim,
+- no equivalence claim to attn's borrower-first managed-revenue baseline,
 - no public borrower readiness.
 
 Minimum evidence:
@@ -302,7 +304,7 @@ What is still false:
 
 - no broad public borrower product,
 - no public lender or LP readiness,
-- no automatic equivalence to the borrower-first Swig path unless the full standard is reached.
+- no automatic equivalence to attn's borrower-first managed-revenue baseline unless the full standard is reached.
 
 Minimum evidence:
 
@@ -834,9 +836,9 @@ Read the requirements above against these working assumptions:
 - the partner keeps the wallet stack,
 - the partner may control per-mint dev wallets,
 - the partner may sponsor gas separately,
-- and creator-fee or service-fee routing may happen inside the partner payout surfaces rather than a borrower-owned Swig path.
+- and creator-fee or service-fee routing may happen inside the partner payout surfaces rather than the borrower-owned path used in attn's standard borrower-first implementation.
 
-That means the immediate question is not whether the partner can mimic the borrower-first Swig implementation.
+That means the immediate question is not whether the partner can mimic attn's standard borrower-first implementation.
 The immediate question is whether the partner can expose enough revenue, control, and readback truth for a bounded first pilot.
 
 ## 21. What this page is not claiming
