@@ -107,15 +107,17 @@ The first pass is a discovery and assessment pass that lets both sides determine
 - the shortest credible path to a pilot,
 - and which missing pieces are standardizable versus partner-specific.
 
-The initial response should define:
+The initial response should define the same core items that appear later in the response package and evidence package:
 
-1. what revenues count,
-2. where those revenues flow today,
-3. what changes while debt is open,
-4. who can edit that routing,
-5. what attn can read back,
-6. what happens if the routing degrades,
-7. and what happens after the lane closes.
+1. `revenue scope`: which revenues count toward the lane, which subset is repayment-relevant, and which visible revenues remain out of scope.
+2. `current payout topology`: where fees land first, which wallets or services touch them, and how funds move to final recipients.
+3. `current payout recipients`: the wallets, entities, or destinations currently receiving the in-scope flow.
+4. `current payout-edit authority`: the actor or approval path that can change recipients, splits, or payout rules.
+5. `current debt-open destination or waterfall design`: the routing rule that should apply while debt is open.
+6. `available readback or export surfaces`: the APIs, dashboards, exports, or reports attn can inspect directly.
+7. `incident or freeze posture`: the actions available if payout integrity degrades or needs to be paused.
+8. `release or offboard description`: what changes after close and what confirms that the debt-open rule has been removed.
+9. `written note on what is still manual or weaker than the baseline`: a plain statement of what remains manual, partial, or not yet fully evidenced.
 
 If those answers are strong, the lane may qualify for a bounded first pilot.
 If they are incomplete or weak, the lane remains at a lower claim level.
@@ -514,14 +516,15 @@ If the response shows unresolved ambiguity on core controls, attn should stop at
 
 For the first pass, the partner only needs to answer these items clearly:
 
-1. what exact revenues count toward the lane and which subset is repayment-relevant
-2. what the current payout topology is, including first landing point and current recipients
-3. what changes while debt is open, including the repayment destination, split, or waterfall
-4. who can edit payout routing or payout policy and what receipts or logs exist for those changes
-5. what live or near-live readback, exports, or dashboards attn can inspect
-6. what happens if payout integrity degrades, including pause, freeze, or quarantine actions
-7. what changes after the debt closes, including release or offboard behavior
-8. what remains manual, partial, or weaker than the stricter borrower-first baseline
+1. `revenue scope`: what exact revenues count toward the lane and which subset is repayment-relevant.
+2. `current payout topology`: what the current path looks like from first landing point through intermediate routing to current recipients.
+3. `current payout recipients`: which wallets, entities, or destinations currently receive the in-scope flow.
+4. `current payout-edit authority`: who can edit payout routing or payout policy and what receipts or logs exist for those changes.
+5. `current debt-open destination or waterfall design`: what changes while debt is open, including the repayment destination, split, or waterfall.
+6. `available readback or export surfaces`: what live or near-live APIs, dashboards, exports, or reports attn can inspect directly.
+7. `incident or freeze posture`: what happens if payout integrity degrades, including pause, freeze, or quarantine actions.
+8. `release or offboard description`: what changes after the debt closes, including release or offboard behavior.
+9. `written note on what is still manual or weaker than the baseline`: what remains manual, partial, or weaker than the stricter borrower-first baseline.
 
 If attn and the partner move into implementation review, the exact object shapes for descriptors, readbacks, receipts, evidence packs, and drift signals should come from `@attn-credit/sdk` rather than from this public page.
 

@@ -1,5 +1,56 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide should introduce response and evidence labels earlier
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The user correctly flagged that the page explains the detailed response and evidence labels too late. The fix is to surface the same labeled items with short explainers earlier, in the first-response sections, so readers do not have to wait until section `13` to understand the vocabulary.
+- Missing info/questions: none blocking.
+- Type: hosted docs / creator-fee guide early terminology alignment
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` now explains the evidence-package rows well in section `13`.
+  - Earlier sections `2` and `9` still used shorthand phrases like `what revenues count` and `what attn can read back`, which meant the first detailed definitions arrived too late.
+- Fix intent:
+  1) use the same labeled items earlier in the page,
+  2) add short plain-language explainers where those labels first appear,
+  3) keep section `13` as the detailed evidence-pack version rather than the first introduction.
+- Acceptance criteria:
+  - sections `2` and `9` use the same core labels as section `13`,
+  - those early mentions include short explainers,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the page scannable,
+    - avoid duplicating the full evidence-package prose too early,
+    - make the terminology consistent across sections `2`, `9`, and `13`.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote the early response lists in sections `2` and `9` to use the same labeled items introduced later in section `13`, each with a short explainer.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the guide now teaches the response/evidence vocabulary earlier instead of making readers wait for the evidence package section.
+
 ## 2026-04-08 - creator-fee guide examples should avoid placeholder launch labels
 
 Checklist
