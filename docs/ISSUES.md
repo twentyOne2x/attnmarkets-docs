@@ -1,5 +1,56 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide SDK bullets should explain the interface surfaces inline
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and tiny. The user correctly flagged that section `1.2` names several SDK surfaces without explaining what they mean. In a first-share partner guide, the first mention of those surfaces should use `term: one-line explainer` wording rather than shorthand bullets.
+- Missing info/questions: none blocking.
+- Type: hosted docs / creator-fee guide SDK surface clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already uses inline explainers in later dense lists such as the evidence package and minimum technical surfaces.
+  - Section `1.2` still used terse bullet fragments, which forced readers to infer what each SDK surface actually does.
+- Fix intent:
+  1) rewrite the SDK bullets into `term: explainer` form,
+  2) keep the section concise,
+  3) reduce the need for extra prose elsewhere in the guide.
+- Acceptance criteria:
+  - section `1.2` explains each SDK surface inline,
+  - the standard and sdk/doc split remain unchanged,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: tiny
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the list scannable,
+    - use concrete plain-language explainers,
+    - do not broaden the section into an SDK tutorial.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote the SDK bullets in section `1.2` into `term: one-line explainer` form so each interface surface is understandable on first read.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the first introduction to SDK surfaces now explains what each one does instead of relying on shorthand.
+
 ## 2026-04-08 - creator-fee guide should use formal standards language throughout
 
 Checklist

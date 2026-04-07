@@ -69,13 +69,13 @@ A large part of the integration surface is now standardized in `@attn-credit/sdk
 
 The SDK now provides:
 
-- schema and response shapes for revenue scope and payout topology,
-- readback endpoints or adapters,
-- change-receipt formats,
-- drift-detection hooks,
-- monitoring and alert payloads,
-- pilot evidence packaging,
-- and claim-level or stage classification helpers.
+- `schema and response shapes`: typed objects for describing revenue scope, payout topology, readbacks, receipts, and evidence packs in one consistent contract.
+- `readback endpoints or adapters`: integration surfaces that let attn inspect current payout state, recipients, debt-open routing, and change authority without inventing a custom payload for each partner.
+- `change-receipt formats`: canonical records for payout edits, routing changes, release actions, and incident events so those changes can be attributed and reviewed consistently.
+- `drift-detection hooks`: standard signals for telling attn when payout routing, debt-open mode, or incident state has moved outside the expected posture.
+- `monitoring and alert payloads`: event shapes that can feed attn monitoring, alerts, and operator review flows.
+- `pilot evidence packaging`: a repeatable evidence-pack format for bundling descriptors, readbacks, receipts, and stage assessment into one reviewable artifact.
+- `claim-level or stage classification helpers`: helpers that map the available evidence to the staged path in this guide instead of leaving stage assignment to ad hoc prose.
 
 Those are the reusable mechanics.
 The exact object shapes and receipt formats should live in the SDK reference, not in this public guide.
