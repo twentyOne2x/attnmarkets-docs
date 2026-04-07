@@ -1,5 +1,62 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee guide should collapse the standalone platform-counterparty section into Stage 1
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The creator-fee guide now has the right stage ladder, which means the standalone `Interim platform-counterparty posture` section is redundant and harder to understand than the Stage 1 description itself. The user is right that the sentence `attn does not pretend the payout path has stronger control integrity than it really has` is opaque. The right fix is to remove the standalone section and fold any necessary meaning into Stage 1.
+- Missing info/questions: none blocking. The Stage 1 section already contains the right conceptual slot for this meaning.
+- Type: hosted docs / creator-fee guide deduplication
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already defines `Stage 1: Platform-as-counterparty MVP`.
+  - A later standalone section repeats the same concept using more opaque language.
+  - This makes the document longer and less clear without adding real substance.
+- Fix intent:
+  1) remove the standalone `Interim platform-counterparty posture` section,
+  2) strengthen the Stage 1 wording slightly so the useful meaning stays present,
+  3) renumber downstream sections and references cleanly.
+- Acceptance criteria:
+  - the standalone interim platform-counterparty section is removed,
+  - Stage 1 still clearly explains when the platform is the operating counterparty,
+  - all later section numbers and references are consistent,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep one canonical page,
+    - make the result shorter and clearer,
+    - preserve the stage model and claim boundaries.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Removed the standalone `Interim platform-counterparty posture` section.
+- Folded the key idea into `Stage 1: Platform-as-counterparty MVP`.
+- Renumbered the downstream sections and top-of-page references.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the document is shorter,
+  - the opaque sentence is gone,
+  - and the platform-counterparty concept now lives only where it belongs: inside Stage 1.
+
 ## 2026-04-07 - creator-fee guide should explain the borrower-side baseline before naming internal implementation labels
 
 Checklist

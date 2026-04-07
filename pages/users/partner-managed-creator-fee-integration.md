@@ -8,9 +8,9 @@ If you are the partner team, the goal is simple:
 
 - read this page once,
 - read sections `1` through `7` first,
-- answer the response sections `9`, `10`, and `14` at the level of detail you have today,
-- attach the evidence listed in section `15`,
-- and use sections `6` through `19` to scope the earliest honest pilot and the strongest honest claim level.
+- answer the response sections `9`, `10`, and `13` at the level of detail you have today,
+- attach the evidence listed in section `14`,
+- and use sections `6` through `18` to scope the earliest honest pilot and the strongest honest claim level.
 
 ## 1. What this page is for
 
@@ -213,6 +213,7 @@ Minimum evidence:
 This is the first meaningful pilot stage if the platform is willing to stand behind the lane before stronger payout controls are in place.
 
 At this stage, attn is evaluating the platform as the primary counterparty rather than treating the end creator or borrower as fully policy-enforced onchain collateral.
+The platform is the operating counterparty for the pilot, and the lane should be described that way rather than as already having stronger payout-policy enforcement than the facts support.
 
 What must be true:
 
@@ -367,8 +368,8 @@ The right way to use it is:
 1. read sections `1` through `6` first so the requirements and the acceptable stage ladder are clear,
 2. review section `8` so the attn evaluation lens is clear,
 3. answer sections `9` and `10` in plain English at the level of detail you already have,
-4. if the lane still looks promising, answer section `14` for the first bounded pilot,
-5. then attach whatever evidence from section `15` you can already provide.
+4. if the lane still looks promising, answer section `13` for the first bounded pilot,
+5. then attach whatever evidence from section `14` you can already provide.
 
 An initial response can be concise.
 It can include:
@@ -663,34 +664,7 @@ This should only happen if the partner can prove the same practical outcomes tha
 - readback is real,
 - and release or offboard behavior is clear.
 
-## 13. Interim platform-counterparty posture
-
-If the partner is not ready for the stronger payout-control claim yet, attn can still evaluate a narrower interim posture where the platform itself is the direct counterparty for the first lane.
-
-That means:
-
-- attn does not pretend the payout path has stronger control integrity than it really has,
-- the platform stands behind the lane operationally,
-- reporting and readback still matter,
-- and the lane stays bounded.
-
-This is an acceptable interim shape only if the partner can still provide:
-
-- named revenue scope,
-- named payout topology,
-- named operational owner,
-- periodic reporting or readback,
-- and a clear explanation of what happens if the intended repayment behavior changes.
-
-This should be described honestly as:
-
-- `platform counterparty risk`
-
-and not as:
-
-- `fully policy-controlled creator-fee repayment parity`
-
-## 14. Bounded first-pilot response template
+## 13. Bounded first-pilot response template
 
 Please answer these before claiming the first pilot is ready:
 
@@ -713,7 +687,7 @@ The first pilot should fail closed:
 - if incident posture is undefined, treat the lane as operationally weaker,
 - if release or offboard is undefined, disclose that explicitly.
 
-## 15. Evidence package the partner should send
+## 14. Evidence package the partner should send
 
 The best response from the partner is one package that includes:
 
@@ -740,7 +714,7 @@ If the partner wants a direct response template, this is sufficient:
 8. What incident or freeze posture already exists?
 9. If stronger payout-path control is not ready yet, are you willing to stand behind the lane as the direct platform counterparty for a bounded pilot?
 
-## 16. Minimum technical surfaces
+## 15. Minimum technical surfaces
 
 attn does not need a large rewrite to start.
 It does need enough technical surface to qualify and monitor the lane.
@@ -759,7 +733,7 @@ The minimum useful surfaces are usually:
 If some of these are missing, the lane can still be discussed.
 The claim level just stays lower.
 
-## 17. First technical review agenda
+## 16. First technical review agenda
 
 If attn and the partner have a technical review call, the clean agenda is:
 
@@ -779,7 +753,7 @@ If attn and the partner have a technical review call, the clean agenda is:
 
 That meeting should end with a concrete yes or no on whether a bounded first pilot is realistically closable.
 
-## 18. When stronger signer and operator security requirements apply
+## 17. When stronger signer and operator security requirements apply
 
 This page is intentionally focused on integration requirements first.
 So the stronger signer and operator security controls do **not** need to dominate the earliest partner conversation.
@@ -815,7 +789,7 @@ If the partner engineering or security team wants the deeper external baseline, 
 - [Security Alliance: signing verification](https://frameworks.securityalliance.org/wallet-security/signing-and-verification/signing-verification)
 - [Security Alliance: secure multisig best practices](https://frameworks.securityalliance.org/wallet-security/secure-multisig-best-practices/)
 
-## 19. Technical references
+## 18. Technical references
 
 This page should be enough for the first partner conversation.
 If the partner engineering team wants supporting references, use these next:
@@ -827,7 +801,7 @@ If the partner engineering team wants supporting references, use these next:
 - [Pricing, spreads, and core parameters](../mechanics/pricing-and-parameters.md)
 - [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
-## 20. Current concrete mapping
+## 19. Current concrete mapping
 
 For the current live partner discussion, the platform in view is ClawPump.
 
@@ -841,7 +815,7 @@ Read the requirements above against these working assumptions:
 That means the immediate question is not whether the partner can mimic attn's standard borrower-first implementation.
 The immediate question is whether the partner can expose enough revenue, control, and readback truth for a bounded first pilot.
 
-## 21. What this page is not claiming
+## 20. What this page is not claiming
 
 This page does not claim:
 
@@ -852,7 +826,7 @@ This page does not claim:
 
 It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
 
-## 22. Related pages
+## 21. Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
 - [Revenue accounts and signing model](../mechanics/revenue-accounts-and-signing-model.md)
