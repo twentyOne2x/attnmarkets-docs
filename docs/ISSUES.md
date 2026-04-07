@@ -1,5 +1,62 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee integration guide should add gated signer and operator security thresholds
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The single-page creator-fee guide now has the right structure, but it still does not clearly tell the partner when stronger Drift/SEAL-style signer and operator security requirements become mandatory. The user is right that these controls should not dominate the early integration conversation, but they also should not be left implicit. The right fix is one gated section that explains when those requirements turn on and what they are.
+- Missing info/questions: none blocking. The threshold logic is already clear from the repo policy: this should be tied to real signing, mutable payout control, attn or partner treasury operations, protected endpoints, and meaningful balances, not only a raw TVL number.
+- Type: hosted docs / creator-fee guide security thresholds
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` focuses correctly on revenues, policies, and pilot stages.
+  - It does not yet tell the partner when the security bar steps up from normal integration review into dedicated-signing-computer and protected-endpoint doctrine.
+  - The user explicitly wants to avoid overloading the early doc, but also wants the threshold to be clear.
+- Fix intent:
+  1) add one concise section that explains when stronger signer and operator security requirements apply,
+  2) tie the threshold to control surface and meaningful balances rather than only TVL,
+  3) include the key requirements without turning the whole guide into a security framework doc,
+  4) point deeper readers to the relevant external references.
+- Acceptance criteria:
+  - the main guide contains one clear gated section for signer/operator security thresholds,
+  - the section explains that the trigger is not just TVL but real signing and payout-control surface,
+  - the section lists the minimum stronger controls once the threshold is crossed,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep one canonical page,
+    - do not front-load the whole doc with security doctrine,
+    - make the threshold explicit and operational.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added a new gated section to the creator-fee integration guide explaining when stronger signer and operator security requirements apply.
+- The section makes clear that the trigger is not only TVL; it is also real signing, mutable payout or treasury control, protected endpoints, and meaningful balances.
+- The section lists the minimum stronger controls once that threshold is crossed and points to the external references for deeper reading.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the partner guide stays focused on integration first,
+  - but the point where Drift/SEAL-style signer controls become mandatory is now explicit.
+
 ## 2026-04-07 - creator-fee integration guide should state requirements before asking questions
 
 Checklist

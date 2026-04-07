@@ -10,7 +10,7 @@ If you are the partner team, the goal is simple:
 - read sections `1` through `6` first,
 - answer the response sections `7`, `8`, and `13` at the level of detail you have today,
 - attach the evidence listed in section `14`,
-- and use sections `9` through `17` to scope the earliest honest pilot and the strongest honest claim level.
+- and use sections `9` through `18` to scope the earliest honest pilot and the strongest honest claim level.
 
 ## 1. What this page is for
 
@@ -754,7 +754,43 @@ If attn and the partner have a technical review call, the clean agenda is:
 
 That meeting should end with a concrete yes or no on whether a bounded first pilot is realistically closable.
 
-## 17. Technical references
+## 17. When stronger signer and operator security requirements apply
+
+This page is intentionally focused on integration requirements first.
+So the stronger signer and operator security controls do **not** need to dominate the earliest partner conversation.
+
+But they do need to become explicit once the lane crosses out of light integration review and into real signing or meaningful balances.
+
+The trigger is not only raw TVL.
+The stronger security posture becomes mandatory once one or more of these are true:
+
+- real multisig or treasury approvals are happening,
+- payout routing or repayment destinations can be changed through signer-controlled operations,
+- attn or the partner is relying on protected operator endpoints to move funds or approve production changes,
+- the lane is reaching a real bounded pilot with meaningful balances,
+- or a compromised everyday laptop could materially alter the repayment path or treasury posture.
+
+At that point, the minimum bar should include:
+
+- dedicated signing computers for real multisig approvals,
+- no everyday browsing, coding, messaging, or app installs on signer-capable machines,
+- hardware-wallet use on clean signer endpoints only,
+- protected-endpoint inventory and machine-class tracking,
+- attributable change receipts and signer review,
+- incident freeze, quarantine, and recovery procedures,
+- and clear separation between routine operator laptops and production signer devices.
+
+For early compatibility work, manual underwriting review, or light platform-counterparty discussion, this can stay as a forward-looking requirement.
+For a real bounded pilot with treasury movement or mutable payout control, it should be treated as part of the lane standard, not an optional hardening extra.
+
+If the partner engineering or security team wants the deeper external baseline, use:
+
+- [How to Multisig](https://howtomultisig.com/)
+- [Security Alliance frameworks](https://frameworks.securityalliance.org/)
+- [Security Alliance: signing verification](https://frameworks.securityalliance.org/wallet-security/signing-and-verification/signing-verification)
+- [Security Alliance: secure multisig best practices](https://frameworks.securityalliance.org/wallet-security/secure-multisig-best-practices/)
+
+## 18. Technical references
 
 This page should be enough for the first partner conversation.
 If the partner engineering team wants supporting references, use these next:
@@ -766,7 +802,7 @@ If the partner engineering team wants supporting references, use these next:
 - [Pricing, spreads, and core parameters](../mechanics/pricing-and-parameters.md)
 - [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
-## 18. Current concrete mapping
+## 19. Current concrete mapping
 
 For the current live partner discussion, the platform in view is ClawPump.
 
@@ -780,7 +816,7 @@ Read the requirements above against these working assumptions:
 That means the immediate question is not whether the partner can mimic the borrower-first Swig implementation.
 The immediate question is whether the partner can expose enough revenue, control, and readback truth for a bounded first pilot.
 
-## 19. What this page is not claiming
+## 20. What this page is not claiming
 
 This page does not claim:
 
@@ -791,7 +827,7 @@ This page does not claim:
 
 It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
 
-## 20. Related pages
+## 21. Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
 - [Revenue accounts and signing model](../mechanics/revenue-accounts-and-signing-model.md)
