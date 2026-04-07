@@ -1,8 +1,8 @@
-# Partner-Managed Creator-Fee Integration Guide
+# Partner-Managed Revenue Integration Guide
 
-This page is the single document a creator-fee platform should use when evaluating an attn integration while keeping its own wallet and payout infrastructure.
+This page is the single document a partner should use when evaluating an attn integration while keeping its own wallet and payout infrastructure.
 
-At a high level, attn enables a financing lane against creator-fee or service-fee revenues without forcing the partner to migrate those revenues into attn-owned wallets or into a borrower-owned Swig stack first.
+At a high level, attn enables a financing lane against attributable partner-managed revenues without forcing the partner to migrate those revenues into attn-owned wallets or into a borrower-owned Swig stack first.
 
 The point of this setup is straightforward:
 
@@ -24,7 +24,7 @@ If you are the partner team, the goal is simple:
 
 This page answers one question:
 
-**What must be true for attn to support a creator-fee lane when the partner keeps its own wallet and payout stack?**
+**What must be true for attn to support a partner-managed revenue lane when the partner keeps its own wallet and payout stack?**
 
 The page is not asking you to migrate to Swig, Privy, or Squads.
 It is asking whether your existing payout and wallet stack can make the repayment path clear, bounded, auditable, and monitorable enough for a supportable lane.
@@ -35,6 +35,8 @@ In practical terms, attn is trying to answer four things:
 2. where the repayment-relevant share goes while debt is open
 3. who can change that path
 4. how drift, degradation, and release are detected and evidenced
+
+The same standard can apply to creator-fee platforms, service businesses, usage-metered x402-style services, subscription revenue, or another attributable revenue source, as long as the payout path and debt-open routing can be made explicit.
 
 ### 1.1 What this setup is meant to guarantee
 
@@ -133,7 +135,7 @@ The current target is narrow.
 attn is evaluating whether it can support:
 
 - a partner-managed wallet stack,
-- creator-fee or service-fee revenues as the repayment-relevant source,
+- a named attributable revenue source as the repayment-relevant source,
 - a bounded first lane,
 - and an operator-visible evidence chain.
 
@@ -166,7 +168,7 @@ It is looking for "same control result."
 
 Before the partner answers anything in detail, the integration standard should be clear.
 
-For a partner-managed creator-fee lane to be supportable, attn needs these outcomes to be true:
+For a partner-managed revenue lane to be supportable, attn needs these outcomes to be true:
 
 ### 5.1 Revenue scope must be explicit
 
@@ -182,7 +184,7 @@ If the revenue scope is ambiguous, the lane is not yet credit-ready.
 
 > **Example**
 >
-> Suppose the partner currently earns revenue from three places: creator fees on named launches for Creator One and Creator Two, a monthly platform subscription sold to teams using the product, and secondary-market royalties that appear in reporting after launch. The lane may include only the creator-fee revenue from those two named launches. The subscription revenue remains out of scope, and the secondary royalties remain visible in reporting but out of scope unless the lane definition explicitly includes them.
+> Suppose the partner currently earns revenue from three places: usage fees from one API product, monthly subscriptions from a hosted dashboard, and secondary royalties from a separate token program. The lane may include only the usage-fee revenue from the API product. The subscription revenue remains out of scope, and the royalties remain visible in reporting but out of scope unless the lane definition explicitly includes them.
 
 ### 5.2 Wallet topology must be legible
 
@@ -215,7 +217,7 @@ The important thing is making the debt-open repayment behavior explicit and moni
 
 > **Example**
 >
-> While debt is open, `30%` of each in-scope creator-fee event goes to a repayment wallet, `70%` goes to the creator treasury, and that split remains in force until the release condition is met.
+> While debt is open, `30%` of each in-scope revenue event goes to a repayment wallet, `70%` goes to the partner treasury, and that split remains in force until the release condition is met.
 
 ### 5.4 Change authority must be bounded
 
@@ -718,7 +720,7 @@ This page does not claim:
 - automatic control parity,
 - or a fully shipped runtime lane today.
 
-It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
+It is a qualification and pilot-shaping document for a partner-managed revenue integration.
 
 ## 19. Related pages
 
