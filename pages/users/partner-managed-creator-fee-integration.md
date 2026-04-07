@@ -8,9 +8,9 @@ If you are the partner team, the goal is simple:
 
 - read this page once,
 - read sections `1` through `7` first,
-- answer the response sections `9`, `10`, and `13` at the level of detail you have today,
-- attach the evidence listed in section `14`,
-- and use sections `6` through `18` to scope the earliest honest pilot and the strongest honest claim level.
+- answer the response package in section `9` at the level of detail you have today,
+- attach the evidence listed in section `13`,
+- and use sections `6` through `17` to scope the earliest honest pilot and the strongest honest claim level.
 
 ## 1. What this page is for
 
@@ -68,6 +68,7 @@ The SDK can package things like:
 - and claim-level or stage classification helpers.
 
 Those are the reusable mechanics.
+The exact object shapes and receipt formats should live in the SDK reference, not in this public guide.
 
 ### 1.3 What the SDK cannot solve for the partner
 
@@ -432,29 +433,15 @@ At that point, the lane should remain at `compatibility-only`.
 
 This page is not asking the partner to produce a perfect diligence packet on day one.
 
-The right way to use it is:
+The right flow is:
 
-1. read sections `1` through `6` first so the requirements and the acceptable stage ladder are clear,
-2. review section `8` so the attn evaluation lens is clear,
-3. answer sections `9` and `10` in plain English at the level of detail you already have,
-4. if the lane still looks promising, answer section `13` for the first bounded pilot,
-5. then attach whatever evidence from section `14` you can already provide.
+1. read sections `1` through `6` so the standard and stage ladder are clear,
+2. send one concise response package using section `9`,
+3. attach whatever evidence from section `13` already exists,
+4. use the SDK reference during implementation review if exact payload shapes are needed.
 
-An initial response can be concise.
-It can include:
-
-- one short explanation of the revenue path,
-- one payout topology diagram or export,
-- one explanation of who can change payout routing,
-- and one explanation of what happens when debt is open versus closed.
-
-That is enough to determine whether the lane is:
-
-- only compatibility-level,
-- usable for manual underwriting,
-- or strong enough for a bounded first pilot.
-
-The response sections are intended to determine quickly whether the lane is structurally viable before it is treated as meeting the full standard.
+The public guide is intentionally about control outcomes, stages, and evidence.
+The exact payloads, receipt formats, and validation rules should live in the `@attn-credit/sdk` integration reference that attn shares directly during technical review.
 
 ## 8. How attn evaluates the response
 
@@ -464,7 +451,7 @@ attn uses the partner response for five things:
 2. classify the lane against the stage model in this document,
 3. identify which requirements are already evidenced versus still partial or missing,
 4. decide whether a bounded first pilot is worth scoping,
-5. and determine whether the lane should stop at compatibility, remain manual, or move toward a stronger claim level.
+5. determine whether the lane should stop at compatibility, remain manual, or move toward a stronger claim level.
 
 At a high level, attn is checking:
 
@@ -475,217 +462,25 @@ At a high level, attn is checking:
 - and whether incident and release behavior are defined enough.
 
 If the response is strong, attn can map the lane to one of the acceptable stages and define the next evidence package or pilot shape.
-If the response is incomplete, attn can ask for the specific missing evidence rather than continuing with vague integration language.
+If the response is incomplete, attn can ask for the specific missing evidence.
 If the response shows unresolved ambiguity on core controls, attn should stop at a lower claim level instead of stretching the lane into a stronger posture than the facts support.
 
-This section is intentionally high-level.
-It explains how attn consumes the response without turning the public guide into a private underwriting or servicing manual.
+## 9. Partner response package
 
-## 9. Revenue-functioning response template
+For the first pass, the partner only needs to answer these items clearly:
 
-This is the first thing the partner should answer once the requirements above are understood.
+1. what exact revenues count toward the lane and which subset is repayment-relevant
+2. what the current payout topology is, including first landing point and current recipients
+3. what changes while debt is open, including the repayment destination, split, or waterfall
+4. who can edit payout routing or payout policy and what receipts or logs exist for those changes
+5. what live or near-live readback, exports, or dashboards attn can inspect
+6. what happens if payout integrity degrades, including pause, freeze, or quarantine actions
+7. what changes after the debt closes, including release or offboard behavior
+8. what remains manual, partial, or weaker than the stricter borrower-first baseline
 
-### 9.1 What revenues count?
+If attn and the partner move into implementation review, the exact object shapes for descriptors, readbacks, receipts, evidence packs, and drift signals should come from `@attn-credit/sdk` rather than from this public page.
 
-Please answer:
-
-1. Which revenues are in scope for the lane?
-   - creator fees
-   - service fees
-   - platform fees
-   - other
-2. Which revenues are repayment-relevant?
-3. Which revenues are visible but not repayment-relevant?
-
-What attn needs:
-
-- one named revenue scope,
-- a plain-language explanation,
-- and sample evidence showing the scope is real.
-
-Minimum pilot bar:
-
-- repayment-relevant revenues are named,
-- and the partner can show example records or exports for that scope.
-
-### 9.2 Where do those revenues land first?
-
-Please answer:
-
-1. What wallet or router receives the revenues first?
-2. Is that wallet:
-   - creator-controlled,
-   - partner-controlled,
-   - shared,
-   - or policy-routed?
-3. Are there separate sponsor, treasury, or settlement wallets involved?
-
-What attn needs:
-
-- first landing point,
-- current recipients,
-- and the topology around that flow.
-
-Minimum pilot bar:
-
-- attn can see the first landing wallet or router,
-- and the live recipients that matter for the lane.
-
-### 9.3 What happens while debt is open?
-
-Please answer:
-
-1. What portion of the revenue path changes while debt is open?
-2. Where does the repayment-relevant portion go?
-3. Is it:
-   - a single destination,
-   - a waterfall,
-   - a split,
-   - or a manual operating process?
-4. How is that kept true while the lane is active?
-
-What attn needs:
-
-- the debt-open destination or waterfall,
-- and a concrete explanation of how it stays true.
-
-Minimum pilot bar:
-
-- the debt-open repayment path is explicit,
-- and it cannot drift silently without attn being able to detect it.
-
-### 9.4 What happens if that routing changes?
-
-Please answer:
-
-1. Who can change payout routing or payout policy?
-2. Can one person do it, or is there a quorum, approval flow, or policy engine?
-3. What receipt or log exists when that happens?
-4. How quickly can attn detect the change?
-
-What attn needs:
-
-- known edit authority,
-- bounded change surface,
-- and retained change receipts.
-
-Minimum pilot bar:
-
-- payout-edit authority is named,
-- change events are attributable,
-- and the partner can show how attn would detect drift.
-
-## 10. Policy response template
-
-This section is the control contract.
-
-### 10.1 Launch attribution policy
-
-Please answer:
-
-1. How does the platform determine which launch, mint, or creator belongs to which lane?
-2. What is the source of truth for that mapping?
-3. Can you provide:
-   - launch identifier,
-   - creator or entity identifier,
-   - cluster,
-   - and timestamp?
-
-Minimum pilot bar:
-
-- attribution is deterministic enough that attn can tell which revenue source belongs to which lane.
-
-### 10.2 Revenue-scope policy
-
-Please answer:
-
-1. How is repayment-relevant revenue defined?
-2. Is that scope contractual, configurable, or inferred?
-3. Can the scope change over time?
-4. If yes, who can change it and how is that change recorded?
-
-Minimum pilot bar:
-
-- the revenue scope is explicit and stable enough to underwrite conservatively.
-
-### 10.3 Wallet-topology policy
-
-Please answer:
-
-1. What are the key wallets or payout routers involved?
-2. Which of them can materially affect the repayment path?
-3. Which actor controls each one?
-
-Minimum pilot bar:
-
-- attn can see the wallets and actors that matter to repayment integrity.
-
-### 10.4 Debt-open destination policy
-
-Please answer:
-
-1. What is the required destination or waterfall while debt is open?
-2. How is that destination enforced in practice?
-3. What would count as a violation?
-
-Minimum pilot bar:
-
-- the debt-open destination is explicit,
-- and a violation is detectable rather than arguable.
-
-### 10.5 Change-control policy
-
-Please answer:
-
-1. Who can edit payout recipients, payout percentages, or payout logic?
-2. What approvals are required?
-3. What receipt exists after the change?
-
-Minimum pilot bar:
-
-- known actor,
-- known process,
-- retained receipts.
-
-### 10.6 Readback policy
-
-Please answer:
-
-1. What can attn inspect directly?
-2. What must be provided as exports or reports?
-3. How current is the readback?
-
-Minimum pilot bar:
-
-- attn can inspect enough live or near-live state to detect drift.
-
-### 10.7 Release and offboard policy
-
-Please answer:
-
-1. What changes after the debt closes?
-2. Who regains control of what?
-3. What receipt proves the release or offboard happened?
-
-Minimum pilot bar:
-
-- the release path is defined,
-- and the post-close state is not ambiguous.
-
-### 10.8 Incident policy
-
-Please answer:
-
-1. What happens if payout integrity is compromised?
-2. What freeze, pause, or quarantine actions exist?
-3. What receipts exist for incident and recovery actions?
-
-Minimum pilot bar:
-
-- there is a real degraded-state response,
-- not only a normal-mode explanation.
-
-## 11. Requirement status model
+## 10. Requirement status model
 
 attn will generally classify each requirement as:
 
@@ -699,7 +494,7 @@ Interpretation:
 - a mix of `partial` and `verified` items may still support manual underwriting review,
 - a strong cluster of `verified` items is required for a bounded first pilot.
 
-## 12. What attn can honestly claim at each stage
+## 11. What attn can honestly claim at each stage
 
 ### Compatibility-only
 
@@ -733,19 +528,19 @@ This should only happen if the partner can prove the same practical outcomes tha
 - readback is real,
 - and release or offboard behavior is clear.
 
-## 13. Bounded first-pilot response template
+## 12. Bounded first-pilot scope
 
-Please answer these before claiming the first pilot is ready:
+Before claiming a first pilot is ready, both sides should be able to name:
 
-1. What exact lane is in scope?
-2. What exact revenues count?
-3. What exact wallets or routers matter?
-4. What exact debt-open destination or waterfall applies?
-5. Who can edit that state?
-6. What exact readback or export surfaces will attn receive?
-7. What exact incident response exists if payout integrity degrades?
-8. What exact release or offboard path applies after close?
-9. What remains manual or partially verified?
+1. the exact lane in scope
+2. the exact repayment-relevant revenues
+3. the exact wallets, routers, or policies that affect the path
+4. the exact debt-open destination or waterfall
+5. the exact edit authority for that state
+6. the exact readback or export surfaces attn will receive
+7. the exact incident response if payout integrity degrades
+8. the exact release or offboard path after close
+9. what remains manual or only partially verified
 
 The first pilot should fail closed:
 
@@ -756,7 +551,7 @@ The first pilot should fail closed:
 - if incident posture is undefined, treat the lane as operationally weaker,
 - if release or offboard is undefined, disclose that explicitly.
 
-## 14. Evidence package the partner should send
+## 13. Evidence package the partner should send
 
 The best response from the partner is one package that includes:
 
@@ -771,19 +566,7 @@ The best response from the partner is one package that includes:
 9. release or offboard description,
 10. written note on what is still manual or weaker than the baseline.
 
-If the partner wants a direct response template, this is sufficient:
-
-1. What exact revenue sources count toward the lane?
-2. What is the current payout topology?
-3. Who can edit payout state today?
-4. What is the debt-open repayment destination or waterfall?
-5. What readback or export surfaces can you expose?
-6. What receipts exist for payout changes?
-7. What happens after debt closes?
-8. What incident or freeze posture already exists?
-9. If stronger payout-path control is not ready yet, are you willing to stand behind the lane as the direct platform counterparty for a bounded pilot?
-
-## 15. Minimum technical surfaces
+## 14. Minimum technical surfaces
 
 attn does not need a large rewrite to start.
 It does need enough technical surface to qualify and monitor the lane.
@@ -801,8 +584,9 @@ The minimum useful surfaces are usually:
 
 If some of these are missing, the lane can still be discussed.
 The claim level just stays lower.
+The exact payload shapes for these surfaces should come from `@attn-credit/sdk` rather than from this page.
 
-## 16. First technical review agenda
+## 15. First technical review agenda
 
 If attn and the partner have a technical review call, the clean agenda is:
 
@@ -822,7 +606,7 @@ If attn and the partner have a technical review call, the clean agenda is:
 
 That meeting should end with a concrete yes or no on whether a bounded first pilot is realistically closable.
 
-## 17. When stronger signer and operator security requirements apply
+## 16. When stronger signer and operator security requirements apply
 
 This page is intentionally focused on integration requirements first.
 So the stronger signer and operator security controls do **not** need to dominate the earliest partner conversation.
@@ -858,7 +642,7 @@ If the partner engineering or security team wants the deeper external baseline, 
 - [Security Alliance: signing verification](https://frameworks.securityalliance.org/wallet-security/signing-and-verification/signing-verification)
 - [Security Alliance: secure multisig best practices](https://frameworks.securityalliance.org/wallet-security/secure-multisig-best-practices/)
 
-## 18. Technical references
+## 17. Technical references
 
 This page should be enough for the first partner conversation.
 If the partner engineering team wants supporting references, use these next:
@@ -870,7 +654,7 @@ If the partner engineering team wants supporting references, use these next:
 - [Pricing, spreads, and core parameters](../mechanics/pricing-and-parameters.md)
 - [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
-## 19. What this page is not claiming
+## 18. What this page is not claiming
 
 This page does not claim:
 
@@ -881,7 +665,7 @@ This page does not claim:
 
 It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
 
-## 20. Related pages
+## 19. Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
 - [Revenue accounts and signing model](../mechanics/revenue-accounts-and-signing-model.md)
