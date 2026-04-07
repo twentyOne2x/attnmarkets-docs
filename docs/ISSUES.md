@@ -1,5 +1,69 @@
 # ISSUES
 
+## 2026-04-07 - hosted docs should collapse creator-fee MVP stages back into the main guide
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The lighter MVP page was useful as an intermediate drafting step, but the user wants one forwardable document, not multiple parallel docs. The right fix is to merge the staged MVP ladder into the main creator-fee integration guide and demote the separate MVP route into a compatibility pointer rather than a second full document.
+- Missing info/questions: none blocking. The staged content already exists and can be folded into the strict guide directly.
+- Type: hosted docs / creator-fee guide consolidation
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` is the main full-standard guide.
+  - `pages/users/partner-managed-creator-fee-mvp-paths.md` added useful staged content, but it split the partner story across two pages again.
+  - The user explicitly wants one canonical forwardable document with the acceptable intermediary stages included inline.
+- Fix intent:
+  1) merge the acceptable staged-path content into the main creator-fee integration guide,
+  2) remove the separate MVP page from normal navigation,
+  3) keep the old route only as a backwards-compatibility pointer,
+  4) update launchpad links so they point at the main guide only.
+- Acceptance criteria:
+  - the main creator-fee guide contains the acceptable staged ladder inline,
+  - the sidebar no longer presents the MVP page as a separate primary document,
+  - the launchpads page no longer points at two parallel creator-fee docs,
+  - the old MVP route remains understandable if visited directly,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/_meta.js`
+    - `pages/users/for-launchpads-and-incubators.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+    - `pages/users/partner-managed-creator-fee-mvp-paths.md`
+  - Constraints:
+    - preserve the useful staged ladder content,
+    - keep one real canonical document for partner forwarding,
+    - keep the legacy route non-broken if it was already shared.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Folded the acceptable staged-path ladder into `pages/users/partner-managed-creator-fee-integration.md` as section `10`.
+- Updated the opening guidance and downstream section numbering in the main guide so the page now contains both the full-standard requirements and the acceptable intermediary steps.
+- Removed the MVP page from user navigation in `pages/users/_meta.js`.
+- Removed the extra MVP link from `pages/users/for-launchpads-and-incubators.md`.
+- Converted `pages/users/partner-managed-creator-fee-mvp-paths.md` into a short backwards-compatibility pointer back to the main guide instead of leaving it as a second substantial doc.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/_meta.js pages/users/for-launchpads-and-incubators.md pages/users/partner-managed-creator-fee-integration.md pages/users/partner-managed-creator-fee-mvp-paths.md`
+  - `npm run build`
+- Result:
+  - the creator-fee integration guidance is back to one real canonical document,
+  - the staged MVP ladder remains available inline in the main guide,
+  - and the old MVP route now only preserves backwards compatibility.
+
 ## 2026-04-07 - hosted docs need a smaller creator-fee integration MVP path companion
 
 Checklist

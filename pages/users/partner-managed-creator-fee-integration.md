@@ -4,16 +4,12 @@ This page is the single document a creator-fee platform should use when evaluati
 
 It is intentionally written as a requirements and response document, not a product explainer.
 
-If you want the lighter staged version first, use:
-
-- [Partner-Managed Creator-Fee MVP Paths](./partner-managed-creator-fee-mvp-paths.md)
-
 If you are the partner team, the goal is simple:
 
 - read this page once,
-- answer the questions in sections `3` through `10`,
-- attach the evidence listed in section `11`,
-- and use sections `12` through `14` to scope the first bounded pilot.
+- answer the questions in sections `3` through `11`,
+- attach the evidence listed in section `12`,
+- and use sections `10` through `15` to scope the earliest honest pilot.
 
 ## 1. What this page is for
 
@@ -360,7 +356,219 @@ and not as:
 
 - `fully policy-controlled creator-fee repayment parity`
 
-## 10. Bounded first-pilot questionnaire
+## 10. Acceptable staged paths before the full standard
+
+The full requirements above describe the target state.
+
+But not every partner will be ready for that immediately.
+So this page also defines the acceptable intermediary steps below the full standard.
+
+These are not marketing tiers.
+They are claim-bounded proof stages.
+
+### 10.1 What stays true across every stage
+
+Even the lightest acceptable stage still needs:
+
+- one named revenue scope,
+- one named operating entity,
+- one visible payout topology explanation,
+- one clear operator owner,
+- and one manual stop or downgrade path if payout behavior drifts.
+
+No stage below the full standard should be described as:
+
+- public-live borrower readiness,
+- public lender readiness,
+- Swig-equivalent control parity,
+- or fully automated debt-open enforcement.
+
+### 10.2 Stage 0: Compatibility-only
+
+This is the lightest stage.
+
+At this stage, attn can:
+
+- understand the partner revenue model,
+- inspect example flows,
+- and decide whether the lane is worth deeper work.
+
+What must be true:
+
+- the revenue scope is named,
+- the platform or entity is named,
+- the current payout topology can be explained,
+- sample records show the revenue is real.
+
+What attn can honestly claim:
+
+- compatibility and underwriting interest,
+- not credit readiness.
+
+What is still false:
+
+- no fundable lane,
+- no debt-open routing claim,
+- no platform-control or borrower-control parity claim.
+
+Minimum evidence:
+
+- sample payout exports,
+- named wallets or payout routers,
+- one explanation of who controls what today.
+
+### 10.3 Stage 1: Platform-as-counterparty MVP
+
+This is the first meaningful pilot stage if the platform is willing to stand behind the lane before stronger payout controls are in place.
+
+At this stage, attn is evaluating the platform as the primary counterparty rather than treating the end creator or borrower as fully policy-enforced onchain collateral.
+
+What must be true:
+
+- the platform entity is named and accepts counterparty responsibility,
+- the revenue scope is explicit,
+- attn can review recent revenue behavior,
+- reconciliation happens on a defined cadence,
+- a manual pause or unwind process exists.
+
+What attn can honestly claim:
+
+- bounded platform-counterparty pilot,
+- early proof that the business flow is real,
+- not full payout-policy enforcement.
+
+What is still false:
+
+- no strong borrower-level control claim,
+- no debt-open payout lock claim,
+- no lender-ready external proof.
+
+Minimum evidence:
+
+- recent revenue records,
+- manual settlement or reconciliation process,
+- named operator owners,
+- documented pause, dispute, or unwind path.
+
+### 10.4 Stage 2: Observable payout-path MVP
+
+This stage is stronger than pure platform-counterparty trust.
+
+At this stage, the partner exposes enough readback that attn can see where repayment-relevant revenue is supposed to go and can detect drift, even if enforcement is still partly manual or operator-mediated.
+
+What must be true:
+
+- the debt-open destination or waterfall is explicitly named,
+- current recipients can be read back,
+- payout edits are attributable,
+- attn can detect drift inside a defined window.
+
+What attn can honestly claim:
+
+- the repayment-relevant payout path is observable,
+- the lane is monitorable,
+- and deviations should be detectable.
+
+What is still false:
+
+- no strong claim that payout policy is fully locked or fully automated,
+- no Swig-equivalent control parity claim,
+- no public borrower readiness.
+
+Minimum evidence:
+
+- current payout configuration,
+- change receipts or logs,
+- readback method or export,
+- drift-detection rule,
+- manual escalation path.
+
+### 10.5 Stage 3: Policy-bounded first pilot
+
+This is the strongest acceptable intermediary stage before the full standard.
+
+At this stage, the partner still keeps its own wallet stack, but attn can point to:
+
+- an explicit debt-open payout posture,
+- bounded payout-change authority,
+- durable readback,
+- and incident or freeze behavior.
+
+What must be true:
+
+- the debt-open destination or waterfall is explicit,
+- payout-edit authority is named,
+- changes leave attributable receipts,
+- attn can read back current posture,
+- incident freeze and recovery steps exist,
+- one bounded first pilot can be monitored end to end.
+
+What attn can honestly claim:
+
+- one bounded first real pilot is supportable,
+- the repayment path is legible and operationally bounded,
+- policy and evidence are strong enough for a narrow controlled lane.
+
+What is still false:
+
+- no broad public borrower product,
+- no public lender or LP readiness,
+- no automatic equivalence to the borrower-first Swig path unless the full standard is reached.
+
+Minimum evidence:
+
+- payout topology,
+- debt-open destination rule,
+- edit-authority map,
+- change receipts,
+- readback or dashboard exports,
+- incident or freeze posture,
+- one bounded pilot pack.
+
+### 10.6 Stage 4: Full-standard partner-managed lane
+
+This is the target state for the rest of this document.
+
+At this stage, attn should be able to reason about the partner-managed lane as producing the same practical control outcomes that matter in the stricter borrower-first baseline:
+
+- explicit debt-open payout posture,
+- bounded change control,
+- durable readback,
+- incident response,
+- and release or offboard clarity.
+
+### 10.7 Fastest acceptable paths in practice
+
+If the partner wants the fastest honest route, the usual choices are:
+
+- `Stage 1` when the main goal is proving real financing demand with the platform standing behind the lane,
+- `Stage 2` when payout observability already exists but stronger policy bounding is not yet ready,
+- `Stage 3` when one real bounded pilot is within reach.
+
+### 10.8 What each stage proves
+
+| Stage | What it proves | What it does not prove |
+| --- | --- | --- |
+| `Stage 0` | the revenue model is real enough to evaluate | no financeability, no payout control, no pilot readiness |
+| `Stage 1` | the platform can support a manual or operator-run financing pilot as the primary counterparty | no borrower-level control parity, no debt-open payout lock |
+| `Stage 2` | repayment-relevant routing is observable and drift can be detected | no strong claim that payout policy is fully bounded |
+| `Stage 3` | one bounded first pilot can run with real control, readback, and incident posture | no public-live or broad lender-ready claim |
+| `Stage 4` | the partner-managed lane meets the full stricter requirements | still not the same thing as permissionless or open-lender readiness by default |
+
+### 10.9 When not to move forward
+
+Do not move past discovery if:
+
+- the revenue scope cannot be named,
+- payout recipients cannot be described,
+- the partner cannot identify who can change routing,
+- no readback or receipt path exists,
+- or there is no clear operator owner for pause and incident handling.
+
+At that point the right answer is not `ship anyway`.
+The right answer is `stay at compatibility-only`.
+
+## 11. Bounded first-pilot questionnaire
 
 Please answer these before claiming the first pilot is ready:
 
@@ -383,7 +591,7 @@ The first pilot should fail closed:
 - if incident posture is undefined, treat the lane as operationally weaker,
 - if release or offboard is undefined, disclose that explicitly.
 
-## 11. Evidence package the partner should send
+## 12. Evidence package the partner should send
 
 The best response from the partner is one package that includes:
 
@@ -410,7 +618,7 @@ If the partner wants a direct response template, this is sufficient:
 8. What incident or freeze posture already exists?
 9. If stronger payout-path control is not ready yet, are you willing to stand behind the lane as the direct platform counterparty for a bounded pilot?
 
-## 12. Minimum technical surfaces
+## 13. Minimum technical surfaces
 
 attn does not need a large rewrite to start.
 It does need enough technical surface to qualify and monitor the lane.
@@ -429,7 +637,7 @@ The minimum useful surfaces are usually:
 If some of these are missing, the lane can still be discussed.
 The claim level just stays lower.
 
-## 13. First technical review agenda
+## 14. First technical review agenda
 
 If attn and the partner have a technical review call, the clean agenda is:
 
@@ -449,7 +657,7 @@ If attn and the partner have a technical review call, the clean agenda is:
 
 That meeting should end with a concrete yes or no on whether a bounded first pilot is realistically closable.
 
-## 14. Technical references
+## 15. Technical references
 
 This page should be enough for the first partner conversation.
 If the partner engineering team wants supporting references, use these next:
@@ -461,7 +669,7 @@ If the partner engineering team wants supporting references, use these next:
 - [Pricing, spreads, and core parameters](../mechanics/pricing-and-parameters.md)
 - [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
 
-## 15. Current concrete mapping
+## 16. Current concrete mapping
 
 For the current live partner discussion, the platform in view is ClawPump.
 
@@ -475,7 +683,7 @@ Read the requirements above against these working assumptions:
 That means the immediate question is not whether the partner can mimic the borrower-first Swig implementation.
 The immediate question is whether the partner can expose enough revenue, control, and readback truth for a bounded first pilot.
 
-## 16. What this page is not claiming
+## 17. What this page is not claiming
 
 This page does not claim:
 
@@ -486,7 +694,7 @@ This page does not claim:
 
 It is a qualification and pilot-shaping document for a partner-managed creator-fee integration.
 
-## 17. Related pages
+## 18. Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
 - [Revenue accounts and signing model](../mechanics/revenue-accounts-and-signing-model.md)
