@@ -601,16 +601,16 @@ The first pilot should fail closed:
 
 The best response from the partner is one package that includes:
 
-1. current payout topology,
-2. current payout recipients,
-3. current payout-edit authority,
-4. current debt-open destination or waterfall design,
-5. example revenue exports or receipts for the repayment-relevant scope,
-6. payout-change receipts or logs,
-7. available readback or export surfaces,
-8. incident or freeze posture,
-9. release or offboard description,
-10. written note on what is still manual or weaker than the baseline.
+1. `current payout topology`: a plain description or artifact showing how fees move from first landing point to final recipients.
+2. `current payout recipients`: the wallets, entities, or destinations currently receiving the in-scope flow.
+3. `current payout-edit authority`: the actor or approval path that can change recipients, splits, or payout rules.
+4. `current debt-open destination or waterfall design`: the exact routing rule that should apply while debt is open.
+5. `example revenue exports or receipts for the repayment-relevant scope`: sample evidence showing the in-scope revenue is real and traceable.
+6. `payout-change receipts or logs`: retained evidence of who changed payout state, when, and how.
+7. `available readback or export surfaces`: the APIs, dashboards, signed exports, or reports attn can inspect directly.
+8. `incident or freeze posture`: the actions available when payout integrity degrades or needs to be paused.
+9. `release or offboard description`: what happens after close and what confirms that the debt-open rule has been removed.
+10. `written note on what is still manual or weaker than the baseline`: a clear statement of what is not yet automated, bounded, or fully evidenced.
 
 ## 14. Minimum technical surfaces
 
@@ -619,14 +619,14 @@ It does need enough technical surface to qualify and monitor the lane.
 
 The minimum useful surfaces are usually:
 
-- launch attribution lookup,
-- payout topology lookup,
-- current payout configuration,
-- payout-configuration change history or receipts,
-- revenue events or revenue summaries,
-- current debt-open destination or repayment-mode state,
-- release or offboard action or receipt,
-- incident or freeze state or receipt.
+- `launch attribution lookup`: a way to map one launch, mint, or creator entity to the lane being evaluated.
+- `payout topology lookup`: a way to inspect the current routing structure and the wallets or policies involved.
+- `current payout configuration`: the live recipients, splits, or payout mode that apply right now.
+- `payout-configuration change history or receipts`: retained evidence of changes to payout logic or recipients.
+- `revenue events or revenue summaries`: data showing the in-scope revenue flow over time.
+- `current debt-open destination or repayment-mode state`: the live routing rule that should apply while debt is open.
+- `release or offboard action or receipt`: a way to prove the debt-open rule has been removed after close.
+- `incident or freeze state or receipt`: a way to see whether the lane is paused, degraded, or under recovery.
 
 If some of these are missing, the lane can still be discussed.
 The claim level just stays lower.

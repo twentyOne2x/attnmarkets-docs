@@ -1,5 +1,57 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide dense first-introduction lists should explain terms inline
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The user is right that some dense lists remain readable only if the reader already knows the terms. The best general pattern is to explain a term the first time it appears in a dense list, then use the shorter form later.
+- Missing info/questions: none blocking. The page already has the right structure; the problem is list density, not missing doctrine.
+- Type: hosted docs / creator-fee guide inline term explanation
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` now has stronger framing and examples, but the evidence package and technical-surface lists still assume the reader already knows what each row means.
+  - That is fine for internal readers, but a first-share partner guide should define the term once when it first appears.
+- Fix intent:
+  1) rewrite dense first-introduction lists into `term: one-line explainer` form,
+  2) keep the list concise,
+  3) preserve the existing standard and sdk-first split.
+- Acceptance criteria:
+  - the evidence package list explains each item inline,
+  - the minimum technical surfaces list explains each item inline,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - use short `term: explainer` phrasing,
+    - do not turn the section into long prose,
+    - preserve the standard itself unchanged.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Rewrote the evidence-package list into `term: one-line explainer` format.
+- Rewrote the minimum-technical-surfaces list into the same format so the first mention of each surface is self-explanatory.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the first time dense terms appear, the page now explains them inline instead of assuming prior familiarity.
+
 ## 2026-04-08 - creator-fee guide core requirements should include concrete examples
 
 Checklist
