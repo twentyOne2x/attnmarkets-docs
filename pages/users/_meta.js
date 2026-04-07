@@ -15,6 +15,9 @@ const sidebar = {
   'partner-managed-creator-fee-integration': {
     title: itemTitle('Creator-fee integration')
   },
+  'partner-managed-creator-fee-mvp-paths': {
+    title: itemTitle('Creator-fee MVP paths')
+  },
   'for-liquidity-providers': {
     title: itemTitle('Liquidity providers')
   },

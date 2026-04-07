@@ -1,5 +1,79 @@
 # ISSUES
 
+## 2026-04-07 - hosted docs need a smaller creator-fee integration MVP path companion
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The full partner-managed creator-fee integration guide is useful as the state-of-the-art target, but it is intentionally strict. The user now wants a smaller, less constrained forwardable companion that defines acceptable MVP and intermediary steps that can prove the lane could work before full policy parity is in place.
+- Missing info/questions: none blocking. The stricter guide already freezes the full requirement set, so this new page can be written as a staged ladder beneath it.
+- Type: hosted docs / creator-fee integration MVP ladder
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` is the full requirements and response document.
+  - That page is right for the eventual target, but it is not the best first handoff if the partner wants to understand what can ship earlier.
+  - The user explicitly wants acceptable intermediary steps, especially where attn may initially treat the platform as the counterparty while stronger payout-control and readback policy is still being established.
+- Fix intent:
+  1) add one smaller companion page focused on acceptable MVPs and intermediary stages,
+  2) define what each stage proves and does not prove,
+  3) define the minimum evidence needed at each stage,
+  4) preserve the stricter page as the full-standard target rather than watering it down,
+  5) link the two pages clearly.
+- Acceptance criteria:
+  - one new hosted docs page exists for creator-fee integration MVP paths,
+  - it explains acceptable staged paths below the full standard,
+  - it includes stage-by-stage claim boundaries and evidence minimums,
+  - the main creator-fee integration guide links to it,
+  - relevant user navigation links to it,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/_meta.js`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+    - `pages/users/for-launchpads-and-incubators.md`
+    - `pages/users/partner-managed-creator-fee-mvp-paths.md`
+  - Constraints:
+    - keep the new page generic rather than naming any specific partner in the title,
+    - make the page meaningfully easier to send than the stricter full-requirements guide,
+    - do not relax the full guide itself; add a staged path beneath it,
+    - keep claims honest about what each MVP does and does not prove.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added the new companion page:
+  - `pages/users/partner-managed-creator-fee-mvp-paths.md`
+- The new page defines:
+  - a compatibility-only stage,
+  - a platform-as-counterparty MVP,
+  - an observable payout-path MVP,
+  - a policy-bounded pilot,
+  - and the full-standard target.
+- Each stage now says:
+  - what must be true,
+  - what attn can honestly claim,
+  - what remains false,
+  - and what evidence is minimally required.
+- Linked the stricter guide to the new companion page and updated the user navigation surfaces so the smaller page is easy to find.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/_meta.js pages/users/partner-managed-creator-fee-integration.md pages/users/for-launchpads-and-incubators.md pages/users/partner-managed-creator-fee-mvp-paths.md`
+  - `npm run build`
+- Result:
+  - the hosted docs now have both the full-standard creator-fee integration guide and a smaller MVP-path companion that is easier to forward early in a partner conversation.
+
 ## 2026-04-07 - hosted docs need one self-contained creator-fee partner integration guide
 
 Checklist

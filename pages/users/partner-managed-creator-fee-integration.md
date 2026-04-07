@@ -4,6 +4,10 @@ This page is the single document a creator-fee platform should use when evaluati
 
 It is intentionally written as a requirements and response document, not a product explainer.
 
+If you want the lighter staged version first, use:
+
+- [Partner-Managed Creator-Fee MVP Paths](./partner-managed-creator-fee-mvp-paths.md)
+
 If you are the partner team, the goal is simple:
 
 - read this page once,
