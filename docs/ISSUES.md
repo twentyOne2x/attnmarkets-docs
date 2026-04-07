@@ -1,5 +1,59 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee integration guide should remove chatty or low-signal counterparty copy
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The structure of the creator-fee guide is now strong, but a few sentences still sound conversational or defensive rather than institutional. The user's example is correct: language like `The most useful outcome is not a general statement like "we can integrate."` weakens the tone of a serious partner standard. The right fix is to remove that phrase and tighten similar low-signal wording in the same doc.
+- Missing info/questions: none blocking. The affected lines are directly identifiable in the page copy.
+- Type: hosted docs / creator-fee guide copy tightening
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` has the right structure and scope.
+  - A few phrases still read like draft guidance rather than formal counterparty documentation.
+  - The user explicitly called out the `"we can integrate"` sentence and wants that class of wording removed.
+- Fix intent:
+  1) remove the `we can integrate` phrasing,
+  2) replace similar casual, defensive, or rhetorical phrases with more direct and serious wording,
+  3) preserve the meaning and scope of the document.
+- Acceptance criteria:
+  - the cited sentence is removed,
+  - nearby low-signal phrases are tightened into more formal copy,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the same structure and substantive requirements,
+    - improve tone without adding more content,
+    - stay partner-facing and serious.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Removed the quoted `we can integrate` sentence.
+- Tightened nearby copy that was too conversational or defensive.
+- Replaced rhetorical wording with direct requirement and claim-level language.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the page reads more like a formal partner standard and less like a conversational explainer.
+
 ## 2026-04-07 - creator-fee guide should surface acceptable staged paths before the response sections
 
 Checklist

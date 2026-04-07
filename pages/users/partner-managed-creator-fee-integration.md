@@ -30,8 +30,7 @@ It is asking whether your existing payout and wallet stack can make the repaymen
 
 The partner should use this page as a direct response template.
 
-The most useful outcome is not a general statement like "we can integrate."
-The most useful outcome is a concrete answer to:
+The initial response should define:
 
 1. what revenues count,
 2. where those revenues flow today,
@@ -42,7 +41,7 @@ The most useful outcome is a concrete answer to:
 7. and what happens after the lane closes.
 
 If those answers are strong, the lane may qualify for a bounded first pilot.
-If they are weak, the lane may still be interesting, but the claim level stays lower.
+If they are incomplete or weak, the lane remains at a lower claim level.
 
 ## 3. Integration target
 
@@ -92,7 +91,7 @@ attn must be able to tell:
 - which subset is repayment-relevant,
 - and which visible revenues are out of scope.
 
-If the revenue scope is fuzzy, the lane may still be commercially interesting, but it is not yet a credit-ready lane.
+If the revenue scope is ambiguous, the lane is not yet credit-ready.
 
 ### 5.2 Wallet topology must be legible
 
@@ -144,7 +143,7 @@ attn must be able to tell:
 - what the incident posture is while a lane is open,
 - and what release or offboard looks like after close.
 
-If the lane has no defined degraded-state or release behavior, that should be treated as a real limitation rather than hand-waved away.
+If the lane has no defined degraded-state or release behavior, that should be treated as a real limitation rather than left undefined.
 
 ## 6. Acceptable staged paths before the full standard
 
@@ -355,8 +354,7 @@ Do not move past discovery if:
 - no readback or receipt path exists,
 - or there is no clear operator owner for pause and incident handling.
 
-At that point the right answer is not `ship anyway`.
-The right answer is `stay at compatibility-only`.
+At that point, the lane should remain at `compatibility-only`.
 
 ## 7. How to use this page
 
@@ -369,8 +367,8 @@ The right way to use it is:
 3. if the lane still looks promising, answer section `13` for the first bounded pilot,
 4. then attach whatever evidence from section `14` you can already provide.
 
-A good first response does **not** need to be polished.
-It can be:
+An initial response can be concise.
+It can include:
 
 - one short explanation of the revenue path,
 - one payout topology diagram or export,
@@ -383,8 +381,7 @@ That is enough to determine whether the lane is:
 - usable for manual underwriting,
 - or strong enough for a bounded first pilot.
 
-The point of the response sections is not to trap the partner.
-It is to let both sides decide quickly whether the lane is structurally viable before anyone spends time pretending it is already at the full standard.
+The response sections are intended to determine quickly whether the lane is structurally viable before it is treated as meeting the full standard.
 
 ## 8. Revenue-functioning response template
 
