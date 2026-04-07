@@ -339,13 +339,16 @@ If the partner wants the fastest honest route, the usual choices are:
 
 ### 6.8 What each stage proves
 
-| Stage | What it proves | What it does not prove |
-| --- | --- | --- |
-| `Stage 0` | the revenue model is real enough to evaluate | no financeability, no payout control, no pilot readiness |
-| `Stage 1` | the platform can support a manual or operator-run financing pilot as the primary counterparty | no borrower-level control parity, no debt-open payout lock |
-| `Stage 2` | repayment-relevant routing is observable and drift can be detected | no strong claim that payout policy is fully bounded |
-| `Stage 3` | one bounded first pilot can run with real control, readback, and incident posture | no public-live or broad lender-ready claim |
-| `Stage 4` | the partner-managed lane meets the full stricter requirements | still not the same thing as permissionless or open-lender readiness by default |
+| Stage | What it proves | What it does not prove | What is required to move forward |
+| --- | --- | --- | --- |
+| `Stage 0` | the revenue model is real enough to evaluate | no financeability, no payout control, no pilot readiness | named revenue scope, basic payout topology, named operating owner, and example records or exports |
+| `Stage 1` | the platform can support a manual or operator-run financing pilot as the primary counterparty | no borrower-level control parity, no debt-open payout lock | explicit debt-open destination, recipient readback, attributable change events, and a defined reconciliation cadence |
+| `Stage 2` | repayment-relevant routing is observable and drift can be detected | no strong claim that payout policy is fully bounded | bounded payout-edit authority, durable readback, incident posture, and one concrete pilot pack |
+| `Stage 3` | one bounded first pilot can run with real control, readback, and incident posture | no public-live or broad lender-ready claim | successful pilot evidence, release or offboard clarity, and stronger signer/operator controls once real signing or meaningful balances are in scope |
+| `Stage 4` | the partner-managed lane meets the full stricter requirements | not the same thing as public borrower readiness, outside-lender readiness, or open-lender readiness by default | no further control stage in this ladder; progress after this point belongs to rollout and market-readiness, not a Stage 5 control standard |
+
+Stage `4` is the end of the control and integration ladder in this document.
+Anything beyond that is a separate readiness track, such as repeated successful pilots, outside-lender diligence, public borrower readiness, or broader market rollout.
 
 ### 6.9 When not to move forward
 

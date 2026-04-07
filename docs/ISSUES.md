@@ -1,5 +1,61 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee guide should distinguish control-stage closure from later rollout readiness
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The staged ladder is useful, but the current `What each stage proves` table leaves one ambiguity: it does not clearly say whether there is a `Stage 5`, and it does not state what must be true to move from one stage to the next. The user's instinct is right. The right fix is to add a `what is required to move forward` column and explicitly state that Stage 4 is the end of the control/integration ladder; anything beyond that belongs to a separate rollout/readiness track.
+- Missing info/questions: none blocking. The progression rules are already implicit in the surrounding sections and can be summarized directly.
+- Type: hosted docs / creator-fee stage progression clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already has a solid stage ladder.
+  - The current table explains what each stage proves, but not how to advance or whether the ladder ends.
+  - Readers can reasonably ask whether Stage 4 implies a later Stage 5 or public-lender readiness stage.
+- Fix intent:
+  1) add a `what is required to move forward` column to the stage table,
+  2) state explicitly that Stage 4 closes the control/integration ladder,
+  3) explain that later progress is a rollout/readiness track, not a stricter control stage.
+- Acceptance criteria:
+  - the stage table includes a concrete `move forward` column,
+  - the document explicitly says there is no Stage 5 inside this control ladder,
+  - the document distinguishes later rollout/readiness from the core integration stages,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the ladder concise,
+    - clarify progression without adding a lot of new doctrine,
+    - preserve the current stage meanings.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added a `What is required to move forward` column to the stage table.
+- Added a short note that Stage 4 ends the control/integration ladder.
+- Added a short clarification that later progression belongs to rollout/readiness, not a Stage 5 control standard.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the stage ladder now explains both what each stage proves and how a lane advances,
+  - and the document no longer implies that a hidden Stage 5 should exist.
+
 ## 2026-04-07 - creator-fee guide should remove the partner-specific mapping section
 
 Checklist
