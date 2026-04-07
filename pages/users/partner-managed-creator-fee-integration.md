@@ -601,13 +601,13 @@ The first pilot should fail closed:
 
 The best response from the partner is one package that includes:
 
-1. `current payout topology`: a plain description or artifact showing how fees move from first landing point to final recipients.
+1. `current payout topology`: a short written explanation, diagram, CSV, dashboard export, or similar record showing how fees move from first landing point to final recipients.
 2. `current payout recipients`: the wallets, entities, or destinations currently receiving the in-scope flow.
 3. `current payout-edit authority`: the actor or approval path that can change recipients, splits, or payout rules.
 4. `current debt-open destination or waterfall design`: the exact routing rule that should apply while debt is open.
-5. `example revenue exports or receipts for the repayment-relevant scope`: sample evidence showing the in-scope revenue is real and traceable.
+5. `example revenue exports or receipts for the repayment-relevant scope`: sample CSVs, reports, or transaction-level receipts showing that the in-scope revenue is real and traceable.
 6. `payout-change receipts or logs`: retained evidence of who changed payout state, when, and how.
-7. `available readback or export surfaces`: the APIs, dashboards, signed exports, or reports attn can inspect directly.
+7. `available readback or export surfaces`: the API endpoints, dashboard views, CSV exports, signed reports, or other sources attn can inspect directly.
 8. `incident or freeze posture`: the actions available when payout integrity degrades or needs to be paused.
 9. `release or offboard description`: what happens after close and what confirms that the debt-open rule has been removed.
 10. `written note on what is still manual or weaker than the baseline`: a clear statement of what is not yet automated, bounded, or fully evidenced.

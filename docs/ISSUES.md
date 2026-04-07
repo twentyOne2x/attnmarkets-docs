@@ -1,5 +1,55 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide evidence examples should avoid vague document words
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and tiny. The user correctly flagged that terms like `artifact` are too vague in a first-share partner guide. The fix is not to add more jargon. It is to use concrete examples like diagram, CSV, dashboard export, report, or receipt.
+- Missing info/questions: none blocking.
+- Type: hosted docs / creator-fee evidence wording clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` already moved dense lists into `term: explainer` form.
+  - But some of those explainers still rely on abstract document words that are easy for internal readers and unclear for new counterparties.
+- Fix intent:
+  1) replace vague evidence words with concrete document types,
+  2) keep the section concise,
+  3) preserve the underlying standard unchanged.
+- Acceptance criteria:
+  - the evidence-package rows use concrete examples such as diagram, CSV, dashboard export, report, or receipt,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: tiny
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - do not broaden the section,
+    - keep the examples concrete and plain,
+    - avoid internal shorthand.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Replaced vague evidence words in the evidence-package section with concrete examples such as diagram, CSV, dashboard export, report, and receipt.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the evidence rows now describe recognizable materials instead of abstract artifacts.
+
 ## 2026-04-08 - creator-fee guide dense first-introduction lists should explain terms inline
 
 Checklist
