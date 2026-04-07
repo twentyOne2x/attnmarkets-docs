@@ -13,7 +13,7 @@ const sidebar = {
     title: itemTitle('Launchpads & incubators')
   },
   'partner-managed-creator-fee-integration': {
-    title: itemTitle('Creator-fee integration')
+    title: itemTitle('Partner-managed revenue')
   },
   'for-liquidity-providers': {
     title: itemTitle('Liquidity providers')

@@ -27,7 +27,7 @@ For partners that keep their own wallet and payout infrastructure, the correct n
 
 If you want the concrete creator-fee platform handoff guide, use:
 
-- [Partner-managed creator-fee integration guide](./partner-managed-creator-fee-integration.md)
+- [Partner-managed revenue integration guide](./partner-managed-creator-fee-integration.md)
 
 ## Integration model
 
@@ -46,7 +46,7 @@ If you want the concrete creator-fee platform handoff guide, use:
 ## Related pages
 
 - [Partner-managed wallet integration requirements](../mechanics/partner-wallet-integration-requirements.md)
-- [Partner-managed creator-fee integration guide](./partner-managed-creator-fee-integration.md)
+- [Partner-managed revenue integration guide](./partner-managed-creator-fee-integration.md)
 - [attn Credit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
 - [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)
 - [For Liquidity Providers](./for-liquidity-providers.md)

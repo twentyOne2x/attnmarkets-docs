@@ -217,7 +217,7 @@ It is one concrete pilot shape with one retained evidence chain.
 
 If you want the concrete creator-fee-platform handoff guide, use:
 
-- [Partner-managed creator-fee integration guide](../users/partner-managed-creator-fee-integration.md)
+- [Partner-managed revenue integration guide](../users/partner-managed-creator-fee-integration.md)
 
 ## 7. Related pages
 

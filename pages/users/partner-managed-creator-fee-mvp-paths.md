@@ -4,7 +4,7 @@ This route is kept only for backwards compatibility.
 
 The staged MVP ladder has been folded into the main:
 
-- [Partner-Managed Creator-Fee Integration Guide](./partner-managed-creator-fee-integration.md)
+- [Partner-Managed Revenue Integration Guide](./partner-managed-creator-fee-integration.md)
 
 Use section `10` of that page for:
 
