@@ -1,5 +1,57 @@
 # ISSUES
 
+## 2026-04-08 - creator-fee guide requirement subsections should orient readers before bullet lists
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The current requirement subsections are scan-friendly, but the user is right that some of them read like raw dumps. A short orienting sentence before the bullets makes the section easier for both humans and LLMs to interpret without changing the underlying standard.
+- Missing info/questions: none blocking. The section structure is already good; the gap is readability.
+- Type: hosted docs / creator-fee guide subsection readability
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` has strong subsection titles in `5.x`, but several of them jump directly from heading to bullet list.
+  - That makes the standard easy to scan but harder to absorb on first read.
+- Fix intent:
+  1) add one orienting sentence to each requirement subsection in `5.1` through `5.6`,
+  2) preserve the actual requirements unchanged,
+  3) improve comprehension without turning the page into a long narrative.
+- Acceptance criteria:
+  - each `5.x` requirement subsection has a short introductory sentence before the bullets,
+  - the wording remains concise,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - do not change the standard itself,
+    - keep the added prose short and explanatory,
+    - preserve the sdk-first split.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added one short orienting sentence to each `5.1` through `5.6` subsection so the reader understands the purpose of the bullet list before the requirements.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the requirements remain equally scannable,
+  - but the reader now gets one sentence of interpretation before each list.
+
 ## 2026-04-08 - creator-fee guide should explain what attn enables before the detailed standard
 
 Checklist

@@ -164,6 +164,8 @@ For a partner-managed creator-fee lane to be supportable, attn needs these outco
 
 ### 5.1 Revenue scope must be explicit
 
+The first requirement is simply that everyone is talking about the same revenue base.
+
 attn must be able to tell:
 
 - which revenues are in scope,
@@ -174,6 +176,8 @@ If the revenue scope is ambiguous, the lane is not yet credit-ready.
 
 ### 5.2 Wallet topology must be legible
 
+The second requirement is that the payout path can be explained plainly from first landing point to final recipients.
+
 attn must be able to tell:
 
 - where revenues land first,
@@ -183,6 +187,8 @@ attn must be able to tell:
 If the payout topology cannot be explained plainly, the lane cannot be relied on.
 
 ### 5.3 Debt-open payout behavior must be explicit
+
+Once debt is open, the lane needs a clearly defined repayment posture rather than an implied operating convention.
 
 attn must be able to tell:
 
@@ -195,6 +201,8 @@ The important thing is making the debt-open repayment behavior explicit and moni
 
 ### 5.4 Change authority must be bounded
 
+Knowing the intended payout path is not enough if nobody can explain who is allowed to change it.
+
 attn must be able to tell:
 
 - who can change payout routing or payout policy,
@@ -204,6 +212,8 @@ attn must be able to tell:
 If payout authority exists but is not attributable, that is still a control gap.
 
 ### 5.5 Readback must exist
+
+The lane also needs a way for attn to inspect the current state instead of relying only on promises or static diagrams.
 
 attn must be able to inspect enough live or near-live state to answer:
 
@@ -215,6 +225,8 @@ attn must be able to inspect enough live or near-live state to answer:
 Without readback, the lane can still be discussed, but only at a lower claim level.
 
 ### 5.6 Degrade, release, and offboard behavior must be defined
+
+Finally, the lane needs a defined response for when things go wrong and a defined state for when the lane ends.
 
 attn must be able to tell:
 
