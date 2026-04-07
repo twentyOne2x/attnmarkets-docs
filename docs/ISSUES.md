@@ -1,5 +1,60 @@
 # ISSUES
 
+## 2026-04-07 - creator-fee guide should explain guarantees and sdk scope before the detailed response template
+
+Checklist
+- [x] Report captured
+- [x] Context added
+- [x] Fix applied
+- [x] Tests run
+- [ ] Visual or screenshot verification
+
+PLANNER
+- Spec check: solvable and small. The guide currently becomes detailed quickly, which makes the integration look like a bespoke full-stack lift before the reader understands what the setup is trying to guarantee or how much can be standardized. The user is right that the first section should explain what this setup is about, what guarantees it creates for whom, and which parts can be wrapped in the SDK versus which parts remain partner truth.
+- Missing info/questions: none blocking. The distinction is already implicit in the current requirements and stage model.
+- Type: hosted docs / creator-fee guide framing and sdk-scope clarity
+- Status: completed
+- Context + suspected cause:
+  - `pages/users/partner-managed-creator-fee-integration.md` opens with the right narrow question but moves quickly into the detailed partner response template.
+  - That can make the integration look heavier than it is and blur the line between standardized plumbing and irreducible counterparty risk.
+  - The guide needs to say earlier that the SDK can standardize schemas, readback surfaces, receipts, alerts, and evidence packaging, but it cannot manufacture real payout authority, real change control, or real counterparty integrity.
+- Fix intent:
+  1) add early framing on what guarantees the setup creates and does not create,
+  2) add a clear sdk-scope distinction,
+  3) reduce the sense that the partner must fully implement the whole standard before an initial technical discussion.
+- Acceptance criteria:
+  - the opening explains what the lane is supposed to guarantee to attn and to the partner,
+  - the guide states what can be standardized in an SDK and what cannot,
+  - the initial-response section says the first pass is truth-discovery, not full implementation,
+  - `python3 scripts/knowledge_check.py`, `git diff --check`, and `npm run build` pass.
+- Complexity: small
+- Plan: inline
+- Executor prompt (files, constraints, tests):
+  - Update:
+    - `docs/ISSUES.md`
+    - `pages/users/partner-managed-creator-fee-integration.md`
+  - Constraints:
+    - keep the page as one standalone forwardable guide,
+    - do not turn it into an internal playbook,
+    - stay clear that the sdk can standardize transport and evidence but not eliminate counterparty risk.
+  - Tests/proofs:
+    - `python3 scripts/knowledge_check.py`
+    - `git diff --check`
+    - `npm run build`
+
+EXECUTOR
+- Added early framing on guarantees, non-guarantees, and sdk scope.
+- Clarified that the initial partner response is a truth-discovery pass, not a full implementation commitment.
+
+VERIFIER
+- PASS:
+  - `python3 scripts/knowledge_check.py`
+  - `git diff --check -- docs/ISSUES.md pages/users/partner-managed-creator-fee-integration.md`
+  - `npm run build`
+- Result:
+  - the guide now explains what the setup is for before it asks for detailed responses,
+  - and it distinguishes standardizable sdk surfaces from real counterparty and control requirements.
+
 ## 2026-04-07 - creator-fee guide should distinguish control-stage closure from later rollout readiness
 
 Checklist

@@ -26,9 +26,75 @@ It is asking whether your existing payout and wallet stack can make the repaymen
 - auditable,
 - and monitorable enough for a real lane.
 
+### 1.1 What this setup is meant to guarantee
+
+This setup is meant to create a narrow, explicit guarantee model.
+
+For attn, the goal is:
+
+- to know which revenues matter,
+- to know where the repayment-relevant share should go while debt is open,
+- to know who can change that path,
+- to detect drift or degradation fast enough to respond,
+- and to know what evidence exists when a pilot succeeds or fails.
+
+For the partner, the goal is:
+
+- to keep its own wallet and payout infrastructure,
+- to avoid a forced migration into a borrower-owned wallet stack,
+- to start with an honest bounded pilot instead of a public-live claim,
+- and to understand what stronger claim levels would require later.
+
+What this setup does **not** guarantee on its own:
+
+- elimination of counterparty risk,
+- elimination of operator or signer risk,
+- automatic borrower-readiness,
+- automatic outside-lender readiness,
+- or automatic equivalence to attn's borrower-first managed-revenue baseline.
+
+### 1.2 What can be standardized in an SDK
+
+A lot of the integration surface can be standardized.
+
+The SDK can package things like:
+
+- schema and response shapes for revenue scope and payout topology,
+- readback endpoints or adapters,
+- change-receipt formats,
+- drift-detection hooks,
+- monitoring and alert payloads,
+- pilot evidence packaging,
+- and claim-level or stage classification helpers.
+
+Those are the reusable mechanics.
+
+### 1.3 What the SDK cannot solve for the partner
+
+The SDK cannot create the facts that matter most.
+
+It cannot manufacture:
+
+- real payout authority,
+- real debt-open routing behavior,
+- real change-control integrity,
+- real incident posture,
+- real counterparty responsibility,
+- or real release and offboard behavior.
+
+Those are the partner-specific truths attn still has to evaluate.
+
 ## 2. What the partner needs to do
 
 The partner should use this page as a direct response template.
+
+The first pass is not a commitment to fully implement the whole standard immediately.
+The first pass is a truth-discovery pass that lets both sides determine:
+
+- the current stage,
+- the strongest honest claim level,
+- the shortest credible path to a pilot,
+- and which missing pieces are standardizable versus partner-specific.
 
 The initial response should define:
 
