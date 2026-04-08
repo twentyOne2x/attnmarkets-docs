@@ -172,7 +172,9 @@ For a partner-managed revenue lane to be supportable, attn needs these outcomes 
 
 ### 5.1 Revenue scope must be explicit
 
-The first requirement is simply that everyone is talking about the same revenue base.
+Before talking about controls, both sides need to agree on what money actually counts for the lane.
+In plain English: which revenues are in scope, which part of those revenues is repayment-relevant, and which visible revenues are not part of this lane at all.
+If that boundary is fuzzy, everything downstream becomes hard to reason about.
 
 attn must be able to tell:
 
@@ -184,11 +186,15 @@ If the revenue scope is ambiguous, the lane is not yet credit-ready.
 
 > **Example**
 >
-> Suppose the partner currently earns revenue from three places: usage fees from one API product, monthly subscriptions from a hosted dashboard, and secondary royalties from a separate token program. The lane may include only the usage-fee revenue from the API product. The subscription revenue remains out of scope, and the royalties remain visible in reporting but out of scope unless the lane definition explicitly includes them.
+> Suppose the partner currently earns revenue from three places: usage fees from one API product, monthly subscriptions from a hosted dashboard, and secondary royalties from a separate token program.
+> The lane may include only the usage-fee revenue from the API product.
+> The subscription revenue and royalties may still show up in reporting, but they are out of scope unless the lane definition explicitly includes them.
 
 ### 5.2 Wallet topology must be legible
 
-The second requirement is that the payout path can be explained plainly from first landing point to final recipients.
+Once the revenue scope is clear, the next question is where that money actually goes.
+Someone should be able to explain the payout path from the first landing wallet or router all the way to the final recipients in plain English.
+If the path cannot be explained clearly, attn cannot rely on it.
 
 attn must be able to tell:
 
@@ -200,11 +206,15 @@ If the payout topology cannot be explained plainly, the lane cannot be relied on
 
 > **Example**
 >
-> Fees land first in a platform-controlled router wallet, then split between the creator treasury, the platform fee wallet, and the debt-open repayment destination according to one named payout policy.
+> Fees land first in a platform-controlled router wallet.
+> From there they split between the creator treasury, the platform fee wallet, and the debt-open repayment destination according to one named payout policy.
+> That is the kind of plain-English path attn should be able to follow without guessing.
 
 ### 5.3 Debt-open payout behavior must be explicit
 
-Once debt is open, the lane needs a clearly defined repayment posture rather than an implied operating convention.
+Once debt is open, the important question becomes: what exactly changes in the payout flow while that debt exists.
+There needs to be a concrete rule, not an unwritten expectation, for where the repayment-relevant share goes and how long that routing stays in place.
+If the answer is basically "operators know what to do," the lane is still too weak.
 
 attn must be able to tell:
 
@@ -217,11 +227,15 @@ The important thing is making the debt-open repayment behavior explicit and moni
 
 > **Example**
 >
-> While debt is open, `30%` of each in-scope revenue event goes to a repayment wallet, `70%` goes to the partner treasury, and that split remains in force until the release condition is met.
+> While debt is open, `30%` of each in-scope revenue event goes to a repayment wallet and `70%` goes to the partner treasury.
+> That split stays in force until the release condition is met.
+> The important part is that the rule is explicit, visible, and not dependent on someone remembering an internal procedure.
 
 ### 5.4 Change authority must be bounded
 
-Knowing the intended payout path is not enough if nobody can explain who is allowed to change it.
+It is not enough to know the intended payout path if anyone can change it quietly.
+attn needs to know who has the power to edit payout routing or payout policy, what approvals are required, and what record is left behind when that happens.
+Otherwise the lane can drift without a clear accountability trail.
 
 attn must be able to tell:
 
@@ -233,11 +247,15 @@ If payout authority exists but is not attributable, that is still a control gap.
 
 > **Example**
 >
-> A payout split can be changed only by two named platform operators through an approval flow, and each change emits a retained receipt with the old state, the new state, the approvers, and the timestamp.
+> A payout split can be changed only by two named platform operators through an approval flow.
+> Each change emits a retained receipt showing the old state, the new state, the approvers, and the timestamp.
+> That gives attn a concrete record of who changed the lane and when.
 
 ### 5.5 Readback must exist
 
-The lane also needs a way for attn to inspect the current state instead of relying only on promises or static diagrams.
+attn also needs a way to check the current truth without asking the partner for a fresh manual explanation every time.
+In practice, that means some live or near-live readback surface such as an API, signed export, or dashboard report.
+Without that, the lane may still be interesting, but it stays weaker and more manual.
 
 attn must be able to inspect enough live or near-live state to answer:
 
@@ -250,11 +268,15 @@ Without readback, the lane can still be discussed, but only at a lower claim lev
 
 > **Example**
 >
-> attn can query the current payout recipients, the active debt-open mode, and the last three payout-policy changes from an API or signed export without requiring a separate manual explanation for routine verification.
+> attn can query the current payout recipients, the active debt-open mode, and the last three payout-policy changes from an API or signed export.
+> That means routine verification does not require a new manual walkthrough every time.
+> It also means drift can be spotted from current state instead of from old screenshots.
 
 ### 5.6 Degrade, release, and offboard behavior must be defined
 
-Finally, the lane needs a defined response for when things go wrong and a defined state for when the lane ends.
+Even a good payout setup needs a clear story for failure and for exit.
+There should be an agreed response if routing drifts, controls break, or the lane has to pause, and there should be a clear signal that the debt-open rule has been removed when the lane ends.
+If those states are undefined, the lane is materially weaker.
 
 attn must be able to tell:
 
@@ -266,7 +288,9 @@ If the lane has no defined degraded-state or release behavior, that should be tr
 
 > **Example**
 >
-> If payout routing drifts, the lane moves to a paused state, operators are alerted, repayments stop being treated as healthy, and after close a release receipt confirms that the debt-open routing rule has been removed.
+> If payout routing drifts, the lane moves to a paused state and operators are alerted.
+> While that issue is open, repayments stop being treated as healthy.
+> After close, a release receipt confirms that the debt-open routing rule has been removed.
 
 ## 6. Acceptable staged paths before the full standard
 
@@ -513,7 +537,7 @@ The public SDK repo now includes a file-backed harness path for exactly this:
 - [attn-credit-sdk](https://github.com/twentyOne2x/attn-credit-sdk)
 - [packages/harness-cli/README.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/harness-cli/README.md)
 
-That file-backed harness path is the recommended start for a clawpump-style integration because it lets the partner keep its own wallet stack while still producing:
+That file-backed harness path is the recommended start for a partner-managed wallet integration because it lets the partner keep its own wallet stack while still producing:
 
 - retained partner artifacts,
 - retained receipts,
@@ -555,7 +579,7 @@ If the partner wants a separate repo after that, build it around the cloned publ
 If you are handing this lane to an external team or to an AI coding agent, use this as the base prompt:
 
 ```text
-Implement a clawpump-like partner-managed creator-fee integration for a platform that keeps its own wallet and payout infrastructure.
+Implement a partner-managed creator-fee integration for a platform that keeps its own wallet and payout infrastructure.
 
 Use only these public inputs:
 - https://github.com/twentyOne2x/attn-credit-sdk
@@ -583,7 +607,7 @@ Success criteria:
 - consumes the public SDK or harness directly
 - does not re-type the full attn contract
 - passes its published commands
-- retains partner-style inputs into artifacts
+- retains partner-provided inputs into artifacts
 - does not claim live payout-control parity or hosted runtime parity
 ```
 
