@@ -499,6 +499,96 @@ The exact payloads, receipt formats, and validation rules should live in the pub
 - [attn-credit-sdk](https://github.com/twentyOne2x/attn-credit-sdk)
 - [packages/sdk/README.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/sdk/README.md)
 
+### 7.1 Fastest truthful start for a partner-managed wallet stack
+
+If the partner already has its own wallet and payout infrastructure, the fastest truthful start is:
+
+1. answer the response package in section `9`,
+2. export the current launch, payout-topology, revenue-event, and debt-open routing state from the partner system,
+3. package those exports through the public SDK harness so both sides are looking at one retained run directory instead of ad hoc screenshots and prose,
+4. attach that retained run directory with the evidence package in section `13`.
+
+The public SDK repo now includes a file-backed harness path for exactly this:
+
+- [attn-credit-sdk](https://github.com/twentyOne2x/attn-credit-sdk)
+- [packages/harness-cli/README.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/harness-cli/README.md)
+
+That file-backed harness path is the recommended start for a clawpump-style integration because it lets the partner keep its own wallet stack while still producing:
+
+- retained partner artifacts,
+- retained receipts,
+- one typed integration descriptor,
+- one stage assessment,
+- and one evidence pack.
+
+If attn snapshots are retained alongside that run, treat them as comparison-only. They describe current attn-hosted control-plane truth, not proof that the partner-managed wallet lane already matches the hosted callable fallback.
+
+For a fresh external implementation repo, the minimum honest acceptance bar is:
+
+1. the repo consumes the public SDK or harness contract instead of re-declaring the full contract locally,
+2. the repo produces one retained file-backed run directory from real partner exports or readbacks,
+3. the repo's published `typecheck`, `build`, and `test` commands all pass,
+4. and the README or package scripts advertise only commands that actually exist.
+
+If a draft repo only reconstructs the schema, receipts, or stage language but fails those gates, treat it as partial discovery, not as a finished integration start.
+
+For a fresh blind start, the first commands should be explicit:
+
+```bash
+git clone https://github.com/twentyOne2x/attn-credit-sdk
+cd attn-credit-sdk
+pnpm install
+pnpm build
+pnpm run harness:clawpump-pack-from-files -- \
+  --out-dir ./tmp/harness-runs \
+  --launch ./examples/clawpump/launch.json \
+  --payout-topology ./examples/clawpump/payout-topology.json \
+  --creator-fee-state ./examples/clawpump/creator-fee-state.json \
+  --revenue-events ./examples/clawpump/revenue-events.json \
+  --repayment-mode ./examples/clawpump/repayment-mode.json
+```
+
+If the partner wants a separate repo after that, build it around the cloned public SDK or a Git dependency on that repo. Do not start by re-typing the contract from the guide.
+
+### 7.2 Base prompt for an external team or AI
+
+If you are handing this lane to an external team or to an AI coding agent, use this as the base prompt:
+
+```text
+Implement a clawpump-like partner-managed creator-fee integration for a platform that keeps its own wallet and payout infrastructure.
+
+Use only these public inputs:
+- https://github.com/twentyOne2x/attn-credit-sdk
+- https://docs.attn.markets/users/partner-managed-creator-fee-integration
+
+Do not read or copy any local attn repos or unpublished files.
+Work only inside this repo.
+
+Required flow:
+1. Clone the public SDK repo first.
+2. Run the file-backed harness path first to understand the retained artifact contract.
+3. Build this repo around the public SDK or harness contract instead of re-declaring the full attn contract.
+4. Implement only the partner side:
+   - auth/transport stubs
+   - DTO normalization
+   - export/readback loading
+   - adapter glue into the SDK or harness
+5. Produce:
+   - passing typecheck/build/test commands
+   - one retained file-backed run directory
+   - a README with only real commands
+6. If blocked, state the exact missing public information instead of inventing behavior.
+
+Success criteria:
+- consumes the public SDK or harness directly
+- does not re-type the full attn contract
+- passes its published commands
+- retains partner-style inputs into artifacts
+- does not claim live payout-control parity or hosted runtime parity
+```
+
+This prompt is intentionally more explicit than `implement this`. The latest blind tests showed that external agents do much better when the bootstrap order and non-goals are stated directly.
+
 ## 8. How attn evaluates the response
 
 attn uses the partner response for five things:
