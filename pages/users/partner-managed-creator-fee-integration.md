@@ -528,16 +528,19 @@ The exact payloads, receipt formats, and validation rules should live in the pub
 If the partner already has its own wallet and payout infrastructure, the fastest truthful start is:
 
 1. answer the response package in section `9`,
-2. export the current launch, payout-topology, revenue-event, and debt-open routing state from the partner system,
-3. package those exports through the public SDK harness so both sides are looking at one retained run directory instead of ad hoc screenshots and prose,
-4. attach that retained run directory with the evidence package in section `13`.
+2. gather the first-run file bundle from the partner system,
+3. run the public SDK doctor command on that file bundle,
+4. package the validated bundle through the public SDK harness so both sides are looking at one retained run directory instead of ad hoc screenshots and prose,
+5. attach that retained run directory with the evidence package in section `13`.
 
-The public SDK repo now includes a file-backed harness path for exactly this:
+The public SDK repo now includes both a doctor path and a file-backed harness path for exactly this:
 
 - [attn-credit-sdk](https://github.com/twentyOne2x/attn-credit-sdk)
 - [packages/harness-cli/README.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/harness-cli/README.md)
+- [PARTNER_DATA_CHECKLIST.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/PARTNER_DATA_CHECKLIST.md)
+- [templates/partner-managed-starter](https://github.com/twentyOne2x/attn-credit-sdk/tree/main/templates/partner-managed-starter)
 
-That file-backed harness path is the recommended start for a partner-managed wallet integration because it lets the partner keep its own wallet stack while still producing:
+That start flow is the recommended path for a partner-managed wallet integration because it lets the partner keep its own wallet stack while still producing:
 
 - retained partner artifacts,
 - retained receipts,
@@ -563,6 +566,13 @@ git clone https://github.com/twentyOne2x/attn-credit-sdk
 cd attn-credit-sdk
 pnpm install
 pnpm build
+pnpm run harness:partner-managed-doctor -- \
+  --out-dir ./tmp/harness-runs \
+  --launch ./examples/partner-managed/launch.json \
+  --payout-topology ./examples/partner-managed/payout-topology.json \
+  --creator-fee-state ./examples/partner-managed/creator-fee-state.json \
+  --revenue-events ./examples/partner-managed/revenue-events.json \
+  --repayment-mode ./examples/partner-managed/repayment-mode.json
 pnpm run harness:partner-managed-pack-from-files -- \
   --out-dir ./tmp/harness-runs \
   --launch ./examples/partner-managed/launch.json \
@@ -602,20 +612,21 @@ Work only inside this repo.
 
 Required flow:
 1. Clone the public SDK repo first.
-2. Run the file-backed harness path first to understand the retained artifact contract.
-3. Build this repo around the public SDK or harness contract instead of re-declaring the full attn contract.
-4. If you clone the SDK into `vendor/attn-credit-sdk`, wire it into this repo as a dependency, run `pnpm --dir vendor/attn-credit-sdk build` before root checks if needed, and import from `@attn-credit/sdk` rather than deep-importing `vendor/.../src` or `vendor/.../dist`.
-5. Implement only the partner side:
+2. Run the doctor command on the partner file bundle first so you know exactly which inputs are missing or invalid.
+3. Run the file-backed pack flow once the doctor output says the bundle is ready enough to retain.
+4. Build this repo around the public SDK or harness contract instead of re-declaring the full attn contract.
+5. If you clone the SDK into `vendor/attn-credit-sdk`, wire it into this repo as a dependency, run `pnpm --dir vendor/attn-credit-sdk build` before root checks if needed, and import from `@attn-credit/sdk` rather than deep-importing `vendor/.../src` or `vendor/.../dist`.
+6. Implement only the partner side:
    - auth/transport stubs
    - DTO normalization
    - export/readback loading
    - adapter glue into the SDK or harness
-6. If the public inputs do not define a live partner API contract, keep transport config-driven or stubbed and fail closed instead of inventing endpoint paths or auth scopes.
-7. Produce:
+7. If the public inputs do not define a live partner API contract, keep transport config-driven or stubbed and fail closed instead of inventing endpoint paths or auth scopes.
+8. Produce:
    - passing typecheck/build/test commands
    - one retained file-backed run directory
    - a README with only real commands
-8. If blocked, state the exact missing public information instead of inventing behavior.
+9. If blocked, state the exact missing public information instead of inventing behavior.
 
 Success criteria:
 - consumes the public SDK or harness directly
@@ -628,6 +639,35 @@ Success criteria:
 ```
 
 This prompt is intentionally more explicit than `implement this`. The latest blind tests showed that external agents do much better when the bootstrap order and non-goals are stated directly.
+
+### 7.3 First retained run checklist
+
+If the phrase `exports/readbacks` still feels too abstract, use this simpler checklist.
+
+For the first retained run, the partner should try to gather these five files:
+
+1. `launch.json`
+   - what launch or lane the bundle refers to
+   - mint, creator wallet, launch authority, and timestamp
+2. `payout-topology.json`
+   - where the in-scope flow currently lands
+   - who currently receives it
+   - who can edit that payout state
+3. `creator-fee-state.json`
+   - the current fee recipient
+   - accrued, claimed, and claimable state
+4. `revenue-events.json`
+   - concrete event-level revenue observations
+   - timestamps, amounts, and recipients when available
+5. `repayment-mode.json`
+   - what changes while debt is open
+   - the repayment target, split, and release state
+
+If the partner only has part of that bundle, the doctor command will still tell you what is missing. If the partner has the full bundle, the retained pack flow becomes much more truthful and much easier to review.
+
+The public SDK repo keeps the operational version of that checklist here:
+
+- [PARTNER_DATA_CHECKLIST.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/PARTNER_DATA_CHECKLIST.md)
 
 ## 8. How attn evaluates the response
 
