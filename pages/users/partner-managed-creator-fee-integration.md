@@ -563,16 +563,28 @@ git clone https://github.com/twentyOne2x/attn-credit-sdk
 cd attn-credit-sdk
 pnpm install
 pnpm build
-pnpm run harness:clawpump-pack-from-files -- \
+pnpm run harness:partner-managed-pack-from-files -- \
   --out-dir ./tmp/harness-runs \
-  --launch ./examples/clawpump/launch.json \
-  --payout-topology ./examples/clawpump/payout-topology.json \
-  --creator-fee-state ./examples/clawpump/creator-fee-state.json \
-  --revenue-events ./examples/clawpump/revenue-events.json \
-  --repayment-mode ./examples/clawpump/repayment-mode.json
+  --launch ./examples/partner-managed/launch.json \
+  --payout-topology ./examples/partner-managed/payout-topology.json \
+  --creator-fee-state ./examples/partner-managed/creator-fee-state.json \
+  --revenue-events ./examples/partner-managed/revenue-events.json \
+  --repayment-mode ./examples/partner-managed/repayment-mode.json
 ```
 
 If the partner wants a separate repo after that, build it around the cloned public SDK or a Git dependency on that repo. Do not start by re-typing the contract from the guide.
+
+Legacy `clawpump-*` command names still exist in the SDK as compatibility aliases for the reference adapter, but the public partner start should use the `partner-managed-*` names.
+
+The cleanest separate-repo wiring is also explicit:
+
+1. clone the public SDK into `vendor/attn-credit-sdk`,
+2. declare `@attn-credit/sdk` as a file dependency from `vendor/attn-credit-sdk/packages/sdk`,
+3. run `pnpm --dir vendor/attn-credit-sdk build` before your root `typecheck`, `build`, or `test` commands if the vendored copy does not already include built `dist` outputs,
+4. import from `@attn-credit/sdk` instead of deep-importing `vendor/.../src` or `vendor/.../dist`,
+5. and keep any live partner HTTP routes or auth scopes as explicit config or stubs until the partner publishes that contract.
+
+That last point matters. The public handoff standardizes the retained artifact contract and the SDK contract. It does not invent a universal live partner API. If the live HTTP surface is not publicly defined yet, the honest implementation should fail closed instead of guessing endpoint paths or auth semantics.
 
 ### 7.2 Base prompt for an external team or AI
 
@@ -592,22 +604,26 @@ Required flow:
 1. Clone the public SDK repo first.
 2. Run the file-backed harness path first to understand the retained artifact contract.
 3. Build this repo around the public SDK or harness contract instead of re-declaring the full attn contract.
-4. Implement only the partner side:
+4. If you clone the SDK into `vendor/attn-credit-sdk`, wire it into this repo as a dependency, run `pnpm --dir vendor/attn-credit-sdk build` before root checks if needed, and import from `@attn-credit/sdk` rather than deep-importing `vendor/.../src` or `vendor/.../dist`.
+5. Implement only the partner side:
    - auth/transport stubs
    - DTO normalization
    - export/readback loading
    - adapter glue into the SDK or harness
-5. Produce:
+6. If the public inputs do not define a live partner API contract, keep transport config-driven or stubbed and fail closed instead of inventing endpoint paths or auth scopes.
+7. Produce:
    - passing typecheck/build/test commands
    - one retained file-backed run directory
    - a README with only real commands
-6. If blocked, state the exact missing public information instead of inventing behavior.
+8. If blocked, state the exact missing public information instead of inventing behavior.
 
 Success criteria:
 - consumes the public SDK or harness directly
 - does not re-type the full attn contract
+- does not deep-import vendored SDK source or dist files directly when a package dependency on `@attn-credit/sdk` is available
 - passes its published commands
 - retains partner-provided inputs into artifacts
+- keeps live transport fail-closed when the public partner API contract is not defined
 - does not claim live payout-control parity or hosted runtime parity
 ```
 
