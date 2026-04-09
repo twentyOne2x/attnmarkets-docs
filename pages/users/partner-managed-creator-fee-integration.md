@@ -529,11 +529,11 @@ If the partner already has its own wallet and payout infrastructure, the fastest
 
 1. answer the response package in section `9`,
 2. gather the first-run file bundle from the partner system,
-3. run the public SDK doctor command on that file bundle,
+3. run the public SDK validation command on that file bundle,
 4. package the validated bundle through the public SDK harness so both sides are looking at one retained run directory instead of ad hoc screenshots and prose,
 5. attach that retained run directory with the evidence package in section `13`.
 
-The public SDK repo now includes both a doctor path and a file-backed harness path for exactly this:
+The public SDK repo now includes both a validation path and a file-backed harness path for exactly this:
 
 - [attn-credit-sdk](https://github.com/twentyOne2x/attn-credit-sdk)
 - [packages/harness-cli/README.md](https://github.com/twentyOne2x/attn-credit-sdk/blob/main/packages/harness-cli/README.md)
@@ -566,7 +566,7 @@ git clone https://github.com/twentyOne2x/attn-credit-sdk
 cd attn-credit-sdk
 pnpm install
 pnpm build
-pnpm run harness:partner-managed-doctor -- \
+pnpm run harness:partner-managed-validate -- \
   --out-dir ./tmp/harness-runs \
   --launch ./examples/partner-managed/launch.json \
   --payout-topology ./examples/partner-managed/payout-topology.json \
@@ -612,8 +612,8 @@ Work only inside this repo.
 
 Required flow:
 1. Clone the public SDK repo first.
-2. Run the doctor command on the partner file bundle first so you know exactly which inputs are missing or invalid.
-3. Run the file-backed pack flow once the doctor output says the bundle is ready enough to retain.
+2. Run the validation command on the partner file bundle first so you know exactly which inputs are missing or invalid.
+3. Run the file-backed pack flow once the validation output says the bundle is ready enough to retain.
 4. Build this repo around the public SDK or harness contract instead of re-declaring the full attn contract.
 5. If you clone the SDK into `vendor/attn-credit-sdk`, wire it into this repo as a dependency, run `pnpm --dir vendor/attn-credit-sdk build` before root checks if needed, and import from `@attn-credit/sdk` rather than deep-importing `vendor/.../src` or `vendor/.../dist`.
 6. Implement only the partner side:
@@ -663,7 +663,7 @@ For the first retained run, the partner should try to gather these five files:
    - what changes while debt is open
    - the repayment target, split, and release state
 
-If the partner only has part of that bundle, the doctor command will still tell you what is missing. If the partner has the full bundle, the retained pack flow becomes much more truthful and much easier to review.
+If the partner only has part of that bundle, the validation command will still tell you what is missing. If the partner has the full bundle, the retained pack flow becomes much more truthful and much easier to review.
 
 The public SDK repo keeps the operational version of that checklist here:
 
