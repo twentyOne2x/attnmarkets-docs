@@ -10,6 +10,8 @@ The point of this setup is straightforward:
 - attn evaluates whether the revenue path is clear and controlled enough to support a bounded lane,
 - and both sides can start with the earliest supportable pilot without overstating the lane's readiness.
 
+For the current Pump creator-fee-backed borrower work, this guide plus the public SDK define the partner-managed lane when the partner keeps its own wallet and payout stack. The SDK does not itself fund the lane. It gives both sides one shared contract for validation, stage assessment, evidence packaging, and integration scaffolding.
+
 This page is intentionally written as a requirements and response document, not a product explainer or internal playbook.
 
 If you are the partner team, the goal is simple:
@@ -572,7 +574,8 @@ pnpm run harness:partner-managed-validate -- \
   --payout-topology ./examples/partner-managed/payout-topology.json \
   --creator-fee-state ./examples/partner-managed/creator-fee-state.json \
   --revenue-events ./examples/partner-managed/revenue-events.json \
-  --repayment-mode ./examples/partner-managed/repayment-mode.json
+  --repayment-mode ./examples/partner-managed/repayment-mode.json \
+  --format human
 pnpm run harness:partner-managed-pack-from-files -- \
   --out-dir ./tmp/harness-runs \
   --launch ./examples/partner-managed/launch.json \
@@ -664,6 +667,8 @@ For the first retained run, the partner should try to gather these five files:
    - the repayment target, split, and release state
 
 If the partner only has part of that bundle, the validation command will still tell you what is missing. If the partner has the full bundle, the retained pack flow becomes much more truthful and much easier to review.
+
+If you want a quick human-readable gauge of the current lane instead of raw JSON, use `--format human` on the validation command.
 
 The public SDK repo keeps the operational version of that checklist here:
 
