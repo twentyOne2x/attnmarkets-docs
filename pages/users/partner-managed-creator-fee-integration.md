@@ -81,6 +81,15 @@ The SDK now provides:
 - `pilot evidence packaging`: a repeatable evidence-pack format for bundling descriptors, readbacks, receipts, and stage assessment into one reviewable artifact.
 - `claim-level or stage classification helpers`: helpers that map the available evidence to the staged path in this guide instead of leaving stage assignment to ad hoc prose.
 
+For the current hosted attn treasury-funded Pump creator-fee fallback lane, the public SDK also now exposes one compact discovery and action surface:
+
+- `createPumpAgentBorrowerTools(...)` from `@attn-credit/sdk`
+- `attn-live-catalog`
+- `attn-live-capabilities`
+- `attn-live-action`
+
+Those surfaces are for gauging or using the currently callable hosted fallback through the public SDK contract. They do not turn a partner-managed own-wallet lane into the same thing, but they do let both sides inspect the hosted fallback truth through the same public package.
+
 Those are the reusable mechanics.
 The exact object shapes and receipt formats should live in the public SDK reference, not in this public guide:
 
@@ -551,6 +560,18 @@ That start flow is the recommended path for a partner-managed wallet integration
 - and one evidence pack.
 
 If attn snapshots are retained alongside that run, treat them as comparison-only. They describe current attn-hosted control-plane truth, not proof that the partner-managed wallet lane already matches the hosted callable fallback.
+
+If you need to gauge the currently hosted attn callable fallback itself through the public SDK, the fastest path is:
+
+```bash
+pnpm run harness:attn-live-catalog:human
+pnpm run harness:attn-live-capabilities:human
+pnpm run harness:attn-live-action:human -- \
+  --action check_credit \
+  --mint Eg2ymQ2aQqjMcibnmTt8erC6Tvk9PVpJZCxvVPJz2agu
+```
+
+That live command set is the public SDK path for reading the current hosted borrower contract and running bounded borrower actions like `check_credit`. It is separate from the partner-managed own-wallet retained-run flow above.
 
 For a fresh external implementation repo, the minimum honest acceptance bar is:
 
