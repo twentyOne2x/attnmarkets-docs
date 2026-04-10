@@ -573,6 +573,14 @@ pnpm run harness:attn-live-action:human -- \
 
 That live command set is the public SDK path for reading the current hosted borrower contract and running bounded borrower actions like `check_credit`. It is separate from the partner-managed own-wallet retained-run flow above.
 
+Fresh hosted proof from April 10, 2026:
+
+- the public SDK can create a hosted Swig onboarding session through `start_onboarding`
+- that same public SDK path then truthfully reports the next blockers instead of pretending activation is done
+- the current hosted blockers after session creation are still route-lock confirmation and then operator treasury release
+
+If you need that hosted path, the SDK repo now includes a payload scaffold for the hosted legacy Swig onboarding contract under `examples/attn-live/`.
+
 For a fresh external implementation repo, the minimum honest acceptance bar is:
 
 1. the repo consumes the public SDK or harness contract instead of re-declaring the full contract locally,
