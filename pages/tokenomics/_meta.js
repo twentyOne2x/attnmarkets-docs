@@ -3,9 +3,6 @@ const itemTitle = (label) => (
 )
 
 const sidebar = {
-  index: {
-    title: itemTitle('Tokenomics overview')
-  },
   'tokenomics-overview': {
     title: itemTitle('Directional')
   }

@@ -1,23 +1,24 @@
-# For Agents and Apps
+# For Agent Builders and Apps
 
-attn helps agents, apps, and builders add a credit layer behind onchain revenue and commerce without turning credit into a separate product.
+attn helps agents, apps, and builders add a credit layer behind onchain revenue and commerce without turning credit into a separate product experience.
 
 ## What attn provides
 
-- working capital against visible activity,
+- small credit for approved services and jobs,
+- working capital against visible activity where the lane supports it,
 - repayment-first servicing and policy controls,
 - account setup that keeps the flow programmable,
 - a path to embed credit behind your own user surface.
 
 ## Where it fits best
 
+- agents that need to pay for approved services or jobs,
 - products where users or agents already earn and spend,
-- teams with real onchain revenue or payment activity,
 - operators who want disciplined servicing instead of manual repayment promises.
 
 ## What teams should expect
 
-- a real revenue source worth underwriting,
+- approved service and job boundaries,
 - a clear account and permissions setup,
 - agreement up front on how repayment and controls work.
 
@@ -32,12 +33,12 @@ Projects should be explicit about:
 
 ## Current direction
 
-The strongest current public proof is still the Pump borrower flow.
-The broader goal is credit behind agent-commerce, wallet, and commerce surfaces.
+Hosted agent-credit proof is already live on approved Tempo services and approved Virtuals jobs.
+The broader goal is still credit behind more agent-commerce, wallet, and commerce surfaces over time.
 
 ## Next action
 
-- [Open credit simulation](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
+- [Open agent credit guide](https://attn.markets/skill.md)
 
 ## Related pages
 

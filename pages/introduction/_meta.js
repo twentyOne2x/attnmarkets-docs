@@ -3,9 +3,6 @@ const itemTitle = (label) => (
 )
 
 const sidebar = {
-  index: {
-    title: itemTitle('Start here')
-  },
   'the-missing-layer-for-onchain-revenues': {
     title: itemTitle('Missing layer')
   },

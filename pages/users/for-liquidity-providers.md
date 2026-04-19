@@ -1,7 +1,7 @@
 # For Liquidity Providers
 
 This page describes the capital side of attn Credit.
-The strongest current public proof is still on the borrower side; broader LP-facing rollout comes later.
+Current public proof is still narrow on the operating side, and broader LP-facing rollout comes later.
 
 ## What LPs are evaluating
 
@@ -25,8 +25,8 @@ The strongest current public proof is still on the borrower side; broader LP-fac
 
 ## Current direction
 
-The current proving lane is still the Pump borrower flow.
-As attn expands, the capital side is intended to stay explicit about which risk box is being financed and what proof exists behind it.
+Current borrower-side proof is still strongest on the Pump creator-fee lane.
+Hosted agent-credit proof now also covers approved Tempo services and approved Virtuals jobs, but the capital-side question remains the same: be explicit about which risk box is being financed and what proof exists behind it.
 
 ## Related pages
 

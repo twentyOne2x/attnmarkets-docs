@@ -1,100 +1,75 @@
-# For Pump.fun Creators, Devs, and Memecoin CTOs
+# Where Agent Revenue Comes From Today
 
-This page is for teams with real onchain fee flow that need short-cycle working capital.
+This page is for teams trying to understand what currently counts as real onchain income in agent commerce, and why that matters for attn.
 
-## Your situation
+The short version is:
 
-You have:
+- revenues are the proof the agent already does useful work,
+- reputation helps shape the starter line while repayment history is still young,
+- current public attn credit stays bounded to approved spend or tightly scoped borrower flows.
 
-- recurring creator or protocol earnings,
-- active build and distribution costs,
-- a need to fund operations without repeatedly selling token inventory.
+## 1. Pump.fun creator fees
 
-attn Credit helps convert routed earnings into an enforceable financing facility.
+Pump creator fees are the clearest current borrower-side example of onchain revenue.
 
-## What you get
+Why they matter:
 
-### 1. Controlled revenue account
+- they are visible onchain,
+- they can show recurring earned flow,
+- they give attn something concrete to underwrite against.
 
-Your eligible earnings are routed into a configured revenue account with clear policy behavior:
+This is why the current borrower lane is still centered on Pump creator-fee history.
 
-- if no facility is active, withdrawals follow normal policy,
-- if a facility is active, debt service sweeps are prioritized.
+## 2. Jobs sold on Virtuals ACP
 
-This makes repayment legible and auditable.
+Virtuals Agent Protocol Commerce (`agdp.io`) gives agents a way to sell jobs onchain.
 
-Implementation note (v1): this is typically implemented as a Squads-controlled revenue account (timelocked config + spending limits),
-so sweeps to repayment can run without giving an executor broad permissions.
+Why that matters:
 
-For the current Pump borrower-first lane, the practical lifecycle is more specific:
+- it proves the agent can sell useful work,
+- it gives attn a clearer read on what kind of work the agent actually does,
+- it creates a bounded place where credit can later be used or reviewed.
 
-- before onboarding, the borrower controls Pump creator-fee admin,
-- during ACTIVE, Pump fee-admin control moves to the pledged Swig path,
-- after CLOSE, fee-admin control is transferred back to the borrower or the borrower-selected target.
+Current public truth:
 
-That means attn is **not** intended to take permanent ownership of the creator-fee stream. The ACTIVE period is a temporary, policy-controlled control posture designed to keep repayment rails enforceable.
+- hosted agent credit is already proven on approved Virtuals jobs,
+- not every possible job is instantly approved,
+- demand, review, and proof still matter.
 
-### 2. Revenue-swept advances
+## 3. Services sold and paid through Tempo MPP
 
-You can take a short-dated advance against a policy-defined share of expected earnings.
+Tempo Machine Payment Protocol (`MPP.dev`) gives agents a cleaner way to sell and pay for services without relying on logins, API keys, or normal checkout assumptions.
 
-Typical use cases:
+Why that matters:
 
-- funding content and growth cycles,
-- paying contractors and infra costs,
-- bridging short operating windows.
+- it proves the agent can participate in machine-native commerce,
+- it gives attn a bounded service rail where small starter credit can be used,
+- it makes payment flow part of the operating setup rather than a side channel.
 
-### 3. Scaling into revolving lines
+## 4. Why attn cares
 
-As flow continuity improves, facilities can move from one-off advances to revolving usage:
+attn is not trying to be the revenue source.
+attn is the credit layer that sits behind those revenue and payment surfaces.
 
-- dynamic limits based on observed revenue,
-- mandatory utilization discipline,
-- deterministic throttle/freeze behavior under stress.
+The current model is:
 
-## Typical flow (timeline)
+- revenue proves the agent or team is already doing real work,
+- reputation helps when history is still short,
+- credit stays bounded while the public product is still narrow.
 
-```text
-Apply -> Route fees -> Draw -> Sweeps -> Close
-```
+## 5. Current public shape
 
-1. **Apply**
-   Share recent fee-flow history and operating requirements.
-2. **Route fees**
-   Configure eligible earnings into the controlled revenue account.
-3. **Draw**
-   Access short-cycle advance liquidity within approved policy limits.
-4. **Sweeps**
-   Automated repayment sweeps run from routed earnings while the facility is active.
-5. **Close**
-   Facility winds down after repayment and returns to normal operating policy.
+Today that means:
 
-### Important operational note
+- borrower credit backed by Pump.fun creator fees,
+- agent credit for approved Virtuals jobs and approved Tempo services.
 
-Once the onchain fee-routing state is configured, creator-fee control does not depend on a web server staying online. But the current guided product flow still relies on attn-operated backend and keeper services for:
-
-- servicing automation,
-- debt-state checks,
-- guided close,
-- and verified offboarding back to the borrower or chosen target.
-
-## Optional collateral extensions
-
-For larger tickets, launchpad or DAO structures can add collateral overlays while keeping repayment anchored in routed earnings.
-
-See: [For Launchpads & Incubators](./for-launchpads-and-incubators.md)
-
-## What to communicate to your community
-
-Teams should disclose:
-
-- what share of routed earnings is pledged,
-- what facility proceeds are used for,
-- how policy controls protect repayment discipline.
+That is still a narrow public box, but it is already enough to show the shape of the stack.
 
 ## Related pages
 
-- [View demo app](https://app.attn.markets/credit-line)
+- [Open borrower estimate](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
+- [Agent credit guide](https://attn.markets/skill.md)
 - [How attn Credit works (non-technical)](../mechanics/how-it-works-nontechnical.md)
-- [attn Credit Engine and attnUSD](../mechanics/pt-yt-attnusd.md)
-- [Risk, Limits, and Concentration Framework](../mechanics/risk-and-limits.md)
+- [Vision: attn as the Credit Layer for Agent Commerce](../introduction/vision-attn.md)
+- [For Launchpads & Incubators](./for-launchpads-and-incubators.md)

@@ -25,6 +25,7 @@ attn is meant to sit behind cards, wallets, marketplaces, and commerce flows as 
 
 ### 3. Agent-commerce surfaces
 
+- the current narrow fit is approved agent-service and job spend,
 - the longer-term fit is credit behind agent marketplaces, spend surfaces, and machine-driven payment flows,
 - the partner owns the user experience while attn provides the credit layer behind it.
 
@@ -37,8 +38,8 @@ attn is meant to sit behind cards, wallets, marketplaces, and commerce flows as 
 
 ## Current direction
 
-The strongest current public proof is still the narrower Pump borrower flow.
-The broader cards, commerce, and settlement role is the direction of travel, not a blanket public-live claim today.
+Current public proof is still narrow.
+Hosted agent-credit proof exists on approved Tempo services and approved Virtuals jobs. Broader cards, commerce, and settlement distribution is still the direction of travel, not a blanket public-live claim today.
 
 ## Related pages
 

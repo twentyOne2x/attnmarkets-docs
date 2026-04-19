@@ -19,6 +19,26 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/introduction',
+        destination: '/introduction/the-missing-layer-for-onchain-revenues',
+        permanent: false,
+      },
+      {
+        source: '/users',
+        destination: '/users/for-apps-daos-and-builders',
+        permanent: false,
+      },
+      {
+        source: '/mechanics',
+        destination: '/mechanics/how-it-works-nontechnical',
+        permanent: false,
+      },
+      {
+        source: '/tokenomics',
+        destination: '/tokenomics/tokenomics-overview',
+        permanent: false,
+      },
+      {
         source: '/introduction/where-attn-sits-next-to-avici-and-pye',
         destination: '/introduction/attn-in-context',
         permanent: true,

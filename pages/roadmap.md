@@ -1,21 +1,30 @@
 # Roadmap (Indicative)
 
-This roadmap starts from the current proving lane, then widens toward the broader agent-commerce vision.
+This roadmap starts from the current narrow public product surfaces, then widens toward the broader agent-commerce vision.
+
+The broad logic is:
+
+- first prove that onchain revenues and reputation can support bounded working capital,
+- then widen the approved rails and partner surfaces,
+- then broaden into more conservative commerce and receivables use cases.
 
 ## Action rail
 
-[**`> REQUEST ACCESS`**](https://attn.markets/request-access) [**`> OPEN CREDIT SIMULATION`**](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
+[**`> OPEN AGENT CREDIT GUIDE`**](https://attn.markets/skill.md) [**`> OPEN BORROWER ESTIMATE`**](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
 
-Request access is still permissioned.
-The simulation is public.
+The agent guide is public.
+The borrower estimate is public.
 
-## Phase 0 - Prove the borrower flow
+## Phase 0 - Prove the narrow live lanes
 
-- prove repayment controls in a live borrower lane,
-- keep the qualification and activation flow simple,
-- collect repeatable operating proof.
+- keep agent credit tightly bounded to approved services and jobs,
+- keep borrower credit tied to Pump.fun creator-fee history,
+- use those revenue and payment surfaces as proof that the agent or operator already does real work,
+- collect repeatable proof before widening the surface area.
 
-_If this is you: want an indicative limit + terms -> [Open credit simulation](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)._
+_If this is you: want to pay for an approved service or job -> [Open agent credit guide](https://attn.markets/skill.md)._
+
+_If this is you: want an indicative borrower limit + terms -> [Open borrower estimate](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)._
 
 ## Phase 1 - Harden servicing and reporting
 
@@ -23,12 +32,12 @@ _If this is you: want an indicative limit + terms -> [Open credit simulation](ht
 - tighten the operating playbooks around activation, servicing, and close,
 - make the proof easier to review and repeat.
 
-_If this is you: ready to route revenue + draw -> [Request access](https://attn.markets/request-access)._
+_If this is you: need a guided borrower path beyond the estimate -> [Request access](https://attn.markets/request-access)._
 
-## Phase 2 - Expand into agent-commerce surfaces
+## Phase 2 - Expand approved service and partner surfaces
 
-- place the same credit layer behind more wallets, marketplaces, and spend surfaces,
-- support partner-owned user experiences rather than a single front end,
+- widen the set of approved services, jobs, and partner-owned surfaces,
+- support more partner-owned user experiences rather than one front end,
 - keep repayment and controls consistent as distribution expands.
 
 _If this is you: exploring partner integration -> [For Cards, Commerce, and Settlement Partners](./users/for-cards-and-commerce-partners.md)._
