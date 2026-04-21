@@ -2,7 +2,7 @@
 
 This page is the single document a partner should use when evaluating an attn integration while keeping its own wallet and payout infrastructure.
 
-At a high level, attn enables a financing lane against attributable partner-managed revenues without forcing the partner to migrate those revenues into attn-owned wallets or into a borrower-owned Swig stack first.
+At a high level, attn enables a financing lane against attributable partner-managed revenues without forcing the partner to migrate those revenues into attn-owned wallets or into an attn-managed wallet stack first.
 
 The point of this setup is straightforward:
 
@@ -28,7 +28,7 @@ This page answers one question:
 
 **What must be true for attn to support a partner-managed revenue lane when the partner keeps its own wallet and payout stack?**
 
-The page is not asking you to migrate to Swig, Privy, or Squads.
+The page is not asking you to migrate to any specific wallet product, custody stack, or attn-managed wallet model.
 It is asking whether your existing payout and wallet stack can make the repayment path clear, bounded, auditable, and monitorable enough for a supportable lane.
 
 In practical terms, attn is trying to answer four things:
@@ -81,14 +81,14 @@ The SDK now provides:
 - `pilot evidence packaging`: a repeatable evidence-pack format for bundling descriptors, readbacks, receipts, and stage assessment into one reviewable artifact.
 - `claim-level or stage classification helpers`: helpers that map the available evidence to the staged path in this guide instead of leaving stage assignment to ad hoc prose.
 
-For the current hosted attn treasury-funded Pump creator-fee fallback lane, the public SDK also now exposes one compact discovery and action surface:
+The public SDK also exposes one compact discovery and action surface for checking attn's own current hosted route truth:
 
 - `createPumpAgentBorrowerTools(...)` from `@attn-credit/sdk`
 - `attn-live-catalog`
 - `attn-live-capabilities`
 - `attn-live-action`
 
-Those surfaces are for gauging or using the currently callable hosted fallback through the public SDK contract. They do not turn a partner-managed own-wallet lane into the same thing, but they do let both sides inspect the hosted fallback truth through the same public package.
+Those surfaces are for gauging or using attn's current hosted route truth through the public SDK contract. They do not turn a partner-managed own-wallet lane into the same thing, but they do let both sides inspect attn-hosted truth through the same public package when that reference point is useful. They are optional reference checks, not the starting contract for a partner that keeps its own payout and wallet stack.
 
 Those are the reusable mechanics.
 The exact object shapes and receipt formats should live in the public SDK reference, not in this public guide:
@@ -167,7 +167,7 @@ At a high level, that baseline gives attn:
 - readback and auditability,
 - and a defined release or offboard path after close.
 
-In attn today, that baseline is implemented through the borrower-first Pump/Swig path.
+In attn today, that baseline is implemented through an attn-managed borrower-first path.
 
 The partner-managed lane does not need to look the same at the account or wallet level.
 It does need to produce the same practical outcomes where policy matters.
@@ -329,7 +329,7 @@ No stage below the full standard should be described as:
 - equivalence to attn's borrower-first managed-revenue baseline,
 - or fully automated debt-open enforcement.
 
-### 6.2 Stage 0: Compatibility-only
+### 6.2 Stage 0: Early review only
 
 This is the earliest stage in the ladder.
 
@@ -363,7 +363,7 @@ Minimum evidence:
 - named wallets or payout routers,
 - one explanation of who controls what today.
 
-### 6.3 Stage 1: Platform-as-counterparty MVP
+### 6.3 Stage 1: Platform-backed manual pilot candidate
 
 This is the first meaningful pilot stage if the platform is willing to stand behind the lane before stronger payout controls are in place.
 
@@ -380,7 +380,8 @@ What must be true:
 
 What this stage supports:
 
-- bounded platform-counterparty pilot,
+- bounded platform-counterparty pilot review,
+- compatibility-level assessment while stronger controls are missing,
 - early proof that the business flow is real,
 - not full payout-policy enforcement.
 
@@ -397,7 +398,7 @@ Minimum evidence:
 - named operator owners,
 - documented pause, dispute, or unwind path.
 
-### 6.4 Stage 2: Observable payout-path MVP
+### 6.4 Stage 2: Observable payout path
 
 This stage is stronger than pure platform-counterparty trust.
 
@@ -430,7 +431,7 @@ Minimum evidence:
 - drift-detection rule,
 - manual escalation path.
 
-### 6.5 Stage 3: Policy-bounded first pilot
+### 6.5 Stage 3: Controlled first pilot
 
 This is the strongest intermediary stage before the full standard.
 
@@ -497,7 +498,7 @@ If the partner wants the fastest supportable route, the usual choices are:
 | Stage | What it proves | What it does not prove | What is required to move forward |
 | --- | --- | --- | --- |
 | `Stage 0` | the revenue model is real enough to evaluate | no financeability, no payout control, no pilot readiness | named revenue scope, basic payout topology, named operating owner, and example records or exports |
-| `Stage 1` | the platform can support a manual or operator-run financing pilot as the primary counterparty | no borrower-level control parity, no debt-open payout lock | explicit debt-open destination, recipient readback, attributable change events, and a defined reconciliation cadence |
+| `Stage 1` | the platform-counterparty path is reviewable as a manual or operator-run financing candidate | no borrower-level control parity, no debt-open payout lock, no pilot approval by itself | explicit debt-open destination, recipient readback, attributable change events, and a defined reconciliation cadence |
 | `Stage 2` | repayment-relevant routing is observable and drift can be detected | no strong claim that payout policy is fully bounded | bounded payout-edit authority, durable readback, incident posture, and one concrete pilot pack |
 | `Stage 3` | one bounded first pilot can run with defined control, readback, and incident posture | no public-live or broad lender-ready claim | successful pilot evidence, release or offboard clarity, and stronger signer/operator controls once production signing or meaningful balances are in scope |
 | `Stage 4` | the partner-managed lane meets the full stricter requirements | not the same thing as public borrower readiness, outside-lender readiness, or open-lender readiness by default | no further control stage in this ladder; progress after this point belongs to rollout and market-readiness, not a Stage 5 control standard |
@@ -541,8 +542,8 @@ If the partner already has its own wallet and payout infrastructure, the fastest
 1. answer the response package in section `9`,
 2. gather the first-run file bundle from the partner system,
 3. run the public SDK validation command on that file bundle,
-4. package the validated bundle through the public SDK harness so both sides are looking at one retained run directory instead of ad hoc screenshots and prose,
-5. attach that retained run directory with the evidence package in section `13`.
+4. package the validated bundle through the public SDK harness so both sides are looking at one saved review bundle instead of ad hoc screenshots and prose,
+5. attach that saved review bundle with the evidence package in section `13`.
 
 The public SDK repo now includes both a validation path and a file-backed harness path for exactly this:
 
@@ -553,15 +554,23 @@ The public SDK repo now includes both a validation path and a file-backed harnes
 
 That start flow is the recommended path for a partner-managed wallet integration because it lets the partner keep its own wallet stack while still producing:
 
-- retained partner artifacts,
-- retained receipts,
+- saved partner artifacts,
+- saved receipts,
 - one typed integration descriptor,
 - one stage assessment,
 - and one evidence pack.
 
-If attn snapshots are retained alongside that run, treat them as comparison-only. They describe current attn-hosted control-plane truth, not proof that the partner-managed wallet lane already matches the hosted callable fallback.
+First public partner packaging proof from April 20, 2026:
 
-If you need to gauge the currently hosted attn callable fallback itself through the public SDK, the fastest path is:
+- a real mainnet-beta partner readback bundle was packaged through this public SDK review flow,
+- the reviewed result fit the `Stage 1` evidence shape, but only at the lowest support level,
+- the proof supports compatibility-level review of a platform-counterparty MVP, not underwriting-compatible status, financing readiness, or controlled pilot approval by itself,
+- it did not prove positive revenue flow, live treasury funding, a repayment-target invariant, attn-managed payout-control parity, public or production readiness, or equivalence to attn's own hosted path,
+- and the next required evidence remains a repayment-target invariant plus attn readback and audit receipts.
+
+If attn snapshots are saved alongside that run, treat them as comparison-only. They describe current attn-hosted behavior, not proof that the partner-managed wallet lane already matches attn's own hosted path.
+
+If you need to gauge attn's current hosted route truth itself through the public SDK, the fastest path is:
 
 ```bash
 pnpm run harness:attn-live-catalog:human
@@ -571,20 +580,20 @@ pnpm run harness:attn-live-action:human -- \
   --mint Eg2ymQ2aQqjMcibnmTt8erC6Tvk9PVpJZCxvVPJz2agu
 ```
 
-That live command set is the public SDK path for reading the current hosted borrower contract and running bounded borrower actions like `check_credit`. It is separate from the partner-managed own-wallet retained-run flow above.
+That live command set is the public SDK path for reading attn's current hosted borrower contract and running bounded borrower actions like `check_credit`. It is separate from the partner-managed own-wallet review flow above and should be treated as an optional reference check, not as the partner's starting contract.
 
-Fresh hosted proof from April 10, 2026:
+Fresh hosted proof from April 21, 2026:
 
-- the public SDK can create a hosted Swig onboarding session through `start_onboarding`
-- that same public SDK path then truthfully reports the next blockers instead of pretending activation is done
-- the current hosted blockers after session creation are still route-lock confirmation and then operator treasury release
+- the public SDK can read current attn-hosted route truth and run bounded checks like `check_credit`
+- those hosted checks are still discovery-only for real credit and should not be treated as proof that a live funded lane is ready
+- one older hosted path remains blocked on external Pump creator-fee finalization and signer access
 
-If you need that hosted path, the SDK repo now includes a payload scaffold for the hosted legacy Swig onboarding contract under `examples/attn-live/`.
+If you need one of those older hosted paths for attn-side debugging, the SDK repo still includes an example payload scaffold under `examples/attn-live/`, but most partner-managed integrations can ignore it.
 
 For a fresh external implementation repo, the minimum honest acceptance bar is:
 
 1. the repo consumes the public SDK or harness contract instead of re-declaring the full contract locally,
-2. the repo produces one retained file-backed run directory from real partner exports or readbacks,
+2. the repo produces one saved file-backed review bundle from real partner exports or readbacks,
 3. the repo's published `typecheck`, `build`, and `test` commands all pass,
 4. and the README or package scripts advertise only commands that actually exist.
 
@@ -622,11 +631,21 @@ The cleanest separate-repo wiring is also explicit:
 
 1. clone the public SDK into `vendor/attn-credit-sdk`,
 2. declare `@attn-credit/sdk` as a file dependency from `vendor/attn-credit-sdk/packages/sdk`,
-3. run `pnpm --dir vendor/attn-credit-sdk build` before your root `typecheck`, `build`, or `test` commands if the vendored copy does not already include built `dist` outputs,
+3. run `pnpm --dir vendor/attn-credit-sdk install && pnpm --dir vendor/attn-credit-sdk build` before your root `typecheck`, `build`, or `test` commands so the vendored workspace has its own dependencies and built `dist` outputs,
 4. import from `@attn-credit/sdk` instead of deep-importing `vendor/.../src` or `vendor/.../dist`,
 5. and keep any live partner HTTP routes or auth scopes as explicit config or stubs until the partner publishes that contract.
 
-That last point matters. The public handoff standardizes the retained artifact contract and the SDK contract. It does not invent a universal live partner API. If the live HTTP surface is not publicly defined yet, the honest implementation should fail closed instead of guessing endpoint paths or auth semantics.
+That last point matters. The public handoff standardizes the saved review bundle and the SDK contract. It does not invent a universal live partner API. If the live HTTP surface is not publicly defined yet, the honest implementation should fail closed instead of guessing endpoint paths or auth semantics.
+
+The expected saved review bundle is also simple and stable:
+
+1. `inputs.json`
+2. `logs/events.ndjson`
+3. `partner/*.json`
+4. `sdk/*.json`
+5. `summary.json`
+
+That is the minimum file tree another team should expect after a successful packaging pass.
 
 ### 7.2 Base prompt for an external team or AI
 
@@ -645,9 +664,9 @@ Work only inside this repo.
 Required flow:
 1. Clone the public SDK repo first.
 2. Run the validation command on the partner file bundle first so you know exactly which inputs are missing or invalid.
-3. Run the file-backed pack flow once the validation output says the bundle is ready enough to retain.
+3. Run the file-backed pack flow once the validation output says the bundle is ready enough to save.
 4. Build this repo around the public SDK or harness contract instead of re-declaring the full attn contract.
-5. If you clone the SDK into `vendor/attn-credit-sdk`, wire it into this repo as a dependency, run `pnpm --dir vendor/attn-credit-sdk build` before root checks if needed, and import from `@attn-credit/sdk` rather than deep-importing `vendor/.../src` or `vendor/.../dist`.
+5. If you clone the SDK into `vendor/attn-credit-sdk`, wire it into this repo as a dependency, run `pnpm --dir vendor/attn-credit-sdk install && pnpm --dir vendor/attn-credit-sdk build` before root checks if needed, and import from `@attn-credit/sdk` rather than deep-importing `vendor/.../src` or `vendor/.../dist`.
 6. Implement only the partner side:
    - auth/transport stubs
    - DTO normalization
@@ -656,7 +675,7 @@ Required flow:
 7. If the public inputs do not define a live partner API contract, keep transport config-driven or stubbed and fail closed instead of inventing endpoint paths or auth scopes.
 8. Produce:
    - passing typecheck/build/test commands
-   - one retained file-backed run directory
+   - one saved file-backed review bundle
    - a README with only real commands
 9. If blocked, state the exact missing public information instead of inventing behavior.
 
@@ -672,11 +691,11 @@ Success criteria:
 
 This prompt is intentionally more explicit than `implement this`. The latest blind tests showed that external agents do much better when the bootstrap order and non-goals are stated directly.
 
-### 7.3 First retained run checklist
+### 7.3 First saved review bundle checklist
 
 If the phrase `exports/readbacks` still feels too abstract, use this simpler checklist.
 
-For the first retained run, the partner should try to gather these five files:
+For the first saved review bundle, the partner should try to gather these five files:
 
 1. `launch.json`
    - what launch or lane the bundle refers to
@@ -695,7 +714,7 @@ For the first retained run, the partner should try to gather these five files:
    - what changes while debt is open
    - the repayment target, split, and release state
 
-If the partner only has part of that bundle, the validation command will still tell you what is missing. If the partner has the full bundle, the retained pack flow becomes much more truthful and much easier to review.
+If the partner only has part of that bundle, the validation command will still tell you what is missing. If the partner has the full bundle, the pack flow becomes much more truthful and much easier to review.
 
 If you want a quick human-readable gauge of the current lane instead of raw JSON, use `--format human` on the validation command.
 
