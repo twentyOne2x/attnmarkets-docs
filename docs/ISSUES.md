@@ -9665,7 +9665,7 @@ EXECUTOR
 VERIFIER
 - Acceptance criteria check: PASS.
 
-## 2026-02-20 - Tokenomics clarity: explicit current status (no token today)
+## 2026-02-20 - Tokenomics clarity: current status wording superseded
 
 - [x] report captured
 - [x] context added
@@ -9674,17 +9674,14 @@ VERIFIER
 - [x] visual/screenshot verification (no screenshot provided)
 
 PLANNER
-- Spec check: Solvable. User requested explicit token status language to reduce speculation.
+- Spec check: Solvable. User requested explicit token status language to reduce speculation. This Feb. 20 wording was superseded by the May 14, 2026 official-token correction.
 - Missing info/questions: None.
 - Context + suspected cause:
   - `/tokenomics/tokenomics-overview` describes directional governance/tokenomics but does not explicitly state present-day token status.
 - Fix intent:
-  - Add a clear "Current status" statement:
-    - no live attn token today,
-    - token design/scope TBD,
-    - governance implementation TBD.
+  - Add a clear "Current status" statement. Superseded on May 14, 2026 by the official ATTN token address.
 - Acceptance criteria:
-  - Target page clearly states there is no token today.
+  - Target page clearly states current official-token status.
   - Status statement is explicit and non-speculative.
   - Build/knowledge checks pass.
 - Complexity: tiny
@@ -9695,14 +9692,11 @@ PLANNER
 
 EXECUTOR
 - Updated `pages/tokenomics/tokenomics-overview.md`:
-  - Added explicit `Current status` section:
-    - no live token today,
-    - token design is TBD,
-    - governance implementation is TBD.
+  - Added explicit `Current status` section. Superseded on May 14, 2026 by the official ATTN token address.
 - Proofs:
   - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
   - `npm run build` -> PASS (`/tokenomics/tokenomics-overview` generated successfully).
-  - `rg -n "Current status|no live attn token today|TBD" pages/tokenomics/tokenomics-overview.md` -> expected matches present.
+  - `rg -n "Current status|official ATTN token|TBD" pages/tokenomics/tokenomics-overview.md` -> expected matches present after the May 14, 2026 correction.
 
 VERIFIER
 - Acceptance criteria check: PASS.
