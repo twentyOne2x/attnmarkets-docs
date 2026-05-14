@@ -1,7 +1,9 @@
 # For Liquidity Providers
 
 This page describes the capital side of attn Credit.
-Current public proof is still narrow on the operating side, and broader LP-facing rollout comes later.
+It is not an open public LP product page.
+
+Current public proof is still narrow on the operating side, and broader LP-facing rollout remains under review.
 
 ## What LPs are evaluating
 
@@ -26,7 +28,7 @@ Current public proof is still narrow on the operating side, and broader LP-facin
 ## Current direction
 
 Current borrower-side proof is still strongest on the Pump creator-fee lane.
-Hosted agent-credit proof now also covers approved Tempo services and approved Virtuals jobs, but the capital-side question remains the same: be explicit about which risk box is being financed and what proof exists behind it.
+Agent credit remains bounded to approved services and jobs. The capital-side question remains the same: be explicit about which risk box is being financed and what proof exists behind it.
 
 ## Related pages
 

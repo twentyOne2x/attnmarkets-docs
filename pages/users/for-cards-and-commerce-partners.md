@@ -1,6 +1,6 @@
 # For Cards, Commerce, and Settlement Partners
 
-attn is meant to sit behind cards, wallets, marketplaces, and commerce flows as the credit and servicing layer.
+This page is for cards, wallet, marketplace, and commerce partners evaluating whether attn Credit can fit behind their own user surface.
 
 ## What attn provides
 
@@ -26,8 +26,8 @@ attn is meant to sit behind cards, wallets, marketplaces, and commerce flows as 
 ### 3. Agent-commerce surfaces
 
 - the current narrow fit is approved agent-service and job spend,
-- the longer-term fit is credit behind agent marketplaces, spend surfaces, and machine-driven payment flows,
-- the partner owns the user experience while attn provides the credit layer behind it.
+- the longer-term fit is still under review,
+- the partner keeps the user experience while attn evaluates whether the lane qualifies for bounded credit.
 
 ## What partners should expect
 
@@ -39,7 +39,7 @@ attn is meant to sit behind cards, wallets, marketplaces, and commerce flows as 
 ## Current direction
 
 Current public proof is still narrow.
-Hosted agent-credit proof exists on approved Tempo services and approved Virtuals jobs. Broader cards, commerce, and settlement distribution is still the direction of travel, not a blanket public-live claim today.
+Agent credit is bounded to approved services and jobs. Broader cards, commerce, and settlement distribution is not a blanket public-live claim today.
 
 ## Related pages
 

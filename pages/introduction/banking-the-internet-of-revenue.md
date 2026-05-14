@@ -1,9 +1,9 @@
 # Banking the Internet of Revenue
 
 The internet already has revenue rails.
-What it still lacks is a credit layer that can sit behind them.
+What it still lacks is a disciplined credit process tied to those rails.
 
-attn is built around that idea: if agents, apps, and onchain businesses can earn and operate onchain, they should also be able to access working capital in a disciplined way.
+attn is built around that idea: if agents, apps, and onchain businesses can earn and operate onchain, some of that activity can become reviewable for disciplined working capital.
 
 ## 1. Revenue is getting more operational
 
@@ -35,7 +35,7 @@ It is to make credit native to the systems where agents and onchain businesses a
 ## 4. Current direction
 
 The strongest current public proof is still in the Pump borrower flow.
-The broader direction is agent commerce first, then more conservative commerce and receivables-style use cases over time.
+Agent-credit usage remains bounded to approved services and jobs. Broader commerce and receivables-style use cases remain under review.
 
 ## 5. Go deeper
 

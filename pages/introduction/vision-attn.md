@@ -1,4 +1,4 @@
-# Vision: attn as the Credit Layer for Agent Commerce
+# Vision: attn as Agent-Commerce Credit
 
 attn's long-term role is simple:
 be the credit and servicing layer behind agent commerce and onchain revenue.
@@ -23,7 +23,7 @@ Across different surfaces, the same pieces matter:
 
 - start where revenue and repayment are easiest to verify,
 - prove the controls in narrow live lanes first,
-- reuse the same layer behind broader commerce, wallet, treasury, and receivables-style use cases later.
+- evaluate broader commerce, wallet, treasury, and receivables-style use cases only after the narrow lanes have repeatable proof.
 
 ## 3. Why this path
 
@@ -35,11 +35,11 @@ Across different surfaces, the same pieces matter:
 
 Current public proof is still intentionally narrow.
 
-- hosted agent credit is proven on approved Tempo services and approved Virtuals jobs,
+- agent credit is bounded to approved services and jobs,
 - borrower-side proof is still centered on the Pump creator-fee lane,
 - XLayer remains more tightly bounded and separately gated.
 
-The broader direction is still agent-commerce credit first, with more conservative commerce and receivables expansion later.
+The review order is agent-commerce credit first, then more conservative commerce and receivables expansion only where the proof supports it.
 
 The right way to read the stack is:
 
@@ -52,8 +52,8 @@ The right way to read the stack is:
 
 - agent builders get a small spend-scoped credit layer they can place behind approved flows,
 - borrowers get working capital against observable activity,
-- commerce partners get a credit layer they can place behind their own surfaces,
-- capital partners get a model centered on repayment discipline instead of loose promises.
+- commerce partners get a review path for placing credit behind their own surfaces,
+- capital partners get target reporting and control standards to evaluate, not an open LP product by default.
 
 ## 6. Related pages
 

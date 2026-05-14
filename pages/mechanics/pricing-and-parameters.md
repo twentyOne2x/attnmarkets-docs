@@ -1,7 +1,8 @@
 # Pricing, Spreads, and Core Parameters
 
-This page describes the target pricing framework for attn Credit.
-The strongest current public proof is still the borrower-side Pump flow; broader capital-side expansion comes later.
+This page describes the target pricing framework for attn Credit. It is not a claim that every pricing lane is live.
+
+The strongest current borrower-side proof is still the Pump flow; broader capital-side expansion remains under review.
 
 Pricing is policy-driven and lane-specific.
 Rates reflect cashflow volatility, enforceability strength, operational cost, and expected loss behavior.
@@ -39,7 +40,7 @@ Typical characteristics:
 
 ## 4. Broader commerce / receivables lane policy
 
-This lane pricing reflects more conservative underwriting and stronger reporting expectations.
+This lane is a target pricing model for more conservative underwriting and stronger reporting expectations.
 
 Typical characteristics:
 

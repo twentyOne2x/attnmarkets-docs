@@ -1,6 +1,6 @@
 # For Agent Builders and Apps
 
-attn helps agents, apps, and builders add a credit layer behind onchain revenue and commerce without turning credit into a separate product experience.
+attn helps agents, apps, and builders review whether onchain revenue or approved service spend can support bounded credit.
 
 ## What attn provides
 
@@ -8,7 +8,7 @@ attn helps agents, apps, and builders add a credit layer behind onchain revenue 
 - working capital against visible activity where the lane supports it,
 - repayment-first servicing and policy controls,
 - account setup that keeps the flow programmable,
-- a path to embed credit behind your own user surface.
+- a review path for embedding credit behind your own user surface.
 
 ## Where it fits best
 
@@ -33,8 +33,8 @@ Projects should be explicit about:
 
 ## Current direction
 
-Hosted agent-credit proof is already live on approved Tempo services and approved Virtuals jobs.
-The broader goal is still credit behind more agent-commerce, wallet, and commerce surfaces over time.
+Agent credit is bounded to approved services and jobs.
+Broader agent-commerce, wallet, and commerce surfaces remain review areas until a specific partner lane has live proof and controls.
 
 ## Next action
 

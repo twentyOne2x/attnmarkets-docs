@@ -1,7 +1,8 @@
 # Risk, Limits, and Concentration Framework
 
-This page describes the target risk framework for attn Credit.
-The strongest current public proof is still the borrower-side Pump flow; broader capital-side expansion comes later.
+This page describes the target risk framework for attn Credit. It is not a claim that every lane or capital-side structure is live.
+
+The strongest current borrower-side proof is still the Pump flow; broader capital-side expansion remains under review.
 
 attn Credit manages risk through policy-bounded underwriting plus deterministic servicing controls.
 The objective is controlled loss behavior under stress, not discretionary reaction.
@@ -89,8 +90,8 @@ Governance scope:
 
 ## 6. LP impact model
 
-- Losses and recoveries are reflected at credit pool level.
-- attnUSD holders are exposed according to credit pool composition.
+- Where a capital-side product exists, losses and recoveries are reflected at credit pool level.
+- Where attnUSD exposure exists, holders are exposed according to credit pool composition.
 - There is no implied principal guarantee.
 
 ## 7. Related pages

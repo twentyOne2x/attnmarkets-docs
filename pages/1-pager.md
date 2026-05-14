@@ -1,42 +1,39 @@
-# attn Credit - Credit for Agent Commerce
+# attn Credit - Current Status
 
-attn Credit helps onchain businesses and agent-driven businesses turn revenue into working capital.
-Think of it as a credit layer for agent commerce: agents can already earn, pay, and operate onchain; attn adds financing on top.
+attn Credit is a credit product for agent commerce and onchain revenue. It is not a finished broad lending marketplace.
 
-## What this is
+## Public today
 
-attn Credit is a revenue-backed credit system designed to do two things at once:
-- unlock capital against visible onchain business activity,
-- keep repayment disciplined through controls and servicing.
+- **Agent credit:** bounded credit for approved services and jobs.
+- **Borrower estimate:** an indicative borrower view for Pump.fun creator-fee history.
+- **ATTN token:** the official token is `FVGdJQVzAdKr8ZH7ahyhp4cvDszX3N8QYGSdzueopump`; detailed tokenomics are still being refined.
 
-## Product system
+## What attn does
 
-- **Revenue signals:** reads business activity, income, and payment flow to understand borrowing capacity.
-- **Account controls:** works with programmable accounts, routing rules, and policy controls.
-- **Credit logic:** sets limits and pricing as activity changes.
-- **Servicing:** keeps repayment first and tracks facility health over time.
+- reviews revenue and payment activity,
+- uses identity or reputation where repayment history is still thin,
+- sets bounded credit limits,
+- keeps spend and repayment tied to approved rails,
+- records servicing, control, and incident evidence.
 
-## Operating lanes
+## What not to assume
 
-- **Agent commerce:** the long-term frame is credit behind agent marketplaces, spend surfaces, and payment flows.
-- **Pump:** the first proving ground for revenue-backed borrower flows.
-- **Settlement and receivables:** the broader direction as attn expands into more conservative business-finance use cases.
+- no broad public borrower funding by default,
+- no open public lender or LP product by default,
+- no finalized tokenomics, governance model, emissions schedule, or staking design,
+- no blanket cards, commerce, settlement, or receivables availability today.
 
-## Why this matters
+## Current product priority
 
-- agents and onchain businesses already have ways to earn and spend,
-- but credit is still missing from that stack,
-- and the same credit layer can sit behind many different product surfaces instead of living only inside one app.
+The priority is improving the narrow public product surfaces first: approved agent-credit usage and Pump creator-fee borrower review.
 
-## Current direction
-
-The broader vision is agent-commerce credit.
-The strongest current public proof is still in the narrower Pump borrower flow, with broader lending and pool infrastructure coming later.
+Partner distribution, capital-side rollout, and broader commerce or receivables use cases remain review or roadmap areas until the docs point to specific live proof.
 
 ## Next actions
 
 > **What to do next**
 >
-> - [See agent-commerce context](./introduction/attn-in-context.mdx)
-> - [Open credit simulation](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
+> - [Open agent credit guide](https://attn.markets/skill.md)
+> - [Open borrower estimate](https://www.attn.markets/credit-simulation?cluster=mainnet-beta)
 > - [Read non-technical overview](./mechanics/how-it-works-nontechnical.md)
+> - [Review token status](./tokenomics/tokenomics-overview.md)

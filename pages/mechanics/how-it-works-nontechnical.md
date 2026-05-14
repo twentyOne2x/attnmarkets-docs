@@ -79,7 +79,7 @@ The exact playbooks get more detailed in the deeper mechanics pages.
 ## 8. Current direction
 
 Current public proof is still narrow.
-Hosted agent credit is proven on approved Tempo services and approved Virtuals jobs. Borrower-side proof is still centered on the Pump creator-fee lane. The broader direction is the same credit layer sitting behind more agent-commerce, wallet, and commerce surfaces over time.
+Agent credit is bounded to approved services and jobs. Borrower-side proof is still centered on the Pump creator-fee lane. Broader agent-commerce, wallet, and commerce surfaces remain review areas until the docs point to a specific live lane.
 
 ## 9. Where to go deeper
 

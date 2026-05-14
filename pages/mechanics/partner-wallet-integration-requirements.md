@@ -23,7 +23,7 @@ The practical near-term shape is narrower:
 
 - the partner keeps its wallet infrastructure,
 - attn can fund the first lane from private treasury,
-- and both sides treat the lane as operator-driven until the control and repayment invariants are actually proven.
+- and both sides treat the lane as operator-driven until the control and repayment invariants are verified.
 
 ## 2. Current posture
 
@@ -191,7 +191,7 @@ Required:
 ### Swig-equivalent partner control
 
 This is the strongest claim.
-It should only be used if the partner-managed stack proves the same safety outcomes that the Swig borrower lane is designed to achieve:
+It should only be used if the partner-managed stack shows the same safety outcomes that the Swig borrower lane targets:
 
 - enforced debt-open routing,
 - bounded change control,

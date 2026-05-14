@@ -222,7 +222,7 @@ So the intended model is:
 - practical control of that Swig path sits with the ATTN-configured authority through Swig policy,
 - the borrower (or chosen target) regains fee admin after CLOSE.
 
-This means the current Pump borrower lane is designed to be:
+This means the current Pump borrower lane is intended to be:
 
 - **temporary**, not permanent,
 - **policy-controlled**, not borrower-unilateral during ACTIVE,
@@ -299,7 +299,7 @@ It does **not** assume:
 - that attn controls the entire protocol or treasury,  
 - that all project spending is gated through the pledged path.
 
-Revenue accounts are a narrow, opinionated piece of infra designed to make onchain revenues **bankable** without taking over governance of the entire project.
+Revenue accounts are a narrow, opinionated piece of infra for making onchain revenues reviewable for credit without taking over governance of the entire project.
 
 ---
 
@@ -453,4 +453,4 @@ Canonical internal spec:
 
 **Does attn custody funds?**
 
-No. Funds live in onchain accounts controlled by the borrower's safe and its vault authorities. attn Credit is designed to be non-custodial while still making repayment controls enforceable.
+No. Funds live in onchain accounts controlled by the borrower's safe and its vault authorities. attn Credit does not need to custody borrower funds to make repayment controls enforceable.

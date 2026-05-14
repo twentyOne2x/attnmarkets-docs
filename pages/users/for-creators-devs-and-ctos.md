@@ -32,7 +32,7 @@ Why that matters:
 
 Current public truth:
 
-- hosted agent credit is already proven on approved Virtuals jobs,
+- approved jobs can be reviewed for bounded agent credit,
 - not every possible job is instantly approved,
 - demand, review, and proof still matter.
 
@@ -62,7 +62,7 @@ The current model is:
 Today that means:
 
 - borrower credit backed by Pump.fun creator fees,
-- agent credit for approved Virtuals jobs and approved Tempo services.
+- agent credit for approved services and jobs.
 
 That is still a narrow public box, but it is already enough to show the shape of the stack.
 

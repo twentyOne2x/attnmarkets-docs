@@ -1,10 +1,11 @@
 # Architecture Overview
 
-This page describes the target attn Credit architecture.
-The strongest current public proof is still the borrower-side Pump flow; broader capital-side expansion comes later.
+This page describes the target attn Credit architecture. It is not a claim that every component is live across every lane.
+
+The strongest current borrower-side proof is still the Pump flow; broader capital-side expansion remains under review.
 
 attn Credit is organized around control, underwriting, servicing, and reporting.
-The architecture is designed so repayment enforcement and risk controls are observable and deterministic.
+The architecture goal is to make repayment enforcement and risk controls observable and deterministic.
 
 ## 1. Core components
 
@@ -35,7 +36,7 @@ The architecture is designed so repayment enforcement and risk controls are obse
 
 - **Capital Segmentation**
   - Separate risk boxes as the product expands.
-  - Capital-side reporting and LP structures sit on top of those boxes where applicable.
+  - Capital-side reporting and LP structures sit on top of those boxes only where that lane exists.
 
 ## 2. Data flows (simplified)
 
@@ -45,7 +46,7 @@ The architecture is designed so repayment enforcement and risk controls are obse
 
 2. **Underwrite and size**
    - Credit engine computes initial limit and policy bounds.
-   - Facility is assigned to the appropriate credit pool policy.
+   - Facility is assigned to the appropriate policy box.
 
 3. **Draw and serve**
    - Borrower draws within current availability.
@@ -60,8 +61,8 @@ The architecture is designed so repayment enforcement and risk controls are obse
    - Routing continues to prioritize debt service during stress modes.
 
 6. **Report and reconcile**
-   - Monitoring outputs lender tape and governance summaries.
-   - LP-facing metrics roll up by credit pool and portfolio.
+   - Monitoring outputs review tape and governance summaries.
+   - LP-facing metrics apply only where a capital-side product exists.
 
 ## 3. Lane separation in architecture
 

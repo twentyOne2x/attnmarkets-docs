@@ -24,7 +24,7 @@ Today the most useful examples are already visible in the agent-commerce stack:
 - services sold and paid through Tempo Machine Payment Protocol (`MPP.dev`).
 
 Those are not the credit layer by themselves.
-They are the proof that an agent or operator already does useful work onchain.
+They are evidence that an agent or operator already does useful work onchain.
 
 ## What attn adds
 
@@ -59,9 +59,9 @@ The broader point is simple:
 
 Current public proof is still narrow:
 - borrower-side proof remains strongest on the Pump creator-fee lane,
-- hosted agent-credit proof now also covers approved Tempo services and approved Virtuals jobs.
+- agent credit remains bounded to approved services and jobs.
 
-The broader direction is still credit behind agent commerce and other onchain business activity.
+The review direction is credit behind agent commerce first, then other onchain business activity as proof and controls justify it.
 
 ## Next pages
 

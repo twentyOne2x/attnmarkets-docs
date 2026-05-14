@@ -1,7 +1,8 @@
 # attn Credit Engine and attnUSD
 
-This page describes the target capital-side model for **attn Credit**.
-The strongest current public proof is still the borrower-side Pump flow; broader pool-side rollout comes later.
+This page describes the target capital-side model for **attn Credit**. It is not an open LP product page and it is not the ATTN tokenomics page.
+
+The strongest current borrower-side proof is still the Pump flow; broader pool-side rollout remains under review.
 
 attn Credit is a credit and servicing system for onchain revenue, with repayment automated from routed cashflows.
 
@@ -18,7 +19,7 @@ Hover highlighted terms for quick glossary definitions.
 - **Credit pool**
   Capital bucket with its own risk policy (for example, a Pump proving lane versus a more conservative commerce or receivables lane).
 - **<abbr title="LP portfolio share token over managed credit pool exposure and performance.">attnUSD</abbr>**
-  LP share in one or more managed credit pools, marked from underlying facility performance.
+  Target LP share concept for managed credit pool exposure, marked from underlying facility performance where a pool exists.
 
 ## 2. Control plane
 
@@ -99,7 +100,7 @@ Lanes operate with separate credit pools and risk boxes in early stages.
 
 ## 8. attnUSD model
 
-<abbr title="LP portfolio share token over managed credit pool exposure and performance.">attnUSD</abbr> is a portfolio share over managed credit pool exposure:
+<abbr title="LP portfolio share token over managed credit pool exposure and performance.">attnUSD</abbr> is a target portfolio-share concept over managed credit pool exposure:
 
 - NAV reflects credit pool composition, facility performance, reserves, and realized losses/recoveries.
 - There is no implied 1:1 principal guarantee.
@@ -107,7 +108,7 @@ Lanes operate with separate credit pools and risk boxes in early stages.
 
 See also: [For Liquidity Providers](../users/for-liquidity-providers.md).
 
-## 9. Lender-grade tape
+## 9. Review tape
 
 The reporting package includes:
 

@@ -1,13 +1,13 @@
 # Welcome to attn
 
-attn builds **attn Credit**: the credit and servicing layer for agent commerce.
+attn builds **attn Credit**: credit for approved agent-commerce and onchain-revenue use cases.
 
 Today that shows up in two public product surfaces:
 
 - **agent credit** for approved services and jobs,
 - **borrower credit** backed by Pump.fun creator fees.
 
-This docs site explains how both fit together, what the current proof actually covers, and where the broader product still remains directional.
+This docs site explains what is public today, what is still under review, and what should not be inferred from roadmap language.
 
 The important framing is:
 
@@ -20,10 +20,11 @@ At a high level, attn:
 - reads revenue and payment activity to understand borrowing capacity,
 - works with programmable accounts, routing rules, and policy controls,
 - adjusts limits as activity changes,
-- can sit behind wallets, marketplaces, cards, and commerce flows.
+- may later sit behind wallets, marketplaces, cards, and commerce flows when those lanes have their own proof.
 
-Some pages in these docs go deeper into capital-side mechanics, pool design, and LP reporting.
-Current public proof is still narrow: Pump.fun creator fees remain the strongest borrower-side proof, while hosted agent credit is proven on approved Tempo services and approved Virtuals jobs. XLayer remains more tightly gated.
+Some pages in these docs describe target capital-side mechanics, pool design, and LP reporting. Those pages are not an open LP product announcement.
+
+Current public proof is narrow: Pump.fun creator fees remain the main borrower-side proof, and the agent-credit guide covers approved service/job usage. XLayer remains tightly gated.
 
 ## Where to start
 

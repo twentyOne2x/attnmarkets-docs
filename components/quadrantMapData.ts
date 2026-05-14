@@ -133,7 +133,7 @@ export const PROJECTS: Record<string, ProjectInfo> = {
     distributionModel: "Infrastructure-first (integrator-facing)",
     exampleClients: ["Public named customers are not listed in the cited docs."],
     contextNotes: [
-      "Integrator-facing infrastructure can sit behind partner channels, but the cited sources do not name live distribution partners.",
+      "Integrator-facing infrastructure; the cited sources do not name live distribution partners.",
     ],
     creditVolume: {
       display: "$1.2b",

@@ -20,7 +20,7 @@ Best fit when there is:
 
 ## 3. Apps, wallets, and commerce surfaces
 
-Best fit for products that want to place credit behind an existing user experience:
+Best fit for products exploring credit behind an existing user experience:
 
 - marketplaces,
 - wallet and spend surfaces,
@@ -29,7 +29,7 @@ Best fit for products that want to place credit behind an existing user experien
 
 ## 4. Capital and credit partners
 
-Best fit for partners that care about:
+Best fit for partners evaluating:
 
 - repayment discipline,
 - clear controls and reporting,
@@ -37,16 +37,16 @@ Best fit for partners that care about:
 
 ## 5. Launchpads and ecosystem operators
 
-Best fit when partners want:
+Best fit when partners are reviewing:
 
 - a financing layer behind existing communities,
 - a clearer path from revenue to working capital,
-- infrastructure that can later plug into broader commerce surfaces.
+- infrastructure that could later plug into broader commerce surfaces after proof exists.
 
 ## 6. Current direction
 
 Current public proof is still narrow.
-Hosted agent credit is proven on approved Tempo services and approved Virtuals jobs. Borrower-side proof is still centered on Pump creator-fee history. The broader direction remains agent-commerce credit first, then more conservative commerce and receivables use cases later.
+Agent credit is bounded to approved services and jobs. Borrower-side proof is still centered on Pump creator-fee history. Broader commerce, receivables, and LP-facing work remains under review rather than public by default.
 
 ## 7. Related pages
 
