@@ -4,8 +4,8 @@ Tokenomics and governance are designed to support durable credit operations, not
 
 ## Current status
 
-- There is **no live attn token today**.
-- Token design, if introduced, is TBD.
+- As of Thursday, May 14, 2026, the official ATTN token is `FVGdJQVzAdKr8ZH7ahyhp4cvDszX3N8QYGSdzueopump`.
+- This page does not detail tokenomics.
 - Governance implementation details are TBD.
 
 ## 1. Core principles
