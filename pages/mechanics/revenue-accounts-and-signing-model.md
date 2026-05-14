@@ -206,7 +206,7 @@ For the current Pump borrower lane, the practical control lifecycle is:
    - This pledged Swig wallet is the current Pump fee-admin pubkey while the loan is active.
    - This is **not** intended to mean "attn hot wallet custody."
    - The control surface is a **program-controlled Swig wallet path**.
-   - In the current ACTIVE posture, practical control of that path sits with the ATTN-configured manage authority through Swig policy.
+   - In the current ACTIVE posture, practical control of that path sits with the attn-configured manage authority through Swig policy.
    - The borrower is intentionally stripped of direct manage actions on the pledged path while the facility is active.
    - Narrow executor roles can run allowlisted servicing moves but do not get broad reconfiguration power.
 
@@ -219,7 +219,7 @@ So the intended model is:
 
 - the borrower controls fee admin before onboarding,
 - the pledged Swig wallet is the onchain Pump admin during ACTIVE,
-- practical control of that Swig path sits with the ATTN-configured authority through Swig policy,
+- practical control of that Swig path sits with the attn-configured authority through Swig policy,
 - the borrower (or chosen target) regains fee admin after CLOSE.
 
 This means the current Pump borrower lane is intended to be:
@@ -232,12 +232,12 @@ This means the current Pump borrower lane is intended to be:
 
 ClawPump can be confusing because two different questions get mixed together:
 
-1. **Can ATTN observe enough data to show a bounded underwriting / compatibility view?**
-2. **Can ATTN control the fee-admin lifecycle the same way it can in the borrower-first Pump path?**
+1. **Can attn observe enough data to show a bounded underwriting / compatibility view?**
+2. **Can attn control the fee-admin lifecycle the same way it can in the borrower-first Pump path?**
 
 Those are not the same thing.
 
-A ClawPump token may still be visible to ATTN's data plane because it can trade in the same Pump / PumpSwap ecosystem that ATTN watches for:
+A ClawPump token may still be visible to attn's data plane because it can trade in the same Pump / PumpSwap ecosystem that attn watches for:
 
 - market activity,
 - fee-proxy inputs,
@@ -341,9 +341,9 @@ Not in the intended path just by "showing up." The realistic risks are:
 - unsupported assumptions on external platforms,
 - or an operator/product fault that leaves the position temporarily stuck until recovery/offboarding completes.
 
-**Does ATTN technically hold the control key during ACTIVE?**
+**Does attn technically hold the control key during ACTIVE?**
 
-In the current default `swig` borrower path: yes, ATTN controls a real authority signer.
+In the current default `swig` borrower path: yes, attn controls a real authority signer.
 
 The precise model is:
 
@@ -353,7 +353,7 @@ The precise model is:
 
 So the practical controller during ACTIVE is:
 
-- **the ATTN-configured authority behind `ATTNConfig`**
+- **the attn-configured authority behind `ATTNConfig`**
 
 That is not the same thing as:
 
@@ -361,7 +361,7 @@ That is not the same thing as:
 - random outsider control,
 - or "the backend server itself is the signer."
 
-It does mean the current default path relies on an ATTN-controlled signer for ACTIVE custody and post-close transfer-back.
+It does mean the current default path relies on an attn-controlled signer for ACTIVE custody and post-close transfer-back.
 
 **So should this be Squads / multisig / MPC?**
 
@@ -378,20 +378,20 @@ The codebase already distinguishes:
 
 So the practical statement is:
 
-- current default Swig path = ATTN-controlled authority through Swig policy
+- current default Swig path = attn-controlled authority through Swig policy
 - stronger target posture = Squads or MPC/HSM-backed signer custody
 
 Concrete reading of that statement:
 
-1. in proof/dev environments, ATTN control is literally represented by a local signer keypair
+1. in proof/dev environments, attn control is literally represented by a local signer keypair
 2. in the web app, the onboarding screen may show a placeholder authority pubkey before real configuration is provided
-3. in production, the real ACTIVE control authority is the ATTN-operated pubkey configured into the `ATTNConfig` Swig role
+3. in production, the real ACTIVE control authority is the attn-operated pubkey configured into the `ATTNConfig` Swig role
 
 So when someone asks "who owns it during ACTIVE?", the accurate answer is:
 
 - `Pump` sees the pledged Swig wallet as admin,
 - `Swig` enforces the role model,
-- and the practical controller is the ATTN-configured authority signer behind `ATTNConfig`.
+- and the practical controller is the attn-configured authority signer behind `ATTNConfig`.
 
 **What is actually test-covered**
 
@@ -399,16 +399,16 @@ The product currently has meaningful test coverage for:
 
 1. borrower misconfiguration during ACTIVE
    - borrower cannot retain `manageAuthority`
-2. missing expected ATTN authority
+2. missing expected attn authority
    - the configured `ATTNConfig` authority must hold `manageAuthority`
 3. wrong authority present
-   - if a different authority has `manageAuthority` while the expected ATTN authority does not, verifier/stage/activation fail closed
+   - if a different authority has `manageAuthority` while the expected attn authority does not, verifier/stage/activation fail closed
 4. unauthorized ACTIVE fee-admin mutation attempts
    - borrower and other non-authority actors are expected to fail closed when attempting to reroute creator fees
 
 What is **not** honestly solved by those tests:
 
-1. compromise of the real active ATTN authority signer
+1. compromise of the real active attn authority signer
    - if the signer behind `ATTNConfig` is compromised, the chain still sees that signer as legitimate
    - this is a custody-hardening problem, not something verifier logic can detect away
 
@@ -419,7 +419,7 @@ So the accurate security statement is:
 The clean answer is:
 
 1. **today**
-   - the default Swig borrower path still depends on a real ATTN-controlled authority signer behind `ATTNConfig`
+   - the default Swig borrower path still depends on a real attn-controlled authority signer behind `ATTNConfig`
 2. **fastest safer improvement**
    - keep the same Swig role model,
    - move that signer to **HSM-backed** or **MPC-backed** custody
@@ -429,21 +429,21 @@ The clean answer is:
 Why:
 
 1. HSM/MPC reduces single-key compromise risk without forcing a borrower-facing UX redesign.
-2. Squads/multisig is the stronger governance answer if you want “no single ATTN operator can reassign creator-fee admin during ACTIVE.”
+2. Squads/multisig is the stronger governance answer if you want “no single attn operator can reassign creator-fee admin during ACTIVE.”
 3. Squads/multisig is also a bigger migration, so it should be treated as a second-stage target, not casually implied as already true.
 
 What this means in plain language:
 
 1. **Current default**
    - secure enough to block borrower misuse and random outsiders in the intended path,
-   - but still dependent on the custody quality of one ATTN authority path.
+   - but still dependent on the custody quality of one attn authority path.
 
 2. **Target posture**
    - the ACTIVE control authority should be backed by:
      - HSM, or
      - MPC, or
      - Squads/multisig
-   - depending on how much governance hardness ATTN wants relative to implementation friction.
+   - depending on how much governance hardness attn wants relative to implementation friction.
 
 Canonical internal spec:
 - `/Users/user/PycharmProjects/attn-credit/docs/plans/active/2026-03-11-active-control-authority-hardening-spec.md`

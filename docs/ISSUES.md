@@ -1942,7 +1942,7 @@ PLANNER
 - Status: completed
 - Context + suspected cause:
   - the prior rewrite corrected the borrower truth but still made the page feel borrower-lane-first
-  - the stronger ATTN positioning in this repo is broader: attn as the credit and servicing layer behind agent commerce, cards, commerce, treasury, and settlement surfaces
+  - the stronger attn positioning in this repo is broader: attn as the credit and servicing layer behind agent commerce, cards, commerce, treasury, and settlement surfaces
 - Fix intent:
   1) shift the title and opening paragraphs from Pump borrower credit to agent-commerce credit
   2) frame Pump borrower-first Swig as the current proving lane, not the core identity
@@ -2014,7 +2014,7 @@ PLANNER
     - `/Users/user/PycharmProjects/attnmarkets-docs/docs/ISSUES.md`
     - `/Users/user/PycharmProjects/attnmarkets-docs/pages/1-pager.md`
   - Constraints:
-    - use the latest local ATTN shared knowledge and current attn-credit proof docs
+    - use the latest local attn shared knowledge and current attn-credit proof docs
     - keep `attn` lowercase and avoid generic credit-landing filler
     - do not claim public-live credit, lender mainnet, grouped-mainnet default readiness, or ClawPump parity
     - keep the page concise and scannable
@@ -2416,7 +2416,7 @@ Checklist
 - [x] Visual or screenshot verification
 
 PLANNER
-- Spec check: solvable. The user wants the new agentic-commerce quadrant shown in full, widened so payment rails and wallets are explicit, and updated to include Tempo using the ATTN shared knowledge graph.
+- Spec check: solvable. The user wants the new agentic-commerce quadrant shown in full, widened so payment rails and wallets are explicit, and updated to include Tempo using the attn shared knowledge graph.
 - Missing info/questions: none blocking. The shared knowledge capture and Tempo's March 18, 2026 mainnet announcement provide enough source material for positioning.
 - Type: feature/docs map taxonomy
 - Status: in_progress
@@ -9679,7 +9679,7 @@ PLANNER
 - Context + suspected cause:
   - `/tokenomics/tokenomics-overview` describes directional governance/tokenomics but does not explicitly state present-day token status.
 - Fix intent:
-  - Add a clear "Current status" statement. Superseded on May 14, 2026 by the official ATTN token address.
+  - Add a clear "Current status" statement. Superseded on May 14, 2026 by the official $attn token address.
 - Acceptance criteria:
   - Target page clearly states current official-token status.
   - Status statement is explicit and non-speculative.
@@ -9692,11 +9692,11 @@ PLANNER
 
 EXECUTOR
 - Updated `pages/tokenomics/tokenomics-overview.md`:
-  - Added explicit `Current status` section. Superseded on May 14, 2026 by the official ATTN token address.
+  - Added explicit `Current status` section. Superseded on May 14, 2026 by the official $attn token address.
 - Proofs:
   - `python3 scripts/knowledge_check.py` -> `OK: knowledge base checks passed.`
   - `npm run build` -> PASS (`/tokenomics/tokenomics-overview` generated successfully).
-  - `rg -n "Current status|official ATTN token|TBD" pages/tokenomics/tokenomics-overview.md` -> expected matches present after the May 14, 2026 correction.
+  - `rg -n "Current status|official $attn token|TBD" pages/tokenomics/tokenomics-overview.md` -> expected matches present after the May 14, 2026 correction.
 
 VERIFIER
 - Acceptance criteria check: PASS.
@@ -10680,7 +10680,7 @@ PLANNER
 - Type: docs
 - Status: completed
 - Context + suspected cause:
-  - Labels use mixed shorthand names and ATTN uppercase.
+  - Labels use mixed shorthand names and attn uppercase.
   - Page still includes ASCII section and axis narrative text.
   - Pinned tooltip only closes via Esc/Close; outside-click close is missing.
   - Quadrant styling/axis labels are visually heavy or mispositioned.

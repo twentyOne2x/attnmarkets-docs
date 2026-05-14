@@ -256,7 +256,7 @@ export default function AsciiQuadrantMap(props: { asOf?: string }) {
         <TooltipToken id="claw">Claw</TooltipToken>
         {"     |  "}
         <TooltipToken id="attn" align="right">
-          ATTN
+          attn
         </TooltipToken>
         {dot}
         <TooltipToken id="creditcoop" align="right">

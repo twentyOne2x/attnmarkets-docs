@@ -1,6 +1,6 @@
 # attn Credit Engine and attnUSD
 
-This page describes the target capital-side model for **attn Credit**. It is not an open LP product page and it is not the ATTN tokenomics page.
+This page describes the target capital-side model for **attn Credit**. It is not an open LP product page and it is not the $attn tokenomics page.
 
 The strongest current borrower-side proof is still the Pump flow; broader pool-side rollout remains under review.
 

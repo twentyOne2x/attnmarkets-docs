@@ -290,7 +290,7 @@ function main() {
   const timestamp = new Date().toISOString();
 
   const output = [
-    "ATTN in context export (page + hover data)",
+    "attn in context export (page + hover data)",
     `Generated: ${timestamp}`,
     `Page source: ${path.relative(repoRoot, pagePath)}`,
     "",

@@ -11,7 +11,7 @@ Refresh `attn-in-context` so it is scan-first for BD decisions, with grouped nar
 - Preserve existing local, unrelated modifications.
 - Keep the map readable in plain docs flow.
 - Ensure accessibility: keyboard focus tooltips + non-color fallback shapes in scatter legend/markers.
-- Include Rain/YouLend/Pipe/Frames/Sponge and keep ATTN framing clear.
+- Include Rain/YouLend/Pipe/Frames/Sponge and keep attn framing clear.
 
 ## Plan
 1. Add shared map dataset in `components/quadrantMapData.ts`.

@@ -6,7 +6,7 @@ attn Credit is a credit product for agent commerce and onchain revenue. It is no
 
 - **Agent credit:** bounded credit for approved services and jobs.
 - **Borrower estimate:** an indicative borrower view for Pump.fun creator-fee history.
-- **ATTN token:** the official token is `FVGdJQVzAdKr8ZH7ahyhp4cvDszX3N8QYGSdzueopump`; detailed tokenomics are still being refined.
+- **$attn token:** the official token is `FVGdJQVzAdKr8ZH7ahyhp4cvDszX3N8QYGSdzueopump`; detailed tokenomics are still being refined.
 
 ## What attn does
 
