@@ -1,49 +1,15 @@
-# Tokenomics (Directional)
+# ATTN Token
 
-Tokenomics and governance are designed to support durable credit operations, not short-term incentive extraction.
+This page is a status note, not a tokenomics document.
 
 ## Current status
 
 - As of Thursday, May 14, 2026, the official ATTN token is `FVGdJQVzAdKr8ZH7ahyhp4cvDszX3N8QYGSdzueopump`.
-- This page does not detail tokenomics.
-- Governance implementation details are TBD.
+- Tokenomics are still being refined.
+- No detailed tokenomics, governance model, emissions schedule, staking design, or LP program should be inferred from this page.
 
-## 1. Core principles
+## Direction
 
-- prioritize solvency and servicing reliability,
-- align incentives with long-term facility performance,
-- keep lane-level risk accountability explicit,
-- maintain transparent reporting standards.
+ATTN has considered incentive designs around borrowers, lenders, and onboarding costs. Those ideas are not final and should not be treated as active tokenomics commitments.
 
-## 2. LP economics
-
-If and when LP capital is active, returns would come from managed credit pool performance, including:
-
-- facility fees and spreads,
-- utilization and servicing behavior,
-- realized losses and recoveries,
-- reserve and policy decisions.
-
-## 3. Governance scope
-
-Governance should control:
-
-- pool-level cap frameworks,
-- parameter bands for borrowing-base and trigger logic,
-- reserve and loss-allocation policy,
-- reporting and incident-discipline standards.
-
-## 4. Lane-aware policy
-
-- **Pump lane:** higher-yield credit pool with tighter caps and stricter fast-response controls.
-- **Broader commerce / receivables lane:** conservative credit pool with tighter reporting and underwriting constraints.
-
-Early phases keep credit pools separated and non-commingled.
-
-## 5. Long-term direction
-
-As track record grows, governance can evaluate:
-
-- controlled expansion of facility types,
-- broader LP access modes,
-- allocator frameworks across proven credit pools.
+The current priority is product execution. Tokenomics can be refined after the product surface, credit workflows, and user incentives are clearer.
